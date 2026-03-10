@@ -21,6 +21,14 @@
   --header-bg: #fff;
   --header-text: #111;
   --accent-color: #2563eb;
+
+  /* Пастельные цвета для карточек (светлые, 15% насыщенности) */
+  --element-blue: #d9eaf5;
+  --element-green: #ddf0dd;
+  --element-red: #f9e1de;
+  --element-purple: #f1e0f0;
+  --element-yellow: #fdf0cf;
+  --element-unknown: #ececec;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -36,6 +44,14 @@
     --header-bg: #2d2d2d;
     --header-text: #eee;
     --accent-color: #3b82f6;
+
+    /* Темнее, но всё ещё пастельные */
+    --element-blue: #1f3a4b;
+    --element-green: #1f3f2a;
+    --element-red: #512e30;
+    --element-purple: #452e4a;
+    --element-yellow: #4f482b;
+    --element-unknown: #3a3a3a;
   }
 }
 
@@ -685,7 +701,15 @@ header {
   cursor:pointer;
   height: 100%;
   box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  /* По умолчанию цвет, если стихия не определена */
+  background-color: var(--element-unknown);
 }
+.card[data-element="Синий"] { background-color: var(--element-blue); }
+.card[data-element="Зеленый"] { background-color: var(--element-green); }
+.card[data-element="Красный"] { background-color: var(--element-red); }
+.card[data-element="Фиолетовый"] { background-color: var(--element-purple); }
+.card[data-element="Желтый"] { background-color: var(--element-yellow); }
+
 .card:hover { 
   box-shadow:0 8px 25px rgba(0,0,0,.12); 
   transform: translateY(-4px);
@@ -694,7 +718,7 @@ header {
 .thumb { 
   width:100%; 
   height: 190px;
-  background: var(--secondary-color); 
+  background: rgba(0,0,0,0.05); 
   display:flex; 
   align-items:center; 
   justify-content:center; 
@@ -744,7 +768,7 @@ header {
   justify-content: center;
 }
 .pill { 
-  background: var(--secondary-color); 
+  background: rgba(0,0,0,0.1); 
   border:1px solid var(--border-color); 
   border-radius:999px; 
   padding:4px 8px; 
@@ -1527,10 +1551,12 @@ function renderCards(rows){
   els.cards.innerHTML = rows.map((r, i)=>{
     const img = fileCellToUrl(r[F.image]);
     const abilitiesFull = String(r[F.abilities]||'');
-    const hasAbilities = abilitiesFull.trim().length > 0;
+    // Убираем ведущий апостроф, если он есть (исправление пункта 1)
+    const cleanedAbilities = abilitiesFull.replace(/^'/, '');
+    const hasAbilities = cleanedAbilities.trim().length > 0;
     
     return `
-      <article class="card" data-idx="${i}">
+      <article class="card" data-idx="${i}" data-element="${r[F.element] || ''}">
         <div class="thumb">
           ${img ? `<img src="${img}" alt="${r[F.name]||''}" loading="lazy" onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<div style=\\'color: #999; padding: 20px; text-align: center;\\'>Нет изображения</div>';" />` : '<div style="color: #999; padding: 20px; text-align: center;">Нет изображения</div>'}
         </div>
@@ -1553,7 +1579,7 @@ function renderCards(rows){
         </div>
         ${hasAbilities ? `
           <button class="toggle-abilities" data-idx="${i}">Показать способности</button>
-          <div class="card-abilities-full" id="abilities-${i}">${abilitiesFull.replace(/\n/g, '<br>')}</div>
+          <div class="card-abilities-full" id="abilities-${i}">${cleanedAbilities.replace(/\n/g, '<br>')}</div>
         ` : ''}
       </article>
     `;
@@ -1599,8 +1625,10 @@ function fillModal(h){
     <span class="pill">ЗАЩ: ${h[F.defense]||''}</span>
     <span class="pill">HP: ${h[F.hp]||''}</span>
   `;
-  els.mAbilities.textContent = h[F.abilities] || '—';
-  els.mPassive.textContent = h[F.passive] || '—';
+  // Убираем ведущий апостроф в модальном окне (исправление пункта 1)
+  const abilitiesText = String(h[F.abilities] || '—');
+  els.mAbilities.textContent = abilitiesText.replace(/^'/, '');
+  els.mPassive.textContent = String(h[F.passive] || '—').replace(/^'/, '');
 }
 
 function openModal(idx){
