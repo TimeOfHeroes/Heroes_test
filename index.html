@@ -13,7 +13,7 @@
   --secondary-color: #f3f3f3;
   --border-color: #ddd;
   --text-color: #111;
-  --bg-color: #f7f7f7;
+  --bg-color: #ffffff;        /* Белый фон вокруг карточек */
   --card-bg: #fff;
   --filter-bg: #fff;
   --checkbox-bg: #fff;
@@ -22,15 +22,24 @@
   --header-text: #111;
   --accent-color: #2563eb;
 
-  /* Гармоничные пастельные цвета для карточек — мягкие, чистые */
-  --element-blue: #e1f0fa;      /* небесно-голубой */
-  --element-green: #e0f0e0;      /* свежая мята */
-  --element-red: #ffe5e2;        /* нежный персиково-розовый */
-  --element-purple: #f2e3f5;     /* сиреневый туман */
-  --element-yellow: #fff6dd;     /* ванильный свет */
-  --element-unknown: #f5f5f5;
+  /* Пастельные цвета для карточек */
+  --element-blue: #cbf0ff;      /* голубой */
+  --element-green: #d7ffd6;      /* зеленый */
+  --element-red: #ffdcdc;        /* красный */
+  --element-purple: #f4c6ff;     /* фиолетовый */
+  --element-yellow: #ffFdc3;     /* желтый */
   
-  /* Текст на пастельном фоне — мягкий, без грязи */
+  /* Плашки (pill) для характеристик */
+  --pill-blue: #afd9e9;
+  --pill-green: #c3eac2;
+  --pill-red: #e5c7c4;
+  --pill-purple: #dbb0e5;
+  --pill-yellow: #e9e7aa;
+  --pill-default: #e0e0e0;
+  
+  --element-unknown: #f0f0f0;
+  
+  /* Текст на пастельном фоне */
   --card-text: #2d3a3a;
   --card-meta: #4a5a5a;
 }
@@ -38,7 +47,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --text-color: #eee;
-    --bg-color: #1a1a1a;
+    --bg-color: #1a1a1a;        /* Темный фон */
     --card-bg: #2d2d2d;
     --filter-bg: #2d2d2d;
     --checkbox-bg: #3d3d3d;
@@ -49,13 +58,21 @@
     --header-text: #eee;
     --accent-color: #3b82f6;
 
-    /* Темная тема — глубокие, но чистые цвета */
-    --element-blue: #234b63;      /* глубокий аквамарин */
-    --element-green: #23502e;      /* изумрудный лес */
-    --element-red: #6d3737;        /* тёмная вишня */
-    --element-purple: #5a3763;     /* баклажан */
-    --element-yellow: #66572e;     /* тёмная охра */
-    --element-unknown: #3f3f3f;
+    /* Темная тема — глубокие, чистые цвета */
+    --element-blue: #1a4055;
+    --element-green: #1a4525;
+    --element-red: #5a2e2e;
+    --element-purple: #4a2e52;
+    --element-yellow: #554a26;
+    
+    --pill-blue: #2b5f7a;
+    --pill-green: #2b6137;
+    --pill-red: #7a4242;
+    --pill-purple: #674273;
+    --pill-yellow: #786a39;
+    --pill-default: #4a4a4a;
+    
+    --element-unknown: #3a3a3a;
     
     --card-text: #f0f0f0;
     --card-meta: #c0c0c0;
@@ -440,7 +457,7 @@ header {
     margin-bottom: 8px;
   }
   .copyright {
-    display: none; /* Скрываем копирайт на мобильных */
+    display: none;
   }
   
   .center-group {
@@ -698,7 +715,7 @@ header {
 }
 
 .card { 
-  border:1px solid var(--border-color); 
+  border: none;                   /* Убрана серая граница */
   border-radius:12px; 
   overflow:hidden; 
   background: var(--card-bg); 
@@ -726,12 +743,13 @@ header {
 .thumb { 
   width:100%; 
   height: 190px;
-  background: rgba(0,0,0,0.03); 
+  background: transparent;        /* Убран фон, теперь один фон на всю карточку */
   display:flex; 
   align-items:center; 
   justify-content:center; 
   overflow:hidden;
   position: relative;
+  margin-top: 12px;               /* Увеличен отступ сверху карточки */
 }
 .thumb img { 
   width: 100%;
@@ -745,7 +763,7 @@ header {
 }
 
 .card h3 { 
-  margin:12px 12px 6px; 
+  margin:16px 12px 6px;           /* Увеличен верхний отступ после картинки */
   font-size:16px; 
   font-weight: 600;
   line-height: 1.3;
@@ -775,23 +793,41 @@ header {
   flex-wrap:wrap;
   justify-content: center;
 }
+
+/* Плашки с характеристиками - цвета в соответствии со стихией */
 .pill { 
-  background: rgba(255,255,255,0.4);
-  backdrop-filter: blur(2px);
-  border:1px solid rgba(0,0,0,0.08); 
   border-radius:999px; 
   padding:4px 8px; 
   font-size:12px;
   white-space: nowrap;
   font-weight: 500;
   color: var(--card-text);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Цвета плашек по стихиям */
+.card[data-element="Синий"] .pill {
+  background-color: var(--pill-blue);
+}
+.card[data-element="Зеленый"] .pill {
+  background-color: var(--pill-green);
+}
+.card[data-element="Красный"] .pill {
+  background-color: var(--pill-red);
+}
+.card[data-element="Фиолетовый"] .pill {
+  background-color: var(--pill-purple);
+}
+.card[data-element="Желтый"] .pill {
+  background-color: var(--pill-yellow);
+}
+.card:not([data-element="Синий"]):not([data-element="Зеленый"]):not([data-element="Красный"]):not([data-element="Фиолетовый"]):not([data-element="Желтый"]) .pill {
+  background-color: var(--pill-default);
 }
 
 @media (prefers-color-scheme: dark) {
   .pill {
-    background: rgba(0,0,0,0.3);
-    border-color: rgba(255,255,255,0.1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
   }
 }
 
@@ -799,16 +835,16 @@ header {
 .toggle-abilities {
   background: none;
   border: none;
-  color: var(--primary-color);
+  color: #000000;                 /* Черный цвет */
   font-size: 11px;
   cursor: pointer;
   padding: 2px 6px;
-  margin: 0 auto 8px;
+  margin: 12px auto 8px;          /* Увеличен отступ сверху */
   text-decoration: underline;
   display: block;
 }
 .toggle-abilities:hover {
-  color: #098;
+  color: #333;
 }
 .card-abilities-full {
   display: none;
@@ -819,6 +855,15 @@ header {
   border-top: 1px solid rgba(0,0,0,0.08);
   margin-top: 4px;
   padding-top: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .toggle-abilities {
+    color: #ffffff;               /* Белый в темной теме */
+  }
+  .toggle-abilities:hover {
+    color: #cccccc;
+  }
 }
 
 /* Модалка */
@@ -1406,7 +1451,7 @@ let viewRows = [];
 let currentIdx = -1;
 let allHeroNames = [];
 let filteredHeroNames = [];
-let sortDirection = 'desc'; // 'asc' или 'desc'
+let sortDirection = 'desc';
 
 const selected = {
   element: new Set(),
@@ -1422,7 +1467,6 @@ function toNum(v){ const n = Number(String(v).replace(',', '.')); return Number.
 function uniq(values){ return [...new Set(values.filter(v => v!==undefined && v!==null && String(v).trim()!==''))]; }
 function sortAlpha(a,b){ return String(a).localeCompare(String(b), 'ru', {numeric:true}); }
 
-// Функция для сортировки скорости маны в заданном порядке
 function sortMana(a, b) {
   const order = ['Очень медленно', 'Медленно', 'Средне', 'Быстро', 'Очень быстро', 'Легендарно быстро'];
   const indexA = order.indexOf(a);
@@ -1451,7 +1495,6 @@ function fileCellToUrl(v){
   return '';
 }
 
-// Функция для обновления отображения выбранных героев
 function updateHeroSelectDisplay() {
   const count = selected.heroes.size;
   els.heroSelectedCount.textContent = `${count} выбрано`;
@@ -1469,7 +1512,6 @@ function updateHeroSelectDisplay() {
   }
 }
 
-// Функция для обновления чекбоксов героев
 function updateHeroCheckboxes() {
   const heroNamesToShow = filteredHeroNames.length > 0 ? filteredHeroNames : allHeroNames;
   
@@ -1567,7 +1609,6 @@ function renderCards(rows){
   els.cards.innerHTML = rows.map((r, i)=>{
     const img = fileCellToUrl(r[F.image]);
     const abilitiesFull = String(r[F.abilities]||'');
-    // Убираем ведущий апостроф, если он есть (исправление пункта 1)
     const cleanedAbilities = abilitiesFull.replace(/^'/, '');
     const hasAbilities = cleanedAbilities.trim().length > 0;
     
@@ -1641,7 +1682,6 @@ function fillModal(h){
     <span class="pill">ЗАЩ: ${h[F.defense]||''}</span>
     <span class="pill">HP: ${h[F.hp]||''}</span>
   `;
-  // Убираем ведущий апостроф в модальном окне (исправление пункта 1)
   const abilitiesText = String(h[F.abilities] || '—');
   els.mAbilities.textContent = abilitiesText.replace(/^'/, '');
   els.mPassive.textContent = String(h[F.passive] || '—').replace(/^'/, '');
@@ -1704,13 +1744,9 @@ function applyFilters(){
 }
 
 function attachEvents(){
-  // Поиск
   els.searchInput.addEventListener('input', applyFilters);
-  
-  // Сортировка
   els.sortSelect.addEventListener('change', applyFilters);
   
-  // Кнопка сортировки
   els.sortBtn.addEventListener('click', () => {
     if (sortDirection === 'desc') {
       sortDirection = 'asc';
@@ -1724,7 +1760,6 @@ function attachEvents(){
     applyFilters();
   });
   
-  // Обработчики для выбора героев
   els.heroSelectToggle.addEventListener('click', (e) => {
     els.heroSelectToggle.classList.toggle('show');
     els.heroCheckboxes.classList.toggle('show');
@@ -1774,7 +1809,6 @@ function attachEvents(){
     applyFilters();
   });
   
-  // Кнопка "Применить" в фильтрах
   els.applyFiltersBtn.addEventListener('click', () => {
     applyFilters();
     els.filters.classList.remove('show');
@@ -1812,7 +1846,6 @@ function attachEvents(){
     if (e.key === 'ArrowRight') go(1);
   });
   
-  // Обработка фильтров
   els.openFilters.addEventListener('click', ()=>{
     els.filters.classList.add('show');
     document.body.style.overflow = 'hidden';
@@ -1830,7 +1863,6 @@ function attachEvents(){
     }
   });
   
-  // Информационная модалка
   els.infoBtn.addEventListener('click', ()=>{
     els.infoModal.classList.add('show');
     document.body.style.overflow = 'hidden';
@@ -1848,7 +1880,6 @@ function attachEvents(){
     }
   });
   
-  // Устанавливаем дату обновления
   const now = new Date();
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   els.updateDate.textContent = now.toLocaleDateString('ru-RU', options);
