@@ -39,11 +39,11 @@
   --card-text: #2d3a3a;
   --card-meta: #4a5a5a;
   
-  /* Цвета для талантов */
   --talent-mandatory: #ffd700;
   --talent-left: #4CAF50;
   --talent-right: #f44336;
   --talent-selected: #2196F3;
+  --talent-hover: rgba(33, 150, 243, 0.2);
   --talent-border: #ddd;
 }
 
@@ -82,6 +82,7 @@
     --talent-left: #2e7d32;
     --talent-right: #c62828;
     --talent-selected: #1565C0;
+    --talent-hover: rgba(21, 101, 192, 0.3);
     --talent-border: #666;
   }
 }
@@ -410,6 +411,14 @@ header {
 }
 .btn.secondary:hover {
   background: var(--secondary-color);
+}
+.btn.reset {
+  background-color: #f44336;
+  color: white;
+  border-color: #f44336;
+}
+.btn.reset:hover {
+  background-color: #d32f2f;
 }
 
 .info-btn-wrapper {
@@ -1018,7 +1027,7 @@ header {
   text-decoration: underline;
 }
 
-/* Секция талантов в модальном окне */
+/* Секция талантов */
 .talents-section {
   margin-top: 20px;
   border-top: 1px solid var(--border-color);
@@ -1032,6 +1041,16 @@ header {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.hero-class-badge {
+  font-size: 14px;
+  font-weight: normal;
+  background: var(--secondary-color);
+  padding: 4px 10px;
+  border-radius: 20px;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
 }
 
 .base-stats-display {
@@ -1073,7 +1092,7 @@ header {
 }
 
 .talent-group {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   overflow: hidden;
@@ -1081,12 +1100,11 @@ header {
 
 .talent-group-header {
   background: var(--secondary-color);
-  padding: 8px 12px;
-  font-weight: 600;
+  padding: 4px 8px;
+  font-size: 12px;
+  color: var(--card-meta);
   border-bottom: 1px solid var(--border-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  text-align: center;
 }
 
 .talent-row {
@@ -1095,6 +1113,7 @@ header {
   padding: 8px;
   border-bottom: 1px solid var(--border-color);
   background: var(--card-bg);
+  justify-content: space-between;
 }
 
 .talent-row:last-child {
@@ -1104,29 +1123,43 @@ header {
 .talent-cell {
   flex: 1;
   min-width: 80px;
-  padding: 4px;
+  padding: 6px 4px;
   text-align: center;
-  border-radius: 4px;
+  border-radius: 6px;
   transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 }
 
 .talent-mandatory {
   background-color: var(--talent-mandatory);
   border: 2px solid var(--talent-mandatory);
   color: var(--text-color);
-  font-weight: 600;
+  font-weight: 500;
+  cursor: default;
 }
 
 .talent-choice {
   background-color: var(--secondary-color);
   border: 2px solid transparent;
   cursor: pointer;
-  position: relative;
+}
+
+.talent-choice.left:hover:not(.disabled) {
+  background-color: rgba(76, 175, 80, 0.2);
+  border-color: var(--talent-left);
+}
+
+.talent-choice.right:hover:not(.disabled) {
+  background-color: rgba(244, 67, 54, 0.2);
+  border-color: var(--talent-right);
 }
 
 .talent-choice.selected {
   border-color: var(--talent-selected);
-  background-color: rgba(33, 150, 243, 0.1);
+  background-color: var(--talent-hover);
 }
 
 .talent-choice.disabled {
@@ -1135,42 +1168,40 @@ header {
   pointer-events: none;
 }
 
-.talent-choice.left:hover {
-  background-color: rgba(76, 175, 80, 0.2);
-}
-
-.talent-choice.right:hover {
-  background-color: rgba(244, 67, 54, 0.2);
-}
-
-.talent-choice img {
-  width: 32px;
-  height: 32px;
+.talent-cell img {
+  width: 40px;
+  height: 40px;
   object-fit: contain;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
 .talent-name {
-  font-size: 11px;
-  line-height: 1.3;
+  font-size: 10px;
+  line-height: 1.2;
   word-break: break-word;
   color: var(--text-color);
+  max-width: 100%;
 }
 
 .talent-effects {
-  font-size: 10px;
+  font-size: 9px;
   color: var(--card-meta);
   margin-top: 2px;
+  font-weight: normal;
 }
 
 .talent-empty {
   color: var(--card-meta);
   font-style: italic;
   font-size: 11px;
-  padding: 12px 4px;
+  background: transparent;
+  border: 1px dashed var(--border-color);
+  justify-content: center;
+  display: flex;
+  align-items: center;
 }
 
 .talent-actions {
@@ -1187,16 +1218,6 @@ header {
   flex: 1;
   padding: 8px 12px;
   font-size: 13px;
-}
-
-.talent-actions .btn.reset {
-  background-color: var(--talent-right);
-  color: white;
-  border-color: var(--talent-right);
-}
-
-.talent-actions .btn.reset:hover {
-  background-color: #b71c1c;
 }
 
 .calculated-stats {
@@ -1224,10 +1245,11 @@ header {
   color: var(--accent-color);
 }
 
-.calculated-stats .stat-change {
-  font-size: 11px;
+.stat-change {
+  font-size: 10px;
   margin-left: 4px;
   color: var(--primary-color);
+  font-weight: normal;
 }
 
 @media (max-width: 768px) {
@@ -1251,6 +1273,11 @@ header {
   
   .stats-grid {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+  
+  .talent-cell img {
+    width: 36px;
+    height: 36px;
   }
 }
 
@@ -1529,22 +1556,19 @@ header {
         <div class="stats-grid" id="baseStatsGrid"></div>
       </div>
       
-      <!-- Древо талантов будет вставлено сюда динамически -->
+      <!-- Древо талантов -->
       <div id="talentTreeContainer"></div>
       
       <!-- Рассчитанные характеристики -->
       <div class="calculated-stats" id="calculatedStats">
-        <h4>
-          Итоговые характеристики
-          <button id="resetTalentsBtn" class="btn reset" style="margin-left: auto; padding: 4px 8px; font-size: 12px;">Сбросить все</button>
-        </h4>
+        <h4>Итоговые характеристики</h4>
         <div class="stats-grid" id="calculatedStatsGrid"></div>
       </div>
       
-      <!-- Кнопки управления талантами -->
+      <!-- Кнопки управления -->
       <div class="talent-actions">
-        <button id="applyTalentsBtn" class="btn primary">Применить таланты</button>
-        <button id="resetCurrentGroupBtn" class="btn reset">Сбросить текущую группу</button>
+        <button id="resetAllTalentsBtn" class="btn reset">Сбросить все таланты</button>
+        <button id="resetCurrentGroupBtn" class="btn secondary">Сбросить текущую группу</button>
       </div>
     </div>
   </div>
@@ -1575,7 +1599,7 @@ header {
 </div>
 
 <script>
-// Имена колонок (точно как в CSV)
+// Имена колонок
 const F = {
 id: 'id',
 name: 'Герой',
@@ -1648,8 +1672,7 @@ const els = {
   talentTreeContainer: document.getElementById('talentTreeContainer'),
   calculatedStats: document.getElementById('calculatedStats'),
   calculatedStatsGrid: document.getElementById('calculatedStatsGrid'),
-  resetTalentsBtn: document.getElementById('resetTalentsBtn'),
-  applyTalentsBtn: document.getElementById('applyTalentsBtn'),
+  resetAllTalentsBtn: document.getElementById('resetAllTalentsBtn'),
   resetCurrentGroupBtn: document.getElementById('resetCurrentGroupBtn'),
   infoModal: document.getElementById('infoModal'),
   infoBtn: document.getElementById('infoBtn'),
@@ -1666,14 +1689,14 @@ let filteredHeroNames = [];
 let sortDirection = 'desc';
 
 // Данные талантов
-let talentDescriptions = {};
-let classTalents = {};
+let talentDescriptions = {}; // talent_id -> полная информация
+let classTalents = {};       // className -> массив талантов
 
 // Состояние выбранных талантов для текущего героя
 let currentHeroTalents = {
   class: null,
   selections: {}, // groupId -> { branch: 'left'/'right', talentIds: [] }
-  mandatoryTalents: [] // список обязательных талантов
+  mandatoryTalents: [] // список ID обязательных талантов
 };
 
 // Выбранные фильтры
@@ -1688,9 +1711,19 @@ const selected = {
 };
 
 // Вспомогательные функции
-function toNum(v){ const n = Number(String(v).replace(',', '.')); return Number.isFinite(n) ? n : null; }
-function uniq(values){ return [...new Set(values.filter(v => v!==undefined && v!==null && String(v).trim()!==''))]; }
-function sortAlpha(a,b){ return String(a).localeCompare(String(b), 'ru', {numeric:true}); }
+function toNum(v){ 
+  if (v === undefined || v === null) return null;
+  const n = Number(String(v).replace(',', '.').replace(/[^\d.-]/g, '')); 
+  return Number.isFinite(n) ? n : null; 
+}
+
+function uniq(values){ 
+  return [...new Set(values.filter(v => v!==undefined && v!==null && String(v).trim()!==''))]; 
+}
+
+function sortAlpha(a,b){ 
+  return String(a).localeCompare(String(b), 'ru', {numeric:true}); 
+}
 
 function sortMana(a, b) {
   const order = ['Очень медленно', 'Медленно', 'Средне', 'Быстро', 'Очень быстро', 'Легендарно быстро'];
@@ -1703,8 +1736,6 @@ function sortMana(a, b) {
   
   return indexA - indexB;
 }
-
-function sortNumericAsc(a,b){ const na=toNum(a), nb=toNum(b); return (na??Infinity) - (nb??Infinity); }
 
 function fileCellToUrl(v){
   if (!v) return '';
@@ -1720,26 +1751,45 @@ function fileCellToUrl(v){
   return '';
 }
 
-function getImageFromTalent(talentId, active = true) {
+function getTalentImage(talentId, active = true) {
   const talent = talentDescriptions[talentId];
   if (!talent) return '';
-  const imgField = active ? 'Картинка активная' : 'Картинка неактивная';
-  return fileCellToUrl(talent[imgField]);
+  const field = active ? 'Картинка активная' : 'Картинка неактивная';
+  return fileCellToUrl(talent[field]);
 }
 
 function getTalentName(talentId) {
   const talent = talentDescriptions[talentId];
   if (!talent) return `Талант ${talentId}`;
-  return talent.effect_type || 'Талант';
+  // Берем название из effect_type или id
+  return talent.effect_type || `Талант ${talentId}`;
 }
 
 function getTalentEffects(talentId) {
   const talent = talentDescriptions[talentId];
   if (!talent) return [];
+  
+  // Определяем тип эффекта по названию
+  let type = 'stat_increase';
+  let target = 'unknown';
+  
+  if (talent.effect_type) {
+    const name = talent.effect_type.toLowerCase();
+    if (name.includes('атак')) target = 'Атака';
+    else if (name.includes('защит')) target = 'Защита';
+    else if (name.includes('жизн') || name.includes('здоров')) target = 'Жизни';
+    else if (name.includes('сил')) target = 'Сила';
+    else if (name.includes('крит')) target = 'Крит';
+    else if (name.includes('лечен') || name.includes('исцел')) target = 'Исцеление';
+    else if (name.includes('маны') || name.includes('скорость')) target = 'Скорость маны';
+    else target = talent.effect_type;
+  }
+  
   return [{
-    type: talent.effect_type,
-    value: talent.value,
-    isPercent: talent.is_percent === 'true' || talent.is_percent === true
+    type: type,
+    target: target,
+    value: toNum(talent.value) || 0,
+    isPercent: talent.is_percent === 'true' || talent.is_percent === true || String(talent.is_percent).toLowerCase() === 'true'
   }];
 }
 
@@ -1765,11 +1815,12 @@ function updateHeroCheckboxes() {
   const heroNamesToShow = filteredHeroNames.length > 0 ? filteredHeroNames : allHeroNames;
   
   els.heroCheckboxesList.innerHTML = heroNamesToShow.map(name => {
+    const safeId = 'hero-' + name.replace(/[^a-zA-Zа-яА-Я0-9]/g, '_');
     const isSelected = selected.heroes.has(name);
     return `
       <div class="hero-checkbox-item">
-        <input type="checkbox" id="hero-${name.replace(/\s+/g, '_')}" data-hero="${name}" ${isSelected ? 'checked' : ''}>
-        <label for="hero-${name.replace(/\s+/g, '_')}">${name}</label>
+        <input type="checkbox" id="${safeId}" data-hero="${name}" ${isSelected ? 'checked' : ''}>
+        <label for="${safeId}">${name}</label>
       </div>
     `;
   }).join('');
@@ -1801,13 +1852,13 @@ function buildFacet(container, values, facetKey){
   }
   
   container.innerHTML = opts.map(val => {
-    const checked = selected[facetKey].size ? (selected[facetKey].has(String(val)) ? 'checked' : '') : '';
+    const checked = selected[facetKey].has(String(val)) ? 'checked' : '';
     return `<label class="opt"><input type="checkbox" data-facet="${facetKey}" value="${String(val).replace(/"/g,'&quot;')}" ${checked}><span>${String(val)}</span></label>`;
   }).join('');
   
   container.querySelectorAll('input[type="checkbox"]').forEach(cb=>{
     cb.addEventListener('change', ()=>{
-      const set = selected[facetKey];
+      const set = selected[cb.dataset.facet];
       if (cb.checked) set.add(cb.value); else set.delete(cb.value);
     });
   });
@@ -1848,13 +1899,18 @@ function selectNone(facetKey){
   initAllFacets(allRows);
 }
 
-// Функция для расчета итоговых характеристик с учетом талантов
+// Функция расчета итоговых характеристик
 function calculateFinalStats(baseStats, talentSelections) {
   const finalStats = { ...baseStats };
   const changes = {};
   
+  // Инициализируем изменения для всех базовых статов
+  Object.keys(baseStats).forEach(key => {
+    changes[key] = { base: baseStats[key], percent: 0, absolute: 0 };
+  });
+  
   // Применяем обязательные таланты
-  if (talentSelections.mandatoryTalents) {
+  if (talentSelections.mandatoryTalents && talentSelections.mandatoryTalents.length) {
     talentSelections.mandatoryTalents.forEach(talentId => {
       const effects = getTalentEffects(talentId);
       effects.forEach(effect => {
@@ -1863,23 +1919,30 @@ function calculateFinalStats(baseStats, talentSelections) {
     });
   }
   
-  // Применяем выбранные таланты
-  Object.values(talentSelections.selections || {}).forEach(selection => {
-    if (selection.talentIds) {
-      selection.talentIds.forEach(talentId => {
-        const effects = getTalentEffects(talentId);
-        effects.forEach(effect => {
-          applyEffect(effect, finalStats, changes);
+  // Применяем выбранные таланты из веток
+  if (talentSelections.selections) {
+    Object.values(talentSelections.selections).forEach(selection => {
+      if (selection.talentIds && selection.talentIds.length) {
+        selection.talentIds.forEach(talentId => {
+          const effects = getTalentEffects(talentId);
+          effects.forEach(effect => {
+            applyEffect(effect, finalStats, changes);
+          });
         });
-      });
-    }
-  });
+      }
+    });
+  }
   
   return { finalStats, changes };
 }
 
 function applyEffect(effect, stats, changes) {
-  let statName = effect.type === 'stat_increase' ? effect.target_stat || 'unknown' : effect.type;
+  let statName = effect.target || 'unknown';
+  
+  // Проверяем, есть ли такой стат в базовых
+  if (!(statName in stats) && statName !== 'unknown') {
+    stats[statName] = 0;
+  }
   
   if (!changes[statName]) {
     changes[statName] = { base: stats[statName] || 0, percent: 0, absolute: 0 };
@@ -1895,169 +1958,98 @@ function applyEffect(effect, stats, changes) {
   stats[statName] = (changes[statName].base + changes[statName].absolute) * (1 + changes[statName].percent / 100);
 }
 
-// Загрузка данных талантов
-function loadTalentData() {
-  return new Promise((resolve, reject) => {
-    let loaded = 0;
-    const total = 2;
-    
-    // Загрузка описаний талантов
-    Papa.parse(TALENT_DESC_URL, {
-      download: true,
-      header: true,
-      skipEmptyLines: true,
-      complete: (res) => {
-        res.data.forEach(row => {
-          if (row.talent_id) {
-            talentDescriptions[row.talent_id] = row;
-          }
-        });
-        loaded++;
-        if (loaded === total) resolve();
-      },
-      error: reject
-    });
-    
-    // Загрузка классов с талантами
-    Papa.parse(CLASSES_URL, {
-      download: true,
-      header: true,
-      skipEmptyLines: true,
-      complete: (res) => {
-        res.data.forEach(row => {
-          if (!row.class_id) return;
-          
-          const className = row.class_id;
-          if (!classTalents[className]) {
-            classTalents[className] = [];
-          }
-          
-          classTalents[className].push({
-            rowNumber: parseInt(row.row_number),
-            isMandatory: row.is_mandatory === 'true',
-            branchGroup: row.branch_group,
-            leftTalentId: row.left_talent_id ? parseInt(row.left_talent_id) : null,
-            centerTalentId: row.center_talent_id ? parseInt(row.center_talent_id) : null,
-            rightTalentId: row.right_talent_id ? parseInt(row.right_talent_id) : null,
-            nextGroup: row.next_group === 'NULL' ? null : row.next_group
-          });
-        });
-        
-        // Сортируем таланты по номеру строки
-        Object.keys(classTalents).forEach(className => {
-          classTalents[className].sort((a, b) => a.rowNumber - b.rowNumber);
-        });
-        
-        loaded++;
-        if (loaded === total) resolve();
-      },
-      error: reject
-    });
-  });
-}
-
 // Функция для отображения древа талантов
-function renderTalentTree(heroClass) {
-  if (!heroClass || !classTalents[heroClass]) {
+function renderTalentTree() {
+  if (!currentHeroTalents.class || !classTalents[currentHeroTalents.class]) {
     els.talentTreeContainer.innerHTML = '<p>Нет данных о талантах для этого класса</p>';
     return;
   }
   
-  const talents = classTalents[heroClass];
+  const talents = classTalents[currentHeroTalents.class];
   const groups = {};
   
-  // Группируем таланты
+  // Группируем таланты по branch_group
   talents.forEach(talent => {
-    if (!groups[talent.branchGroup]) {
-      groups[talent.branchGroup] = {
-        group: talent.branchGroup,
-        nextGroup: talent.nextGroup,
-        talents: []
-      };
+    const group = talent.branchGroup;
+    if (!groups[group]) {
+      groups[group] = [];
     }
-    groups[talent.branchGroup].talents.push(talent);
+    groups[group].push(talent);
   });
   
   // Рендерим группы
   let html = '';
-  Object.values(groups).forEach(group => {
+  Object.keys(groups).sort().forEach(group => {
+    const groupTalents = groups[group].sort((a, b) => a.rowNumber - b.rowNumber);
+    
     html += '<div class="talent-group">';
-    html += `<div class="talent-group-header">Группа ${group.group.replace('group_', '')}`;
+    html += `<div class="talent-group-header"></div>`; // Пустой заголовок без номера
     
-    // Добавляем индикатор выбранной ветки
-    const selection = currentHeroTalents.selections[group.group];
-    if (selection) {
-      html += ` (выбрана: ${selection.branch === 'left' ? 'Левая' : 'Правая'})`;
-    }
-    html += '</div>';
-    
-    // Сортируем таланты в группе по номеру строки
-    group.talents.sort((a, b) => a.rowNumber - b.rowNumber);
-    
-    group.talents.forEach(talent => {
+    groupTalents.forEach(talent => {
       html += '<div class="talent-row">';
       
       // Левая ветка
       if (talent.leftTalentId) {
-        const isSelected = currentHeroTalents.selections[group.group]?.branch === 'left' && 
-                          currentHeroTalents.selections[group.group]?.talentIds.includes(talent.leftTalentId);
-        const imgUrl = getImageFromTalent(talent.leftTalentId, isSelected);
-        const effects = getTalentEffects(talent.leftTalentId);
-        const effectsText = effects.map(e => `${e.value}${e.isPercent ? '%' : ''}`).join(', ');
+        const isSelected = currentHeroTalents.selections[group]?.branch === 'left';
+        const talentId = talent.leftTalentId;
+        const imgUrl = getTalentImage(talentId, isSelected);
+        const effects = getTalentEffects(talentId);
+        const effectsText = effects.map(e => `${e.value}${e.isPercent ? '%' : ''} ${e.target}`).join(', ');
         
         html += `<div class="talent-cell talent-choice left ${isSelected ? 'selected' : ''}" 
-                    data-group="${group.group}" data-branch="left" data-talent-id="${talent.leftTalentId}">`;
+                    data-group="${group}" data-branch="left" data-talent-id="${talentId}">`;
         if (imgUrl) {
-          html += `<img src="${imgUrl}" alt="Талант" loading="lazy">`;
+          html += `<img src="${imgUrl}" alt="Талант" loading="lazy" onerror="this.style.display='none'">`;
         }
-        html += `<div class="talent-name">${getTalentName(talent.leftTalentId)}</div>`;
+        html += `<div class="talent-name">${getTalentName(talentId)}</div>`;
         if (effectsText) {
           html += `<div class="talent-effects">${effectsText}</div>`;
         }
         html += '</div>';
       } else {
-        html += '<div class="talent-cell talent-empty">—</div>';
+        html += '<div class="talent-cell talent-empty"></div>';
       }
       
       // Центральная ветка (обязательная)
       if (talent.centerTalentId) {
-        const imgUrl = getImageFromTalent(talent.centerTalentId, true);
-        const effects = getTalentEffects(talent.centerTalentId);
-        const effectsText = effects.map(e => `${e.value}${e.isPercent ? '%' : ''}`).join(', ');
+        const talentId = talent.centerTalentId;
+        const imgUrl = getTalentImage(talentId, true);
+        const effects = getTalentEffects(talentId);
+        const effectsText = effects.map(e => `${e.value}${e.isPercent ? '%' : ''} ${e.target}`).join(', ');
         
-        html += `<div class="talent-cell talent-mandatory" data-talent-id="${talent.centerTalentId}">`;
+        html += `<div class="talent-cell talent-mandatory" data-talent-id="${talentId}">`;
         if (imgUrl) {
-          html += `<img src="${imgUrl}" alt="Обязательный талант" loading="lazy">`;
+          html += `<img src="${imgUrl}" alt="Обязательный талант" loading="lazy" onerror="this.style.display='none'">`;
         }
-        html += `<div class="talent-name">${getTalentName(talent.centerTalentId)}</div>`;
+        html += `<div class="talent-name">${getTalentName(talentId)}</div>`;
         if (effectsText) {
           html += `<div class="talent-effects">${effectsText}</div>`;
         }
         html += '</div>';
       } else {
-        html += '<div class="talent-cell talent-empty">—</div>';
+        html += '<div class="talent-cell talent-empty"></div>';
       }
       
       // Правая ветка
       if (talent.rightTalentId) {
-        const isSelected = currentHeroTalents.selections[group.group]?.branch === 'right' && 
-                          currentHeroTalents.selections[group.group]?.talentIds.includes(talent.rightTalentId);
-        const imgUrl = getImageFromTalent(talent.rightTalentId, isSelected);
-        const effects = getTalentEffects(talent.rightTalentId);
-        const effectsText = effects.map(e => `${e.value}${e.isPercent ? '%' : ''}`).join(', ');
+        const isSelected = currentHeroTalents.selections[group]?.branch === 'right';
+        const talentId = talent.rightTalentId;
+        const imgUrl = getTalentImage(talentId, isSelected);
+        const effects = getTalentEffects(talentId);
+        const effectsText = effects.map(e => `${e.value}${e.isPercent ? '%' : ''} ${e.target}`).join(', ');
         
         html += `<div class="talent-cell talent-choice right ${isSelected ? 'selected' : ''}" 
-                    data-group="${group.group}" data-branch="right" data-talent-id="${talent.rightTalentId}">`;
+                    data-group="${group}" data-branch="right" data-talent-id="${talentId}">`;
         if (imgUrl) {
-          html += `<img src="${imgUrl}" alt="Талант" loading="lazy">`;
+          html += `<img src="${imgUrl}" alt="Талант" loading="lazy" onerror="this.style.display='none'">`;
         }
-        html += `<div class="talent-name">${getTalentName(talent.rightTalentId)}</div>`;
+        html += `<div class="talent-name">${getTalentName(talentId)}</div>`;
         if (effectsText) {
           html += `<div class="talent-effects">${effectsText}</div>`;
         }
         html += '</div>';
       } else {
-        html += '<div class="talent-cell talent-empty">—</div>';
+        html += '<div class="talent-cell talent-empty"></div>';
       }
       
       html += '</div>';
@@ -2070,7 +2062,8 @@ function renderTalentTree(heroClass) {
   
   // Добавляем обработчики для выбора талантов
   document.querySelectorAll('.talent-choice').forEach(el => {
-    el.addEventListener('click', function() {
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
       const group = this.dataset.group;
       const branch = this.dataset.branch;
       const talentId = parseInt(this.dataset.talentId);
@@ -2078,18 +2071,16 @@ function renderTalentTree(heroClass) {
       selectTalentBranch(group, branch, talentId);
     });
   });
-  
-  // Обновляем отображение рассчитанных характеристик
-  updateCalculatedStats();
 }
 
 // Функция выбора ветки талантов
 function selectTalentBranch(group, branch, talentId) {
-  // Проверяем, можно ли выбрать эту ветку
+  if (!currentHeroTalents.class || !classTalents[currentHeroTalents.class]) return;
+  
   const talents = classTalents[currentHeroTalents.class];
   const groupTalents = talents.filter(t => t.branchGroup === group);
   
-  // Получаем все таланты этой ветки в группе
+  // Получаем все ID талантов этой ветки в группе
   const branchTalentIds = groupTalents
     .map(t => branch === 'left' ? t.leftTalentId : t.rightTalentId)
     .filter(id => id !== null);
@@ -2100,40 +2091,66 @@ function selectTalentBranch(group, branch, talentId) {
     talentIds: branchTalentIds
   };
   
-  // Обновляем отображение
-  renderTalentTree(currentHeroTalents.class);
+  // Перерисовываем дерево
+  renderTalentTree();
+  
+  // Обновляем рассчитанные характеристики
+  updateCalculatedStats();
 }
 
 // Функция сброса всех талантов
 function resetAllTalents() {
   currentHeroTalents.selections = {};
-  renderTalentTree(currentHeroTalents.class);
+  renderTalentTree();
+  updateCalculatedStats();
 }
 
 // Функция сброса текущей группы
 function resetCurrentGroup() {
-  // Определяем текущую группу (последнюю выбранную или первую доступную)
-  const groups = Object.keys(classTalents[currentHeroTalents.class]
-    .reduce((acc, t) => { acc[t.branchGroup] = true; return acc; }, {}));
+  if (!currentHeroTalents.class) return;
   
+  // Находим первую группу, в которой есть выбор
+  const groups = Object.keys(currentHeroTalents.selections);
   if (groups.length > 0) {
     delete currentHeroTalents.selections[groups[0]];
+    renderTalentTree();
+    updateCalculatedStats();
   }
-  
-  renderTalentTree(currentHeroTalents.class);
 }
 
 // Функция обновления рассчитанных характеристик
 function updateCalculatedStats() {
-  if (!currentIdx || !viewRows[currentIdx]) return;
+  if (currentIdx < 0 || !viewRows[currentIdx]) return;
   
   const hero = viewRows[currentIdx];
   const baseStats = {
-    Сила: toNum(hero[F.power]) || 0,
-    Атака: toNum(hero[F.attack]) || 0,
-    Защита: toNum(hero[F.defense]) || 0,
-    Жизни: toNum(hero[F.hp]) || 0
+    'Сила': toNum(hero[F.power]) || 0,
+    'Атака': toNum(hero[F.attack]) || 0,
+    'Защита': toNum(hero[F.defense]) || 0,
+    'Жизни': toNum(hero[F.hp]) || 0
   };
+  
+  // Добавляем возможные дополнительные статы из талантов
+  const allEffects = [];
+  if (currentHeroTalents.mandatoryTalents) {
+    currentHeroTalents.mandatoryTalents.forEach(id => {
+      allEffects.push(...getTalentEffects(id));
+    });
+  }
+  Object.values(currentHeroTalents.selections).forEach(s => {
+    if (s.talentIds) {
+      s.talentIds.forEach(id => {
+        allEffects.push(...getTalentEffects(id));
+      });
+    }
+  });
+  
+  // Добавляем новые статы, которых нет в базовых
+  allEffects.forEach(effect => {
+    if (effect.target && !(effect.target in baseStats) && effect.target !== 'unknown') {
+      baseStats[effect.target] = 0;
+    }
+  });
   
   const { finalStats, changes } = calculateFinalStats(baseStats, currentHeroTalents);
   
@@ -2141,7 +2158,7 @@ function updateCalculatedStats() {
   els.baseStatsGrid.innerHTML = Object.entries(baseStats).map(([key, value]) => `
     <div class="stat-item">
       <span class="stat-label">${key}:</span>
-      <span class="stat-value">${Math.round(value)}</span>
+      <span class="stat-value">${Math.round(value * 10) / 10}</span>
     </div>
   `).join('');
   
@@ -2149,7 +2166,7 @@ function updateCalculatedStats() {
   els.calculatedStatsGrid.innerHTML = Object.entries(finalStats).map(([key, value]) => {
     const change = changes[key];
     let changeText = '';
-    if (change) {
+    if (change && (change.absolute !== 0 || change.percent !== 0)) {
       const parts = [];
       if (change.absolute > 0) parts.push(`+${change.absolute}`);
       if (change.percent > 0) parts.push(`+${change.percent}%`);
@@ -2160,7 +2177,7 @@ function updateCalculatedStats() {
       <div class="stat-item">
         <span class="stat-label">${key}:</span>
         <span class="stat-value">
-          ${Math.round(value)}
+          ${Math.round(value * 10) / 10}
           ${changeText ? `<span class="stat-change">${changeText}</span>` : ''}
         </span>
       </div>
@@ -2178,28 +2195,29 @@ function fillModal(h){
 
   els.mName.textContent = h[F.name] || '';
   els.mMeta1.innerHTML = `
-    <span>${h[F.element]||''}</span>
-    <span>${(h[F.stars]||'') ? (h[F.stars]+'★') : ''}</span>
-    <span>${h[F.mana]||''}</span>
+    <span>${h[F.element] || ''}</span>
+    <span>${h[F.stars] ? h[F.stars] + '★' : ''}</span>
+    <span>${h[F.mana] || ''}</span>
   `;
   els.mMeta2.innerHTML = `
-    <span>${h[F.attackType]||''}</span>
-    <span>${h[F.summon]||''}</span>
-    <span>${h[F.clazz]||''}</span>
+    <span>${h[F.attackType] || ''}</span>
+    <span>${h[F.summon] || ''}</span>
+    <span>${h[F.clazz] || ''}</span>
   `;
   els.mStats.innerHTML = `
-    <span class="pill">Сила: ${h[F.power]||''}</span>
-    <span class="pill">АТК: ${h[F.attack]||''}</span>
-    <span class="pill">ЗАЩ: ${h[F.defense]||''}</span>
-    <span class="pill">HP: ${h[F.hp]||''}</span>
+    <span class="pill">С: ${h[F.power] || ''}</span>
+    <span class="pill">А: ${h[F.attack] || ''}</span>
+    <span class="pill">З: ${h[F.defense] || ''}</span>
+    <span class="pill">Ж: ${h[F.hp] || ''}</span>
   `;
+  
   const abilitiesText = String(h[F.abilities] || '—');
-  els.mAbilities.textContent = abilitiesText.replace(/^'/, '');
-  els.mPassive.textContent = String(h[F.passive] || '—').replace(/^'/, '');
+  els.mAbilities.textContent = abilitiesText.replace(/^'/, '').replace(/'$/, '');
+  els.mPassive.textContent = String(h[F.passive] || '—').replace(/^'/, '').replace(/'$/, '');
   
   // Устанавливаем класс героя для талантов
   const heroClass = h[F.clazz];
-  if (heroClass) {
+  if (heroClass && classTalents[heroClass]) {
     currentHeroTalents = {
       class: heroClass,
       selections: {},
@@ -2207,14 +2225,18 @@ function fillModal(h){
     };
     
     // Собираем обязательные таланты
-    if (classTalents[heroClass]) {
-      currentHeroTalents.mandatoryTalents = classTalents[heroClass]
-        .filter(t => t.isMandatory && t.centerTalentId)
-        .map(t => t.centerTalentId);
-    }
+    currentHeroTalents.mandatoryTalents = classTalents[heroClass]
+      .filter(t => t.isMandatory && t.centerTalentId)
+      .map(t => t.centerTalentId);
     
     els.heroClassBadge.textContent = heroClass;
-    renderTalentTree(heroClass);
+    els.talentsSection.style.display = 'block';
+    
+    // Рендерим дерево
+    renderTalentTree();
+    
+    // Обновляем рассчитанные характеристики
+    updateCalculatedStats();
   } else {
     els.talentsSection.style.display = 'none';
   }
@@ -2243,29 +2265,29 @@ function go(delta){
 function applyFilters(){
   const q = els.searchInput.value.trim().toLowerCase();
   
-  viewRows = allRows.filter(r=>{
-    const tName = String(r[F.name]||'').toLowerCase();
-    const tAbil = String(r[F.abilities]||'').toLowerCase();
+  viewRows = allRows.filter(r => {
+    const tName = String(r[F.name] || '').toLowerCase();
+    const tAbil = String(r[F.abilities] || '').toLowerCase();
     const passQ = !q || tName.includes(q) || tAbil.includes(q);
-    const passElem   = selected.element.size===0   || selected.element.has(String(r[F.element]));
-    const passStars  = selected.stars.size===0     || selected.stars.has(String(r[F.stars]));
-    const passMana   = selected.mana.size===0      || selected.mana.has(String(r[F.mana]));
-    const passAtkT   = selected.attackType.size===0|| selected.attackType.has(String(r[F.attackType]));
-    const passSummon = selected.summon.size===0    || selected.summon.has(String(r[F.summon]));
-    const passClazz  = selected.clazz.size===0     || selected.clazz.has(String(r[F.clazz]));
-    const passHeroes = selected.heroes.size===0    || selected.heroes.has(String(r[F.name]));
+    const passElem   = selected.element.size === 0   || selected.element.has(String(r[F.element]));
+    const passStars  = selected.stars.size === 0     || selected.stars.has(String(r[F.stars]));
+    const passMana   = selected.mana.size === 0      || selected.mana.has(String(r[F.mana]));
+    const passAtkT   = selected.attackType.size === 0|| selected.attackType.has(String(r[F.attackType]));
+    const passSummon = selected.summon.size === 0    || selected.summon.has(String(r[F.summon]));
+    const passClazz  = selected.clazz.size === 0     || selected.clazz.has(String(r[F.clazz]));
+    const passHeroes = selected.heroes.size === 0    || selected.heroes.has(String(r[F.name]));
     
     return passQ && passElem && passStars && passMana && passAtkT && passSummon && passClazz && passHeroes;
   });
 
   const by = els.sortSelect.value;
   
-  viewRows.sort((a,b)=>{
+  viewRows.sort((a, b) => {
     const av = a[by], bv = b[by];
     const an = toNum(av), bn = toNum(bv);
     let cmp;
-    if (an!=null && bn!=null) cmp = an - bn;
-    else cmp = String(av||'').localeCompare(String(bv||''), 'ru', {numeric:true});
+    if (an != null && bn != null) cmp = an - bn;
+    else cmp = String(av || '').localeCompare(String(bv || ''), 'ru', {numeric: true});
     return sortDirection === 'asc' ? cmp : -cmp;
   });
 
@@ -2283,33 +2305,33 @@ function renderCards(rows){
     return;
   }
   els.empty.style.display = 'none';
-  els.cards.innerHTML = rows.map((r, i)=>{
+  els.cards.innerHTML = rows.map((r, i) => {
     const img = fileCellToUrl(r[F.image]);
-    const abilitiesFull = String(r[F.abilities]||'');
-    const cleanedAbilities = abilitiesFull.replace(/^'/, '');
+    const abilitiesFull = String(r[F.abilities] || '');
+    const cleanedAbilities = abilitiesFull.replace(/^'/, '').replace(/'$/, '');
     const hasAbilities = cleanedAbilities.trim().length > 0;
     
     return `
       <article class="card" data-idx="${i}" data-element="${r[F.element] || ''}">
         <div class="thumb">
-          ${img ? `<img src="${img}" alt="${r[F.name]||''}" loading="lazy" onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<div style=\\'color: #999; padding: 20px; text-align: center;\\'>Нет изображения</div>';" />` : '<div style="color: #999; padding: 20px; text-align: center;">Нет изображения</div>'}
+          ${img ? `<img src="${img}" alt="${r[F.name] || ''}" loading="lazy" onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<div style=\\'color: #999; padding: 20px; text-align: center;\\'>Нет изображения</div>';">` : '<div style="color: #999; padding: 20px; text-align: center;">Нет изображения</div>'}
         </div>
-        <h3>${r[F.name]||''}</h3>
+        <h3>${r[F.name] || ''}</h3>
         <div class="meta">
-          <span>${r[F.element]||''}</span> •
-          <span>${r[F.stars]||''}★</span> •
-          <span>${r[F.mana]||''}</span>
+          <span>${r[F.element] || ''}</span> •
+          <span>${r[F.stars] || ''}★</span> •
+          <span>${r[F.mana] || ''}</span>
         </div>
         <div class="meta">
-          <span>${r[F.attackType]||''}</span> •
-          <span>${r[F.summon]||''}</span> •
-          <span>${r[F.clazz]||''}</span>
+          <span>${r[F.attackType] || ''}</span> •
+          <span>${r[F.summon] || ''}</span> •
+          <span>${r[F.clazz] || ''}</span>
         </div>
         <div class="stats">
-          <span class="pill">С: ${r[F.power]||''}</span>
-          <span class="pill">А: ${r[F.attack]||''}</span>
-          <span class="pill">З: ${r[F.defense]||''}</span>
-          <span class="pill">Ж: ${r[F.hp]||''}</span>
+          <span class="pill">С: ${r[F.power] || ''}</span>
+          <span class="pill">А: ${r[F.attack] || ''}</span>
+          <span class="pill">З: ${r[F.defense] || ''}</span>
+          <span class="pill">Ж: ${r[F.hp] || ''}</span>
         </div>
         ${hasAbilities ? `
           <button class="toggle-abilities" data-idx="${i}">Показать способности</button>
@@ -2335,25 +2357,18 @@ function renderCards(rows){
   });
 }
 
-function attachEvents(){
+function attachEvents() {
   els.searchInput.addEventListener('input', applyFilters);
   els.sortSelect.addEventListener('change', applyFilters);
   
   els.sortBtn.addEventListener('click', () => {
-    if (sortDirection === 'desc') {
-      sortDirection = 'asc';
-      els.sortBtn.className = 'sort-btn asc';
-      els.sortBtn.setAttribute('data-tooltip', 'Сортировка по возрастанию');
-    } else {
-      sortDirection = 'desc';
-      els.sortBtn.className = 'sort-btn desc';
-      els.sortBtn.setAttribute('data-tooltip', 'Сортировка по убыванию');
-    }
+    sortDirection = sortDirection === 'desc' ? 'asc' : 'desc';
+    els.sortBtn.className = `sort-btn ${sortDirection}`;
+    els.sortBtn.setAttribute('data-tooltip', sortDirection === 'asc' ? 'Сортировка по возрастанию' : 'Сортировка по убыванию');
     applyFilters();
   });
   
   els.heroSelectToggle.addEventListener('click', (e) => {
-    els.heroSelectToggle.classList.toggle('show');
     els.heroCheckboxes.classList.toggle('show');
     e.stopPropagation();
   });
@@ -2369,27 +2384,25 @@ function attachEvents(){
   });
   
   els.applyHeroSelection.addEventListener('click', () => {
-    els.heroSelectToggle.classList.remove('show');
     els.heroCheckboxes.classList.remove('show');
     applyFilters();
   });
   
   document.addEventListener('click', (e) => {
     if (!els.heroSelectToggle.contains(e.target) && !els.heroCheckboxes.contains(e.target)) {
-      els.heroSelectToggle.classList.remove('show');
       els.heroCheckboxes.classList.remove('show');
     }
   });
   
-  document.querySelectorAll('.facet .actions button').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
+  document.querySelectorAll('.facet .actions button').forEach(btn => {
+    btn.addEventListener('click', () => {
       const facetKey = btn.dataset.facet;
       if (btn.dataset.action === 'all') selectAll(facetKey);
       else selectNone(facetKey);
     });
   });
   
-  els.resetAll.addEventListener('click', ()=>{
+  els.resetAll.addEventListener('click', () => {
     els.searchInput.value = '';
     els.sortSelect.value = 'Сила';
     sortDirection = 'desc';
@@ -2413,10 +2426,8 @@ function attachEvents(){
     document.body.style.overflow = '';
   });
   
-  els.cards.addEventListener('click', (e)=>{
-    if (e.target.classList.contains('toggle-abilities')) {
-      return;
-    }
+  els.cards.addEventListener('click', (e) => {
+    if (e.target.classList.contains('toggle-abilities')) return;
     const card = e.target.closest('.card');
     if (!card) return;
     const idx = Number(card.dataset.idx);
@@ -2424,31 +2435,31 @@ function attachEvents(){
   });
   
   els.mClose.addEventListener('click', closeModal);
-  els.mPrev.addEventListener('click', ()=>go(-1));
-  els.mNext.addEventListener('click', ()=>go(1));
+  els.mPrev.addEventListener('click', () => go(-1));
+  els.mNext.addEventListener('click', () => go(1));
   
-  els.modal.addEventListener('click', (e)=>{
+  els.modal.addEventListener('click', (e) => {
     if (e.target === els.modal) closeModal();
   });
   
-  window.addEventListener('keydown', (e)=>{
+  window.addEventListener('keydown', (e) => {
     if (!els.modal.classList.contains('show')) return;
     if (e.key === 'Escape') closeModal();
     if (e.key === 'ArrowLeft') go(-1);
     if (e.key === 'ArrowRight') go(1);
   });
   
-  els.openFilters.addEventListener('click', ()=>{
+  els.openFilters.addEventListener('click', () => {
     els.filters.classList.add('show');
     document.body.style.overflow = 'hidden';
   });
   
-  els.closeFilters.addEventListener('click', ()=>{
+  els.closeFilters.addEventListener('click', () => {
     els.filters.classList.remove('show');
     document.body.style.overflow = '';
   });
   
-  els.filters.addEventListener('click', (e)=>{
+  els.filters.addEventListener('click', (e) => {
     if (e.target === els.filters) {
       els.filters.classList.remove('show');
       document.body.style.overflow = '';
@@ -2456,21 +2467,20 @@ function attachEvents(){
   });
   
   // Обработчики для талантов
-  els.resetTalentsBtn.addEventListener('click', resetAllTalents);
-  els.applyTalentsBtn.addEventListener('click', updateCalculatedStats);
+  els.resetAllTalentsBtn.addEventListener('click', resetAllTalents);
   els.resetCurrentGroupBtn.addEventListener('click', resetCurrentGroup);
   
-  els.infoBtn.addEventListener('click', ()=>{
+  els.infoBtn.addEventListener('click', () => {
     els.infoModal.classList.add('show');
     document.body.style.overflow = 'hidden';
   });
   
-  els.infoClose.addEventListener('click', ()=>{
+  els.infoClose.addEventListener('click', () => {
     els.infoModal.classList.remove('show');
     document.body.style.overflow = '';
   });
   
-  els.infoModal.addEventListener('click', (e)=>{
+  els.infoModal.addEventListener('click', (e) => {
     if (e.target === els.infoModal) {
       els.infoModal.classList.remove('show');
       document.body.style.overflow = '';
@@ -2484,21 +2494,74 @@ function attachEvents(){
 
 // Загрузка всех данных
 Promise.all([
+  // Загрузка героев
   new Promise((resolve, reject) => {
     Papa.parse(DATA_URL, {
       download: true,
       header: true,
       skipEmptyLines: true,
       complete: (res) => {
-        allRows = res.data || [];
+        allRows = res.data.filter(row => row && row[F.name]);
         resolve();
       },
       error: reject
     });
   }),
-  loadTalentData()
+  // Загрузка описаний талантов
+  new Promise((resolve, reject) => {
+    Papa.parse(TALENT_DESC_URL, {
+      download: true,
+      header: true,
+      skipEmptyLines: true,
+      complete: (res) => {
+        res.data.forEach(row => {
+          if (row.talent_id) {
+            talentDescriptions[row.talent_id] = row;
+          }
+        });
+        resolve();
+      },
+      error: reject
+    });
+  }),
+  // Загрузка классов с талантами
+  new Promise((resolve, reject) => {
+    Papa.parse(CLASSES_URL, {
+      download: true,
+      header: true,
+      skipEmptyLines: true,
+      complete: (res) => {
+        res.data.forEach(row => {
+          if (!row.class_id) return;
+          
+          const className = row.class_id;
+          if (!classTalents[className]) {
+            classTalents[className] = [];
+          }
+          
+          classTalents[className].push({
+            rowNumber: parseInt(row.row_number) || 0,
+            isMandatory: row.is_mandatory === 'true' || row.is_mandatory === true,
+            branchGroup: row.branch_group,
+            leftTalentId: row.left_talent_id ? parseInt(row.left_talent_id) : null,
+            centerTalentId: row.center_talent_id ? parseInt(row.center_talent_id) : null,
+            rightTalentId: row.right_talent_id ? parseInt(row.right_talent_id) : null,
+            nextGroup: row.next_group === 'NULL' ? null : row.next_group
+          });
+        });
+        
+        // Сортируем таланты по номеру строки
+        Object.keys(classTalents).forEach(className => {
+          classTalents[className].sort((a, b) => a.rowNumber - b.rowNumber);
+        });
+        
+        resolve();
+      },
+      error: reject
+    });
+  })
 ]).then(() => {
-  if (!allRows.length){ 
+  if (!allRows.length) { 
     els.count.textContent = 'Данные не найдены. Проверьте heroes.csv'; 
     return; 
   }
