@@ -970,7 +970,8 @@ const CLASSES_URL = 'Classes.csv?ts=' + Date.now();
 
 let allHeroes = [], viewHeroes = [], currentIdx = -1, allHeroNames = [], filteredHeroNames = [];
 let sortDirection = 'desc';
-let talentDescriptions = {};
+let talentDescriptions = {};      // talent_id (текстовый) -> данные
+let talentIdToNumber = {};        // номер ID (1-26) -> текстовый ID
 let classTalents = {};
 
 const selected = { element: new Set(), stars: new Set(), mana: new Set(), attackType: new Set(), summon: new Set(), clazz: new Set(), heroes: new Set() };
@@ -980,11 +981,20 @@ function uniq(arr) { return [...new Set(arr.filter(v=>v!==null&&v!==undefined&&S
 function sortAlpha(a,b) { return String(a).localeCompare(String(b),'ru',{numeric:true}); }
 function fileCellToUrl(v) { let s=String(v||''); let m=s.match(/\((https?:\/\/[^)]+)\)/i); if(m) return m[1]; let m2=s.match(/https?:\/\/\S+/i); return m2?m2[0].replace(/[),]+$/,''):''; }
 
-// Функция получения эффектов таланта с отладкой
-function getTalentEffects(talentId) {
-    const talent = talentDescriptions[talentId];
+// Получение данных таланта по числовому ID из Classes.csv
+function getTalentByNumberId(numId) {
+    const talentKey = talentIdToNumber[numId];
+    if (!talentKey) {
+        console.warn(`Талант с ID ${numId} не найден в маппинге. Доступные ID:`, Object.keys(talentIdToNumber));
+        return null;
+    }
+    return talentDescriptions[talentKey];
+}
+
+// Функция получения эффектов таланта по числовому ID
+function getTalentEffects(numId) {
+    const talent = getTalentByNumberId(numId);
     if (!talent) {
-        console.warn(`Талант с ID ${talentId} не найден в talentDescriptions`);
         return { attackPercent:0, attackFlat:0, defensePercent:0, defenseFlat:0, hpPercent:0, hpFlat:0 };
     }
     
@@ -998,23 +1008,23 @@ function getTalentEffects(talentId) {
     if (typeLower.includes('атак')) {
         if (isPercent) result.attackPercent = value;
         else result.attackFlat = value;
-        console.log(`  Талант ${talentId} (${effectType}): +${value}${isPercent?'%':''} к Атаке`);
+        console.log(`  Талант ${numId} (${effectType}): +${value}${isPercent?'%':''} к Атаке`);
     } else if (typeLower.includes('защит')) {
         if (isPercent) result.defensePercent = value;
         else result.defenseFlat = value;
-        console.log(`  Талант ${talentId} (${effectType}): +${value}${isPercent?'%':''} к Защите`);
+        console.log(`  Талант ${numId} (${effectType}): +${value}${isPercent?'%':''} к Защите`);
     } else if (typeLower.includes('жизн') || typeLower.includes('здоров')) {
         if (isPercent) result.hpPercent = value;
         else result.hpFlat = value;
-        console.log(`  Талант ${talentId} (${effectType}): +${value}${isPercent?'%':''} к Жизням`);
+        console.log(`  Талант ${numId} (${effectType}): +${value}${isPercent?'%':''} к Жизням`);
     } else {
-        console.log(`  Талант ${talentId} (${effectType}): эффект не распознан, значение ${value}${isPercent?'%':''}`);
+        console.log(`  Талант ${numId} (${effectType}): эффект "${effectType}"`);
     }
     
     return result;
 }
 
-// Функция расчета характеристик с отладкой
+// Функция расчета характеристик с учетом талантов
 function calculateStatsWithTalents(hero, mode) {
     const heroName = hero[HERO_FIELDS.name];
     const heroClass = hero[HERO_FIELDS.clazz];
@@ -1283,8 +1293,54 @@ function attachEvents() {
 
 Promise.all([
     new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]); console.log('✅ Герои загружены:', allHeroes.length); res();},error:rej})),
-    new Promise((res,rej)=>Papa.parse(TALENT_DESC_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{r.data.forEach(row=>{if(row[TALENT_DESC_FIELDS.talent_id]) talentDescriptions[row[TALENT_DESC_FIELDS.talent_id]]=row;}); console.log('✅ Описания талантов загружены:', Object.keys(talentDescriptions).length); res();},error:rej})),
-    new Promise((res,rej)=>Papa.parse(CLASSES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{r.data.forEach(row=>{if(!row[CLASS_TALENT_FIELDS.class_id]) return; let cn=row[CLASS_TALENT_FIELDS.class_id]; if(!classTalents[cn]) classTalents[cn]=[]; classTalents[cn].push({rowNumber:parseInt(row[CLASS_TALENT_FIELDS.row_number])||0, isMandatory:String(row[CLASS_TALENT_FIELDS.is_mandatory]).toLowerCase()==='true', branchGroup:row[CLASS_TALENT_FIELDS.branch_group], leftTalentId:row[CLASS_TALENT_FIELDS.left_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.left_talent_id]):null, centerTalentId:row[CLASS_TALENT_FIELDS.center_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.center_talent_id]):null, rightTalentId:row[CLASS_TALENT_FIELDS.right_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.right_talent_id]):null});}); Object.keys(classTalents).forEach(cn=>classTalents[cn].sort((a,b)=>a.rowNumber-b.rowNumber)); console.log('✅ Классы с талантами загружены:', Object.keys(classTalents).length); console.log('📋 Доступные классы:', Object.keys(classTalents)); res();},error:rej}))
+    new Promise((res,rej)=>Papa.parse(TALENT_DESC_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{
+        // Создаем маппинг числовых ID к текстовым
+        // Порядок из Talent_description.csv:
+        const numberToTalentMap = {
+            1: "Атака", 2: "Защита", 3: "Жизни", 4: "Атака", 5: "Защита", 6: "Жизни",
+            7: "Атака", 8: "Защита", 9: "Жизни", 10: "Исцеление", 11: "Крит", 12: "Бонус к скорости набора маны",
+            13: "Исцеление", 14: "Крит", 15: "Бонус к скорости набора маны", 16: "Шанс уклониться", 17: "Стойкость",
+            18: "Подавление магии", 19: "Концентрация", 20: "Магический разряд", 21: "Кровавый вихрь", 22: "Непоколебимость",
+            23: "Природный зов", 24: "Второе дыхание", 25: "Пробитие", 26: "Кровавый вихрь"
+        };
+        
+        r.data.forEach(row=>{
+            // Сохраняем по текстовому ID
+            if(row[TALENT_DESC_FIELDS.talent_id]) {
+                talentDescriptions[row[TALENT_DESC_FIELDS.talent_id]] = row;
+            }
+        });
+        
+        // Создаем маппинг числовой ID -> текстовый ID
+        for (let i = 1; i <= 26; i++) {
+            if (numberToTalentMap[i]) {
+                talentIdToNumber[i] = numberToTalentMap[i];
+            }
+        }
+        
+        console.log('✅ Описания талантов загружены:', Object.keys(talentDescriptions).length);
+        console.log('📋 Маппинг ID талантов (число -> название):', talentIdToNumber);
+        res();
+    },error:rej})),
+    new Promise((res,rej)=>Papa.parse(CLASSES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{
+        r.data.forEach(row=>{
+            if(!row[CLASS_TALENT_FIELDS.class_id]) return; 
+            let cn=row[CLASS_TALENT_FIELDS.class_id]; 
+            if(!classTalents[cn]) classTalents[cn]=[]; 
+            classTalents[cn].push({
+                rowNumber:parseInt(row[CLASS_TALENT_FIELDS.row_number])||0, 
+                isMandatory:String(row[CLASS_TALENT_FIELDS.is_mandatory]).toLowerCase()==='true', 
+                branchGroup:row[CLASS_TALENT_FIELDS.branch_group], 
+                leftTalentId:row[CLASS_TALENT_FIELDS.left_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.left_talent_id]):null, 
+                centerTalentId:row[CLASS_TALENT_FIELDS.center_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.center_talent_id]):null, 
+                rightTalentId:row[CLASS_TALENT_FIELDS.right_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.right_talent_id]):null
+            });
+        }); 
+        Object.keys(classTalents).forEach(cn=>classTalents[cn].sort((a,b)=>a.rowNumber-b.rowNumber)); 
+        console.log('✅ Классы с талантами загружены:', Object.keys(classTalents).length); 
+        console.log('📋 Доступные классы:', Object.keys(classTalents)); 
+        res();
+    },error:rej}))
 ]).then(()=>{
     if(!allHeroes.length) { document.getElementById('count').textContent='Данные не найдены'; return; }
     initAllFacets(allHeroes);
@@ -1292,7 +1348,6 @@ Promise.all([
     applyFilters();
     console.log('🚀 Сайт готов к работе!');
     console.log('📊 Для проверки расчета: откройте карточку любого героя и выберите режим талантов');
-    console.log('📊 В консоли будут подробные логи расчета каждого героя');
 }).catch(e=>{console.error('❌ Ошибка загрузки данных:', e); document.getElementById('count').textContent='Ошибка загрузки данных. Проверьте консоль.';});
 </script>
 </body>
