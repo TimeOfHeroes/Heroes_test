@@ -980,10 +980,13 @@ function uniq(arr) { return [...new Set(arr.filter(v=>v!==null&&v!==undefined&&S
 function sortAlpha(a,b) { return String(a).localeCompare(String(b),'ru',{numeric:true}); }
 function fileCellToUrl(v) { let s=String(v||''); let m=s.match(/\((https?:\/\/[^)]+)\)/i); if(m) return m[1]; let m2=s.match(/https?:\/\/\S+/i); return m2?m2[0].replace(/[),]+$/,''):''; }
 
-// Функция получения эффектов таланта
+// Функция получения эффектов таланта с отладкой
 function getTalentEffects(talentId) {
     const talent = talentDescriptions[talentId];
-    if (!talent) return { attackPercent:0, attackFlat:0, defensePercent:0, defenseFlat:0, hpPercent:0, hpFlat:0 };
+    if (!talent) {
+        console.warn(`Талант с ID ${talentId} не найден в talentDescriptions`);
+        return { attackPercent:0, attackFlat:0, defensePercent:0, defenseFlat:0, hpPercent:0, hpFlat:0 };
+    }
     
     const value = toNum(talent[TALENT_DESC_FIELDS.value]) || 0;
     const isPercent = String(talent[TALENT_DESC_FIELDS.is_percent]).toLowerCase() === 'true';
@@ -995,41 +998,58 @@ function getTalentEffects(talentId) {
     if (typeLower.includes('атак')) {
         if (isPercent) result.attackPercent = value;
         else result.attackFlat = value;
+        console.log(`  Талант ${talentId} (${effectType}): +${value}${isPercent?'%':''} к Атаке`);
     } else if (typeLower.includes('защит')) {
         if (isPercent) result.defensePercent = value;
         else result.defenseFlat = value;
+        console.log(`  Талант ${talentId} (${effectType}): +${value}${isPercent?'%':''} к Защите`);
     } else if (typeLower.includes('жизн') || typeLower.includes('здоров')) {
         if (isPercent) result.hpPercent = value;
         else result.hpFlat = value;
+        console.log(`  Талант ${talentId} (${effectType}): +${value}${isPercent?'%':''} к Жизням`);
+    } else {
+        console.log(`  Талант ${talentId} (${effectType}): эффект не распознан, значение ${value}${isPercent?'%':''}`);
     }
     
     return result;
 }
 
-// Функция расчета характеристик с учетом талантов
+// Функция расчета характеристик с отладкой
 function calculateStatsWithTalents(hero, mode) {
+    const heroName = hero[HERO_FIELDS.name];
+    const heroClass = hero[HERO_FIELDS.clazz];
     const baseAttack = toNum(hero[HERO_FIELDS.attack]) || 0;
     const baseDefense = toNum(hero[HERO_FIELDS.defense]) || 0;
     const baseHp = toNum(hero[HERO_FIELDS.hp]) || 0;
-    const heroClass = hero[HERO_FIELDS.clazz];
     
-    // Если нет данных о талантах для класса или режим "без талантов"
+    console.log(`\n========== РАСЧЕТ ДЛЯ ${heroName} (${heroClass}) ==========`);
+    console.log(`Базовые: Атака=${baseAttack}, Защита=${baseDefense}, Жизни=${baseHp}`);
+    console.log(`Режим: ${mode === 'none' ? 'Без талантов' : (mode === 'attack' ? 'Таланты в атаку' : 'Таланты в защиту')}`);
+    
     if (mode === 'none' || !classTalents[heroClass]) {
+        if (!classTalents[heroClass]) {
+            console.warn(`Класс ${heroClass} не найден в classTalents! Доступные классы:`, Object.keys(classTalents));
+        }
+        console.log(`Результат (без талантов): Атака=${baseAttack}, Защита=${baseDefense}, Жизни=${baseHp}`);
         return { attack: Math.round(baseAttack), defense: Math.round(baseDefense), hp: Math.round(baseHp) };
     }
     
-    // Собираем все таланты класса
     const talents = classTalents[heroClass];
+    console.log(`Найдено ${talents.length} записей талантов для класса ${heroClass}`);
     
-    // Суммируем эффекты от всех талантов, которые должны быть активны
     let totalAttackPercent = 0, totalAttackFlat = 0;
     let totalDefensePercent = 0, totalDefenseFlat = 0;
     let totalHpPercent = 0, totalHpFlat = 0;
     
-    // Обрабатываем каждый талант в дереве
+    let mandatoryCount = 0;
+    let leftCount = 0;
+    let rightCount = 0;
+    
     for (const talent of talents) {
-        // Обязательные таланты (центральный столбец) - всегда активны
+        // Обязательные таланты (центральный столбец)
         if (talent.isMandatory && talent.centerTalentId) {
+            mandatoryCount++;
+            console.log(`\n[Обязательный] строка ${talent.rowNumber}, талант ID ${talent.centerTalentId}`);
             const effects = getTalentEffects(talent.centerTalentId);
             totalAttackPercent += effects.attackPercent;
             totalAttackFlat += effects.attackFlat;
@@ -1038,47 +1058,57 @@ function calculateStatsWithTalents(hero, mode) {
             totalHpPercent += effects.hpPercent;
             totalHpFlat += effects.hpFlat;
         }
-        
-        // Для необязательных талантов выбираем левую или правую ветку в зависимости от режима
-        if (!talent.isMandatory) {
+        // Необязательные таланты - выбираем ветку
+        else if (!talent.isMandatory) {
             if (mode === 'attack' && talent.leftTalentId) {
-                // Проверяем, что левый талант действительно влияет на атаку
+                leftCount++;
+                console.log(`\n[Левая ветка] строка ${talent.rowNumber}, талант ID ${talent.leftTalentId}`);
                 const effects = getTalentEffects(talent.leftTalentId);
-                if (effects.attackPercent > 0 || effects.attackFlat > 0) {
-                    totalAttackPercent += effects.attackPercent;
-                    totalAttackFlat += effects.attackFlat;
-                }
-                // Также могут быть дополнительные бонусы
+                totalAttackPercent += effects.attackPercent;
+                totalAttackFlat += effects.attackFlat;
                 totalDefensePercent += effects.defensePercent;
                 totalDefenseFlat += effects.defenseFlat;
                 totalHpPercent += effects.hpPercent;
                 totalHpFlat += effects.hpFlat;
             } 
             else if (mode === 'defense' && talent.rightTalentId) {
-                // Проверяем, что правый талант действительно влияет на защиту
+                rightCount++;
+                console.log(`\n[Правая ветка] строка ${talent.rowNumber}, талант ID ${talent.rightTalentId}`);
                 const effects = getTalentEffects(talent.rightTalentId);
-                if (effects.defensePercent > 0 || effects.defenseFlat > 0) {
-                    totalDefensePercent += effects.defensePercent;
-                    totalDefenseFlat += effects.defenseFlat;
-                }
                 totalAttackPercent += effects.attackPercent;
                 totalAttackFlat += effects.attackFlat;
+                totalDefensePercent += effects.defensePercent;
+                totalDefenseFlat += effects.defenseFlat;
                 totalHpPercent += effects.hpPercent;
                 totalHpFlat += effects.hpFlat;
             }
         }
     }
     
-    // Применяем все бонусы
+    console.log(`\n=== ИТОГО БОНУСОВ ===`);
+    console.log(`Обязательных талантов: ${mandatoryCount}`);
+    console.log(`Выбрано левых веток: ${leftCount}, правых веток: ${rightCount}`);
+    console.log(`Атака: +${totalAttackFlat} (плоский) +${totalAttackPercent}%`);
+    console.log(`Защита: +${totalDefenseFlat} (плоский) +${totalDefensePercent}%`);
+    console.log(`Жизни: +${totalHpFlat} (плоский) +${totalHpPercent}%`);
+    
     const finalAttack = (baseAttack + totalAttackFlat) * (1 + totalAttackPercent / 100);
     const finalDefense = (baseDefense + totalDefenseFlat) * (1 + totalDefensePercent / 100);
     const finalHp = (baseHp + totalHpFlat) * (1 + totalHpPercent / 100);
     
-    return { 
+    const result = { 
         attack: Math.round(finalAttack), 
         defense: Math.round(finalDefense), 
         hp: Math.round(finalHp) 
     };
+    
+    console.log(`\n=== РЕЗУЛЬТАТ ===`);
+    console.log(`Атака: ${baseAttack} → ${result.attack} (+${result.attack - baseAttack})`);
+    console.log(`Защита: ${baseDefense} → ${result.defense} (+${result.defense - baseDefense})`);
+    console.log(`Жизни: ${baseHp} → ${result.hp} (+${result.hp - baseHp})`);
+    console.log(`==========================================\n`);
+    
+    return result;
 }
 
 function buildFacet(container, values, facetKey) {
@@ -1252,16 +1282,18 @@ function attachEvents() {
 }
 
 Promise.all([
-    new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]); console.log('Герои загружены:', allHeroes.length); res();},error:rej})),
-    new Promise((res,rej)=>Papa.parse(TALENT_DESC_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{r.data.forEach(row=>{if(row[TALENT_DESC_FIELDS.talent_id]) talentDescriptions[row[TALENT_DESC_FIELDS.talent_id]]=row;}); console.log('Описания талантов загружены:', Object.keys(talentDescriptions).length); res();},error:rej})),
-    new Promise((res,rej)=>Papa.parse(CLASSES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{r.data.forEach(row=>{if(!row[CLASS_TALENT_FIELDS.class_id]) return; let cn=row[CLASS_TALENT_FIELDS.class_id]; if(!classTalents[cn]) classTalents[cn]=[]; classTalents[cn].push({rowNumber:parseInt(row[CLASS_TALENT_FIELDS.row_number])||0, isMandatory:String(row[CLASS_TALENT_FIELDS.is_mandatory]).toLowerCase()==='true', branchGroup:row[CLASS_TALENT_FIELDS.branch_group], leftTalentId:row[CLASS_TALENT_FIELDS.left_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.left_talent_id]):null, centerTalentId:row[CLASS_TALENT_FIELDS.center_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.center_talent_id]):null, rightTalentId:row[CLASS_TALENT_FIELDS.right_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.right_talent_id]):null});}); Object.keys(classTalents).forEach(cn=>classTalents[cn].sort((a,b)=>a.rowNumber-b.rowNumber)); console.log('Классы загружены:', Object.keys(classTalents).length); res();},error:rej}))
+    new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]); console.log('✅ Герои загружены:', allHeroes.length); res();},error:rej})),
+    new Promise((res,rej)=>Papa.parse(TALENT_DESC_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{r.data.forEach(row=>{if(row[TALENT_DESC_FIELDS.talent_id]) talentDescriptions[row[TALENT_DESC_FIELDS.talent_id]]=row;}); console.log('✅ Описания талантов загружены:', Object.keys(talentDescriptions).length); res();},error:rej})),
+    new Promise((res,rej)=>Papa.parse(CLASSES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{r.data.forEach(row=>{if(!row[CLASS_TALENT_FIELDS.class_id]) return; let cn=row[CLASS_TALENT_FIELDS.class_id]; if(!classTalents[cn]) classTalents[cn]=[]; classTalents[cn].push({rowNumber:parseInt(row[CLASS_TALENT_FIELDS.row_number])||0, isMandatory:String(row[CLASS_TALENT_FIELDS.is_mandatory]).toLowerCase()==='true', branchGroup:row[CLASS_TALENT_FIELDS.branch_group], leftTalentId:row[CLASS_TALENT_FIELDS.left_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.left_talent_id]):null, centerTalentId:row[CLASS_TALENT_FIELDS.center_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.center_talent_id]):null, rightTalentId:row[CLASS_TALENT_FIELDS.right_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.right_talent_id]):null});}); Object.keys(classTalents).forEach(cn=>classTalents[cn].sort((a,b)=>a.rowNumber-b.rowNumber)); console.log('✅ Классы с талантами загружены:', Object.keys(classTalents).length); console.log('📋 Доступные классы:', Object.keys(classTalents)); res();},error:rej}))
 ]).then(()=>{
     if(!allHeroes.length) { document.getElementById('count').textContent='Данные не найдены'; return; }
     initAllFacets(allHeroes);
     attachEvents();
     applyFilters();
-    console.log('Готово. talentDescriptions:', Object.keys(talentDescriptions).length, 'classTalents:', Object.keys(classTalents).length);
-}).catch(e=>{console.error(e); document.getElementById('count').textContent='Ошибка загрузки данных';});
+    console.log('🚀 Сайт готов к работе!');
+    console.log('📊 Для проверки расчета: откройте карточку любого героя и выберите режим талантов');
+    console.log('📊 В консоли будут подробные логи расчета каждого героя');
+}).catch(e=>{console.error('❌ Ошибка загрузки данных:', e); document.getElementById('count').textContent='Ошибка загрузки данных. Проверьте консоль.';});
 </script>
 </body>
 </html>
