@@ -1070,7 +1070,7 @@ function calculateStatsWithTalents(hero, mode) {
     for (const group of groups) {
         groupIndex++;
         
-        // Применяем обязательные таланты в группе
+        // Сначала применяем обязательные таланты в группе
         for (const talent of group) {
             if (talent.isMandatory && talent.centerTalentId) {
                 console.log(`\n[Группа ${groupIndex}] Обязательный талант (строка ${talent.rowNumber})`);
@@ -1088,7 +1088,7 @@ function calculateStatsWithTalents(hero, mode) {
         let selectedSide = null;
         
         if (mode === 'attack') {
-            // Ищем ветку с талантами на атаку
+            // 1. Ищем ветку с талантами на атаку
             for (const talent of group) {
                 if (!talent.isMandatory) {
                     if (talent.leftTalentId && doesTalentAffectStat(talent.leftTalentId, 'attack')) {
@@ -1101,14 +1101,32 @@ function calculateStatsWithTalents(hero, mode) {
                     }
                 }
             }
-            // Если нет талантов на атаку, берем левую ветку по умолчанию
+            // 2. Если нет талантов на атаку, ищем ветку с талантами на защиту
+            if (selectedSide === null) {
+                for (const talent of group) {
+                    if (!talent.isMandatory) {
+                        if (talent.leftTalentId && doesTalentAffectStat(talent.leftTalentId, 'defense')) {
+                            selectedSide = 'left';
+                            break;
+                        }
+                        if (talent.rightTalentId && doesTalentAffectStat(talent.rightTalentId, 'defense')) {
+                            selectedSide = 'right';
+                            break;
+                        }
+                    }
+                }
+                if (selectedSide !== null) {
+                    console.log(`[Группа ${groupIndex}] Нет талантов на атаку, выбрана ${selectedSide === 'left' ? 'левая' : 'правая'} ветка с защитой`);
+                }
+            }
+            // 3. Если нет талантов ни на атаку, ни на защиту, берем левую ветку по умолчанию
             if (selectedSide === null) {
                 selectedSide = 'left';
-                console.log(`[Группа ${groupIndex}] Нет талантов на атаку, выбрана левая ветка по умолчанию`);
+                console.log(`[Группа ${groupIndex}] Нет талантов на атаку и защиту, выбрана левая ветка по умолчанию`);
             }
         } 
         else if (mode === 'defense') {
-            // Ищем ветку с талантами на защиту
+            // 1. Ищем ветку с талантами на защиту
             for (const talent of group) {
                 if (!talent.isMandatory) {
                     if (talent.leftTalentId && doesTalentAffectStat(talent.leftTalentId, 'defense')) {
@@ -1121,15 +1139,32 @@ function calculateStatsWithTalents(hero, mode) {
                     }
                 }
             }
-            // Если нет талантов на защиту, берем правую ветку по умолчанию
+            // 2. Если нет талантов на защиту, ищем ветку с талантами на атаку
+            if (selectedSide === null) {
+                for (const talent of group) {
+                    if (!talent.isMandatory) {
+                        if (talent.leftTalentId && doesTalentAffectStat(talent.leftTalentId, 'attack')) {
+                            selectedSide = 'left';
+                            break;
+                        }
+                        if (talent.rightTalentId && doesTalentAffectStat(talent.rightTalentId, 'attack')) {
+                            selectedSide = 'right';
+                            break;
+                        }
+                    }
+                }
+                if (selectedSide !== null) {
+                    console.log(`[Группа ${groupIndex}] Нет талантов на защиту, выбрана ${selectedSide === 'left' ? 'левая' : 'правая'} ветка с атакой`);
+                }
+            }
+            // 3. Если нет талантов ни на защиту, ни на атаку, берем правую ветку по умолчанию
             if (selectedSide === null) {
                 selectedSide = 'right';
-                console.log(`[Группа ${groupIndex}] Нет талантов на защиту, выбрана правая ветка по умолчанию`);
+                console.log(`[Группа ${groupIndex}] Нет талантов на защиту и атаку, выбрана правая ветка по умолчанию`);
             }
         }
         
         // Применяем ВСЕ таланты выбранной ветки в этой группе
-        let appliedCount = 0;
         for (const talent of group) {
             if (!talent.isMandatory) {
                 let talentId = null;
@@ -1139,7 +1174,6 @@ function calculateStatsWithTalents(hero, mode) {
                     talentId = talent.rightTalentId;
                 }
                 if (talentId) {
-                    appliedCount++;
                     const effects = getTalentEffects(talentId);
                     attackPercent += effects.attackPercent;
                     attackFlat += effects.attackFlat;
@@ -1148,7 +1182,7 @@ function calculateStatsWithTalents(hero, mode) {
                     hpPercent += effects.hpPercent;
                     hpFlat += effects.hpFlat;
                     
-                    // Логируем каждый примененный талант
+                    // Логируем
                     let statStr = [];
                     if (effects.attackFlat) statStr.push(`Атака+${effects.attackFlat}`);
                     if (effects.attackPercent) statStr.push(`Атака+${effects.attackPercent}%`);
@@ -1161,15 +1195,10 @@ function calculateStatsWithTalents(hero, mode) {
                 }
             }
         }
-        if (appliedCount === 0) {
-            console.log(`[Группа ${groupIndex}] В выбранной ветке нет талантов`);
-        }
     }
     
-    // ПРАВИЛЬНАЯ ФОРМУЛА: 
-    // Сначала вычисляем бонус от процентов (от базы)
-    // Затем добавляем плоские бонусы
-    // Округляем итоговый бонус вниз
+    // Расчет итоговых характеристик
+    // Формула: итог = база + floor(база × процент/100 + плоские)
     const attackBonus = (baseAttack * attackPercent / 100) + attackFlat;
     const finalAttack = baseAttack + Math.floor(attackBonus);
     
