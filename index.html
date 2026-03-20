@@ -1051,126 +1051,99 @@ function calculateStatsWithTalents(hero, mode) {
     let totalDefensePercent = 0, totalDefenseFlat = 0;
     let totalHpPercent = 0, totalHpFlat = 0;
     
-    let groupIndex = 0;
+    // Группируем таланты по branch_group
+    const groups = [];
     let currentGroup = [];
-    let groupCounter = 0;
     
-    // Проходим по всем талантам и обрабатываем группы
-    for (let i = 0; i < talents.length; i++) {
-        const talent = talents[i];
-        
-        // Собираем группу по branch_group
+    for (const talent of talents) {
         if (currentGroup.length === 0 || currentGroup[0].branchGroup === talent.branchGroup) {
             currentGroup.push(talent);
         } else {
-            // Обрабатываем накопленную группу
-            processGroup(currentGroup, mode);
+            groups.push([...currentGroup]);
             currentGroup = [talent];
-            groupCounter++;
         }
     }
-    // Обрабатываем последнюю группу
-    if (currentGroup.length > 0) {
-        processGroup(currentGroup, mode);
-    }
+    if (currentGroup.length > 0) groups.push(currentGroup);
     
-    function processGroup(group, modeType) {
-        // Находим обязательный талант (центральный)
-        const mandatory = group.find(t => t.isMandatory && t.centerTalentId);
-        if (mandatory) {
-            console.log(`\n[Группа ${groupCounter+1}] Обязательный талант (строка ${mandatory.rowNumber})`);
-            const effects = getTalentEffects(mandatory.centerTalentId);
-            totalAttackPercent += effects.attackPercent;
-            totalAttackFlat += effects.attackFlat;
-            totalDefensePercent += effects.defensePercent;
-            totalDefenseFlat += effects.defenseFlat;
-            totalHpPercent += effects.hpPercent;
-            totalHpFlat += effects.hpFlat;
+    let groupIndex = 0;
+    
+    for (const group of groups) {
+        groupIndex++;
+        
+        // Применяем обязательные таланты в группе
+        for (const talent of group) {
+            if (talent.isMandatory && talent.centerTalentId) {
+                console.log(`\n[Группа ${groupIndex}] Обязательный талант (строка ${talent.rowNumber})`);
+                const effects = getTalentEffects(talent.centerTalentId);
+                totalAttackPercent += effects.attackPercent;
+                totalAttackFlat += effects.attackFlat;
+                totalDefensePercent += effects.defensePercent;
+                totalDefenseFlat += effects.defenseFlat;
+                totalHpPercent += effects.hpPercent;
+                totalHpFlat += effects.hpFlat;
+            }
         }
         
-        // Находим необязательные таланты в группе
-        const choiceTalents = group.filter(t => !t.isMandatory);
+        // Определяем, какую ветку выбрать в этой группе
+        let selectedSide = null; // 'left' или 'right'
         
-        if (choiceTalents.length > 0) {
-            // Выбираем ветку в зависимости от режима
-            if (modeType === 'attack') {
-                // Ищем талант, который увеличивает атаку
-                let selectedTalent = null;
-                for (const ct of choiceTalents) {
-                    if (ct.leftTalentId && doesTalentAffectStat(ct.leftTalentId, 'attack')) {
-                        selectedTalent = { talentId: ct.leftTalentId, side: 'левая', row: ct.rowNumber };
+        if (mode === 'attack') {
+            // Ищем, в какой ветке есть таланты на атаку
+            for (const talent of group) {
+                if (!talent.isMandatory) {
+                    if (talent.leftTalentId && doesTalentAffectStat(talent.leftTalentId, 'attack')) {
+                        selectedSide = 'left';
                         break;
                     }
-                    if (ct.rightTalentId && doesTalentAffectStat(ct.rightTalentId, 'attack')) {
-                        selectedTalent = { talentId: ct.rightTalentId, side: 'правая', row: ct.rowNumber };
+                    if (talent.rightTalentId && doesTalentAffectStat(talent.rightTalentId, 'attack')) {
+                        selectedSide = 'right';
                         break;
-                    }
-                }
-                
-                if (selectedTalent) {
-                    console.log(`[Группа ${groupCounter+1}] Выбрана ${selectedTalent.side} ветка (строка ${selectedTalent.row}) - увеличение Атаки`);
-                    const effects = getTalentEffects(selectedTalent.talentId);
-                    totalAttackPercent += effects.attackPercent;
-                    totalAttackFlat += effects.attackFlat;
-                    totalDefensePercent += effects.defensePercent;
-                    totalDefenseFlat += effects.defenseFlat;
-                    totalHpPercent += effects.hpPercent;
-                    totalHpFlat += effects.hpFlat;
-                } else {
-                    // Если нет талантов на атаку, берем левую ветку по умолчанию
-                    const leftTalent = choiceTalents.find(t => t.leftTalentId);
-                    if (leftTalent) {
-                        console.log(`[Группа ${groupCounter+1}] Выбрана левая ветка (строка ${leftTalent.rowNumber}) - нет таланта на атаку`);
-                        const effects = getTalentEffects(leftTalent.leftTalentId);
-                        totalAttackPercent += effects.attackPercent;
-                        totalAttackFlat += effects.attackFlat;
-                        totalDefensePercent += effects.defensePercent;
-                        totalDefenseFlat += effects.defenseFlat;
-                        totalHpPercent += effects.hpPercent;
-                        totalHpFlat += effects.hpFlat;
-                    }
-                }
-            } 
-            else if (modeType === 'defense') {
-                // Ищем талант, который увеличивает защиту
-                let selectedTalent = null;
-                for (const ct of choiceTalents) {
-                    if (ct.leftTalentId && doesTalentAffectStat(ct.leftTalentId, 'defense')) {
-                        selectedTalent = { talentId: ct.leftTalentId, side: 'левая', row: ct.rowNumber };
-                        break;
-                    }
-                    if (ct.rightTalentId && doesTalentAffectStat(ct.rightTalentId, 'defense')) {
-                        selectedTalent = { talentId: ct.rightTalentId, side: 'правая', row: ct.rowNumber };
-                        break;
-                    }
-                }
-                
-                if (selectedTalent) {
-                    console.log(`[Группа ${groupCounter+1}] Выбрана ${selectedTalent.side} ветка (строка ${selectedTalent.row}) - увеличение Защиты`);
-                    const effects = getTalentEffects(selectedTalent.talentId);
-                    totalAttackPercent += effects.attackPercent;
-                    totalAttackFlat += effects.attackFlat;
-                    totalDefensePercent += effects.defensePercent;
-                    totalDefenseFlat += effects.defenseFlat;
-                    totalHpPercent += effects.hpPercent;
-                    totalHpFlat += effects.hpFlat;
-                } else {
-                    // Если нет талантов на защиту, берем правую ветку по умолчанию
-                    const rightTalent = choiceTalents.find(t => t.rightTalentId);
-                    if (rightTalent) {
-                        console.log(`[Группа ${groupCounter+1}] Выбрана правая ветка (строка ${rightTalent.rowNumber}) - нет таланта на защиту`);
-                        const effects = getTalentEffects(rightTalent.rightTalentId);
-                        totalAttackPercent += effects.attackPercent;
-                        totalAttackFlat += effects.attackFlat;
-                        totalDefensePercent += effects.defensePercent;
-                        totalDefenseFlat += effects.defenseFlat;
-                        totalHpPercent += effects.hpPercent;
-                        totalHpFlat += effects.hpFlat;
                     }
                 }
             }
+            // Если нет талантов на атаку, берем левую ветку по умолчанию
+            if (selectedSide === null) selectedSide = 'left';
+        } 
+        else if (mode === 'defense') {
+            // Ищем, в какой ветке есть таланты на защиту
+            for (const talent of group) {
+                if (!talent.isMandatory) {
+                    if (talent.leftTalentId && doesTalentAffectStat(talent.leftTalentId, 'defense')) {
+                        selectedSide = 'left';
+                        break;
+                    }
+                    if (talent.rightTalentId && doesTalentAffectStat(talent.rightTalentId, 'defense')) {
+                        selectedSide = 'right';
+                        break;
+                    }
+                }
+            }
+            // Если нет талантов на защиту, берем правую ветку по умолчанию
+            if (selectedSide === null) selectedSide = 'right';
         }
-        groupCounter++;
+        
+        // Применяем ВСЕ таланты выбранной ветки в этой группе
+        for (const talent of group) {
+            if (!talent.isMandatory) {
+                let talentId = null;
+                if (selectedSide === 'left' && talent.leftTalentId) {
+                    talentId = talent.leftTalentId;
+                } else if (selectedSide === 'right' && talent.rightTalentId) {
+                    talentId = talent.rightTalentId;
+                }
+                
+                if (talentId) {
+                    const effects = getTalentEffects(talentId);
+                    totalAttackPercent += effects.attackPercent;
+                    totalAttackFlat += effects.attackFlat;
+                    totalDefensePercent += effects.defensePercent;
+                    totalDefenseFlat += effects.defenseFlat;
+                    totalHpPercent += effects.hpPercent;
+                    totalHpFlat += effects.hpFlat;
+                    console.log(`[Группа ${groupIndex}] ${selectedSide === 'left' ? 'Левая' : 'Правая'} ветка (строка ${talent.rowNumber})`);
+                }
+            }
+        }
     }
     
     console.log(`\n=== ИТОГО БОНУСОВ ===`);
