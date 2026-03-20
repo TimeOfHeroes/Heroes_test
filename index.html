@@ -990,20 +990,15 @@ const talentEffectsMap = {
     26: { type: 'Кровавый вихрь', value: 35, isPercent: true }
 };
 
-// Функция получения эффектов таланта по числовому ID
 function getTalentEffects(numId) {
     const talent = talentEffectsMap[numId];
     if (!talent) {
         return { attackPercent:0, attackFlat:0, defensePercent:0, defenseFlat:0, hpPercent:0, hpFlat:0 };
     }
-    
     const value = talent.value;
     const isPercent = talent.isPercent;
-    const effectType = talent.type;
-    const typeLower = effectType.toLowerCase();
-    
+    const typeLower = talent.type.toLowerCase();
     let result = { attackPercent:0, attackFlat:0, defensePercent:0, defenseFlat:0, hpPercent:0, hpFlat:0 };
-    
     if (typeLower.includes('атак')) {
         if (isPercent) result.attackPercent = value;
         else result.attackFlat = value;
@@ -1014,16 +1009,13 @@ function getTalentEffects(numId) {
         if (isPercent) result.hpPercent = value;
         else result.hpFlat = value;
     }
-    
     return result;
 }
 
-// Проверка, влияет ли талант на определенную характеристику
 function doesTalentAffectStat(talentId, statType) {
     const talent = talentEffectsMap[talentId];
     if (!talent) return false;
     const typeLower = talent.type.toLowerCase();
-    
     if (statType === 'attack') return typeLower.includes('атак');
     if (statType === 'defense') return typeLower.includes('защит');
     if (statType === 'hp') return typeLower.includes('жизн') || typeLower.includes('здоров');
@@ -1031,6 +1023,8 @@ function doesTalentAffectStat(talentId, statType) {
 }
 
 // Функция расчета характеристик с учетом талантов
+// ПРАВИЛЬНАЯ ФОРМУЛА: проценты только на базовую характеристику, плоские добавляются после
+// Итог = база × (1 + сумма_процентов/100) + сумма_плоских
 function calculateStatsWithTalents(hero, mode) {
     const heroName = hero[HERO_FIELDS.name];
     const heroClass = hero[HERO_FIELDS.clazz];
@@ -1048,7 +1042,6 @@ function calculateStatsWithTalents(hero, mode) {
     
     const talents = classTalents[heroClass];
     
-    // Собираем отдельно плоские и процентные бонусы
     let attackFlat = 0;
     let attackPercent = 0;
     let defenseFlat = 0;
@@ -1090,10 +1083,9 @@ function calculateStatsWithTalents(hero, mode) {
         }
         
         // Определяем, какую ветку выбрать в этой группе
-        let selectedSide = null; // 'left' или 'right'
+        let selectedSide = null;
         
         if (mode === 'attack') {
-            // Ищем, в какой ветке есть таланты на атаку
             for (const talent of group) {
                 if (!talent.isMandatory) {
                     if (talent.leftTalentId && doesTalentAffectStat(talent.leftTalentId, 'attack')) {
@@ -1106,11 +1098,9 @@ function calculateStatsWithTalents(hero, mode) {
                     }
                 }
             }
-            // Если нет талантов на атаку, берем левую ветку по умолчанию
             if (selectedSide === null) selectedSide = 'left';
         } 
         else if (mode === 'defense') {
-            // Ищем, в какой ветке есть таланты на защиту
             for (const talent of group) {
                 if (!talent.isMandatory) {
                     if (talent.leftTalentId && doesTalentAffectStat(talent.leftTalentId, 'defense')) {
@@ -1123,7 +1113,6 @@ function calculateStatsWithTalents(hero, mode) {
                     }
                 }
             }
-            // Если нет талантов на защиту, берем правую ветку по умолчанию
             if (selectedSide === null) selectedSide = 'right';
         }
         
@@ -1136,7 +1125,6 @@ function calculateStatsWithTalents(hero, mode) {
                 } else if (selectedSide === 'right' && talent.rightTalentId) {
                     talentId = talent.rightTalentId;
                 }
-                
                 if (talentId) {
                     const effects = getTalentEffects(talentId);
                     attackPercent += effects.attackPercent;
@@ -1151,10 +1139,10 @@ function calculateStatsWithTalents(hero, mode) {
         }
     }
     
-    // Расчет итоговых характеристик (проценты от БАЗОВЫХ значений)
-    const finalAttack = (baseAttack + attackFlat) * (1 + attackPercent / 100);
-    const finalDefense = (baseDefense + defenseFlat) * (1 + defensePercent / 100);
-    const finalHp = (baseHp + hpFlat) * (1 + hpPercent / 100);
+    // ПРАВИЛЬНАЯ ФОРМУЛА: проценты только на базовую характеристику
+    const finalAttack = baseAttack * (1 + attackPercent / 100) + attackFlat;
+    const finalDefense = baseDefense * (1 + defensePercent / 100) + defenseFlat;
+    const finalHp = baseHp * (1 + hpPercent / 100) + hpFlat;
     
     console.log(`\n=== ИТОГО БОНУСОВ ===`);
     console.log(`Атака: +${attackFlat} (плоский) +${attackPercent}% от базы ${baseAttack}`);
