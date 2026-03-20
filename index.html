@@ -118,6 +118,7 @@ header {
   justify-content: space-between;
   padding: 12px 0;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
 .brand {
@@ -137,7 +138,6 @@ header {
   color: var(--header-text);
   opacity: 0.7;
   margin: 2px 0 0;
-  text-align: left;
   font-style: italic;
 }
 
@@ -220,7 +220,6 @@ header {
   margin: 0;
   font-size: 14px;
   font-weight: 600;
-  color: var(--text-color);
 }
 .hero-checkbox-item {
   display: flex;
@@ -244,7 +243,6 @@ header {
   flex: 1;
   cursor: pointer;
   font-size: 14px;
-  color: var(--text-color);
 }
 .hero-select-actions {
   display: flex;
@@ -289,6 +287,7 @@ header {
   align-items: center;
   gap: 16px;
   flex-shrink: 0;
+  flex-wrap: wrap;
 }
 
 .sort-group {
@@ -402,15 +401,11 @@ header {
 }
 .btn.primary:hover {
   background: #1d4ed8;
-  border-color: #1d4ed8;
 }
 .btn.secondary {
   background: var(--card-bg);
   color: var(--text-color);
   border-color: var(--checkbox-border);
-}
-.btn.secondary:hover {
-  background: var(--secondary-color);
 }
 .btn.reset {
   background-color: #f44336;
@@ -419,6 +414,16 @@ header {
 }
 .btn.reset:hover {
   background-color: #d32f2f;
+}
+
+.talent-mode-select {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 14px;
+  color: var(--text-color);
+  cursor: pointer;
 }
 
 .info-btn-wrapper {
@@ -445,97 +450,19 @@ header {
 }
 
 @media (max-width: 1024px) {
-  .container {
-    padding: 0 12px;
-  }
-  
-  .top-bar {
-    flex-wrap: wrap;
-    gap: 12px;
-    padding: 10px 0;
-  }
-  
-  .brand {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 8px;
-  }
-  .copyright {
-    display: none;
-  }
-  
-  .center-group {
-    order: 1;
-    width: 100%;
-    max-width: none;
-  }
-  
-  .right-group {
-    order: 2;
-    width: 100%;
-    justify-content: space-between;
-  }
-  
-  .sort-group {
-    flex: 1;
-  }
-  .sort-select-wrapper {
-    flex: 1;
-  }
-  .sort-select-wrapper select {
-    width: 100%;
-    min-width: 0;
-  }
-  
-  .filter-buttons {
-    flex-shrink: 0;
-  }
-  
-  .info-btn-wrapper {
-    flex-shrink: 0;
-  }
+  .top-bar { flex-direction: column; align-items: stretch; }
+  .brand { text-align: center; }
+  .center-group { max-width: none; }
+  .right-group { justify-content: space-between; }
+  .sort-group { flex: 1; }
+  .sort-select-wrapper { flex: 1; }
+  .sort-select-wrapper select { width: 100%; }
 }
 
 @media (max-width: 640px) {
-  .top-bar {
-    gap: 8px;
-  }
-  
-  .center-group {
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .right-group {
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  
-  .sort-group {
-    width: 100%;
-    order: 1;
-  }
-  
-  .filter-buttons {
-    width: 100%;
-    order: 2;
-    justify-content: flex-start;
-  }
-  
-  .info-btn-wrapper {
-    order: 3;
-    margin-left: auto;
-  }
-  
-  .btn, .sort-select-wrapper select, .hero-select-toggle, .search-wrapper input {
-    font-size: 13px;
-    padding: 7px 10px;
-  }
-  
-  .sort-btn, .info-btn {
-    width: 36px;
-    height: 36px;
-  }
+  .center-group { flex-direction: column; }
+  .right-group { flex-direction: column; align-items: stretch; }
+  .filter-buttons { justify-content: space-between; }
 }
 
 .wrap { 
@@ -544,12 +471,6 @@ header {
   min-height: calc(100vh - var(--hdrH));
   max-width: 1400px;
   margin: 0 auto;
-}
-@media (max-width: 1024px) { 
-  .wrap { 
-    padding: 16px;
-    min-height: auto;
-  } 
 }
 
 .filters { 
@@ -566,7 +487,6 @@ header {
   overflow: hidden;
   z-index: 99;
   border-radius: 0 12px 12px 0;
-  box-shadow: 2px 0 15px rgba(0,0,0,.1);
   transform: translateX(-100%);
   transition: transform 0.3s ease;
   display: none;
@@ -590,33 +510,25 @@ header {
   margin-bottom:16px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--border-color);
-  background: var(--filter-bg);
   flex-shrink: 0;
 }
 .filters h2 { 
   margin:0; 
   font-size:18px; 
   font-weight: 600;
-  color: var(--text-color);
 }
 .facet { 
   margin-bottom:20px; 
-  background: var(--filter-bg);
-  padding: 0;
   flex-shrink: 0;
 }
 .facet h3 { 
   margin:0 0 10px; 
   font-size:15px; 
-  color: var(--text-color);
   font-weight: 500;
-  background: var(--filter-bg);
-  padding: 0;
 }
 .opts { 
   max-height:200px; 
   overflow-y: auto;
-  overflow-x: hidden;
   border:1px solid var(--border-color); 
   border-radius:8px; 
   padding:8px; 
@@ -632,8 +544,6 @@ header {
   padding: 4px 6px;
   border-radius: 4px;
   transition: background 0.2s;
-  background: transparent;
-  color: var(--text-color);
 }
 .opt:hover {
   background: rgba(0,0,0,.1);
@@ -644,14 +554,11 @@ header {
   cursor: pointer; 
   flex-shrink: 0;
   accent-color: var(--primary-color);
-  background: var(--checkbox-bg);
-  border: 1px solid var(--checkbox-border);
 }
 .facet .actions { 
   display:flex; 
   gap:8px; 
   margin-top:10px; 
-  background: var(--filter-bg);
 }
 .facet .actions .btn { 
   font-size:13px; 
@@ -678,7 +585,6 @@ header {
 }
 #count { 
   margin:0 0 20px; 
-  color: var(--text-color);
   opacity: 0.7;
   font-size:15px;
   padding: 8px 0;
@@ -690,27 +596,6 @@ header {
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
   gap:20px; 
   width: 100%;
-}
-
-@media (max-width: 1024px) {
-  .cards { 
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
-    gap:16px;
-  }
-}
-
-@media (max-width: 768px) {
-  .cards { 
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
-    gap:14px;
-  }
-}
-
-@media (max-width: 480px) {
-  .cards { 
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
-    gap:12px;
-  }
 }
 
 .card { 
@@ -741,12 +626,10 @@ header {
 .thumb { 
   width:100%; 
   height: 190px;
-  background: transparent;
   display:flex; 
   align-items:center; 
   justify-content:center; 
   overflow:hidden;
-  position: relative;
   margin-top: 12px;
 }
 .thumb img { 
@@ -765,24 +648,16 @@ header {
   font-size:16px; 
   font-weight: 600;
   line-height: 1.3;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   text-align: center;
-  color: var(--card-text);
 }
-
 .meta { 
   margin:0 12px 6px; 
-  color: var(--card-meta);
   display:flex; 
   gap:6px; 
   flex-wrap:wrap; 
   font-size:13px;
-  line-height: 1.4;
   justify-content: center;
   text-align: center;
-  font-weight: 450;
 }
 .stats { 
   margin:0 12px 12px; 
@@ -798,53 +673,30 @@ header {
   font-size:12px;
   white-space: nowrap;
   font-weight: 500;
-  color: var(--card-text);
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-.card[data-element="Синий"] .pill {
-  background-color: var(--pill-blue);
-}
-.card[data-element="Зеленый"] .pill {
-  background-color: var(--pill-green);
-}
-.card[data-element="Красный"] .pill {
-  background-color: var(--pill-red);
-}
-.card[data-element="Фиолетовый"] .pill {
-  background-color: var(--pill-purple);
-}
-.card[data-element="Желтый"] .pill {
-  background-color: var(--pill-yellow);
-}
-.card:not([data-element="Синий"]):not([data-element="Зеленый"]):not([data-element="Красный"]):not([data-element="Фиолетовый"]):not([data-element="Желтый"]) .pill {
-  background-color: var(--pill-default);
-}
-
-@media (prefers-color-scheme: dark) {
-  .pill {
-    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-  }
-}
+.card[data-element="Синий"] .pill { background-color: var(--pill-blue); }
+.card[data-element="Зеленый"] .pill { background-color: var(--pill-green); }
+.card[data-element="Красный"] .pill { background-color: var(--pill-red); }
+.card[data-element="Фиолетовый"] .pill { background-color: var(--pill-purple); }
+.card[data-element="Желтый"] .pill { background-color: var(--pill-yellow); }
+.card:not([data-element]) .pill { background-color: var(--pill-default); }
 
 .toggle-abilities {
   background: none;
   border: none;
-  color: #000000;
   font-size: 11px;
   cursor: pointer;
   padding: 2px 6px;
   margin: 12px auto 8px;
   text-decoration: underline;
   display: block;
-}
-.toggle-abilities:hover {
-  color: #333;
+  color: var(--text-color);
 }
 .card-abilities-full {
   display: none;
   font-size: 11px;
-  color: var(--card-meta);
   padding: 0 12px 8px;
   line-height: 1.4;
   border-top: 1px solid rgba(0,0,0,0.08);
@@ -852,16 +704,6 @@ header {
   padding-top: 8px;
 }
 
-@media (prefers-color-scheme: dark) {
-  .toggle-abilities {
-    color: #ffffff;
-  }
-  .toggle-abilities:hover {
-    color: #cccccc;
-  }
-}
-
-/* Модальное окно героя */
 .modal { 
   position: fixed; 
   inset: 0; 
@@ -872,24 +714,15 @@ header {
   padding: 20px; 
   z-index: 2000; 
 }
-.modal.show { 
-  display: flex; 
-  animation: fadeIn 0.3s ease;
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+.modal.show { display: flex; }
 .dialog { 
   position: relative; 
   background: var(--card-bg); 
-  color: var(--text-color); 
   max-width: 1200px; 
   width: min(1200px, 95vw); 
   max-height: 90vh; 
   overflow: hidden; 
   border-radius: 16px; 
-  box-shadow: 0 25px 50px rgba(0,0,0,.3); 
   display: flex; 
   flex-direction: column;
 }
@@ -901,11 +734,6 @@ header {
   overflow-y: auto;
   max-height: calc(90vh - 60px);
 }
-.dialog .image-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 .dialog img { 
   width: 100%;
   height: auto;
@@ -915,25 +743,15 @@ header {
   background: var(--secondary-color);
   padding: 15px;
 }
-.dialog .info-container {
-  display: flex;
-  flex-direction: column;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  hyphens: auto;
-}
 .dialog h2 { 
   margin: 0 0 12px; 
   font-size:28px; 
   font-weight: 700;
-  color: var(--text-color);
-  line-height: 1.2;
 }
 .dialog .meta { 
   display:flex; 
   gap:10px; 
   flex-wrap:wrap; 
-  color: var(--text-color);
   opacity: 0.8;
   margin-bottom:10px; 
   font-size:15px;
@@ -945,13 +763,6 @@ header {
   flex-wrap:wrap; 
   margin:12px 0 20px;
 }
-.dialog .mStats .pill { 
-  font-size:14px; 
-  padding:8px 12px;
-  background: rgba(10, 119, 0, 0.1);
-  border-color: var(--primary-color);
-  color: var(--primary-color);
-}
 .pre { 
   white-space: pre-line; 
   background: var(--secondary-color); 
@@ -960,7 +771,6 @@ header {
   padding:12px; 
   font-size:15px; 
   overflow-wrap: break-word;
-  word-break: break-word;
   line-height: 1.5;
   margin: 8px 0;
 }
@@ -981,11 +791,6 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
-}
-.close:hover {
-  background: rgba(0,0,0,.9);
-  transform: scale(1.1);
 }
 .nav { 
   position: absolute; 
@@ -995,21 +800,14 @@ header {
   background: rgba(0,0,0,.7); 
   color: #fff; 
   font-size: 28px; 
-  line-height: 1; 
   width: 44px;
   height: 44px;
-  padding: 0;
   border-radius: 50%; 
   cursor: pointer; 
   z-index: 10; 
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
-}
-.nav:hover {
-  background: rgba(0,0,0,.9);
-  transform: translateY(-50%) scale(1.1);
 }
 .nav.prev { left: 12px; } 
 .nav.next { right: 12px; }
@@ -1019,269 +817,27 @@ header {
   font-size:14px; 
   color:var(--primary-color); 
   text-decoration:none;
+}
+.talent-mode-selector {
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.talent-mode-selector label {
   font-weight: 500;
-  transition: color 0.2s;
 }
-.open-img:hover {
-  color: #098;
-  text-decoration: underline;
-}
-
-/* Секция талантов */
-.talents-section {
-  margin-top: 20px;
-  border-top: 1px solid var(--border-color);
-  padding-top: 15px;
-}
-
-.talents-section h3 {
-  margin: 0 0 15px 0;
-  font-size: 18px;
-  color: var(--text-color);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.hero-class-badge {
-  font-size: 14px;
-  font-weight: normal;
-  background: var(--secondary-color);
-  padding: 4px 10px;
-  border-radius: 20px;
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-}
-
-.base-stats-display {
-  background: var(--secondary-color);
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 20px;
-  border: 1px solid var(--border-color);
-}
-
-.base-stats-display h4 {
-  margin: 0 0 10px 0;
-  font-size: 16px;
-  color: var(--text-color);
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 8px;
-}
-
-.stat-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 8px;
-  background: var(--card-bg);
-  border-radius: 4px;
-  font-size: 13px;
-}
-
-.stat-label {
-  color: var(--card-meta);
-}
-
-.stat-value {
-  font-weight: 600;
-  color: var(--primary-color);
-}
-
-.talent-group {
-  margin-bottom: 15px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.talent-group-header {
-  background: var(--secondary-color);
-  padding: 4px 8px;
-  font-size: 12px;
-  color: var(--card-meta);
-  border-bottom: 1px solid var(--border-color);
-  text-align: center;
-}
-
-.talent-row {
-  display: flex;
-  gap: 8px;
-  padding: 8px;
-  border-bottom: 1px solid var(--border-color);
-  background: var(--card-bg);
-  justify-content: space-between;
-}
-
-.talent-row:last-child {
-  border-bottom: none;
-}
-
-.talent-cell {
-  flex: 1;
-  min-width: 80px;
-  padding: 6px 4px;
-  text-align: center;
-  border-radius: 6px;
-  transition: all 0.2s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.talent-mandatory {
-  background-color: var(--talent-mandatory);
-  border: 2px solid var(--talent-mandatory);
-  color: var(--text-color);
-  font-weight: 500;
-  cursor: default;
-}
-
-.talent-choice {
-  background-color: var(--secondary-color);
-  border: 2px solid transparent;
-  cursor: pointer;
-}
-
-.talent-choice.left:hover:not(.disabled) {
-  background-color: rgba(76, 175, 80, 0.2);
-  border-color: var(--talent-left);
-}
-
-.talent-choice.right:hover:not(.disabled) {
-  background-color: rgba(244, 67, 54, 0.2);
-  border-color: var(--talent-right);
-}
-
-.talent-choice.selected {
-  border-color: var(--talent-selected);
-  background-color: var(--talent-hover);
-}
-
-.talent-choice.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-.talent-cell img {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  margin-bottom: 2px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.talent-name {
-  font-size: 10px;
-  line-height: 1.2;
-  word-break: break-word;
-  color: var(--text-color);
-  max-width: 100%;
-}
-
-.talent-effects {
-  font-size: 9px;
-  color: var(--card-meta);
-  margin-top: 2px;
-  font-weight: normal;
-}
-
-.talent-empty {
-  color: var(--card-meta);
-  font-style: italic;
-  font-size: 11px;
-  background: transparent;
-  border: 1px dashed var(--border-color);
-  justify-content: center;
-  display: flex;
-  align-items: center;
-}
-
-.talent-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 15px;
-  padding: 10px;
-  background: var(--secondary-color);
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-}
-
-.talent-actions .btn {
-  flex: 1;
+.talent-mode-selector select {
   padding: 8px 12px;
-  font-size: 13px;
-}
-
-.calculated-stats {
-  margin-top: 15px;
-  padding: 12px;
-  background: var(--secondary-color);
   border-radius: 8px;
   border: 1px solid var(--border-color);
-}
-
-.calculated-stats h4 {
-  margin: 0 0 10px 0;
-  font-size: 16px;
+  background: var(--card-bg);
   color: var(--text-color);
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
-.calculated-stats .stats-grid {
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-}
-
-.calculated-stats .stat-value {
-  color: var(--accent-color);
-}
-
-.stat-change {
-  font-size: 10px;
-  margin-left: 4px;
-  color: var(--primary-color);
-  font-weight: normal;
-}
-
-@media (max-width: 768px) {
-  .dialog .modal-content {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  
-  .talent-row {
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .talent-cell {
-    width: 100%;
-  }
-  
-  .talent-actions {
-    flex-direction: column;
-  }
-  
-  .stats-grid {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  }
-  
-  .talent-cell img {
-    width: 36px;
-    height: 36px;
-  }
-}
-
-/* Информационная модалка */
 .info-modal {
   position: fixed;
   inset: 0;
@@ -1292,67 +848,22 @@ header {
   padding: 20px;
   z-index: 2001;
 }
-.info-modal.show {
-  display: flex;
-}
+.info-modal.show { display: flex; }
 .info-dialog {
   background: var(--card-bg);
-  color: var(--text-color);
   border-radius: 16px;
   padding: 30px;
   max-width: 500px;
   width: 90%;
-  box-shadow: 0 20px 60px rgba(0,0,0,.3);
   position: relative;
 }
-.info-dialog h2 {
-  margin: 0 0 20px;
-  color: var(--text-color);
-  font-size: 24px;
-  text-align: center;
-}
-.info-dialog p {
-  margin: 0 0 15px;
-  line-height: 1.6;
-  color: var(--text-color);
-  opacity: 0.9;
-}
+.info-dialog h2 { margin: 0 0 20px; text-align: center; }
 .info-dialog .clan {
   background: rgba(10, 119, 0, 0.1);
   padding: 15px;
   border-radius: 10px;
   margin: 20px 0;
   text-align: center;
-  border: 1px solid var(--primary-color);
-}
-.info-dialog .clan strong {
-  color: var(--primary-color);
-  font-size: 18px;
-}
-.info-dialog .contact {
-  background: rgba(0, 0, 0, 0.05);
-  padding: 15px;
-  border-radius: 10px;
-  margin: 20px 0;
-  text-align: center;
-  border: 1px solid var(--border-color);
-}
-.info-dialog .contact a {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 500;
-}
-.info-dialog .contact a:hover {
-  text-decoration: underline;
-}
-.info-dialog .date {
-  text-align: center;
-  font-style: italic;
-  color: var(--text-color);
-  opacity: 0.6;
-  margin-top: 20px;
-  padding-top: 15px;
-  border-top: 1px solid var(--border-color);
 }
 .info-close {
   position: absolute;
@@ -1362,24 +873,11 @@ header {
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: var(--text-color);
-  opacity: 0.7;
-  transition: all 0.2s;
-}
-.info-close:hover {
-  opacity: 1;
-  color: var(--text-color);
 }
 
-@media (min-width: 1025px) {
-  .filters.show ~ .wrap::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.5);
-    z-index: 98;
-    pointer-events: none;
-  }
+@media (max-width: 768px) {
+  .dialog .modal-content { grid-template-columns: 1fr; }
+  .talent-mode-selector { flex-direction: column; align-items: stretch; }
 }
 </style>
 </head>
@@ -1391,18 +889,12 @@ header {
         <h1>Время Героев. Галерея героев с талантами.</h1>
         <div class="copyright">Евгений Поташко и Владимир Плотников, клан "Рожденные в СССР."</div>
       </div>
-      
       <div class="center-group">
         <div class="hero-select-wrapper">
           <div class="hero-select-container">
-            <button id="heroSelectToggle" class="hero-select-toggle" aria-label="Выбор героя">
-              <span id="heroSelectText">Выберите героя</span>
-            </button>
+            <button id="heroSelectToggle" class="hero-select-toggle"><span id="heroSelectText">Выберите героя</span></button>
             <div id="heroCheckboxes" class="hero-checkboxes">
-              <div class="hero-checkboxes-header">
-                <h3>Выберите героев</h3>
-                <span id="heroSelectedCount" class="hero-selected-count">0 выбрано</span>
-              </div>
+              <div class="hero-checkboxes-header"><h3>Выберите героев</h3><span id="heroSelectedCount">0 выбрано</span></div>
               <div id="heroCheckboxesList"></div>
               <div class="hero-select-actions">
                 <button id="selectAllHeroes" class="btn">Выбрать все</button>
@@ -1412,34 +904,18 @@ header {
             </div>
           </div>
         </div>
-        
-        <div class="search-wrapper">
-          <input id="searchInput" type="search" placeholder="Поиск по имени/способности">
-        </div>
+        <div class="search-wrapper"><input id="searchInput" type="search" placeholder="Поиск по имени/способности"></div>
       </div>
-      
       <div class="right-group">
         <div class="sort-group">
-          <div class="sort-select-wrapper">
-            <select id="sortSelect">
-              <option value="Сила">Сила</option>
-              <option value="Атака">Атака</option>
-              <option value="Защита">Защита</option>
-              <option value="Жизни">Жизни</option>
-              <option value="Герой">Имя</option>
-            </select>
-          </div>
+          <div class="sort-select-wrapper"><select id="sortSelect"><option value="Сила">Сила</option><option value="Атака">Атака</option><option value="Защита">Защита</option><option value="Жизни">Жизни</option><option value="Герой">Имя</option></select></div>
           <button id="sortBtn" class="sort-btn desc" data-tooltip="Сортировка по убыванию"></button>
         </div>
-        
         <div class="filter-buttons">
           <button id="openFilters" class="btn primary">Фильтры</button>
           <button id="resetAll" class="btn secondary">Сбросить</button>
         </div>
-        
-        <div class="info-btn-wrapper">
-          <button id="infoBtn" class="info-btn" title="Информация">i</button>
-        </div>
+        <div class="info-btn-wrapper"><button id="infoBtn" class="info-btn">i</button></div>
       </div>
     </div>
   </div>
@@ -1447,1166 +923,335 @@ header {
 
 <aside id="filters" class="filters">
 <div class="panel">
-<div class="head">
-<h2>Фильтры</h2>
-<div style="display: flex; gap: 8px;">
-  <button id="applyFiltersBtn" class="btn primary" style="flex: 1;">Применить</button>
-  <button id="closeFilters" class="btn">Закрыть</button>
+<div class="head"><h2>Фильтры</h2><div style="display: flex; gap: 8px;"><button id="applyFiltersBtn" class="btn primary">Применить</button><button id="closeFilters" class="btn">Закрыть</button></div></div>
+<div class="facet" data-facet="element"><h3>Стихия</h3><div class="opts" id="facet-element"></div><div class="actions"><button class="btn" data-action="all" data-facet="element">Все</button><button class="btn" data-action="none" data-facet="element">Снять</button></div></div>
+<div class="facet" data-facet="stars"><h3>Количество звезд</h3><div class="opts" id="facet-stars"></div><div class="actions"><button class="btn" data-action="all" data-facet="stars">Все</button><button class="btn" data-action="none" data-facet="stars">Снять</button></div></div>
+<div class="facet" data-facet="mana"><h3>Скорость маны</h3><div class="opts" id="facet-mana"></div><div class="actions"><button class="btn" data-action="all" data-facet="mana">Все</button><button class="btn" data-action="none" data-facet="mana">Снять</button></div></div>
+<div class="facet" data-facet="attackType"><h3>Способ атаки</h3><div class="opts" id="facet-attackType"></div><div class="actions"><button class="btn" data-action="all" data-facet="attackType">Все</button><button class="btn" data-action="none" data-facet="attackType">Снять</button></div></div>
+<div class="facet" data-facet="summon"><h3>Место призыва</h3><div class="opts" id="facet-summon"></div><div class="actions"><button class="btn" data-action="all" data-facet="summon">Все</button><button class="btn" data-action="none" data-facet="summon">Снять</button></div></div>
+<div class="facet" data-facet="clazz"><h3>Класс</h3><div class="opts" id="facet-clazz"></div><div class="actions"><button class="btn" data-action="all" data-facet="clazz">Все</button><button class="btn" data-action="none" data-facet="clazz">Снять</button></div></div>
+<div class="apply-filters-container"><button id="applyFiltersMobileBtn" class="btn primary apply-filters-btn">Применить фильтры</button></div>
 </div>
-</div>
-<div class="facet" data-facet="element">
-      <h3>Стихия</h3>
-      <div class="opts" id="facet-element"></div>
-      <div class="actions">
-        <button class="btn" data-action="all" data-facet="element">Все</button>
-        <button class="btn" data-action="none" data-facet="element">Снять</button>
-      </div>
-    </div>
-
-    <div class="facet" data-facet="stars">
-      <h3>Количество звезд</h3>
-      <div class="opts" id="facet-stars"></div>
-      <div class="actions">
-        <button class="btn" data-action="all" data-facet="stars">Все</button>
-        <button class="btn" data-action="none" data-facet="stars">Снять</button>
-      </div>
-    </div>
-
-    <div class="facet" data-facet="mana">
-      <h3>Скорость маны</h3>
-      <div class="opts" id="facet-mana"></div>
-      <div class="actions">
-        <button class="btn" data-action="all" data-facet="mana">Все</button>
-        <button class="btn" data-action="none" data-facet="mana">Снять</button>
-      </div>
-    </div>
-
-    <div class="facet" data-facet="attackType">
-      <h3>Способ атаки</h3>
-      <div class="opts" id="facet-attackType"></div>
-      <div class="actions">
-        <button class="btn" data-action="all" data-facet="attackType">Все</button>
-        <button class="btn" data-action="none" data-facet="attackType">Снять</button>
-      </div>
-    </div>
-
-    <div class="facet" data-facet="summon">
-      <h3>Место призыва</h3>
-      <div class="opts" id="facet-summon"></div>
-      <div class="actions">
-        <button class="btn" data-action="all" data-facet="summon">Все</button>
-        <button class="btn" data-action="none" data-facet="summon">Снять</button>
-      </div>
-    </div>
-
-    <div class="facet" data-facet="clazz">
-      <h3>Класс</h3>
-      <div class="opts" id="facet-clazz"></div>
-      <div class="actions">
-        <button class="btn" data-action="all" data-facet="clazz">Все</button>
-        <button class="btn" data-action="none" data-facet="clazz">Снять</button>
-      </div>
-    </div>
-    
-    <div class="apply-filters-container">
-      <button id="applyFiltersMobileBtn" class="btn primary apply-filters-btn">Применить фильтры</button>
-    </div>
-  </div>
 </aside>
 
 <div class="wrap">
 <section class="content">
   <div id="count">Загрузка...</div>
   <div id="cards" class="cards"></div>
-  <div id="empty" style="display:none; color:#666; padding:24px;">Ничего не найдено. Измените фильтры.</div>
+  <div id="empty" style="display:none;">Ничего не найдено. Измените фильтры.</div>
 </section>
 </div>
 
-<!-- Модальное окно героя с талантами -->
-<div id="modal" class="modal" role="dialog" aria-modal="true">
+<div id="modal" class="modal">
 <div class="dialog">
-<button id="mClose" class="close" aria-label="Закрыть">×</button>
-<button id="mPrev" class="nav prev" aria-label="Предыдущий">‹</button>
-<button id="mNext" class="nav next" aria-label="Следующий">›</button>
+<button id="mClose" class="close">×</button>
+<button id="mPrev" class="nav prev">‹</button>
+<button id="mNext" class="nav next">›</button>
 <div class="modal-content">
-  <div class="image-container">
-    <img id="mImg" src="" alt="">
-    <a id="mOpenImg" class="open-img" href="#" target="_blank" rel="noopener">Открыть изображение в новой вкладке</a>
-  </div>
+  <div class="image-container"><img id="mImg" src=""><a id="mOpenImg" class="open-img" href="#" target="_blank">Открыть изображение</a></div>
   <div class="info-container">
     <h2 id="mName"></h2>
     <div id="mMeta1" class="meta"></div>
     <div id="mMeta2" class="meta"></div>
     <div id="mStats" class="mStats"></div>
+    <div class="talent-mode-selector">
+      <label>Режим талантов:</label>
+      <select id="talentModeSelect">
+        <option value="none">Без талантов</option>
+        <option value="attack">Таланты в атаку</option>
+        <option value="defense">Таланты в защиту</option>
+      </select>
+    </div>
     <h3>Способности</h3>
     <div id="mAbilities" class="pre"></div>
     <h3>Пассивные способности</h3>
     <div id="mPassive" class="pre"></div>
-    
-    <!-- Секция талантов -->
-    <div class="talents-section" id="talentsSection">
-      <h3>
-        Древо талантов
-        <span class="hero-class-badge" id="heroClassBadge"></span>
-      </h3>
-      
-      <!-- Базовые характеристики -->
-      <div class="base-stats-display" id="baseStatsDisplay">
-        <h4>Базовые характеристики</h4>
-        <div class="stats-grid" id="baseStatsGrid"></div>
-      </div>
-      
-      <!-- Древо талантов -->
-      <div id="talentTreeContainer"></div>
-      
-      <!-- Рассчитанные характеристики -->
-      <div class="calculated-stats" id="calculatedStats">
-        <h4>Итоговые характеристики</h4>
-        <div class="stats-grid" id="calculatedStatsGrid"></div>
-      </div>
-      
-      <!-- Кнопки управления -->
-      <div class="talent-actions">
-        <button id="resetAllTalentsBtn" class="btn reset">Сбросить все таланты</button>
-        <button id="resetCurrentGroupBtn" class="btn secondary">Сбросить текущую группу</button>
-      </div>
-    </div>
   </div>
 </div>
 </div>
 </div>
 
-<!-- Модалка информации -->
-<div id="infoModal" class="info-modal">
-  <div class="info-dialog">
-    <button id="infoClose" class="info-close" aria-label="Закрыть">×</button>
-    <h2>О галерее героев</h2>
-    <p>Эта галерея содержит информацию о героях игры "Время Героев", их характеристиках, способностях и древе талантов.</p>
-    <div class="clan">
-      <strong>Разработано:</strong><br>
-      Евгений Поташко и Владимир Плотников<br>
-      <strong>Клан: "Рожденные в СССР."</strong><br>
-      скрины героев предоставлены великим и могучим Козырем
-    </div>
-    <div class="contact">
-      <strong>Обратная связь:</strong><br>
-      Нашли ошибку или есть предложения?<br>
-      Пишите: <a href="mailto:master-Erasm@yandex.ru">master-Erasm@yandex.ru</a>
-    </div>
-    <p>База данных регулярно обновляется с учетом новых героев и изменений в балансе игры.</p>
-    <p class="date">Дата последнего обновления: <span id="updateDate"></span></p>
-  </div>
-</div>
+<div id="infoModal" class="info-modal"><div class="info-dialog"><button id="infoClose" class="info-close">×</button><h2>О галерее героев</h2><p>Галерея героев игры "Время Героев" с системой талантов.</p><div class="clan"><strong>Разработано:</strong><br>Евгений Поташко и Владимир Плотников<br><strong>Клан: "Рожденные в СССР."</strong></div><p class="date">Дата обновления: <span id="updateDate"></span></p></div></div>
 
 <script>
-// Имена колонок для heroes.csv
-const HERO_FIELDS = {
-  id: 'id',
-  name: 'Герой',
-  element: 'Стихия',
-  stars: 'Количество звезд',
-  mana: 'Скорость маны',
-  power: 'Сила',
-  attack: 'Атака',
-  defense: 'Защита',
-  hp: 'Жизни',
-  attackType: 'Способ атаки',
-  abilities: 'Способности',
-  passive: 'Пассивные способности',
-  summon: 'Место призыва',
-  clazz: 'Класс',
-  image: 'Картинка'
-};
+const HERO_FIELDS = { id:'id', name:'Герой', element:'Стихия', stars:'Количество звезд', mana:'Скорость маны', power:'Сила', attack:'Атака', defense:'Защита', hp:'Жизни', attackType:'Способ атаки', abilities:'Способности', passive:'Пассивные способности', summon:'Место призыва', clazz:'Класс', image:'Картинка' };
+const TALENT_DESC_FIELDS = { id:'id', talent_id:'talent_id', effect_type:'effect_type', value:'value', is_percent:'is_percent', image_active:'Картинка активная', image_inactive:'Картинка неактивная' };
+const CLASS_TALENT_FIELDS = { class_id:'class_id', row_number:'row_number', is_mandatory:'is_mandatory', branch_group:'branch_group', left_talent_id:'left_talent_id', center_talent_id:'center_talent_id', right_talent_id:'right_talent_id' };
 
-// Имена колонок для Talent_discription.csv
-const TALENT_DESC_FIELDS = {
-  id: 'id',
-  id2: 'id 2',
-  talent_id: 'talent_id',
-  effect_type: 'effect_type',
-  value: 'value',
-  is_percent: 'is_percent',
-  image_active: 'Картинка активная',
-  image_inactive: 'Картинка неактивная'
-};
-
-// Имена колонок для Classes.csv
-const CLASS_TALENT_FIELDS = {
-  id: 'id',
-  id2: 'id 2',
-  class_id: 'class_id',
-  row_number: 'row_number',
-  is_mandatory: 'is_mandatory',
-  branch_group: 'branch_group',
-  left_talent_id: 'left_talent_id',
-  center_talent_id: 'center_talent_id',
-  right_talent_id: 'right_talent_id',
-  next_group: 'next_group'
-};
-
-// URL для загрузки данных
 const DATA_URL = 'heroes.csv?ts=' + Date.now();
-const TALENT_DESC_URL = 'Talent_discription.csv?ts=' + Date.now();
+const TALENT_DESC_URL = 'Talent_description.csv?ts=' + Date.now();
 const CLASSES_URL = 'Classes.csv?ts=' + Date.now();
 
-// Элементы DOM
-const els = {
-  searchInput: document.getElementById('searchInput'),
-  sortSelect: document.getElementById('sortSelect'),
-  sortBtn: document.getElementById('sortBtn'),
-  resetAll: document.getElementById('resetAll'),
-  openFilters: document.getElementById('openFilters'),
-  closeFilters: document.getElementById('closeFilters'),
-  applyFiltersBtn: document.getElementById('applyFiltersBtn'),
-  applyFiltersMobileBtn: document.getElementById('applyFiltersMobileBtn'),
-  heroSelectToggle: document.getElementById('heroSelectToggle'),
-  heroSelectText: document.getElementById('heroSelectText'),
-  heroCheckboxes: document.getElementById('heroCheckboxes'),
-  heroCheckboxesList: document.getElementById('heroCheckboxesList'),
-  heroSelectedCount: document.getElementById('heroSelectedCount'),
-  selectAllHeroes: document.getElementById('selectAllHeroes'),
-  deselectAllHeroes: document.getElementById('deselectAllHeroes'),
-  applyHeroSelection: document.getElementById('applyHeroSelection'),
-  filters: document.getElementById('filters'),
-  count: document.getElementById('count'),
-  cards: document.getElementById('cards'),
-  empty: document.getElementById('empty'),
-  facet: {
-    element: document.getElementById('facet-element'),
-    stars: document.getElementById('facet-stars'),
-    mana: document.getElementById('facet-mana'),
-    attackType: document.getElementById('facet-attackType'),
-    summon: document.getElementById('facet-summon'),
-    clazz: document.getElementById('facet-clazz'),
-  },
-  modal: document.getElementById('modal'),
-  mClose: document.getElementById('mClose'),
-  mPrev: document.getElementById('mPrev'),
-  mNext: document.getElementById('mNext'),
-  mImg: document.getElementById('mImg'),
-  mOpenImg: document.getElementById('mOpenImg'),
-  mName: document.getElementById('mName'),
-  mMeta1: document.getElementById('mMeta1'),
-  mMeta2: document.getElementById('mMeta2'),
-  mStats: document.getElementById('mStats'),
-  mAbilities: document.getElementById('mAbilities'),
-  mPassive: document.getElementById('mPassive'),
-  talentsSection: document.getElementById('talentsSection'),
-  heroClassBadge: document.getElementById('heroClassBadge'),
-  baseStatsDisplay: document.getElementById('baseStatsDisplay'),
-  baseStatsGrid: document.getElementById('baseStatsGrid'),
-  talentTreeContainer: document.getElementById('talentTreeContainer'),
-  calculatedStats: document.getElementById('calculatedStats'),
-  calculatedStatsGrid: document.getElementById('calculatedStatsGrid'),
-  resetAllTalentsBtn: document.getElementById('resetAllTalentsBtn'),
-  resetCurrentGroupBtn: document.getElementById('resetCurrentGroupBtn'),
-  infoModal: document.getElementById('infoModal'),
-  infoBtn: document.getElementById('infoBtn'),
-  infoClose: document.getElementById('infoClose'),
-  updateDate: document.getElementById('updateDate')
-};
-
-// Глобальные данные
-let allHeroes = [];
-let viewHeroes = [];
-let currentIdx = -1;
-let allHeroNames = [];
-let filteredHeroNames = [];
+let allHeroes = [], viewHeroes = [], currentIdx = -1, allHeroNames = [], filteredHeroNames = [];
 let sortDirection = 'desc';
+let talentDescriptions = {}; // talent_id -> { effect_type, value, is_percent }
+let classTalents = {};       // className -> массив строк талантов
+let currentHeroStats = { attack: 0, defense: 0, hp: 0, power: 0 }; // базовые для модалки
+let currentHeroClass = '';
 
-// Данные талантов
-let talentDescriptions = {}; // talent_id -> полная информация
-let classTalents = {};       // className -> массив талантов
+const selected = { element: new Set(), stars: new Set(), mana: new Set(), attackType: new Set(), summon: new Set(), clazz: new Set(), heroes: new Set() };
 
-// Состояние выбранных талантов для текущего героя
-let currentHeroTalents = {
-  class: null,
-  selections: {}, // groupId -> { branch: 'left'/'right', talentIds: [] }
-  mandatoryTalents: [] // список ID обязательных талантов
-};
+function toNum(v) { let n = parseFloat(String(v).replace(',','.')); return isNaN(n)?null:n; }
+function uniq(arr) { return [...new Set(arr.filter(v=>v!==null&&v!==undefined&&String(v).trim()!==''))]; }
+function sortAlpha(a,b) { return String(a).localeCompare(String(b),'ru',{numeric:true}); }
+function fileCellToUrl(v) { let s=String(v||''); let m=s.match(/\((https?:\/\/[^)]+)\)/i); if(m) return m[1]; let m2=s.match(/https?:\/\/\S+/i); return m2?m2[0].replace(/[),]+$/,''):''; }
 
-// Выбранные фильтры
-const selected = {
-  element: new Set(),
-  stars: new Set(),
-  mana: new Set(),
-  attackType: new Set(),
-  summon: new Set(),
-  clazz: new Set(),
-  heroes: new Set()
-};
-
-// Вспомогательные функции
-function toNum(v) { 
-  if (v === undefined || v === null) return null;
-  const str = String(v).replace(',', '.').replace(/[^\d.-]/g, '');
-  const n = parseFloat(str);
-  return !isNaN(n) && isFinite(n) ? n : null; 
-}
-
-function uniq(values) { 
-  return [...new Set(values.filter(v => v !== undefined && v !== null && String(v).trim() !== ''))]; 
-}
-
-function sortAlpha(a, b) { 
-  return String(a).localeCompare(String(b), 'ru', { numeric: true }); 
-}
-
-function sortNumericAsc(a, b) { 
-  const na = toNum(a), nb = toNum(b); 
-  if (na === null && nb === null) return 0;
-  if (na === null) return 1;
-  if (nb === null) return -1;
-  return na - nb; 
-}
-
-function sortMana(a, b) {
-  const order = ['Очень медленно', 'Медленно', 'Средне', 'Быстро', 'Очень быстро', 'Легендарно быстро'];
-  const indexA = order.indexOf(String(a));
-  const indexB = order.indexOf(String(b));
-  
-  if (indexA === -1 && indexB === -1) return String(a).localeCompare(String(b), 'ru');
-  if (indexA === -1) return 1;
-  if (indexB === -1) return -1;
-  
-  return indexA - indexB;
-}
-
-function fileCellToUrl(v) {
-  if (!v) return '';
-  const s = String(v).trim();
-  
-  // Ищем URL в скобках
-  const mParen = s.match(/\((https?:\/\/[^)]+)\)/i);
-  if (mParen) return mParen[1];
-  
-  // Ищем прямой URL
-  const mAny = s.match(/https?:\/\/\S+/i);
-  if (mAny) return mAny[0].replace(/[),]+$/, '');
-  
-  return '';
-}
-
-function getTalentImage(talentId, active = true) {
-  const talent = talentDescriptions[talentId];
-  if (!talent) return '';
-  
-  // Определяем название поля в зависимости от активности
-  const fieldName = active ? TALENT_DESC_FIELDS.image_active : TALENT_DESC_FIELDS.image_inactive;
-  return fileCellToUrl(talent[fieldName]);
-}
-
-function getTalentName(talentId) {
-  const talent = talentDescriptions[talentId];
-  if (!talent) return `Талант ${talentId}`;
-  
-  // Используем effect_type как название
-  return talent[TALENT_DESC_FIELDS.effect_type] || `Талант ${talentId}`;
-}
-
-function getTalentEffects(talentId) {
-  const talent = talentDescriptions[talentId];
-  if (!talent) return [];
-  
-  const value = toNum(talent[TALENT_DESC_FIELDS.value]) || 0;
-  const isPercent = String(talent[TALENT_DESC_FIELDS.is_percent]).toLowerCase() === 'true' || 
-                    talent[TALENT_DESC_FIELDS.is_percent] === true;
-  const effectType = talent[TALENT_DESC_FIELDS.effect_type] || 'unknown';
-  
-  // Определяем цель эффекта по названию
-  let target = effectType;
-  const nameLower = effectType.toLowerCase();
-  
-  if (nameLower.includes('атак')) target = 'Атака';
-  else if (nameLower.includes('защит')) target = 'Защита';
-  else if (nameLower.includes('жизн') || nameLower.includes('здоров')) target = 'Жизни';
-  else if (nameLower.includes('сил')) target = 'Сила';
-  else if (nameLower.includes('крит')) target = 'Крит';
-  else if (nameLower.includes('лечен') || nameLower.includes('исцел')) target = 'Исцеление';
-  else if (nameLower.includes('маны') || nameLower.includes('скорость')) target = 'Скорость маны';
-  
-  return [{
-    type: 'stat_increase',
-    target: target,
-    value: value,
-    isPercent: isPercent,
-    originalName: effectType
-  }];
-}
-
-// Обновление отображения выбора героев
-function updateHeroSelectDisplay() {
-  const count = selected.heroes.size;
-  els.heroSelectedCount.textContent = `${count} выбрано`;
-  
-  if (count === 0) {
-    els.heroSelectText.textContent = 'Выберите героя';
-  } else if (count === 1) {
-    const heroName = Array.from(selected.heroes)[0];
-    els.heroSelectText.textContent = heroName;
-  } else if (count === allHeroNames.length) {
-    els.heroSelectText.textContent = 'Все герои';
-  } else {
-    const firstHero = Array.from(selected.heroes)[0];
-    els.heroSelectText.textContent = `${firstHero} и еще ${count - 1}`;
-  }
-}
-
-function updateHeroCheckboxes() {
-  const heroNamesToShow = filteredHeroNames.length > 0 ? filteredHeroNames : allHeroNames;
-  
-  els.heroCheckboxesList.innerHTML = heroNamesToShow.map(name => {
-    const safeId = 'hero-' + name.replace(/[^a-zA-Zа-яА-Я0-9]/g, '_');
-    const isSelected = selected.heroes.has(name);
-    return `
-      <div class="hero-checkbox-item">
-        <input type="checkbox" id="${safeId}" data-hero="${name}" ${isSelected ? 'checked' : ''}>
-        <label for="${safeId}">${name}</label>
-      </div>
-    `;
-  }).join('');
-  
-  els.heroCheckboxesList.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-    cb.addEventListener('change', function() {
-      const heroName = this.getAttribute('data-hero');
-      if (this.checked) {
-        selected.heroes.add(heroName);
-      } else {
-        selected.heroes.delete(heroName);
-      }
-      updateHeroSelectDisplay();
+// Функция расчета характеристик с учетом талантов по выбранному режиму
+function calculateStatsWithTalents(hero, mode) {
+    const baseAttack = toNum(hero[HERO_FIELDS.attack]) || 0;
+    const baseDefense = toNum(hero[HERO_FIELDS.defense]) || 0;
+    const baseHp = toNum(hero[HERO_FIELDS.hp]) || 0;
+    const heroClass = hero[HERO_FIELDS.clazz];
+    
+    if (mode === 'none' || !classTalents[heroClass]) {
+        return { attack: baseAttack, defense: baseDefense, hp: baseHp };
+    }
+    
+    // Собираем ID талантов для выбранного режима
+    const talents = classTalents[heroClass];
+    const selectedTalentIds = new Set();
+    
+    // Обязательные таланты (центральный столбец на строках 1,4,7,10,12,15,18,20)
+    talents.forEach(t => {
+        if (t.isMandatory && t.centerTalentId) {
+            selectedTalentIds.add(t.centerTalentId);
+        }
     });
-  });
-  
-  updateHeroSelectDisplay();
+    
+    // Определяем, какие ветки выбирать в зависимости от режима
+    // Группируем по branch_group, чтобы выбрать левую или правую ветку
+    const groups = {};
+    talents.forEach(t => {
+        if (!groups[t.branchGroup]) groups[t.branchGroup] = [];
+        groups[t.branchGroup].push(t);
+    });
+    
+    for (const group in groups) {
+        const groupTalents = groups[group];
+        // В каждой группе выбираем таланты для левой или правой ветки
+        // Нужно определить, какие таланты в этой группе относятся к атаке или защите
+        let hasAttackTalent = false;
+        let hasDefenseTalent = false;
+        
+        for (const t of groupTalents) {
+            if (t.leftTalentId && talentDescriptions[t.leftTalentId]) {
+                const effect = talentDescriptions[t.leftTalentId];
+                const effectType = effect[TALENT_DESC_FIELDS.effect_type] || '';
+                if (effectType.toLowerCase().includes('атак')) hasAttackTalent = true;
+                if (effectType.toLowerCase().includes('защит')) hasDefenseTalent = true;
+            }
+            if (t.rightTalentId && talentDescriptions[t.rightTalentId]) {
+                const effect = talentDescriptions[t.rightTalentId];
+                const effectType = effect[TALENT_DESC_FIELDS.effect_type] || '';
+                if (effectType.toLowerCase().includes('атак')) hasAttackTalent = true;
+                if (effectType.toLowerCase().includes('защит')) hasDefenseTalent = true;
+            }
+        }
+        
+        // Выбираем ветку в зависимости от режима
+        if (mode === 'attack' && hasAttackTalent) {
+            // Выбираем левую ветку (обычно атака слева) или правую, если слева нет атаки
+            for (const t of groupTalents) {
+                if (t.leftTalentId && talentDescriptions[t.leftTalentId]) {
+                    const eff = talentDescriptions[t.leftTalentId][TALENT_DESC_FIELDS.effect_type] || '';
+                    if (eff.toLowerCase().includes('атак')) {
+                        selectedTalentIds.add(t.leftTalentId);
+                        break;
+                    }
+                }
+            }
+        } else if (mode === 'defense' && hasDefenseTalent) {
+            // Выбираем правую ветку (обычно защита справа)
+            for (const t of groupTalents) {
+                if (t.rightTalentId && talentDescriptions[t.rightTalentId]) {
+                    const eff = talentDescriptions[t.rightTalentId][TALENT_DESC_FIELDS.effect_type] || '';
+                    if (eff.toLowerCase().includes('защит')) {
+                        selectedTalentIds.add(t.rightTalentId);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    
+    // Применяем эффекты талантов
+    let attackBonusPercent = 0, attackBonusFlat = 0;
+    let defenseBonusPercent = 0, defenseBonusFlat = 0;
+    let hpBonusPercent = 0, hpBonusFlat = 0;
+    
+    selectedTalentIds.forEach(talentId => {
+        const talent = talentDescriptions[talentId];
+        if (!talent) return;
+        const value = toNum(talent[TALENT_DESC_FIELDS.value]) || 0;
+        const isPercent = String(talent[TALENT_DESC_FIELDS.is_percent]).toLowerCase() === 'true';
+        const effectType = talent[TALENT_DESC_FIELDS.effect_type] || '';
+        
+        if (effectType.toLowerCase().includes('атак')) {
+            if (isPercent) attackBonusPercent += value;
+            else attackBonusFlat += value;
+        } else if (effectType.toLowerCase().includes('защит')) {
+            if (isPercent) defenseBonusPercent += value;
+            else defenseBonusFlat += value;
+        } else if (effectType.toLowerCase().includes('жизн') || effectType.toLowerCase().includes('здоров')) {
+            if (isPercent) hpBonusPercent += value;
+            else hpBonusFlat += value;
+        }
+    });
+    
+    const finalAttack = (baseAttack + attackBonusFlat) * (1 + attackBonusPercent / 100);
+    const finalDefense = (baseDefense + defenseBonusFlat) * (1 + defenseBonusPercent / 100);
+    const finalHp = (baseHp + hpBonusFlat) * (1 + hpBonusPercent / 100);
+    
+    return { attack: Math.round(finalAttack), defense: Math.round(finalDefense), hp: Math.round(finalHp) };
 }
 
 function buildFacet(container, values, facetKey) {
-  let opts = uniq(values);
-  
-  if (facetKey === 'mana') {
-    opts.sort(sortMana);
-  } else if (facetKey === 'stars') {
-    opts.sort(sortNumericAsc);
-  } else {
-    opts.sort(sortAlpha);
-  }
-  
-  container.innerHTML = opts.map(val => {
-    const checked = selected[facetKey].has(String(val)) ? 'checked' : '';
-    return `<label class="opt"><input type="checkbox" data-facet="${facetKey}" value="${String(val).replace(/"/g, '&quot;')}" ${checked}><span>${String(val)}</span></label>`;
-  }).join('');
-  
-  container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-    cb.addEventListener('change', () => {
-      const set = selected[cb.dataset.facet];
-      if (cb.checked) set.add(cb.value); else set.delete(cb.value);
-    });
-  });
+    let opts = uniq(values);
+    if (facetKey === 'mana') opts.sort((a,b)=>{let o=['Очень медленно','Медленно','Средне','Быстро','Очень быстро','Легендарно быстро']; return o.indexOf(a)-o.indexOf(b);});
+    else if (facetKey === 'stars') opts.sort((a,b)=>toNum(a)-toNum(b));
+    else opts.sort(sortAlpha);
+    container.innerHTML = opts.map(v=>`<label class="opt"><input type="checkbox" data-facet="${facetKey}" value="${String(v).replace(/"/g,'&quot;')}" ${selected[facetKey].has(String(v))?'checked':''}><span>${v}</span></label>`).join('');
+    container.querySelectorAll('input[type="checkbox"]').forEach(cb=>cb.addEventListener('change',()=>{let s=selected[cb.dataset.facet]; if(cb.checked) s.add(cb.value); else s.delete(cb.value);}));
 }
 
 function initAllFacets(heroes) {
-  buildFacet(els.facet.element, heroes.map(r => r[HERO_FIELDS.element]), 'element');
-  buildFacet(els.facet.stars, heroes.map(r => r[HERO_FIELDS.stars]), 'stars');
-  buildFacet(els.facet.mana, heroes.map(r => r[HERO_FIELDS.mana]), 'mana');
-  buildFacet(els.facet.attackType, heroes.map(r => r[HERO_FIELDS.attackType]), 'attackType');
-  buildFacet(els.facet.summon, heroes.map(r => r[HERO_FIELDS.summon]), 'summon');
-  buildFacet(els.facet.clazz, heroes.map(r => r[HERO_FIELDS.clazz]), 'clazz');
-  
-  allHeroNames = uniq(heroes.map(r => r[HERO_FIELDS.name])).sort(sortAlpha);
-  filteredHeroNames = [...allHeroNames];
-  updateHeroCheckboxes();
+    buildFacet(document.getElementById('facet-element'), heroes.map(r=>r[HERO_FIELDS.element]), 'element');
+    buildFacet(document.getElementById('facet-stars'), heroes.map(r=>r[HERO_FIELDS.stars]), 'stars');
+    buildFacet(document.getElementById('facet-mana'), heroes.map(r=>r[HERO_FIELDS.mana]), 'mana');
+    buildFacet(document.getElementById('facet-attackType'), heroes.map(r=>r[HERO_FIELDS.attackType]), 'attackType');
+    buildFacet(document.getElementById('facet-summon'), heroes.map(r=>r[HERO_FIELDS.summon]), 'summon');
+    buildFacet(document.getElementById('facet-clazz'), heroes.map(r=>r[HERO_FIELDS.clazz]), 'clazz');
+    allHeroNames = uniq(heroes.map(r=>r[HERO_FIELDS.name])).sort(sortAlpha);
+    filteredHeroNames = [...allHeroNames];
+    updateHeroCheckboxes();
 }
 
-function selectAll(facetKey) {
-  const values = uniq(allHeroes.map(r => {
-    switch (facetKey) {
-      case 'element': return r[HERO_FIELDS.element];
-      case 'stars': return r[HERO_FIELDS.stars];
-      case 'mana': return r[HERO_FIELDS.mana];
-      case 'attackType': return r[HERO_FIELDS.attackType];
-      case 'summon': return r[HERO_FIELDS.summon];
-      case 'clazz': return r[HERO_FIELDS.clazz];
-      default: return null;
-    }
-  })).filter(v => v !== null);
-  
-  selected[facetKey] = new Set(values.map(String));
-  initAllFacets(allHeroes);
+function updateHeroCheckboxes() {
+    let names = filteredHeroNames.length?filteredHeroNames:allHeroNames;
+    document.getElementById('heroCheckboxesList').innerHTML = names.map(name=>`<div class="hero-checkbox-item"><input type="checkbox" id="hero-${name.replace(/[^a-zа-я0-9]/gi,'_')}" data-hero="${name}" ${selected.heroes.has(name)?'checked':''}><label>${name}</label></div>`).join('');
+    document.querySelectorAll('#heroCheckboxesList input').forEach(cb=>cb.addEventListener('change',function(){let n=this.dataset.hero; if(this.checked) selected.heroes.add(n); else selected.heroes.delete(n); updateHeroSelectDisplay();}));
+    updateHeroSelectDisplay();
 }
 
-function selectNone(facetKey) {
-  selected[facetKey].clear();
-  initAllFacets(allHeroes);
-}
-
-// Функция расчета итоговых характеристик
-function calculateFinalStats(baseStats, talentSelections) {
-  const finalStats = { ...baseStats };
-  const changes = {};
-  
-  // Инициализируем изменения для всех базовых статов
-  Object.keys(baseStats).forEach(key => {
-    changes[key] = { base: baseStats[key], percent: 0, absolute: 0 };
-  });
-  
-  // Применяем обязательные таланты
-  if (talentSelections.mandatoryTalents && talentSelections.mandatoryTalents.length) {
-    talentSelections.mandatoryTalents.forEach(talentId => {
-      const effects = getTalentEffects(talentId);
-      effects.forEach(effect => {
-        applyEffect(effect, finalStats, changes);
-      });
-    });
-  }
-  
-  // Применяем выбранные таланты из веток
-  if (talentSelections.selections) {
-    Object.values(talentSelections.selections).forEach(selection => {
-      if (selection.talentIds && selection.talentIds.length) {
-        selection.talentIds.forEach(talentId => {
-          const effects = getTalentEffects(talentId);
-          effects.forEach(effect => {
-            applyEffect(effect, finalStats, changes);
-          });
-        });
-      }
-    });
-  }
-  
-  return { finalStats, changes };
-}
-
-function applyEffect(effect, stats, changes) {
-  const statName = effect.target;
-  
-  // Если такого стата еще нет, добавляем
-  if (!(statName in stats)) {
-    stats[statName] = 0;
-  }
-  
-  if (!changes[statName]) {
-    changes[statName] = { base: stats[statName], percent: 0, absolute: 0 };
-  }
-  
-  if (effect.isPercent) {
-    changes[statName].percent += effect.value;
-  } else {
-    changes[statName].absolute += effect.value;
-  }
-  
-  // Пересчитываем итоговое значение
-  stats[statName] = (changes[statName].base + changes[statName].absolute) * (1 + changes[statName].percent / 100);
-}
-
-// Функция для отображения древа талантов
-function renderTalentTree() {
-  if (!currentHeroTalents.class || !classTalents[currentHeroTalents.class]) {
-    els.talentTreeContainer.innerHTML = '<p>Нет данных о талантах для этого класса</p>';
-    return;
-  }
-  
-  const talents = classTalents[currentHeroTalents.class];
-  const groups = {};
-  
-  // Группируем таланты по branch_group
-  talents.forEach(talent => {
-    const group = talent.branchGroup;
-    if (!groups[group]) {
-      groups[group] = [];
-    }
-    groups[group].push(talent);
-  });
-  
-  // Рендерим группы
-  let html = '';
-  Object.keys(groups).sort().forEach(group => {
-    const groupTalents = groups[group].sort((a, b) => a.rowNumber - b.rowNumber);
-    
-    html += '<div class="talent-group">';
-    html += `<div class="talent-group-header"></div>`; // Пустой заголовок без номера
-    
-    groupTalents.forEach(talent => {
-      html += '<div class="talent-row">';
-      
-      // Левая ветка
-      if (talent.leftTalentId) {
-        const isSelected = currentHeroTalents.selections[group]?.branch === 'left';
-        const talentId = talent.leftTalentId;
-        const imgUrl = getTalentImage(talentId, isSelected);
-        const effects = getTalentEffects(talentId);
-        const effectsText = effects.map(e => `${e.value}${e.isPercent ? '%' : ''} ${e.target}`).join(', ');
-        
-        html += `<div class="talent-cell talent-choice left ${isSelected ? 'selected' : ''}" 
-                    data-group="${group}" data-branch="left" data-talent-id="${talentId}">`;
-        if (imgUrl) {
-          html += `<img src="${imgUrl}" alt="Талант" loading="lazy" onerror="this.style.display='none'">`;
-        }
-        html += `<div class="talent-name">${getTalentName(talentId)}</div>`;
-        if (effectsText) {
-          html += `<div class="talent-effects">${effectsText}</div>`;
-        }
-        html += '</div>';
-      } else {
-        html += '<div class="talent-cell talent-empty"></div>';
-      }
-      
-      // Центральная ветка (обязательная)
-      if (talent.centerTalentId) {
-        const talentId = talent.centerTalentId;
-        const imgUrl = getTalentImage(talentId, true);
-        const effects = getTalentEffects(talentId);
-        const effectsText = effects.map(e => `${e.value}${e.isPercent ? '%' : ''} ${e.target}`).join(', ');
-        
-        html += `<div class="talent-cell talent-mandatory" data-talent-id="${talentId}">`;
-        if (imgUrl) {
-          html += `<img src="${imgUrl}" alt="Обязательный талант" loading="lazy" onerror="this.style.display='none'">`;
-        }
-        html += `<div class="talent-name">${getTalentName(talentId)}</div>`;
-        if (effectsText) {
-          html += `<div class="talent-effects">${effectsText}</div>`;
-        }
-        html += '</div>';
-      } else {
-        html += '<div class="talent-cell talent-empty"></div>';
-      }
-      
-      // Правая ветка
-      if (talent.rightTalentId) {
-        const isSelected = currentHeroTalents.selections[group]?.branch === 'right';
-        const talentId = talent.rightTalentId;
-        const imgUrl = getTalentImage(talentId, isSelected);
-        const effects = getTalentEffects(talentId);
-        const effectsText = effects.map(e => `${e.value}${e.isPercent ? '%' : ''} ${e.target}`).join(', ');
-        
-        html += `<div class="talent-cell talent-choice right ${isSelected ? 'selected' : ''}" 
-                    data-group="${group}" data-branch="right" data-talent-id="${talentId}">`;
-        if (imgUrl) {
-          html += `<img src="${imgUrl}" alt="Талант" loading="lazy" onerror="this.style.display='none'">`;
-        }
-        html += `<div class="talent-name">${getTalentName(talentId)}</div>`;
-        if (effectsText) {
-          html += `<div class="talent-effects">${effectsText}</div>`;
-        }
-        html += '</div>';
-      } else {
-        html += '<div class="talent-cell talent-empty"></div>';
-      }
-      
-      html += '</div>';
-    });
-    
-    html += '</div>';
-  });
-  
-  els.talentTreeContainer.innerHTML = html;
-  
-  // Добавляем обработчики для выбора талантов
-  document.querySelectorAll('.talent-choice').forEach(el => {
-    el.addEventListener('click', function(e) {
-      e.stopPropagation();
-      const group = this.dataset.group;
-      const branch = this.dataset.branch;
-      const talentId = parseInt(this.dataset.talentId);
-      
-      selectTalentBranch(group, branch, talentId);
-    });
-  });
-}
-
-// Функция выбора ветки талантов
-function selectTalentBranch(group, branch, talentId) {
-  if (!currentHeroTalents.class || !classTalents[currentHeroTalents.class]) return;
-  
-  const talents = classTalents[currentHeroTalents.class];
-  const groupTalents = talents.filter(t => t.branchGroup === group);
-  
-  // Получаем все ID талантов этой ветки в группе
-  const branchTalentIds = groupTalents
-    .map(t => branch === 'left' ? t.leftTalentId : t.rightTalentId)
-    .filter(id => id !== null);
-  
-  // Сохраняем выбор
-  currentHeroTalents.selections[group] = {
-    branch: branch,
-    talentIds: branchTalentIds
-  };
-  
-  // Перерисовываем дерево
-  renderTalentTree();
-  
-  // Обновляем рассчитанные характеристики
-  updateCalculatedStats();
-}
-
-// Функция сброса всех талантов
-function resetAllTalents() {
-  currentHeroTalents.selections = {};
-  renderTalentTree();
-  updateCalculatedStats();
-}
-
-// Функция сброса текущей группы
-function resetCurrentGroup() {
-  if (!currentHeroTalents.class) return;
-  
-  // Находим первую группу, в которой есть выбор
-  const groups = Object.keys(currentHeroTalents.selections);
-  if (groups.length > 0) {
-    delete currentHeroTalents.selections[groups[0]];
-    renderTalentTree();
-    updateCalculatedStats();
-  }
-}
-
-// Функция обновления рассчитанных характеристик
-function updateCalculatedStats() {
-  if (currentIdx < 0 || !viewHeroes[currentIdx]) return;
-  
-  const hero = viewHeroes[currentIdx];
-  const baseStats = {
-    'Сила': toNum(hero[HERO_FIELDS.power]) || 0,
-    'Атака': toNum(hero[HERO_FIELDS.attack]) || 0,
-    'Защита': toNum(hero[HERO_FIELDS.defense]) || 0,
-    'Жизни': toNum(hero[HERO_FIELDS.hp]) || 0
-  };
-  
-  const { finalStats, changes } = calculateFinalStats(baseStats, currentHeroTalents);
-  
-  // Отображаем базовые характеристики
-  els.baseStatsGrid.innerHTML = Object.entries(baseStats).map(([key, value]) => `
-    <div class="stat-item">
-      <span class="stat-label">${key}:</span>
-      <span class="stat-value">${Math.round(value * 10) / 10}</span>
-    </div>
-  `).join('');
-  
-  // Отображаем итоговые характеристики
-  els.calculatedStatsGrid.innerHTML = Object.entries(finalStats).map(([key, value]) => {
-    const change = changes[key];
-    let changeText = '';
-    if (change && (change.absolute !== 0 || change.percent !== 0)) {
-      const parts = [];
-      if (change.absolute > 0) parts.push(`+${change.absolute}`);
-      if (change.percent > 0) parts.push(`+${change.percent}%`);
-      changeText = parts.length ? ` (${parts.join(', ')})` : '';
-    }
-    
-    return `
-      <div class="stat-item">
-        <span class="stat-label">${key}:</span>
-        <span class="stat-value">
-          ${Math.round(value * 10) / 10}
-          ${changeText ? `<span class="stat-change">${changeText}</span>` : ''}
-        </span>
-      </div>
-    `;
-  }).join('');
-}
-
-// Функция заполнения модального окна
-function fillModal(hero) {
-  const img = fileCellToUrl(hero[HERO_FIELDS.image]);
-  els.mImg.src = img || '';
-  els.mImg.alt = hero[HERO_FIELDS.name] || '';
-  els.mOpenImg.href = img || '#';
-  els.mOpenImg.style.display = img ? 'inline-block' : 'none';
-
-  els.mName.textContent = hero[HERO_FIELDS.name] || '';
-  els.mMeta1.innerHTML = `
-    <span>${hero[HERO_FIELDS.element] || ''}</span>
-    <span>${hero[HERO_FIELDS.stars] ? hero[HERO_FIELDS.stars] + '★' : ''}</span>
-    <span>${hero[HERO_FIELDS.mana] || ''}</span>
-  `;
-  els.mMeta2.innerHTML = `
-    <span>${hero[HERO_FIELDS.attackType] || ''}</span>
-    <span>${hero[HERO_FIELDS.summon] || ''}</span>
-    <span>${hero[HERO_FIELDS.clazz] || ''}</span>
-  `;
-  els.mStats.innerHTML = `
-    <span class="pill">С: ${hero[HERO_FIELDS.power] || ''}</span>
-    <span class="pill">А: ${hero[HERO_FIELDS.attack] || ''}</span>
-    <span class="pill">З: ${hero[HERO_FIELDS.defense] || ''}</span>
-    <span class="pill">Ж: ${hero[HERO_FIELDS.hp] || ''}</span>
-  `;
-  
-  const abilitiesText = String(hero[HERO_FIELDS.abilities] || '—');
-  els.mAbilities.textContent = abilitiesText.replace(/^'/, '').replace(/'$/, '');
-  els.mPassive.textContent = String(hero[HERO_FIELDS.passive] || '—').replace(/^'/, '').replace(/'$/, '');
-  
-  // Устанавливаем класс героя для талантов
-  const heroClass = hero[HERO_FIELDS.clazz];
-  if (heroClass && classTalents[heroClass]) {
-    currentHeroTalents = {
-      class: heroClass,
-      selections: {},
-      mandatoryTalents: []
-    };
-    
-    // Собираем обязательные таланты
-    currentHeroTalents.mandatoryTalents = classTalents[heroClass]
-      .filter(t => t.isMandatory && t.centerTalentId)
-      .map(t => t.centerTalentId);
-    
-    els.heroClassBadge.textContent = heroClass;
-    els.talentsSection.style.display = 'block';
-    
-    // Рендерим дерево
-    renderTalentTree();
-    
-    // Обновляем рассчитанные характеристики
-    updateCalculatedStats();
-  } else {
-    els.talentsSection.style.display = 'none';
-  }
-}
-
-function openModal(idx) {
-  if (!viewHeroes.length) return;
-  currentIdx = idx;
-  fillModal(viewHeroes[currentIdx]);
-  els.modal.classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-  els.modal.classList.remove('show');
-  document.body.style.overflow = '';
-  currentIdx = -1;
-}
-
-function go(delta) {
-  if (currentIdx < 0 || !viewHeroes.length) return;
-  currentIdx = (currentIdx + delta + viewHeroes.length) % viewHeroes.length;
-  fillModal(viewHeroes[currentIdx]);
+function updateHeroSelectDisplay() {
+    let c=selected.heroes.size;
+    document.getElementById('heroSelectedCount').textContent = `${c} выбрано`;
+    if(c===0) document.getElementById('heroSelectText').textContent='Выберите героя';
+    else if(c===1) document.getElementById('heroSelectText').textContent=Array.from(selected.heroes)[0];
+    else if(c===allHeroNames.length) document.getElementById('heroSelectText').textContent='Все герои';
+    else document.getElementById('heroSelectText').textContent=`${Array.from(selected.heroes)[0]} и еще ${c-1}`;
 }
 
 function applyFilters() {
-  const q = els.searchInput.value.trim().toLowerCase();
-  
-  viewHeroes = allHeroes.filter(r => {
-    const tName = String(r[HERO_FIELDS.name] || '').toLowerCase();
-    const tAbil = String(r[HERO_FIELDS.abilities] || '').toLowerCase();
-    const passQ = !q || tName.includes(q) || tAbil.includes(q);
-    const passElem = selected.element.size === 0 || selected.element.has(String(r[HERO_FIELDS.element]));
-    const passStars = selected.stars.size === 0 || selected.stars.has(String(r[HERO_FIELDS.stars]));
-    const passMana = selected.mana.size === 0 || selected.mana.has(String(r[HERO_FIELDS.mana]));
-    const passAtkT = selected.attackType.size === 0 || selected.attackType.has(String(r[HERO_FIELDS.attackType]));
-    const passSummon = selected.summon.size === 0 || selected.summon.has(String(r[HERO_FIELDS.summon]));
-    const passClazz = selected.clazz.size === 0 || selected.clazz.has(String(r[HERO_FIELDS.clazz]));
-    const passHeroes = selected.heroes.size === 0 || selected.heroes.has(String(r[HERO_FIELDS.name]));
-    
-    return passQ && passElem && passStars && passMana && passAtkT && passSummon && passClazz && passHeroes;
-  });
-
-  const by = els.sortSelect.value;
-  
-  viewHeroes.sort((a, b) => {
-    const av = a[by], bv = b[by];
-    const an = toNum(av), bn = toNum(bv);
-    let cmp;
-    if (an != null && bn != null) cmp = an - bn;
-    else cmp = String(av || '').localeCompare(String(bv || ''), 'ru', { numeric: true });
-    return sortDirection === 'asc' ? cmp : -cmp;
-  });
-
-  els.count.textContent = `Найдено: ${viewHeroes.length}`;
-  renderCards(viewHeroes);
-  
-  filteredHeroNames = uniq(viewHeroes.map(r => r[HERO_FIELDS.name])).sort(sortAlpha);
-  updateHeroCheckboxes();
+    let q = document.getElementById('searchInput').value.trim().toLowerCase();
+    viewHeroes = allHeroes.filter(r=>{
+        let nameMatch = !q || String(r[HERO_FIELDS.name]).toLowerCase().includes(q) || String(r[HERO_FIELDS.abilities]).toLowerCase().includes(q);
+        let elemMatch = selected.element.size===0 || selected.element.has(String(r[HERO_FIELDS.element]));
+        let starsMatch = selected.stars.size===0 || selected.stars.has(String(r[HERO_FIELDS.stars]));
+        let manaMatch = selected.mana.size===0 || selected.mana.has(String(r[HERO_FIELDS.mana]));
+        let atkMatch = selected.attackType.size===0 || selected.attackType.has(String(r[HERO_FIELDS.attackType]));
+        let summonMatch = selected.summon.size===0 || selected.summon.has(String(r[HERO_FIELDS.summon]));
+        let clazzMatch = selected.clazz.size===0 || selected.clazz.has(String(r[HERO_FIELDS.clazz]));
+        let heroMatch = selected.heroes.size===0 || selected.heroes.has(String(r[HERO_FIELDS.name]));
+        return nameMatch && elemMatch && starsMatch && manaMatch && atkMatch && summonMatch && clazzMatch && heroMatch;
+    });
+    let by = document.getElementById('sortSelect').value;
+    viewHeroes.sort((a,b)=>{let av=a[by], bv=b[by]; let an=toNum(av), bn=toNum(bv); let cmp=(an!=null && bn!=null)?an-bn:String(av||'').localeCompare(String(bv||''),'ru',{numeric:true}); return sortDirection==='asc'?cmp:-cmp;});
+    document.getElementById('count').textContent = `Найдено: ${viewHeroes.length}`;
+    renderCards(viewHeroes);
+    filteredHeroNames = uniq(viewHeroes.map(r=>r[HERO_FIELDS.name])).sort(sortAlpha);
+    updateHeroCheckboxes();
 }
 
 function renderCards(heroes) {
-  if (!heroes.length) {
-    els.cards.innerHTML = '';
-    els.empty.style.display = 'block';
-    return;
-  }
-  els.empty.style.display = 'none';
-  els.cards.innerHTML = heroes.map((r, i) => {
-    const img = fileCellToUrl(r[HERO_FIELDS.image]);
-    const abilitiesFull = String(r[HERO_FIELDS.abilities] || '');
-    const cleanedAbilities = abilitiesFull.replace(/^'/, '').replace(/'$/, '');
-    const hasAbilities = cleanedAbilities.trim().length > 0;
-    
-    return `
-      <article class="card" data-idx="${i}" data-element="${r[HERO_FIELDS.element] || ''}">
-        <div class="thumb">
-          ${img ? `<img src="${img}" alt="${r[HERO_FIELDS.name] || ''}" loading="lazy" onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<div style=\\'color: #999; padding: 20px; text-align: center;\\'>Нет изображения</div>';">` : '<div style="color: #999; padding: 20px; text-align: center;">Нет изображения</div>'}
-        </div>
-        <h3>${r[HERO_FIELDS.name] || ''}</h3>
-        <div class="meta">
-          <span>${r[HERO_FIELDS.element] || ''}</span> •
-          <span>${r[HERO_FIELDS.stars] || ''}★</span> •
-          <span>${r[HERO_FIELDS.mana] || ''}</span>
-        </div>
-        <div class="meta">
-          <span>${r[HERO_FIELDS.attackType] || ''}</span> •
-          <span>${r[HERO_FIELDS.summon] || ''}</span> •
-          <span>${r[HERO_FIELDS.clazz] || ''}</span>
-        </div>
-        <div class="stats">
-          <span class="pill">С: ${r[HERO_FIELDS.power] || ''}</span>
-          <span class="pill">А: ${r[HERO_FIELDS.attack] || ''}</span>
-          <span class="pill">З: ${r[HERO_FIELDS.defense] || ''}</span>
-          <span class="pill">Ж: ${r[HERO_FIELDS.hp] || ''}</span>
-        </div>
-        ${hasAbilities ? `
-          <button class="toggle-abilities" data-idx="${i}">Показать способности</button>
-          <div class="card-abilities-full" id="abilities-${i}">${cleanedAbilities.replace(/\n/g, '<br>')}</div>
-        ` : ''}
-      </article>
-    `;
-  }).join('');
-  
-  document.querySelectorAll('.toggle-abilities').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      const idx = this.getAttribute('data-idx');
-      const fullAbilities = document.getElementById(`abilities-${idx}`);
-      if (fullAbilities.style.display === 'block') {
-        fullAbilities.style.display = 'none';
-        this.textContent = 'Показать способности';
-      } else {
-        fullAbilities.style.display = 'block';
-        this.textContent = 'Скрыть способности';
-      }
-    });
-  });
+    if(!heroes.length) { document.getElementById('cards').innerHTML=''; document.getElementById('empty').style.display='block'; return; }
+    document.getElementById('empty').style.display='none';
+    document.getElementById('cards').innerHTML = heroes.map((r,i)=>{
+        let img = fileCellToUrl(r[HERO_FIELDS.image]);
+        let abilitiesFull = String(r[HERO_FIELDS.abilities]||'');
+        let cleaned = abilitiesFull.replace(/^'|'$/g,'');
+        let hasAbil = cleaned.trim().length>0;
+        return `<article class="card" data-idx="${i}" data-element="${r[HERO_FIELDS.element]||''}"><div class="thumb">${img?`<img src="${img}" alt="${r[HERO_FIELDS.name]}" loading="lazy" onerror="this.style.display='none'">`:'<div style="padding:20px;">Нет изображения</div>'}</div><h3>${r[HERO_FIELDS.name]}</h3><div class="meta"><span>${r[HERO_FIELDS.element]}</span> • <span>${r[HERO_FIELDS.stars]}★</span> • <span>${r[HERO_FIELDS.mana]}</span></div><div class="meta"><span>${r[HERO_FIELDS.attackType]}</span> • <span>${r[HERO_FIELDS.summon]}</span> • <span>${r[HERO_FIELDS.clazz]}</span></div><div class="stats" id="stats-${i}"><span class="pill">С: ${r[HERO_FIELDS.power]}</span><span class="pill">А: ${r[HERO_FIELDS.attack]}</span><span class="pill">З: ${r[HERO_FIELDS.defense]}</span><span class="pill">Ж: ${r[HERO_FIELDS.hp]}</span></div>${hasAbil?`<button class="toggle-abilities" data-idx="${i}">Показать способности</button><div class="card-abilities-full" id="abilities-${i}">${cleaned.replace(/\n/g,'<br>')}</div>`:''}</article>`;
+    }).join('');
+    document.querySelectorAll('.toggle-abilities').forEach(btn=>btn.addEventListener('click',function(e){e.stopPropagation();let idx=this.dataset.idx;let div=document.getElementById(`abilities-${idx}`);if(div.style.display==='block'){div.style.display='none';this.textContent='Показать способности';}else{div.style.display='block';this.textContent='Скрыть способности';}}));
 }
+
+function openModal(idx) {
+    if(!viewHeroes.length) return;
+    currentIdx = idx;
+    let hero = viewHeroes[currentIdx];
+    currentHeroClass = hero[HERO_FIELDS.clazz];
+    currentHeroStats = { attack: toNum(hero[HERO_FIELDS.attack])||0, defense: toNum(hero[HERO_FIELDS.defense])||0, hp: toNum(hero[HERO_FIELDS.hp])||0, power: toNum(hero[HERO_FIELDS.power])||0 };
+    fillModal(hero);
+    document.getElementById('modal').classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function fillModal(hero) {
+    let img = fileCellToUrl(hero[HERO_FIELDS.image]);
+    document.getElementById('mImg').src = img||'';
+    document.getElementById('mOpenImg').href = img||'#';
+    document.getElementById('mName').textContent = hero[HERO_FIELDS.name]||'';
+    document.getElementById('mMeta1').innerHTML = `<span>${hero[HERO_FIELDS.element]}</span> <span>${hero[HERO_FIELDS.stars]}★</span> <span>${hero[HERO_FIELDS.mana]}</span>`;
+    document.getElementById('mMeta2').innerHTML = `<span>${hero[HERO_FIELDS.attackType]}</span> <span>${hero[HERO_FIELDS.summon]}</span> <span>${hero[HERO_FIELDS.clazz]}</span>`;
+    let mode = document.getElementById('talentModeSelect').value;
+    let calc = calculateStatsWithTalents(hero, mode);
+    document.getElementById('mStats').innerHTML = `<span class="pill">С: ${hero[HERO_FIELDS.power]}</span><span class="pill">А: ${calc.attack}</span><span class="pill">З: ${calc.defense}</span><span class="pill">Ж: ${calc.hp}</span>`;
+    document.getElementById('mAbilities').textContent = String(hero[HERO_FIELDS.abilities]||'—').replace(/^'|'$/g,'');
+    document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive]||'—').replace(/^'|'$/g,'');
+}
+
+function updateModalStats() {
+    if(currentIdx>=0 && viewHeroes[currentIdx]) {
+        let hero = viewHeroes[currentIdx];
+        let mode = document.getElementById('talentModeSelect').value;
+        let calc = calculateStatsWithTalents(hero, mode);
+        document.getElementById('mStats').innerHTML = `<span class="pill">С: ${hero[HERO_FIELDS.power]}</span><span class="pill">А: ${calc.attack}</span><span class="pill">З: ${calc.defense}</span><span class="pill">Ж: ${calc.hp}</span>`;
+    }
+}
+
+function closeModal() { document.getElementById('modal').classList.remove('show'); document.body.style.overflow=''; currentIdx=-1; }
+function go(delta) { if(currentIdx<0||!viewHeroes.length) return; currentIdx=(currentIdx+delta+viewHeroes.length)%viewHeroes.length; fillModal(viewHeroes[currentIdx]); }
 
 function attachEvents() {
-  els.searchInput.addEventListener('input', applyFilters);
-  els.sortSelect.addEventListener('change', applyFilters);
-  
-  els.sortBtn.addEventListener('click', () => {
-    sortDirection = sortDirection === 'desc' ? 'asc' : 'desc';
-    els.sortBtn.className = `sort-btn ${sortDirection}`;
-    els.sortBtn.setAttribute('data-tooltip', sortDirection === 'asc' ? 'Сортировка по возрастанию' : 'Сортировка по убыванию');
-    applyFilters();
-  });
-  
-  els.heroSelectToggle.addEventListener('click', (e) => {
-    els.heroCheckboxes.classList.toggle('show');
-    e.stopPropagation();
-  });
-  
-  els.selectAllHeroes.addEventListener('click', () => {
-    selected.heroes = new Set(filteredHeroNames);
-    updateHeroCheckboxes();
-  });
-  
-  els.deselectAllHeroes.addEventListener('click', () => {
-    selected.heroes.clear();
-    updateHeroCheckboxes();
-  });
-  
-  els.applyHeroSelection.addEventListener('click', () => {
-    els.heroCheckboxes.classList.remove('show');
-    applyFilters();
-  });
-  
-  document.addEventListener('click', (e) => {
-    if (!els.heroSelectToggle.contains(e.target) && !els.heroCheckboxes.contains(e.target)) {
-      els.heroCheckboxes.classList.remove('show');
-    }
-  });
-  
-  document.querySelectorAll('.facet .actions button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const facetKey = btn.dataset.facet;
-      if (btn.dataset.action === 'all') selectAll(facetKey);
-      else selectNone(facetKey);
-    });
-  });
-  
-  els.resetAll.addEventListener('click', () => {
-    els.searchInput.value = '';
-    els.sortSelect.value = 'Сила';
-    sortDirection = 'desc';
-    els.sortBtn.className = 'sort-btn desc';
-    els.sortBtn.setAttribute('data-tooltip', 'Сортировка по убыванию');
-    Object.keys(selected).forEach(k => selected[k].clear());
-    filteredHeroNames = [...allHeroNames];
-    initAllFacets(allHeroes);
-    applyFilters();
-  });
-  
-  els.applyFiltersBtn.addEventListener('click', () => {
-    applyFilters();
-    els.filters.classList.remove('show');
-    document.body.style.overflow = '';
-  });
-  
-  els.applyFiltersMobileBtn.addEventListener('click', () => {
-    applyFilters();
-    els.filters.classList.remove('show');
-    document.body.style.overflow = '';
-  });
-  
-  els.cards.addEventListener('click', (e) => {
-    if (e.target.classList.contains('toggle-abilities')) return;
-    const card = e.target.closest('.card');
-    if (!card) return;
-    const idx = Number(card.dataset.idx);
-    if (Number.isFinite(idx)) openModal(idx);
-  });
-  
-  els.mClose.addEventListener('click', closeModal);
-  els.mPrev.addEventListener('click', () => go(-1));
-  els.mNext.addEventListener('click', () => go(1));
-  
-  els.modal.addEventListener('click', (e) => {
-    if (e.target === els.modal) closeModal();
-  });
-  
-  window.addEventListener('keydown', (e) => {
-    if (!els.modal.classList.contains('show')) return;
-    if (e.key === 'Escape') closeModal();
-    if (e.key === 'ArrowLeft') go(-1);
-    if (e.key === 'ArrowRight') go(1);
-  });
-  
-  els.openFilters.addEventListener('click', () => {
-    els.filters.classList.add('show');
-    document.body.style.overflow = 'hidden';
-  });
-  
-  els.closeFilters.addEventListener('click', () => {
-    els.filters.classList.remove('show');
-    document.body.style.overflow = '';
-  });
-  
-  els.filters.addEventListener('click', (e) => {
-    if (e.target === els.filters) {
-      els.filters.classList.remove('show');
-      document.body.style.overflow = '';
-    }
-  });
-  
-  // Обработчики для талантов
-  els.resetAllTalentsBtn.addEventListener('click', resetAllTalents);
-  els.resetCurrentGroupBtn.addEventListener('click', resetCurrentGroup);
-  
-  els.infoBtn.addEventListener('click', () => {
-    els.infoModal.classList.add('show');
-    document.body.style.overflow = 'hidden';
-  });
-  
-  els.infoClose.addEventListener('click', () => {
-    els.infoModal.classList.remove('show');
-    document.body.style.overflow = '';
-  });
-  
-  els.infoModal.addEventListener('click', (e) => {
-    if (e.target === els.infoModal) {
-      els.infoModal.classList.remove('show');
-      document.body.style.overflow = '';
-    }
-  });
-  
-  const now = new Date();
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  els.updateDate.textContent = now.toLocaleDateString('ru-RU', options);
+    document.getElementById('searchInput').addEventListener('input', applyFilters);
+    document.getElementById('sortSelect').addEventListener('change', applyFilters);
+    document.getElementById('sortBtn').addEventListener('click',()=>{sortDirection=sortDirection==='desc'?'asc':'desc'; document.getElementById('sortBtn').className=`sort-btn ${sortDirection}`; applyFilters();});
+    document.getElementById('heroSelectToggle').addEventListener('click',e=>{document.getElementById('heroCheckboxes').classList.toggle('show'); e.stopPropagation();});
+    document.getElementById('selectAllHeroes').addEventListener('click',()=>{selected.heroes=new Set(filteredHeroNames); updateHeroCheckboxes();});
+    document.getElementById('deselectAllHeroes').addEventListener('click',()=>{selected.heroes.clear(); updateHeroCheckboxes();});
+    document.getElementById('applyHeroSelection').addEventListener('click',()=>{document.getElementById('heroCheckboxes').classList.remove('show'); applyFilters();});
+    document.addEventListener('click',e=>{if(!document.getElementById('heroSelectToggle').contains(e.target)&&!document.getElementById('heroCheckboxes').contains(e.target)) document.getElementById('heroCheckboxes').classList.remove('show');});
+    document.querySelectorAll('.facet .actions button').forEach(btn=>btn.addEventListener('click',()=>{let f=btn.dataset.facet; if(btn.dataset.action==='all'){let vals=uniq(allHeroes.map(r=>{switch(f){case'element':return r[HERO_FIELDS.element];case'stars':return r[HERO_FIELDS.stars];case'mana':return r[HERO_FIELDS.mana];case'attackType':return r[HERO_FIELDS.attackType];case'summon':return r[HERO_FIELDS.summon];case'clazz':return r[HERO_FIELDS.clazz];default:return null;}})).filter(v=>v); selected[f]=new Set(vals.map(String));}else selected[f].clear(); initAllFacets(allHeroes);}));
+    document.getElementById('resetAll').addEventListener('click',()=>{document.getElementById('searchInput').value=''; document.getElementById('sortSelect').value='Сила'; sortDirection='desc'; Object.keys(selected).forEach(k=>selected[k].clear()); filteredHeroNames=[...allHeroNames]; initAllFacets(allHeroes); applyFilters();});
+    document.getElementById('applyFiltersBtn').addEventListener('click',()=>{applyFilters(); document.getElementById('filters').classList.remove('show'); document.body.style.overflow='';});
+    document.getElementById('applyFiltersMobileBtn').addEventListener('click',()=>{applyFilters(); document.getElementById('filters').classList.remove('show'); document.body.style.overflow='';});
+    document.getElementById('cards').addEventListener('click',e=>{if(e.target.classList.contains('toggle-abilities')) return; let card=e.target.closest('.card'); if(card) openModal(Number(card.dataset.idx));});
+    document.getElementById('mClose').addEventListener('click',closeModal);
+    document.getElementById('mPrev').addEventListener('click',()=>go(-1));
+    document.getElementById('mNext').addEventListener('click',()=>go(1));
+    document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal')) closeModal();});
+    window.addEventListener('keydown',e=>{if(!document.getElementById('modal').classList.contains('show')) return; if(e.key==='Escape') closeModal(); if(e.key==='ArrowLeft') go(-1); if(e.key==='ArrowRight') go(1);});
+    document.getElementById('openFilters').addEventListener('click',()=>{document.getElementById('filters').classList.add('show'); document.body.style.overflow='hidden';});
+    document.getElementById('closeFilters').addEventListener('click',()=>{document.getElementById('filters').classList.remove('show'); document.body.style.overflow='';});
+    document.getElementById('filters').addEventListener('click',e=>{if(e.target===document.getElementById('filters')){document.getElementById('filters').classList.remove('show'); document.body.style.overflow='';}});
+    document.getElementById('infoBtn').addEventListener('click',()=>{document.getElementById('infoModal').classList.add('show'); document.body.style.overflow='hidden';});
+    document.getElementById('infoClose').addEventListener('click',()=>{document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow='';});
+    document.getElementById('infoModal').addEventListener('click',e=>{if(e.target===document.getElementById('infoModal')){document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow='';}});
+    document.getElementById('talentModeSelect').addEventListener('change',()=>{updateModalStats();});
+    document.getElementById('updateDate').textContent = new Date().toLocaleDateString('ru-RU',{year:'numeric',month:'long',day:'numeric'});
 }
 
-// Загрузка всех данных
-console.log('Начинаем загрузку данных...');
-
 Promise.all([
-  // Загрузка героев
-  new Promise((resolve, reject) => {
-    Papa.parse(DATA_URL, {
-      download: true,
-      header: true,
-      skipEmptyLines: true,
-      complete: (res) => {
-        console.log('Герои загружены:', res.data.length);
-        allHeroes = res.data.filter(row => row && row[HERO_FIELDS.name]);
-        resolve();
-      },
-      error: (error) => {
-        console.error('Ошибка загрузки героев:', error);
-        reject(error);
-      }
-    });
-  }),
-  // Загрузка описаний талантов
-  new Promise((resolve, reject) => {
-    Papa.parse(TALENT_DESC_URL, {
-      download: true,
-      header: true,
-      skipEmptyLines: true,
-      complete: (res) => {
-        console.log('Описания талантов загружены:', res.data.length);
-        res.data.forEach(row => {
-          if (row[TALENT_DESC_FIELDS.talent_id]) {
-            talentDescriptions[row[TALENT_DESC_FIELDS.talent_id]] = row;
-          }
-        });
-        resolve();
-      },
-      error: (error) => {
-        console.error('Ошибка загрузки описаний талантов:', error);
-        reject(error);
-      }
-    });
-  }),
-  // Загрузка классов с талантами
-  new Promise((resolve, reject) => {
-    Papa.parse(CLASSES_URL, {
-      download: true,
-      header: true,
-      skipEmptyLines: true,
-      complete: (res) => {
-        console.log('Классы с талантами загружены:', res.data.length);
-        res.data.forEach(row => {
-          if (!row[CLASS_TALENT_FIELDS.class_id]) return;
-          
-          const className = row[CLASS_TALENT_FIELDS.class_id];
-          if (!classTalents[className]) {
-            classTalents[className] = [];
-          }
-          
-          classTalents[className].push({
-            rowNumber: parseInt(row[CLASS_TALENT_FIELDS.row_number]) || 0,
-            isMandatory: String(row[CLASS_TALENT_FIELDS.is_mandatory]).toLowerCase() === 'true',
-            branchGroup: row[CLASS_TALENT_FIELDS.branch_group],
-            leftTalentId: row[CLASS_TALENT_FIELDS.left_talent_id] ? parseInt(row[CLASS_TALENT_FIELDS.left_talent_id]) : null,
-            centerTalentId: row[CLASS_TALENT_FIELDS.center_talent_id] ? parseInt(row[CLASS_TALENT_FIELDS.center_talent_id]) : null,
-            rightTalentId: row[CLASS_TALENT_FIELDS.right_talent_id] ? parseInt(row[CLASS_TALENT_FIELDS.right_talent_id]) : null,
-            nextGroup: row[CLASS_TALENT_FIELDS.next_group] === 'NULL' ? null : row[CLASS_TALENT_FIELDS.next_group]
-          });
-        });
-        
-        // Сортируем таланты по номеру строки
-        Object.keys(classTalents).forEach(className => {
-          classTalents[className].sort((a, b) => a.rowNumber - b.rowNumber);
-        });
-        
-        console.log('Обработано классов с талантами:', Object.keys(classTalents).length);
-        resolve();
-      },
-      error: (error) => {
-        console.error('Ошибка загрузки классов с талантами:', error);
-        reject(error);
-      }
-    });
-  })
-]).then(() => {
-  console.log('Все данные успешно загружены');
-  if (!allHeroes.length) { 
-    els.count.textContent = 'Данные не найдены. Проверьте heroes.csv'; 
-    return; 
-  }
-  initAllFacets(allHeroes);
-  attachEvents();
-  applyFilters();
-}).catch(error => {
-  console.error('Ошибка загрузки данных:', error);
-  els.count.textContent = 'Ошибка загрузки данных. Проверьте консоль для деталей.';
-});
+    new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]); res();},error:rej})),
+    new Promise((res,rej)=>Papa.parse(TALENT_DESC_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{r.data.forEach(row=>{if(row[TALENT_DESC_FIELDS.talent_id]) talentDescriptions[row[TALENT_DESC_FIELDS.talent_id]]=row;}); res();},error:rej})),
+    new Promise((res,rej)=>Papa.parse(CLASSES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{r.data.forEach(row=>{if(!row[CLASS_TALENT_FIELDS.class_id]) return; let cn=row[CLASS_TALENT_FIELDS.class_id]; if(!classTalents[cn]) classTalents[cn]=[]; classTalents[cn].push({rowNumber:parseInt(row[CLASS_TALENT_FIELDS.row_number])||0, isMandatory:String(row[CLASS_TALENT_FIELDS.is_mandatory]).toLowerCase()==='true', branchGroup:row[CLASS_TALENT_FIELDS.branch_group], leftTalentId:row[CLASS_TALENT_FIELDS.left_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.left_talent_id]):null, centerTalentId:row[CLASS_TALENT_FIELDS.center_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.center_talent_id]):null, rightTalentId:row[CLASS_TALENT_FIELDS.right_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.right_talent_id]):null});}); Object.keys(classTalents).forEach(cn=>classTalents[cn].sort((a,b)=>a.rowNumber-b.rowNumber)); res();},error:rej}))
+]).then(()=>{
+    if(!allHeroes.length) { document.getElementById('count').textContent='Данные не найдены'; return; }
+    initAllFacets(allHeroes);
+    attachEvents();
+    applyFilters();
+}).catch(e=>{console.error(e); document.getElementById('count').textContent='Ошибка загрузки данных';});
 </script>
 </body>
 </html>
