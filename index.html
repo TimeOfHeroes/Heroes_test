@@ -38,6 +38,13 @@
   --element-unknown: #f0f0f0;
   --card-text: #2d3a3a;
   --card-meta: #4a5a5a;
+  
+  --talent-mandatory: #ffd700;
+  --talent-left: #4CAF50;
+  --talent-right: #f44336;
+  --talent-selected: #2196F3;
+  --talent-hover: rgba(33, 150, 243, 0.2);
+  --talent-border: #ddd;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -70,6 +77,13 @@
     --element-unknown: #3a3a3a;
     --card-text: #f0f0f0;
     --card-meta: #c0c0c0;
+    
+    --talent-mandatory: #b8860b;
+    --talent-left: #2e7d32;
+    --talent-right: #c62828;
+    --talent-selected: #1565C0;
+    --talent-hover: rgba(21, 101, 192, 0.3);
+    --talent-border: #666;
   }
 }
 
@@ -400,6 +414,16 @@ header {
 }
 .btn.reset:hover {
   background-color: #d32f2f;
+}
+
+.talent-mode-select {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 14px;
+  color: var(--text-color);
+  cursor: pointer;
 }
 
 .info-btn-wrapper {
@@ -841,6 +865,35 @@ header {
   margin: 20px 0;
   text-align: center;
 }
+.info-dialog .clan strong {
+  color: var(--primary-color);
+  font-size: 18px;
+}
+.info-dialog .contact {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 15px;
+  border-radius: 10px;
+  margin: 20px 0;
+  text-align: center;
+  border: 1px solid var(--border-color);
+}
+.info-dialog .contact a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+.info-dialog .contact a:hover {
+  text-decoration: underline;
+}
+.info-dialog .date {
+  text-align: center;
+  font-style: italic;
+  color: var(--text-color);
+  opacity: 0.6;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border-color);
+}
 .info-close {
   position: absolute;
   top: 15px;
@@ -849,6 +902,11 @@ header {
   border: none;
   font-size: 24px;
   cursor: pointer;
+  color: var(--text-color);
+  opacity: 0.7;
+}
+.info-close:hover {
+  opacity: 1;
 }
 
 @media (max-width: 768px) {
@@ -924,7 +982,7 @@ header {
 <button id="mPrev" class="nav prev">‹</button>
 <button id="mNext" class="nav next">›</button>
 <div class="modal-content">
-  <div class="image-container"><img id="mImg" src=""><a id="mOpenImg" class="open-img" href="#" target="_blank">Открыть изображение</a></div>
+  <div class="image-container"><img id="mImg" src=""><a id="mOpenImg" class="open-img" href="#" target="_blank">Открыть изображение в новой вкладке</a></div>
   <div class="info-container">
     <h2 id="mName"></h2>
     <div id="mMeta1" class="meta"></div>
@@ -947,7 +1005,26 @@ header {
 </div>
 </div>
 
-<div id="infoModal" class="info-modal"><div class="info-dialog"><button id="infoClose" class="info-close">×</button><h2>О галерее героев</h2><p>Галерея героев игры "Время Героев" с системой талантов.</p><div class="clan"><strong>Разработано:</strong><br>Евгений Поташко и Владимир Плотников<br><strong>Клан: "Рожденные в СССР."</strong></div><p class="date">Дата обновления: <span id="updateDate"></span></p></div></div>
+<div id="infoModal" class="info-modal">
+  <div class="info-dialog">
+    <button id="infoClose" class="info-close" aria-label="Закрыть">×</button>
+    <h2>О галерее героев</h2>
+    <p>Эта галерея содержит информацию о героях игры "Время Героев", их характеристиках, способностях и древе талантов.</p>
+    <div class="clan">
+      <strong>Разработано:</strong><br>
+      Евгений Поташко и Владимир Плотников<br>
+      <strong>Клан: "Рожденные в СССР."</strong><br>
+      скрины героев предоставлены великим и могучим Козырем
+    </div>
+    <div class="contact">
+      <strong>Обратная связь:</strong><br>
+      Нашли ошибку или есть предложения?<br>
+      Пишите: <a href="mailto:master-Erasm@yandex.ru">master-Erasm@yandex.ru</a>
+    </div>
+    <p>База данных регулярно обновляется с учетом новых героев и изменений в балансе игры.</p>
+    <p class="date">Дата последнего обновления: <span id="updateDate"></span></p>
+  </div>
+</div>
 
 <script>
 const HERO_FIELDS = { id:'id', name:'Герой', element:'Стихия', stars:'Количество звезд', mana:'Скорость маны', power:'Сила', attack:'Атака', defense:'Защита', hp:'Жизни', attackType:'Способ атаки', abilities:'Способности', passive:'Пассивные способности', summon:'Место призыва', clazz:'Класс', image:'Картинка' };
@@ -1070,7 +1147,7 @@ function calculateStatsWithTalents(hero, mode) {
     for (const group of groups) {
         groupIndex++;
         
-        // Сначала применяем обязательные таланты в группе
+        // Применяем обязательные таланты в группе
         for (const talent of group) {
             if (talent.isMandatory && talent.centerTalentId) {
                 console.log(`\n[Группа ${groupIndex}] Обязательный талант (строка ${talent.rowNumber})`);
@@ -1197,8 +1274,10 @@ function calculateStatsWithTalents(hero, mode) {
         }
     }
     
-    // Расчет итоговых характеристик
-    // Формула: итог = база + floor(база × процент/100 + плоские)
+    // ПРАВИЛЬНАЯ ФОРМУЛА: 
+    // Сначала вычисляем бонус от процентов (от базы)
+    // Затем добавляем плоские бонусы
+    // Округляем итоговый бонус вниз
     const attackBonus = (baseAttack * attackPercent / 100) + attackFlat;
     const finalAttack = baseAttack + Math.floor(attackBonus);
     
