@@ -129,7 +129,7 @@
 128,128,Паладин,8,false,group_3,6,NULL,10,group_4
 129,129,Паладин,9,false,group_3,2,NULL,3,group_4
 130,130,Паладин,10,true,group_4,NULL,4,NULL,group_5
-131,131,Паладин,11,false,group_4,1,NULL,3,group_5
+131,131,Паладин,11,false,group_4,1,NULL,2,group_5
 132,132,Паладин,12,true,group_5,NULL,22,NULL,group_6
 133,133,Паладин,13,false,group_5,2,NULL,3,group_6
 134,134,Паладин,14,false,group_5,3,NULL,1,group_6
