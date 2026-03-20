@@ -38,13 +38,6 @@
   --element-unknown: #f0f0f0;
   --card-text: #2d3a3a;
   --card-meta: #4a5a5a;
-  
-  --talent-mandatory: #ffd700;
-  --talent-left: #4CAF50;
-  --talent-right: #f44336;
-  --talent-selected: #2196F3;
-  --talent-hover: rgba(33, 150, 243, 0.2);
-  --talent-border: #ddd;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -77,13 +70,6 @@
     --element-unknown: #3a3a3a;
     --card-text: #f0f0f0;
     --card-meta: #c0c0c0;
-    
-    --talent-mandatory: #b8860b;
-    --talent-left: #2e7d32;
-    --talent-right: #c62828;
-    --talent-selected: #1565C0;
-    --talent-hover: rgba(21, 101, 192, 0.3);
-    --talent-border: #666;
   }
 }
 
@@ -984,10 +970,8 @@ const CLASSES_URL = 'Classes.csv?ts=' + Date.now();
 
 let allHeroes = [], viewHeroes = [], currentIdx = -1, allHeroNames = [], filteredHeroNames = [];
 let sortDirection = 'desc';
-let talentDescriptions = {}; // talent_id -> { effect_type, value, is_percent }
-let classTalents = {};       // className -> массив строк талантов
-let currentHeroStats = { attack: 0, defense: 0, hp: 0, power: 0 }; // базовые для модалки
-let currentHeroClass = '';
+let talentDescriptions = {};
+let classTalents = {};
 
 const selected = { element: new Set(), stars: new Set(), mana: new Set(), attackType: new Set(), summon: new Set(), clazz: new Set(), heroes: new Set() };
 
@@ -996,113 +980,105 @@ function uniq(arr) { return [...new Set(arr.filter(v=>v!==null&&v!==undefined&&S
 function sortAlpha(a,b) { return String(a).localeCompare(String(b),'ru',{numeric:true}); }
 function fileCellToUrl(v) { let s=String(v||''); let m=s.match(/\((https?:\/\/[^)]+)\)/i); if(m) return m[1]; let m2=s.match(/https?:\/\/\S+/i); return m2?m2[0].replace(/[),]+$/,''):''; }
 
-// Функция расчета характеристик с учетом талантов по выбранному режиму
+// Функция получения эффектов таланта
+function getTalentEffects(talentId) {
+    const talent = talentDescriptions[talentId];
+    if (!talent) return { attackPercent:0, attackFlat:0, defensePercent:0, defenseFlat:0, hpPercent:0, hpFlat:0 };
+    
+    const value = toNum(talent[TALENT_DESC_FIELDS.value]) || 0;
+    const isPercent = String(talent[TALENT_DESC_FIELDS.is_percent]).toLowerCase() === 'true';
+    const effectType = talent[TALENT_DESC_FIELDS.effect_type] || '';
+    const typeLower = effectType.toLowerCase();
+    
+    let result = { attackPercent:0, attackFlat:0, defensePercent:0, defenseFlat:0, hpPercent:0, hpFlat:0 };
+    
+    if (typeLower.includes('атак')) {
+        if (isPercent) result.attackPercent = value;
+        else result.attackFlat = value;
+    } else if (typeLower.includes('защит')) {
+        if (isPercent) result.defensePercent = value;
+        else result.defenseFlat = value;
+    } else if (typeLower.includes('жизн') || typeLower.includes('здоров')) {
+        if (isPercent) result.hpPercent = value;
+        else result.hpFlat = value;
+    }
+    
+    return result;
+}
+
+// Функция расчета характеристик с учетом талантов
 function calculateStatsWithTalents(hero, mode) {
     const baseAttack = toNum(hero[HERO_FIELDS.attack]) || 0;
     const baseDefense = toNum(hero[HERO_FIELDS.defense]) || 0;
     const baseHp = toNum(hero[HERO_FIELDS.hp]) || 0;
     const heroClass = hero[HERO_FIELDS.clazz];
     
+    // Если нет данных о талантах для класса или режим "без талантов"
     if (mode === 'none' || !classTalents[heroClass]) {
-        return { attack: baseAttack, defense: baseDefense, hp: baseHp };
+        return { attack: Math.round(baseAttack), defense: Math.round(baseDefense), hp: Math.round(baseHp) };
     }
     
-    // Собираем ID талантов для выбранного режима
+    // Собираем все таланты класса
     const talents = classTalents[heroClass];
-    const selectedTalentIds = new Set();
     
-    // Обязательные таланты (центральный столбец на строках 1,4,7,10,12,15,18,20)
-    talents.forEach(t => {
-        if (t.isMandatory && t.centerTalentId) {
-            selectedTalentIds.add(t.centerTalentId);
-        }
-    });
+    // Суммируем эффекты от всех талантов, которые должны быть активны
+    let totalAttackPercent = 0, totalAttackFlat = 0;
+    let totalDefensePercent = 0, totalDefenseFlat = 0;
+    let totalHpPercent = 0, totalHpFlat = 0;
     
-    // Определяем, какие ветки выбирать в зависимости от режима
-    // Группируем по branch_group, чтобы выбрать левую или правую ветку
-    const groups = {};
-    talents.forEach(t => {
-        if (!groups[t.branchGroup]) groups[t.branchGroup] = [];
-        groups[t.branchGroup].push(t);
-    });
-    
-    for (const group in groups) {
-        const groupTalents = groups[group];
-        // В каждой группе выбираем таланты для левой или правой ветки
-        // Нужно определить, какие таланты в этой группе относятся к атаке или защите
-        let hasAttackTalent = false;
-        let hasDefenseTalent = false;
-        
-        for (const t of groupTalents) {
-            if (t.leftTalentId && talentDescriptions[t.leftTalentId]) {
-                const effect = talentDescriptions[t.leftTalentId];
-                const effectType = effect[TALENT_DESC_FIELDS.effect_type] || '';
-                if (effectType.toLowerCase().includes('атак')) hasAttackTalent = true;
-                if (effectType.toLowerCase().includes('защит')) hasDefenseTalent = true;
-            }
-            if (t.rightTalentId && talentDescriptions[t.rightTalentId]) {
-                const effect = talentDescriptions[t.rightTalentId];
-                const effectType = effect[TALENT_DESC_FIELDS.effect_type] || '';
-                if (effectType.toLowerCase().includes('атак')) hasAttackTalent = true;
-                if (effectType.toLowerCase().includes('защит')) hasDefenseTalent = true;
-            }
+    // Обрабатываем каждый талант в дереве
+    for (const talent of talents) {
+        // Обязательные таланты (центральный столбец) - всегда активны
+        if (talent.isMandatory && talent.centerTalentId) {
+            const effects = getTalentEffects(talent.centerTalentId);
+            totalAttackPercent += effects.attackPercent;
+            totalAttackFlat += effects.attackFlat;
+            totalDefensePercent += effects.defensePercent;
+            totalDefenseFlat += effects.defenseFlat;
+            totalHpPercent += effects.hpPercent;
+            totalHpFlat += effects.hpFlat;
         }
         
-        // Выбираем ветку в зависимости от режима
-        if (mode === 'attack' && hasAttackTalent) {
-            // Выбираем левую ветку (обычно атака слева) или правую, если слева нет атаки
-            for (const t of groupTalents) {
-                if (t.leftTalentId && talentDescriptions[t.leftTalentId]) {
-                    const eff = talentDescriptions[t.leftTalentId][TALENT_DESC_FIELDS.effect_type] || '';
-                    if (eff.toLowerCase().includes('атак')) {
-                        selectedTalentIds.add(t.leftTalentId);
-                        break;
-                    }
+        // Для необязательных талантов выбираем левую или правую ветку в зависимости от режима
+        if (!talent.isMandatory) {
+            if (mode === 'attack' && talent.leftTalentId) {
+                // Проверяем, что левый талант действительно влияет на атаку
+                const effects = getTalentEffects(talent.leftTalentId);
+                if (effects.attackPercent > 0 || effects.attackFlat > 0) {
+                    totalAttackPercent += effects.attackPercent;
+                    totalAttackFlat += effects.attackFlat;
                 }
-            }
-        } else if (mode === 'defense' && hasDefenseTalent) {
-            // Выбираем правую ветку (обычно защита справа)
-            for (const t of groupTalents) {
-                if (t.rightTalentId && talentDescriptions[t.rightTalentId]) {
-                    const eff = talentDescriptions[t.rightTalentId][TALENT_DESC_FIELDS.effect_type] || '';
-                    if (eff.toLowerCase().includes('защит')) {
-                        selectedTalentIds.add(t.rightTalentId);
-                        break;
-                    }
+                // Также могут быть дополнительные бонусы
+                totalDefensePercent += effects.defensePercent;
+                totalDefenseFlat += effects.defenseFlat;
+                totalHpPercent += effects.hpPercent;
+                totalHpFlat += effects.hpFlat;
+            } 
+            else if (mode === 'defense' && talent.rightTalentId) {
+                // Проверяем, что правый талант действительно влияет на защиту
+                const effects = getTalentEffects(talent.rightTalentId);
+                if (effects.defensePercent > 0 || effects.defenseFlat > 0) {
+                    totalDefensePercent += effects.defensePercent;
+                    totalDefenseFlat += effects.defenseFlat;
                 }
+                totalAttackPercent += effects.attackPercent;
+                totalAttackFlat += effects.attackFlat;
+                totalHpPercent += effects.hpPercent;
+                totalHpFlat += effects.hpFlat;
             }
         }
     }
     
-    // Применяем эффекты талантов
-    let attackBonusPercent = 0, attackBonusFlat = 0;
-    let defenseBonusPercent = 0, defenseBonusFlat = 0;
-    let hpBonusPercent = 0, hpBonusFlat = 0;
+    // Применяем все бонусы
+    const finalAttack = (baseAttack + totalAttackFlat) * (1 + totalAttackPercent / 100);
+    const finalDefense = (baseDefense + totalDefenseFlat) * (1 + totalDefensePercent / 100);
+    const finalHp = (baseHp + totalHpFlat) * (1 + totalHpPercent / 100);
     
-    selectedTalentIds.forEach(talentId => {
-        const talent = talentDescriptions[talentId];
-        if (!talent) return;
-        const value = toNum(talent[TALENT_DESC_FIELDS.value]) || 0;
-        const isPercent = String(talent[TALENT_DESC_FIELDS.is_percent]).toLowerCase() === 'true';
-        const effectType = talent[TALENT_DESC_FIELDS.effect_type] || '';
-        
-        if (effectType.toLowerCase().includes('атак')) {
-            if (isPercent) attackBonusPercent += value;
-            else attackBonusFlat += value;
-        } else if (effectType.toLowerCase().includes('защит')) {
-            if (isPercent) defenseBonusPercent += value;
-            else defenseBonusFlat += value;
-        } else if (effectType.toLowerCase().includes('жизн') || effectType.toLowerCase().includes('здоров')) {
-            if (isPercent) hpBonusPercent += value;
-            else hpBonusFlat += value;
-        }
-    });
-    
-    const finalAttack = (baseAttack + attackBonusFlat) * (1 + attackBonusPercent / 100);
-    const finalDefense = (baseDefense + defenseBonusFlat) * (1 + defenseBonusPercent / 100);
-    const finalHp = (baseHp + hpBonusFlat) * (1 + hpBonusPercent / 100);
-    
-    return { attack: Math.round(finalAttack), defense: Math.round(finalDefense), hp: Math.round(finalHp) };
+    return { 
+        attack: Math.round(finalAttack), 
+        defense: Math.round(finalDefense), 
+        hp: Math.round(finalHp) 
+    };
 }
 
 function buildFacet(container, values, facetKey) {
@@ -1171,7 +1147,7 @@ function renderCards(heroes) {
         let abilitiesFull = String(r[HERO_FIELDS.abilities]||'');
         let cleaned = abilitiesFull.replace(/^'|'$/g,'');
         let hasAbil = cleaned.trim().length>0;
-        return `<article class="card" data-idx="${i}" data-element="${r[HERO_FIELDS.element]||''}"><div class="thumb">${img?`<img src="${img}" alt="${r[HERO_FIELDS.name]}" loading="lazy" onerror="this.style.display='none'">`:'<div style="padding:20px;">Нет изображения</div>'}</div><h3>${r[HERO_FIELDS.name]}</h3><div class="meta"><span>${r[HERO_FIELDS.element]}</span> • <span>${r[HERO_FIELDS.stars]}★</span> • <span>${r[HERO_FIELDS.mana]}</span></div><div class="meta"><span>${r[HERO_FIELDS.attackType]}</span> • <span>${r[HERO_FIELDS.summon]}</span> • <span>${r[HERO_FIELDS.clazz]}</span></div><div class="stats" id="stats-${i}"><span class="pill">С: ${r[HERO_FIELDS.power]}</span><span class="pill">А: ${r[HERO_FIELDS.attack]}</span><span class="pill">З: ${r[HERO_FIELDS.defense]}</span><span class="pill">Ж: ${r[HERO_FIELDS.hp]}</span></div>${hasAbil?`<button class="toggle-abilities" data-idx="${i}">Показать способности</button><div class="card-abilities-full" id="abilities-${i}">${cleaned.replace(/\n/g,'<br>')}</div>`:''}</article>`;
+        return `<article class="card" data-idx="${i}" data-element="${r[HERO_FIELDS.element]||''}"><div class="thumb">${img?`<img src="${img}" alt="${r[HERO_FIELDS.name]}" loading="lazy" onerror="this.style.display='none'">`:'<div style="padding:20px;">Нет изображения</div>'}</div><h3>${r[HERO_FIELDS.name]}</h3><div class="meta"><span>${r[HERO_FIELDS.element]}</span> • <span>${r[HERO_FIELDS.stars]}★</span> • <span>${r[HERO_FIELDS.mana]}</span></div><div class="meta"><span>${r[HERO_FIELDS.attackType]}</span> • <span>${r[HERO_FIELDS.summon]}</span> • <span>${r[HERO_FIELDS.clazz]}</span></div><div class="stats"><span class="pill">С: ${r[HERO_FIELDS.power]}</span><span class="pill">А: ${r[HERO_FIELDS.attack]}</span><span class="pill">З: ${r[HERO_FIELDS.defense]}</span><span class="pill">Ж: ${r[HERO_FIELDS.hp]}</span></div>${hasAbil?`<button class="toggle-abilities" data-idx="${i}">Показать способности</button><div class="card-abilities-full" id="abilities-${i}">${cleaned.replace(/\n/g,'<br>')}</div>`:''}</article>`;
     }).join('');
     document.querySelectorAll('.toggle-abilities').forEach(btn=>btn.addEventListener('click',function(e){e.stopPropagation();let idx=this.dataset.idx;let div=document.getElementById(`abilities-${idx}`);if(div.style.display==='block'){div.style.display='none';this.textContent='Показать способности';}else{div.style.display='block';this.textContent='Скрыть способности';}}));
 }
@@ -1179,10 +1155,7 @@ function renderCards(heroes) {
 function openModal(idx) {
     if(!viewHeroes.length) return;
     currentIdx = idx;
-    let hero = viewHeroes[currentIdx];
-    currentHeroClass = hero[HERO_FIELDS.clazz];
-    currentHeroStats = { attack: toNum(hero[HERO_FIELDS.attack])||0, defense: toNum(hero[HERO_FIELDS.defense])||0, hp: toNum(hero[HERO_FIELDS.hp])||0, power: toNum(hero[HERO_FIELDS.power])||0 };
-    fillModal(hero);
+    fillModal(viewHeroes[currentIdx]);
     document.getElementById('modal').classList.add('show');
     document.body.style.overflow = 'hidden';
 }
@@ -1194,9 +1167,11 @@ function fillModal(hero) {
     document.getElementById('mName').textContent = hero[HERO_FIELDS.name]||'';
     document.getElementById('mMeta1').innerHTML = `<span>${hero[HERO_FIELDS.element]}</span> <span>${hero[HERO_FIELDS.stars]}★</span> <span>${hero[HERO_FIELDS.mana]}</span>`;
     document.getElementById('mMeta2').innerHTML = `<span>${hero[HERO_FIELDS.attackType]}</span> <span>${hero[HERO_FIELDS.summon]}</span> <span>${hero[HERO_FIELDS.clazz]}</span>`;
+    
     let mode = document.getElementById('talentModeSelect').value;
     let calc = calculateStatsWithTalents(hero, mode);
     document.getElementById('mStats').innerHTML = `<span class="pill">С: ${hero[HERO_FIELDS.power]}</span><span class="pill">А: ${calc.attack}</span><span class="pill">З: ${calc.defense}</span><span class="pill">Ж: ${calc.hp}</span>`;
+    
     document.getElementById('mAbilities').textContent = String(hero[HERO_FIELDS.abilities]||'—').replace(/^'|'$/g,'');
     document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive]||'—').replace(/^'|'$/g,'');
 }
@@ -1222,35 +1197,70 @@ function attachEvents() {
     document.getElementById('deselectAllHeroes').addEventListener('click',()=>{selected.heroes.clear(); updateHeroCheckboxes();});
     document.getElementById('applyHeroSelection').addEventListener('click',()=>{document.getElementById('heroCheckboxes').classList.remove('show'); applyFilters();});
     document.addEventListener('click',e=>{if(!document.getElementById('heroSelectToggle').contains(e.target)&&!document.getElementById('heroCheckboxes').contains(e.target)) document.getElementById('heroCheckboxes').classList.remove('show');});
-    document.querySelectorAll('.facet .actions button').forEach(btn=>btn.addEventListener('click',()=>{let f=btn.dataset.facet; if(btn.dataset.action==='all'){let vals=uniq(allHeroes.map(r=>{switch(f){case'element':return r[HERO_FIELDS.element];case'stars':return r[HERO_FIELDS.stars];case'mana':return r[HERO_FIELDS.mana];case'attackType':return r[HERO_FIELDS.attackType];case'summon':return r[HERO_FIELDS.summon];case'clazz':return r[HERO_FIELDS.clazz];default:return null;}})).filter(v=>v); selected[f]=new Set(vals.map(String));}else selected[f].clear(); initAllFacets(allHeroes);}));
-    document.getElementById('resetAll').addEventListener('click',()=>{document.getElementById('searchInput').value=''; document.getElementById('sortSelect').value='Сила'; sortDirection='desc'; Object.keys(selected).forEach(k=>selected[k].clear()); filteredHeroNames=[...allHeroNames]; initAllFacets(allHeroes); applyFilters();});
+    
+    document.querySelectorAll('.facet .actions button').forEach(btn=>btn.addEventListener('click',()=>{
+        let f=btn.dataset.facet; 
+        if(btn.dataset.action==='all'){
+            let vals=uniq(allHeroes.map(r=>{
+                switch(f){
+                    case'element':return r[HERO_FIELDS.element];
+                    case'stars':return r[HERO_FIELDS.stars];
+                    case'mana':return r[HERO_FIELDS.mana];
+                    case'attackType':return r[HERO_FIELDS.attackType];
+                    case'summon':return r[HERO_FIELDS.summon];
+                    case'clazz':return r[HERO_FIELDS.clazz];
+                    default:return null;
+                }
+            })).filter(v=>v);
+            selected[f]=new Set(vals.map(String));
+        } else selected[f].clear();
+        initAllFacets(allHeroes);
+    }));
+    
+    document.getElementById('resetAll').addEventListener('click',()=>{
+        document.getElementById('searchInput').value=''; 
+        document.getElementById('sortSelect').value='Сила'; 
+        sortDirection='desc'; 
+        Object.keys(selected).forEach(k=>selected[k].clear()); 
+        filteredHeroNames=[...allHeroNames]; 
+        initAllFacets(allHeroes); 
+        applyFilters();
+    });
+    
     document.getElementById('applyFiltersBtn').addEventListener('click',()=>{applyFilters(); document.getElementById('filters').classList.remove('show'); document.body.style.overflow='';});
     document.getElementById('applyFiltersMobileBtn').addEventListener('click',()=>{applyFilters(); document.getElementById('filters').classList.remove('show'); document.body.style.overflow='';});
+    
     document.getElementById('cards').addEventListener('click',e=>{if(e.target.classList.contains('toggle-abilities')) return; let card=e.target.closest('.card'); if(card) openModal(Number(card.dataset.idx));});
+    
     document.getElementById('mClose').addEventListener('click',closeModal);
     document.getElementById('mPrev').addEventListener('click',()=>go(-1));
     document.getElementById('mNext').addEventListener('click',()=>go(1));
     document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal')) closeModal();});
+    
     window.addEventListener('keydown',e=>{if(!document.getElementById('modal').classList.contains('show')) return; if(e.key==='Escape') closeModal(); if(e.key==='ArrowLeft') go(-1); if(e.key==='ArrowRight') go(1);});
+    
     document.getElementById('openFilters').addEventListener('click',()=>{document.getElementById('filters').classList.add('show'); document.body.style.overflow='hidden';});
     document.getElementById('closeFilters').addEventListener('click',()=>{document.getElementById('filters').classList.remove('show'); document.body.style.overflow='';});
     document.getElementById('filters').addEventListener('click',e=>{if(e.target===document.getElementById('filters')){document.getElementById('filters').classList.remove('show'); document.body.style.overflow='';}});
+    
     document.getElementById('infoBtn').addEventListener('click',()=>{document.getElementById('infoModal').classList.add('show'); document.body.style.overflow='hidden';});
     document.getElementById('infoClose').addEventListener('click',()=>{document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow='';});
     document.getElementById('infoModal').addEventListener('click',e=>{if(e.target===document.getElementById('infoModal')){document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow='';}});
-    document.getElementById('talentModeSelect').addEventListener('change',()=>{updateModalStats();});
+    
+    document.getElementById('talentModeSelect').addEventListener('change',updateModalStats);
     document.getElementById('updateDate').textContent = new Date().toLocaleDateString('ru-RU',{year:'numeric',month:'long',day:'numeric'});
 }
 
 Promise.all([
-    new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]); res();},error:rej})),
-    new Promise((res,rej)=>Papa.parse(TALENT_DESC_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{r.data.forEach(row=>{if(row[TALENT_DESC_FIELDS.talent_id]) talentDescriptions[row[TALENT_DESC_FIELDS.talent_id]]=row;}); res();},error:rej})),
-    new Promise((res,rej)=>Papa.parse(CLASSES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{r.data.forEach(row=>{if(!row[CLASS_TALENT_FIELDS.class_id]) return; let cn=row[CLASS_TALENT_FIELDS.class_id]; if(!classTalents[cn]) classTalents[cn]=[]; classTalents[cn].push({rowNumber:parseInt(row[CLASS_TALENT_FIELDS.row_number])||0, isMandatory:String(row[CLASS_TALENT_FIELDS.is_mandatory]).toLowerCase()==='true', branchGroup:row[CLASS_TALENT_FIELDS.branch_group], leftTalentId:row[CLASS_TALENT_FIELDS.left_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.left_talent_id]):null, centerTalentId:row[CLASS_TALENT_FIELDS.center_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.center_talent_id]):null, rightTalentId:row[CLASS_TALENT_FIELDS.right_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.right_talent_id]):null});}); Object.keys(classTalents).forEach(cn=>classTalents[cn].sort((a,b)=>a.rowNumber-b.rowNumber)); res();},error:rej}))
+    new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]); console.log('Герои загружены:', allHeroes.length); res();},error:rej})),
+    new Promise((res,rej)=>Papa.parse(TALENT_DESC_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{r.data.forEach(row=>{if(row[TALENT_DESC_FIELDS.talent_id]) talentDescriptions[row[TALENT_DESC_FIELDS.talent_id]]=row;}); console.log('Описания талантов загружены:', Object.keys(talentDescriptions).length); res();},error:rej})),
+    new Promise((res,rej)=>Papa.parse(CLASSES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{r.data.forEach(row=>{if(!row[CLASS_TALENT_FIELDS.class_id]) return; let cn=row[CLASS_TALENT_FIELDS.class_id]; if(!classTalents[cn]) classTalents[cn]=[]; classTalents[cn].push({rowNumber:parseInt(row[CLASS_TALENT_FIELDS.row_number])||0, isMandatory:String(row[CLASS_TALENT_FIELDS.is_mandatory]).toLowerCase()==='true', branchGroup:row[CLASS_TALENT_FIELDS.branch_group], leftTalentId:row[CLASS_TALENT_FIELDS.left_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.left_talent_id]):null, centerTalentId:row[CLASS_TALENT_FIELDS.center_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.center_talent_id]):null, rightTalentId:row[CLASS_TALENT_FIELDS.right_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.right_talent_id]):null});}); Object.keys(classTalents).forEach(cn=>classTalents[cn].sort((a,b)=>a.rowNumber-b.rowNumber)); console.log('Классы загружены:', Object.keys(classTalents).length); res();},error:rej}))
 ]).then(()=>{
     if(!allHeroes.length) { document.getElementById('count').textContent='Данные не найдены'; return; }
     initAllFacets(allHeroes);
     attachEvents();
     applyFilters();
+    console.log('Готово. talentDescriptions:', Object.keys(talentDescriptions).length, 'classTalents:', Object.keys(classTalents).length);
 }).catch(e=>{console.error(e); document.getElementById('count').textContent='Ошибка загрузки данных';});
 </script>
 </body>
