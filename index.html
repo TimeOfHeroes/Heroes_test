@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <style>
-/* (стили такие же как в предыдущей версии, не менялись) */
+/* (стили такие же, но убрал желтый фон для обязательных) */
 :root { 
   color-scheme: light dark; 
   --hdrH: 70px; 
@@ -39,8 +39,6 @@
   --element-unknown: #f0f0f0;
   --card-text: #2d3a3a;
   --card-meta: #4a5a5a;
-  
-  --talent-mandatory: #ffd700;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -73,8 +71,6 @@
     --element-unknown: #3a3a3a;
     --card-text: #f0f0f0;
     --card-meta: #c0c0c0;
-    
-    --talent-mandatory: #b8860b;
   }
 }
 
@@ -931,11 +927,6 @@ header {
   max-height: 90%;
   object-fit: contain;
 }
-.talent-cell.mandatory {
-  cursor: default;
-  background: var(--talent-mandatory);
-  border-color: var(--talent-mandatory);
-}
 .talent-cell.selectable:hover:not(.mandatory) {
   transform: scale(1.02);
   box-shadow: 0 2px 8px rgba(0,0,0,.2);
@@ -1208,11 +1199,11 @@ const TALENT_DESC_URL = 'Talent_description.csv?ts=' + Date.now();
 let allHeroes = [], viewHeroes = [], currentIdx = -1, allHeroNames = [], filteredHeroNames = [];
 let sortDirection = 'desc';
 let classTalents = {};
-let talentDescriptions = []; // массив для хранения всех записей талантов
+let talentDescriptions = [];
 let currentHeroTalents = {};
 let currentTreeMode = 'manual';
 
-// Эффекты талантов (числовые значения)
+// Эффекты талантов (числовые значения) - правильные!
 const talentEffectsMap = {
     1: { type: 'Атака', value: 15, isPercent: false },
     2: { type: 'Защита', value: 17, isPercent: false },
@@ -1270,14 +1261,12 @@ function getTalentImage(numId, active = false) {
     const isPercent = talent.isPercent;
     const value = talent.value;
     
-    // Ищем в массиве talentDescriptions подходящую запись
     for (const data of talentDescriptions) {
         const dataValue = parseFloat(data[TALENT_DESC_FIELDS.value]);
         const dataIsPercent = String(data[TALENT_DESC_FIELDS.is_percent]).toLowerCase() === 'true';
+        const dataEffectType = data[TALENT_DESC_FIELDS.effect_type];
         
-        if (data[TALENT_DESC_FIELDS.effect_type] === talentName && 
-            dataValue === value && 
-            dataIsPercent === isPercent) {
+        if (dataEffectType === talentName && dataValue === value && dataIsPercent === isPercent) {
             const field = active ? TALENT_DESC_FIELDS.image_active : TALENT_DESC_FIELDS.image_inactive;
             let url = data[field] || '';
             if (!url) return '';
@@ -1485,21 +1474,21 @@ function renderTalentTree(hero, selections, mode) {
                 if (imgUrl) {
                     html += `<img src="${imgUrl}" alt="Талант" loading="lazy" onerror="this.style.display='none'">`;
                 } else {
-                    html += `<div style="font-size:10px; text-align:center;">ID:${talent.leftTalentId}</div>`;
+                    html += `<div style="font-size:10px; text-align:center;">${talent.leftTalentId}</div>`;
                 }
                 html += '</div>';
             } else {
                 html += '<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>';
             }
             
-            // Центральная колонка (обязательная)
+            // Центральная колонка (обязательная) - теперь без желтого фона
             if (talent.centerTalentId) {
                 const imgUrl = getTalentImage(talent.centerTalentId, true);
-                html += `<div class="talent-cell mandatory" data-talent-id="${talent.centerTalentId}" data-row="${rowCounter}">`;
+                html += `<div class="talent-cell" data-talent-id="${talent.centerTalentId}" data-row="${rowCounter}" style="cursor:default;">`;
                 if (imgUrl) {
                     html += `<img src="${imgUrl}" alt="Обязательный талант" loading="lazy" onerror="this.style.display='none'">`;
                 } else {
-                    html += `<div style="font-size:10px; text-align:center;">Обязательный<br>ID:${talent.centerTalentId}</div>`;
+                    html += `<div style="font-size:10px; text-align:center;">${talent.centerTalentId}</div>`;
                 }
                 html += '</div>';
             } else {
@@ -1516,7 +1505,7 @@ function renderTalentTree(hero, selections, mode) {
                 if (imgUrl) {
                     html += `<img src="${imgUrl}" alt="Талант" loading="lazy" onerror="this.style.display='none'">`;
                 } else {
-                    html += `<div style="font-size:10px; text-align:center;">ID:${talent.rightTalentId}</div>`;
+                    html += `<div style="font-size:10px; text-align:center;">${talent.rightTalentId}</div>`;
                 }
                 html += '</div>';
             } else {
@@ -1531,7 +1520,6 @@ function renderTalentTree(hero, selections, mode) {
     document.getElementById('talentTable').innerHTML = html;
     updateTreeStatsPreview(hero, selections);
     
-    // Добавляем обработчики кликов только на selectable ячейки
     document.querySelectorAll('#talentTable .talent-cell.selectable').forEach(cell => {
         const isSelectable = cell.dataset.selectable === 'true';
         if (!isSelectable) return;
@@ -1547,7 +1535,6 @@ function renderTalentTree(hero, selections, mode) {
             
             if (!groupId || !side) return;
             
-            // Деактивируем все ячейки в этой группе
             const groupCells = document.querySelectorAll(`#talentTable .talent-cell[data-group="${groupId}"]`);
             groupCells.forEach(c => {
                 if (!c.classList.contains('mandatory')) {
@@ -1560,12 +1547,10 @@ function renderTalentTree(hero, selections, mode) {
                 }
             });
             
-            // Активируем выбранную ветку
             const newImgUrl = getTalentImage(talentId, true);
             const img = cell.querySelector('img');
             if (img && newImgUrl) img.src = newImgUrl;
             
-            // Активируем все ячейки той же ветки в этой группе
             const sameSideCells = document.querySelectorAll(`#talentTable .talent-cell[data-group="${groupId}"][data-side="${side}"]`);
             sameSideCells.forEach(c => {
                 if (!c.classList.contains('mandatory')) {
@@ -1578,10 +1563,8 @@ function renderTalentTree(hero, selections, mode) {
                 }
             });
             
-            // Обновляем selection
             currentHeroTalents[groupId] = side;
             
-            // Обновляем preview и характеристики в основном окне
             const heroData = viewHeroes[currentIdx];
             if (heroData) {
                 updateTreeStatsPreview(heroData, currentHeroTalents);
@@ -1641,7 +1624,7 @@ function applyTreeMode() {
     } else if (mode === 'defense') {
         currentHeroTalents = getOptimalSelections(hero, 'defense');
     } else if (mode === 'manual') {
-        // Оставляем текущие выбранные таланты
+        // оставляем текущие
     }
     
     renderTalentTree(hero, currentHeroTalents, mode);
@@ -1900,13 +1883,14 @@ Promise.all([
     },error:rej})),
     new Promise((res,rej)=>Papa.parse(TALENT_DESC_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{
         console.log('📥 Загружено строк из Talent_description:', r.data.length);
-        talentDescriptions = []; // очищаем массив
+        talentDescriptions = [];
         r.data.forEach(row=>{
             if(row[TALENT_DESC_FIELDS.talent_id]) {
                 talentDescriptions.push(row);
             }
         });
         console.log('✅ Описания талантов загружены:', talentDescriptions.length);
+        console.log('📋 Пример:', talentDescriptions[0] ? talentDescriptions[0][TALENT_DESC_FIELDS.talent_id] : 'нет');
         res();
     },error:rej}))
 ]).then(()=>{
