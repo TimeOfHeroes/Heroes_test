@@ -1144,6 +1144,26 @@ function calculateStatsWithTalents(hero, mode) {
     
     let groupIndex = 0;
     
+    // Функция для расчета прироста от таланта
+    function getTalentValue(talentId, statType, baseStat) {
+        const talent = talentEffectsMap[talentId];
+        if (!talent) return 0;
+        
+        const isPercent = talent.isPercent;
+        const value = talent.value;
+        const typeLower = talent.type.toLowerCase();
+        
+        if (statType === 'attack' && !typeLower.includes('атак')) return 0;
+        if (statType === 'defense' && !typeLower.includes('защит')) return 0;
+        if (statType === 'hp' && !typeLower.includes('жизн') && !typeLower.includes('здоров')) return 0;
+        
+        if (isPercent) {
+            return baseStat * value / 100;
+        } else {
+            return value;
+        }
+    }
+    
     for (const group of groups) {
         groupIndex++;
         
@@ -1165,79 +1185,119 @@ function calculateStatsWithTalents(hero, mode) {
         let selectedSide = null;
         
         if (mode === 'attack') {
-            // 1. Ищем ветку с талантами на атаку
+            // Собираем все возможные варианты выбора в этой группе для атаки
+            let bestValue = -1;
+            let bestSide = null;
+            
             for (const talent of group) {
                 if (!talent.isMandatory) {
-                    if (talent.leftTalentId && doesTalentAffectStat(talent.leftTalentId, 'attack')) {
-                        selectedSide = 'left';
-                        break;
+                    if (talent.leftTalentId) {
+                        const value = getTalentValue(talent.leftTalentId, 'attack', baseAttack);
+                        if (value > bestValue) {
+                            bestValue = value;
+                            bestSide = 'left';
+                        }
                     }
-                    if (talent.rightTalentId && doesTalentAffectStat(talent.rightTalentId, 'attack')) {
-                        selectedSide = 'right';
-                        break;
+                    if (talent.rightTalentId) {
+                        const value = getTalentValue(talent.rightTalentId, 'attack', baseAttack);
+                        if (value > bestValue) {
+                            bestValue = value;
+                            bestSide = 'right';
+                        }
                     }
                 }
             }
-            // 2. Если нет талантов на атаку, ищем ветку с талантами на защиту
-            if (selectedSide === null) {
+            
+            if (bestSide !== null) {
+                selectedSide = bestSide;
+                console.log(`[Группа ${groupIndex}] Выбрана ${selectedSide === 'left' ? 'левая' : 'правая'} ветка (прирост атаки: ${bestValue.toFixed(2)})`);
+            } else {
+                // Если нет талантов на атаку, ищем таланты на защиту
+                bestValue = -1;
+                bestSide = null;
                 for (const talent of group) {
                     if (!talent.isMandatory) {
-                        if (talent.leftTalentId && doesTalentAffectStat(talent.leftTalentId, 'defense')) {
-                            selectedSide = 'left';
-                            break;
+                        if (talent.leftTalentId) {
+                            const value = getTalentValue(talent.leftTalentId, 'defense', baseDefense);
+                            if (value > bestValue) {
+                                bestValue = value;
+                                bestSide = 'left';
+                            }
                         }
-                        if (talent.rightTalentId && doesTalentAffectStat(talent.rightTalentId, 'defense')) {
-                            selectedSide = 'right';
-                            break;
+                        if (talent.rightTalentId) {
+                            const value = getTalentValue(talent.rightTalentId, 'defense', baseDefense);
+                            if (value > bestValue) {
+                                bestValue = value;
+                                bestSide = 'right';
+                            }
                         }
                     }
                 }
-                if (selectedSide !== null) {
-                    console.log(`[Группа ${groupIndex}] Нет талантов на атаку, выбрана ${selectedSide === 'left' ? 'левая' : 'правая'} ветка с защитой`);
+                if (bestSide !== null) {
+                    selectedSide = bestSide;
+                    console.log(`[Группа ${groupIndex}] Нет талантов на атаку, выбрана ${selectedSide === 'left' ? 'левая' : 'правая'} ветка с защитой (прирост: ${bestValue.toFixed(2)})`);
+                } else {
+                    selectedSide = 'left';
+                    console.log(`[Группа ${groupIndex}] Нет талантов на атаку и защиту, выбрана левая ветка по умолчанию`);
                 }
-            }
-            // 3. Если нет талантов ни на атаку, ни на защиту, берем левую ветку по умолчанию
-            if (selectedSide === null) {
-                selectedSide = 'left';
-                console.log(`[Группа ${groupIndex}] Нет талантов на атаку и защиту, выбрана левая ветка по умолчанию`);
             }
         } 
         else if (mode === 'defense') {
-            // 1. Ищем ветку с талантами на защиту
+            // Собираем все возможные варианты выбора в этой группе для защиты
+            let bestValue = -1;
+            let bestSide = null;
+            
             for (const talent of group) {
                 if (!talent.isMandatory) {
-                    if (talent.leftTalentId && doesTalentAffectStat(talent.leftTalentId, 'defense')) {
-                        selectedSide = 'left';
-                        break;
+                    if (talent.leftTalentId) {
+                        const value = getTalentValue(talent.leftTalentId, 'defense', baseDefense);
+                        if (value > bestValue) {
+                            bestValue = value;
+                            bestSide = 'left';
+                        }
                     }
-                    if (talent.rightTalentId && doesTalentAffectStat(talent.rightTalentId, 'defense')) {
-                        selectedSide = 'right';
-                        break;
+                    if (talent.rightTalentId) {
+                        const value = getTalentValue(talent.rightTalentId, 'defense', baseDefense);
+                        if (value > bestValue) {
+                            bestValue = value;
+                            bestSide = 'right';
+                        }
                     }
                 }
             }
-            // 2. Если нет талантов на защиту, ищем ветку с талантами на атаку
-            if (selectedSide === null) {
+            
+            if (bestSide !== null) {
+                selectedSide = bestSide;
+                console.log(`[Группа ${groupIndex}] Выбрана ${selectedSide === 'left' ? 'левая' : 'правая'} ветка (прирост защиты: ${bestValue.toFixed(2)})`);
+            } else {
+                // Если нет талантов на защиту, ищем таланты на атаку
+                bestValue = -1;
+                bestSide = null;
                 for (const talent of group) {
                     if (!talent.isMandatory) {
-                        if (talent.leftTalentId && doesTalentAffectStat(talent.leftTalentId, 'attack')) {
-                            selectedSide = 'left';
-                            break;
+                        if (talent.leftTalentId) {
+                            const value = getTalentValue(talent.leftTalentId, 'attack', baseAttack);
+                            if (value > bestValue) {
+                                bestValue = value;
+                                bestSide = 'left';
+                            }
                         }
-                        if (talent.rightTalentId && doesTalentAffectStat(talent.rightTalentId, 'attack')) {
-                            selectedSide = 'right';
-                            break;
+                        if (talent.rightTalentId) {
+                            const value = getTalentValue(talent.rightTalentId, 'attack', baseAttack);
+                            if (value > bestValue) {
+                                bestValue = value;
+                                bestSide = 'right';
+                            }
                         }
                     }
                 }
-                if (selectedSide !== null) {
-                    console.log(`[Группа ${groupIndex}] Нет талантов на защиту, выбрана ${selectedSide === 'left' ? 'левая' : 'правая'} ветка с атакой`);
+                if (bestSide !== null) {
+                    selectedSide = bestSide;
+                    console.log(`[Группа ${groupIndex}] Нет талантов на защиту, выбрана ${selectedSide === 'left' ? 'левая' : 'правая'} ветка с атакой (прирост: ${bestValue.toFixed(2)})`);
+                } else {
+                    selectedSide = 'right';
+                    console.log(`[Группа ${groupIndex}] Нет талантов на защиту и атаку, выбрана правая ветка по умолчанию`);
                 }
-            }
-            // 3. Если нет талантов ни на защиту, ни на атаку, берем правую ветку по умолчанию
-            if (selectedSide === null) {
-                selectedSide = 'right';
-                console.log(`[Группа ${groupIndex}] Нет талантов на защиту и атаку, выбрана правая ветка по умолчанию`);
             }
         }
         
