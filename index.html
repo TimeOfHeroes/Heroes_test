@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <style>
-/* (стили такие же, но убрал желтый фон для обязательных) */
 :root { 
   color-scheme: light dark; 
   --hdrH: 70px; 
@@ -1203,7 +1202,6 @@ let talentDescriptions = [];
 let currentHeroTalents = {};
 let currentTreeMode = 'manual';
 
-// Эффекты талантов (числовые значения) - правильные!
 const talentEffectsMap = {
     1: { type: 'Атака', value: 15, isPercent: false },
     2: { type: 'Защита', value: 17, isPercent: false },
@@ -1257,16 +1255,15 @@ function getTalentImage(numId, active = false) {
     const talent = talentEffectsMap[numId];
     if (!talent) return '';
     
-    const talentName = talent.type; // "Атака", "Защита", "Жизни" и т.д.
+    const talentName = talent.type;
     const isPercent = talent.isPercent;
     const value = talent.value;
     
     for (const data of talentDescriptions) {
-        const dataTalentId = data[TALENT_DESC_FIELDS.talent_id]; // "Атака", "Защита" и т.д.
+        const dataTalentId = data[TALENT_DESC_FIELDS.talent_id];
         const dataValue = parseFloat(data[TALENT_DESC_FIELDS.value]);
         const dataIsPercent = String(data[TALENT_DESC_FIELDS.is_percent]).toLowerCase() === 'true';
         
-        // Сравниваем по talent_id, значению и is_percent
         if (dataTalentId === talentName && Math.abs(dataValue - value) < 0.01 && dataIsPercent === isPercent) {
             const field = active ? TALENT_DESC_FIELDS.image_active : TALENT_DESC_FIELDS.image_inactive;
             let url = data[field] || '';
@@ -1465,49 +1462,37 @@ function renderTalentTree(hero, selections, mode) {
         for (const talent of group) {
             html += '<div class="talent-row">';
             
-            // Левая колонка
             if (talent.leftTalentId) {
                 const isActive = selectedSide === 'left';
                 const imgUrl = getTalentImage(talent.leftTalentId, isActive);
                 const isSelectable = !talent.isMandatory && isManual;
                 const disabledClass = (!isSelectable || (!isManual && selectedSide !== null && selectedSide !== 'left')) ? 'disabled' : '';
                 html += `<div class="talent-cell ${disabledClass} selectable" data-group="${groupId}" data-side="left" data-talent-id="${talent.leftTalentId}" data-row="${rowCounter}" data-selectable="${isSelectable}">`;
-                if (imgUrl) {
-                    html += `<img src="${imgUrl}" alt="Талант" loading="lazy" onerror="this.style.display='none'">`;
-                } else {
-                    html += `<div style="font-size:10px; text-align:center;">${talent.leftTalentId}</div>`;
-                }
+                if (imgUrl) html += `<img src="${imgUrl}" alt="Талант" loading="lazy" onerror="this.style.display='none'">`;
+                else html += `<div style="font-size:10px; text-align:center;">${talent.leftTalentId}</div>`;
                 html += '</div>';
             } else {
                 html += '<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>';
             }
             
-            // Центральная колонка (обязательная) - теперь без желтого фона
             if (talent.centerTalentId) {
                 const imgUrl = getTalentImage(talent.centerTalentId, true);
                 html += `<div class="talent-cell" data-talent-id="${talent.centerTalentId}" data-row="${rowCounter}" style="cursor:default;">`;
-                if (imgUrl) {
-                    html += `<img src="${imgUrl}" alt="Обязательный талант" loading="lazy" onerror="this.style.display='none'">`;
-                } else {
-                    html += `<div style="font-size:10px; text-align:center;">${talent.centerTalentId}</div>`;
-                }
+                if (imgUrl) html += `<img src="${imgUrl}" alt="Обязательный талант" loading="lazy" onerror="this.style.display='none'">`;
+                else html += `<div style="font-size:10px; text-align:center;">${talent.centerTalentId}</div>`;
                 html += '</div>';
             } else {
                 html += '<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>';
             }
             
-            // Правая колонка
             if (talent.rightTalentId) {
                 const isActive = selectedSide === 'right';
                 const imgUrl = getTalentImage(talent.rightTalentId, isActive);
                 const isSelectable = !talent.isMandatory && isManual;
                 const disabledClass = (!isSelectable || (!isManual && selectedSide !== null && selectedSide !== 'right')) ? 'disabled' : '';
                 html += `<div class="talent-cell ${disabledClass} selectable" data-group="${groupId}" data-side="right" data-talent-id="${talent.rightTalentId}" data-row="${rowCounter}" data-selectable="${isSelectable}">`;
-                if (imgUrl) {
-                    html += `<img src="${imgUrl}" alt="Талант" loading="lazy" onerror="this.style.display='none'">`;
-                } else {
-                    html += `<div style="font-size:10px; text-align:center;">${talent.rightTalentId}</div>`;
-                }
+                if (imgUrl) html += `<img src="${imgUrl}" alt="Талант" loading="lazy" onerror="this.style.display='none'">`;
+                else html += `<div style="font-size:10px; text-align:center;">${talent.rightTalentId}</div>`;
                 html += '</div>';
             } else {
                 html += '<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>';
@@ -1624,8 +1609,6 @@ function applyTreeMode() {
         currentHeroTalents = getOptimalSelections(hero, 'attack');
     } else if (mode === 'defense') {
         currentHeroTalents = getOptimalSelections(hero, 'defense');
-    } else if (mode === 'manual') {
-        // оставляем текущие
     }
     
     renderTalentTree(hero, currentHeroTalents, mode);
@@ -1891,7 +1874,6 @@ Promise.all([
             }
         });
         console.log('✅ Описания талантов загружены:', talentDescriptions.length);
-        console.log('📋 Пример:', talentDescriptions[0] ? talentDescriptions[0][TALENT_DESC_FIELDS.talent_id] : 'нет');
         res();
     },error:rej}))
 ]).then(()=>{
