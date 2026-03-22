@@ -882,10 +882,35 @@ header {
 .tree-header button:hover {
   background: var(--secondary-color);
 }
+.tree-stats-preview {
+  background: var(--secondary-color);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 0 20px 16px 20px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+}
+.tree-stats-preview .stat-item {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+.tree-stats-preview .stat-label {
+  font-weight: 500;
+  opacity: 0.8;
+}
+.tree-stats-preview .stat-value {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--accent-color);
+}
 .tree-content {
   padding: 20px;
   overflow-y: auto;
-  max-height: calc(90vh - 80px);
+  max-height: calc(90vh - 180px);
 }
 .talent-table {
   display: flex;
@@ -927,10 +952,6 @@ header {
 .talent-cell.disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-.talent-cell.active {
-  border: 3px solid var(--talent-selected);
-  box-shadow: 0 0 0 2px var(--talent-selected);
 }
 .talent-cell.selectable:hover:not(.mandatory):not(.disabled) {
   transform: scale(1.02);
@@ -975,6 +996,9 @@ header {
   }
   .tree-header .tree-controls {
     justify-content: space-between;
+  }
+  .tree-stats-preview {
+    margin: 0 12px 12px 12px;
   }
 }
 
@@ -1157,6 +1181,7 @@ header {
       <button id="treeResetBtn" class="btn secondary">Сбросить все таланты</button>
     </div>
   </div>
+  <div id="treeStatsPreview" class="tree-stats-preview"></div>
   <div class="tree-content" id="treeContent">
     <div class="talent-table" id="talentTable"></div>
   </div>
@@ -1326,9 +1351,7 @@ function calculateStatsWithSelections(hero, selections) {
     }
     if (currentGroup.length > 0) groups.push(currentGroup);
     
-    let groupIndex = 0;
     for (const group of groups) {
-        groupIndex++;
         const groupId = group[0].branchGroup;
         
         for (const talent of group) {
@@ -1396,10 +1419,8 @@ function getOptimalSelections(hero, mode) {
     if (currentGroup.length > 0) groups.push(currentGroup);
     
     const selections = {};
-    let groupIndex = 0;
     
     for (const group of groups) {
-        groupIndex++;
         const groupId = group[0].branchGroup;
         let bestValue = -1;
         let bestSide = null;
@@ -1438,6 +1459,16 @@ function getOptimalSelections(hero, mode) {
 
 let currentHeroTalents = {};
 
+function updateTreeStatsPreview(hero, selections) {
+    const calc = calculateStatsWithSelections(hero, selections);
+    const previewHtml = `
+        <div class="stat-item"><span class="stat-label">⚔️ Атака:</span><span class="stat-value">${calc.attack}</span></div>
+        <div class="stat-item"><span class="stat-label">🛡️ Защита:</span><span class="stat-value">${calc.defense}</span></div>
+        <div class="stat-item"><span class="stat-label">❤️ Жизни:</span><span class="stat-value">${calc.hp}</span></div>
+    `;
+    document.getElementById('treeStatsPreview').innerHTML = previewHtml;
+}
+
 function renderTalentTree(hero, selections) {
     const heroClass = hero[HERO_FIELDS.clazz];
     if (!classTalents[heroClass]) {
@@ -1474,8 +1505,7 @@ function renderTalentTree(hero, selections) {
                 const imgUrl = getTalentImage(talent.leftTalentId, isActive);
                 const isSelectable = !talent.isMandatory;
                 const disabledClass = (!isSelectable || (selectedSide !== null && selectedSide !== 'left')) ? 'disabled' : '';
-                const activeClass = isActive ? 'active' : '';
-                html += `<div class="talent-cell ${disabledClass} ${activeClass} selectable" data-group="${groupId}" data-side="left" data-talent-id="${talent.leftTalentId}" data-row="${rowCounter}">`;
+                html += `<div class="talent-cell ${disabledClass} selectable" data-group="${groupId}" data-side="left" data-talent-id="${talent.leftTalentId}" data-row="${rowCounter}">`;
                 if (imgUrl) {
                     html += `<img src="${imgUrl}" alt="Талант" loading="lazy" onerror="this.style.display='none'">`;
                 } else {
@@ -1506,8 +1536,7 @@ function renderTalentTree(hero, selections) {
                 const imgUrl = getTalentImage(talent.rightTalentId, isActive);
                 const isSelectable = !talent.isMandatory;
                 const disabledClass = (!isSelectable || (selectedSide !== null && selectedSide !== 'right')) ? 'disabled' : '';
-                const activeClass = isActive ? 'active' : '';
-                html += `<div class="talent-cell ${disabledClass} ${activeClass} selectable" data-group="${groupId}" data-side="right" data-talent-id="${talent.rightTalentId}" data-row="${rowCounter}">`;
+                html += `<div class="talent-cell ${disabledClass} selectable" data-group="${groupId}" data-side="right" data-talent-id="${talent.rightTalentId}" data-row="${rowCounter}">`;
                 if (imgUrl) {
                     html += `<img src="${imgUrl}" alt="Талант" loading="lazy" onerror="this.style.display='none'">`;
                 } else {
@@ -1524,8 +1553,9 @@ function renderTalentTree(hero, selections) {
     }
     
     document.getElementById('talentTable').innerHTML = html;
+    updateTreeStatsPreview(hero, selections);
     
-    // Добавляем обработчики кликов только на selectable ячейки
+    // Добавляем обработчики кликов на selectable ячейки
     document.querySelectorAll('#talentTable .talent-cell.selectable').forEach(cell => {
         if (cell.classList.contains('mandatory')) return;
         if (cell.classList.contains('disabled')) return;
@@ -1537,34 +1567,32 @@ function renderTalentTree(hero, selections) {
             
             const groupId = cell.dataset.group;
             const side = cell.dataset.side;
+            const talentId = parseInt(cell.dataset.talentId);
             
             if (!groupId || !side) return;
             
             // Деактивируем все ячейки в этой группе
             const groupCells = document.querySelectorAll(`#talentTable .talent-cell[data-group="${groupId}"]`);
             groupCells.forEach(c => {
-                c.classList.remove('active');
-                // Меняем картинку на неактивную
-                const tid = c.dataset.talentId;
-                if (tid && !c.classList.contains('mandatory')) {
-                    const newImgUrl = getTalentImage(parseInt(tid), false);
-                    const img = c.querySelector('img');
-                    if (img && newImgUrl) img.src = newImgUrl;
+                if (!c.classList.contains('mandatory')) {
+                    const tid = c.dataset.talentId;
+                    if (tid) {
+                        const newImgUrl = getTalentImage(parseInt(tid), false);
+                        const img = c.querySelector('img');
+                        if (img && newImgUrl) img.src = newImgUrl;
+                    }
                 }
             });
             
             // Активируем выбранную ветку
-            const talentId = parseInt(cell.dataset.talentId);
             const newImgUrl = getTalentImage(talentId, true);
             const img = cell.querySelector('img');
             if (img && newImgUrl) img.src = newImgUrl;
-            cell.classList.add('active');
             
             // Активируем все ячейки той же ветки в этой группе
             const sameSideCells = document.querySelectorAll(`#talentTable .talent-cell[data-group="${groupId}"][data-side="${side}"]`);
             sameSideCells.forEach(c => {
                 if (!c.classList.contains('mandatory')) {
-                    c.classList.add('active');
                     const tid = c.dataset.talentId;
                     if (tid) {
                         const newUrl = getTalentImage(parseInt(tid), true);
@@ -1577,9 +1605,10 @@ function renderTalentTree(hero, selections) {
             // Обновляем selection
             currentHeroTalents[groupId] = side;
             
-            // Обновляем расчетные характеристики в реальном времени
+            // Обновляем preview и характеристики в основном окне
             const heroData = viewHeroes[currentIdx];
             if (heroData) {
+                updateTreeStatsPreview(heroData, currentHeroTalents);
                 const calc = calculateStatsWithSelections(heroData, currentHeroTalents);
                 document.getElementById('mStats').innerHTML = `<span class="pill">С: ${heroData[HERO_FIELDS.power]}</span><span class="pill">А: ${calc.attack}</span><span class="pill">З: ${calc.defense}</span><span class="pill">Ж: ${calc.hp}</span>`;
             }
