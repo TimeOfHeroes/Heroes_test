@@ -695,7 +695,7 @@ header {
 .modal { 
   position: fixed; 
   inset: 0; 
-  background: rgba(0,0,0,.85); 
+  background: rgba(0,0,0,0.5);
   display: none; 
   align-items: center; 
   justify-content: center; 
@@ -713,6 +713,7 @@ header {
   border-radius: 16px; 
   display: flex; 
   flex-direction: column;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 .dialog .modal-content {
   display: grid;
@@ -780,6 +781,10 @@ header {
   align-items: center;
   justify-content: center;
 }
+.close:hover {
+  background: rgba(0,0,0,.9);
+  transform: scale(1.05);
+}
 .nav { 
   position: absolute; 
   top: 50%; 
@@ -796,6 +801,10 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.nav:hover {
+  background: rgba(0,0,0,.9);
+  transform: translateY(-50%) scale(1.05);
 }
 .nav.prev { left: 12px; } 
 .nav.next { right: 12px; }
@@ -831,76 +840,66 @@ header {
   white-space: nowrap;
 }
 
-/* Окно дерева талантов - как попап, стилизованное как модальное окно героя */
-.tree-modal {
+/* Окно дерева талантов - плавающее справа, не блокирует клики */
+.tree-panel {
   position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.85);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  z-index: 2100;
-}
-.tree-modal.show {
-  display: flex;
-}
-.tree-dialog {
-  position: relative;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  width: 380px;
+  max-width: calc(100vw - 40px);
   background: var(--card-bg);
-  max-width: 800px;
-  width: min(800px, 90vw);
-  max-height: 80vh;
-  overflow: hidden;
   border-radius: 16px;
-  display: flex;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  z-index: 2100;
+  display: none;
   flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+.tree-panel.show {
+  display: flex;
 }
 .tree-header {
-  padding: 16px 20px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-shrink: 0;
+  background: var(--card-bg);
 }
 .tree-header h3 {
   margin: 0;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
 }
 .tree-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
+  background: none;
   border: none;
-  background: rgba(0,0,0,.7);
-  color: #fff;
   font-size: 24px;
-  line-height: 1;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
   cursor: pointer;
-  z-index: 10;
+  color: var(--text-color);
+  opacity: 0.7;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
 }
 .tree-close:hover {
-  background: rgba(0,0,0,.9);
-  transform: scale(1.05);
+  opacity: 1;
+  background: var(--secondary-color);
 }
 .tree-content {
-  padding: 20px;
+  padding: 16px;
   overflow-y: auto;
-  flex: 1;
+  max-height: 70vh;
 }
 .talent-table {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  min-width: 500px;
 }
 .talent-row {
   display: flex;
@@ -908,8 +907,8 @@ header {
   justify-content: center;
 }
 .talent-cell {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   background: var(--secondary-color);
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -918,6 +917,7 @@ header {
   justify-content: center;
   transition: all 0.2s;
   overflow: hidden;
+  cursor: pointer;
 }
 .talent-cell img {
   max-width: 90%;
@@ -927,33 +927,39 @@ header {
 .talent-cell.active {
   background: var(--talent-active-bg);
 }
-.talent-cell.selectable {
-  cursor: pointer;
+.talent-cell.mandatory {
+  background: var(--talent-mandatory-bg);
+  cursor: default;
 }
 .talent-cell.selectable:hover {
   transform: scale(1.02);
   box-shadow: 0 2px 8px rgba(0,0,0,.2);
 }
-.talent-cell.mandatory {
-  background: var(--talent-mandatory-bg);
-  cursor: default;
-}
-.talent-cell.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  pointer-events: none;
-}
 
 @media (max-width: 768px) {
+  .tree-panel {
+    width: 320px;
+    right: 10px;
+  }
   .talent-cell {
-    width: 55px;
-    height: 55px;
+    width: 50px;
+    height: 50px;
   }
-  .talent-table {
-    min-width: 400px;
+}
+
+@media (max-width: 480px) {
+  .tree-panel {
+    width: calc(100vw - 20px);
+    right: 10px;
+    left: 10px;
+    top: auto;
+    bottom: 10px;
+    transform: none;
+    max-height: 60vh;
   }
-  .tree-dialog {
-    max-width: 95vw;
+  .talent-cell {
+    width: 45px;
+    height: 45px;
   }
 }
 
@@ -1121,17 +1127,15 @@ header {
 </div>
 </div>
 
-<!-- Окно дерева талантов (попап, только дерево) -->
-<div id="treeModal" class="tree-modal">
-<div class="tree-dialog">
-  <button id="treeCloseBtn" class="tree-close">×</button>
+<!-- Окно дерева талантов (плавающее справа) -->
+<div id="treePanel" class="tree-panel">
   <div class="tree-header">
     <h3>🌳 Дерево талантов — <span id="treeHeroName"></span></h3>
+    <button id="closeTreeBtn" class="tree-close">×</button>
   </div>
   <div class="tree-content" id="treeContent">
     <div class="talent-table" id="talentTable"></div>
   </div>
-</div>
 </div>
 
 <div id="infoModal" class="info-modal">
@@ -1169,7 +1173,7 @@ let sortDirection = 'desc';
 let classTalents = {};
 let talentDescriptions = [];
 let currentHeroTalents = {};
-let currentMode = 'none'; // по умолчанию "Без талантов"
+let currentMode = 'none';
 
 const talentEffectsMap = {
     1: { type: 'Атака', value: 15, isPercent: false },
@@ -1412,8 +1416,8 @@ function renderTalentTree(hero, selections, mode) {
     
     let html = '';
     let rowCounter = 1;
-    // В режиме "Без талантов" не показываем активные таланты
     const showActive = mode !== 'none';
+    const isManual = mode === 'manual';
     
     for (const group of groups) {
         const groupId = group[0].branchGroup;
@@ -1426,9 +1430,9 @@ function renderTalentTree(hero, selections, mode) {
             if (talent.leftTalentId) {
                 const isActive = showActive && selectedSide === 'left';
                 const imgUrl = getTalentImage(talent.leftTalentId, isActive);
-                const isSelectable = false; // в этом окне выбор неактивен
+                const selectableClass = isManual ? 'selectable' : '';
                 const activeClass = isActive ? 'active' : '';
-                html += `<div class="talent-cell ${activeClass}" data-talent-id="${talent.leftTalentId}" data-row="${rowCounter}">`;
+                html += `<div class="talent-cell ${activeClass} ${selectableClass}" data-group="${groupId}" data-side="left" data-talent-id="${talent.leftTalentId}" data-row="${rowCounter}">`;
                 if (imgUrl) html += `<img src="${imgUrl}" alt="Талант" loading="lazy" onerror="this.style.display='none'">`;
                 else html += `<div style="font-size:10px; text-align:center;">${talent.leftTalentId}</div>`;
                 html += '</div>';
@@ -1439,7 +1443,7 @@ function renderTalentTree(hero, selections, mode) {
             // Центральная колонка (обязательная)
             if (talent.centerTalentId) {
                 const imgUrl = getTalentImage(talent.centerTalentId, true);
-                html += `<div class="talent-cell mandatory" data-talent-id="${talent.centerTalentId}" data-row="${rowCounter}" style="cursor:default;">`;
+                html += `<div class="talent-cell mandatory" data-talent-id="${talent.centerTalentId}" data-row="${rowCounter}">`;
                 if (imgUrl) html += `<img src="${imgUrl}" alt="Обязательный талант" loading="lazy" onerror="this.style.display='none'">`;
                 else html += `<div style="font-size:10px; text-align:center;">${talent.centerTalentId}</div>`;
                 html += '</div>';
@@ -1451,8 +1455,9 @@ function renderTalentTree(hero, selections, mode) {
             if (talent.rightTalentId) {
                 const isActive = showActive && selectedSide === 'right';
                 const imgUrl = getTalentImage(talent.rightTalentId, isActive);
+                const selectableClass = isManual ? 'selectable' : '';
                 const activeClass = isActive ? 'active' : '';
-                html += `<div class="talent-cell ${activeClass}" data-talent-id="${talent.rightTalentId}" data-row="${rowCounter}">`;
+                html += `<div class="talent-cell ${activeClass} ${selectableClass}" data-group="${groupId}" data-side="right" data-talent-id="${talent.rightTalentId}" data-row="${rowCounter}">`;
                 if (imgUrl) html += `<img src="${imgUrl}" alt="Талант" loading="lazy" onerror="this.style.display='none'">`;
                 else html += `<div style="font-size:10px; text-align:center;">${talent.rightTalentId}</div>`;
                 html += '</div>';
@@ -1466,21 +1471,78 @@ function renderTalentTree(hero, selections, mode) {
     }
     
     document.getElementById('talentTable').innerHTML = html;
+    
+    // Добавляем обработчики кликов только в ручном режиме
+    if (isManual) {
+        document.querySelectorAll('#talentTable .talent-cell.selectable').forEach(cell => {
+            cell.addEventListener('click', (e) => {
+                e.stopPropagation();
+                
+                const groupId = cell.dataset.group;
+                const side = cell.dataset.side;
+                const talentId = parseInt(cell.dataset.talentId);
+                
+                if (!groupId || !side) return;
+                
+                // Деактивируем все ячейки в этой группе
+                const groupCells = document.querySelectorAll(`#talentTable .talent-cell[data-group="${groupId}"]`);
+                groupCells.forEach(c => {
+                    if (!c.classList.contains('mandatory')) {
+                        const tid = c.dataset.talentId;
+                        if (tid) {
+                            const newImgUrl = getTalentImage(parseInt(tid), false);
+                            const img = c.querySelector('img');
+                            if (img && newImgUrl) img.src = newImgUrl;
+                        }
+                        c.classList.remove('active');
+                    }
+                });
+                
+                // Активируем выбранную ветку
+                const newImgUrl = getTalentImage(talentId, true);
+                const img = cell.querySelector('img');
+                if (img && newImgUrl) img.src = newImgUrl;
+                cell.classList.add('active');
+                
+                // Активируем все ячейки той же ветки в этой группе
+                const sameSideCells = document.querySelectorAll(`#talentTable .talent-cell[data-group="${groupId}"][data-side="${side}"]`);
+                sameSideCells.forEach(c => {
+                    if (!c.classList.contains('mandatory')) {
+                        const tid = c.dataset.talentId;
+                        if (tid) {
+                            const newUrl = getTalentImage(parseInt(tid), true);
+                            const cImg = c.querySelector('img');
+                            if (cImg && newUrl) cImg.src = newUrl;
+                        }
+                        c.classList.add('active');
+                    }
+                });
+                
+                // Обновляем selection
+                currentHeroTalents[groupId] = side;
+                
+                // Обновляем характеристики в основном окне
+                const heroData = viewHeroes[currentIdx];
+                if (heroData) {
+                    const calc = calculateStatsWithSelections(heroData, currentHeroTalents);
+                    document.getElementById('mStats').innerHTML = `<span class="pill">С: ${heroData[HERO_FIELDS.power]}</span><span class="pill">А: ${calc.attack}</span><span class="pill">З: ${calc.defense}</span><span class="pill">Ж: ${calc.hp}</span>`;
+                }
+            });
+        });
+    }
 }
 
-function openTreeModal() {
+function openTreePanel() {
     const hero = viewHeroes[currentIdx];
     if (!hero) return;
     
     document.getElementById('treeHeroName').textContent = hero[HERO_FIELDS.name];
     renderTalentTree(hero, currentHeroTalents, currentMode);
-    document.getElementById('treeModal').classList.add('show');
-    document.body.style.overflow = 'hidden';
+    document.getElementById('treePanel').classList.add('show');
 }
 
-function closeTreeModal() {
-    document.getElementById('treeModal').classList.remove('show');
-    document.body.style.overflow = '';
+function closeTreePanel() {
+    document.getElementById('treePanel').classList.remove('show');
 }
 
 function updateMainModalStats() {
@@ -1507,7 +1569,7 @@ function updateMainModalStats() {
     document.getElementById('mStats').innerHTML = `<span class="pill">С: ${hero[HERO_FIELDS.power]}</span><span class="pill">А: ${calc.attack}</span><span class="pill">З: ${calc.defense}</span><span class="pill">Ж: ${calc.hp}</span>`;
     
     // Если окно дерева открыто, обновляем его
-    if (document.getElementById('treeModal').classList.contains('show')) {
+    if (document.getElementById('treePanel').classList.contains('show')) {
         renderTalentTree(hero, currentHeroTalents, currentMode);
     }
 }
@@ -1595,7 +1657,6 @@ function openModal(idx) {
     currentIdx = idx;
     const hero = viewHeroes[currentIdx];
     
-    // Сбрасываем режим на "Без талантов" при смене героя
     currentMode = 'none';
     document.getElementById('talentModeSelect').value = 'none';
     currentHeroTalents = {};
@@ -1620,7 +1681,7 @@ function fillModal(hero) {
     document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive]||'—').replace(/^'|'$/g,'');
 }
 
-function closeModal() { document.getElementById('modal').classList.remove('show'); document.body.style.overflow=''; currentIdx=-1; }
+function closeModal() { document.getElementById('modal').classList.remove('show'); document.body.style.overflow=''; currentIdx=-1; closeTreePanel(); }
 function go(delta) { if(currentIdx<0||!viewHeroes.length) return; currentIdx=(currentIdx+delta+viewHeroes.length)%viewHeroes.length; openModal(currentIdx); }
 
 function attachEvents() {
@@ -1672,7 +1733,7 @@ function attachEvents() {
     document.getElementById('mNext').addEventListener('click',()=>go(1));
     document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal')) closeModal();});
     
-    window.addEventListener('keydown',e=>{if(!document.getElementById('modal').classList.contains('show')) return; if(e.key==='Escape') closeModal(); if(e.key==='ArrowLeft') go(-1); if(e.key==='ArrowRight') go(1);});
+    window.addEventListener('keydown',e=>{if(!document.getElementById('modal').classList.contains('show')) return; if(e.key==='Escape') closeModal(); if(e.key==='ArrowLeft') go(-1); if(e.key==='ArrowRight') go(1); if(e.key==='Escape' && document.getElementById('treePanel').classList.contains('show')) closeTreePanel();});
     
     document.getElementById('openFilters').addEventListener('click',()=>{document.getElementById('filters').classList.add('show'); document.body.style.overflow='hidden';});
     document.getElementById('closeFilters').addEventListener('click',()=>{document.getElementById('filters').classList.remove('show'); document.body.style.overflow='';});
@@ -1683,11 +1744,8 @@ function attachEvents() {
     document.getElementById('infoModal').addEventListener('click',e=>{if(e.target===document.getElementById('infoModal')){document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow='';}});
     
     document.getElementById('talentModeSelect').addEventListener('change', updateMainModalStats);
-    document.getElementById('openTreeBtn').addEventListener('click', openTreeModal);
-    document.getElementById('treeCloseBtn').addEventListener('click', closeTreeModal);
-    document.getElementById('treeModal').addEventListener('click', (e) => {
-        if (e.target === document.getElementById('treeModal')) closeTreeModal();
-    });
+    document.getElementById('openTreeBtn').addEventListener('click', openTreePanel);
+    document.getElementById('closeTreeBtn').addEventListener('click', closeTreePanel);
     
     document.getElementById('updateDate').textContent = new Date().toLocaleDateString('ru-RU',{year:'numeric',month:'long',day:'numeric'});
 }
