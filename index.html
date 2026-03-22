@@ -1202,6 +1202,18 @@ let sortDirection = 'desc';
 let classTalents = {};
 let talentDescriptions = {};
 
+// МАППИНГ: числовой ID таланта (из Classes.csv) -> текстовый ID (из Talent_description.csv)
+const talentNumberToName = {
+    1: "Атака", 2: "Защита", 3: "Жизни", 4: "Атака", 5: "Защита", 6: "Жизни",
+    7: "Атака", 8: "Защита", 9: "Жизни", 10: "Исцеление", 11: "Крит", 
+    12: "Бонус к скорости набора маны", 13: "Исцеление", 14: "Крит", 
+    15: "Бонус к скорости набора маны", 16: "Шанс уклониться", 17: "Стойкость",
+    18: "Подавление магии", 19: "Концентрация", 20: "Магический разряд",
+    21: "Кровавый вихрь", 22: "Непоколебимость", 23: "Природный зов",
+    24: "Второе дыхание", 25: "Пробитие", 26: "Кровавый вихрь"
+};
+
+// Эффекты талантов (числовые значения)
 const talentEffectsMap = {
     1: { type: 'Атака', value: 15, isPercent: false },
     2: { type: 'Защита', value: 17, isPercent: false },
@@ -1261,8 +1273,11 @@ function doesTalentAffectStat(talentId, statType) {
     return false;
 }
 
-function getTalentImage(talentId, active = false) {
-    const talent = talentDescriptions[talentId];
+// Получение URL картинки по числовому ID таланта
+function getTalentImage(numId, active = false) {
+    const talentName = talentNumberToName[numId];
+    if (!talentName) return '';
+    const talent = talentDescriptions[talentName];
     if (!talent) return '';
     const field = active ? TALENT_DESC_FIELDS.image_active : TALENT_DESC_FIELDS.image_inactive;
     let url = talent[field] || '';
@@ -1464,7 +1479,7 @@ function renderTalentTree(hero, selections) {
                 if (imgUrl) {
                     html += `<img src="${imgUrl}" alt="Талант" loading="lazy" onerror="this.style.display='none'">`;
                 } else {
-                    html += `<div style="font-size:10px; text-align:center;">Талант ${talent.leftTalentId}</div>`;
+                    html += `<div style="font-size:10px; text-align:center;">ID:${talent.leftTalentId}</div>`;
                 }
                 html += '</div>';
             } else {
@@ -1478,7 +1493,7 @@ function renderTalentTree(hero, selections) {
                 if (imgUrl) {
                     html += `<img src="${imgUrl}" alt="Обязательный талант" loading="lazy" onerror="this.style.display='none'">`;
                 } else {
-                    html += `<div style="font-size:10px; text-align:center;">Обязательный</div>`;
+                    html += `<div style="font-size:10px; text-align:center;">Обязательный<br>ID:${talent.centerTalentId}</div>`;
                 }
                 html += '</div>';
             } else {
@@ -1496,7 +1511,7 @@ function renderTalentTree(hero, selections) {
                 if (imgUrl) {
                     html += `<img src="${imgUrl}" alt="Талант" loading="lazy" onerror="this.style.display='none'">`;
                 } else {
-                    html += `<div style="font-size:10px; text-align:center;">Талант ${talent.rightTalentId}</div>`;
+                    html += `<div style="font-size:10px; text-align:center;">ID:${talent.rightTalentId}</div>`;
                 }
                 html += '</div>';
             } else {
@@ -1881,11 +1896,6 @@ Promise.all([
             }
         });
         console.log('✅ Описания талантов загружены:', Object.keys(talentDescriptions).length);
-        console.log('📋 Доступные talent_id:', Object.keys(talentDescriptions));
-        if(Object.keys(talentDescriptions).length > 0) {
-            const firstId = Object.keys(talentDescriptions)[0];
-            console.log('📷 Пример картинки для', firstId, 'активная:', talentDescriptions[firstId][TALENT_DESC_FIELDS.image_active]);
-        }
         res();
     },error:rej}))
 ]).then(()=>{
