@@ -1208,7 +1208,7 @@ const TALENT_DESC_URL = 'Talent_description.csv?ts=' + Date.now();
 let allHeroes = [], viewHeroes = [], currentIdx = -1, allHeroNames = [], filteredHeroNames = [];
 let sortDirection = 'desc';
 let classTalents = {};
-let talentDescriptions = {};
+let talentDescriptions = []; // массив для хранения всех записей талантов
 let currentHeroTalents = {};
 let currentTreeMode = 'manual';
 
@@ -1270,8 +1270,8 @@ function getTalentImage(numId, active = false) {
     const isPercent = talent.isPercent;
     const value = talent.value;
     
-    // Ищем в talentDescriptions подходящую запись
-    for (const [name, data] of Object.entries(talentDescriptions)) {
+    // Ищем в массиве talentDescriptions подходящую запись
+    for (const data of talentDescriptions) {
         const dataValue = parseFloat(data[TALENT_DESC_FIELDS.value]);
         const dataIsPercent = String(data[TALENT_DESC_FIELDS.is_percent]).toLowerCase() === 'true';
         
@@ -1900,13 +1900,13 @@ Promise.all([
     },error:rej})),
     new Promise((res,rej)=>Papa.parse(TALENT_DESC_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{
         console.log('📥 Загружено строк из Talent_description:', r.data.length);
+        talentDescriptions = []; // очищаем массив
         r.data.forEach(row=>{
-            const talentId = row[TALENT_DESC_FIELDS.talent_id];
-            if(talentId) {
-                talentDescriptions[talentId] = row;
+            if(row[TALENT_DESC_FIELDS.talent_id]) {
+                talentDescriptions.push(row);
             }
         });
-        console.log('✅ Описания талантов загружены:', Object.keys(talentDescriptions).length);
+        console.log('✅ Описания талантов загружены:', talentDescriptions.length);
         res();
     },error:rej}))
 ]).then(()=>{
