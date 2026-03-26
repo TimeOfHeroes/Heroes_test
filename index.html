@@ -544,7 +544,6 @@ header {
   display:flex; 
   align-items:center; 
   justify-content:space-between; 
-  margin-bottom:16px;
   padding: 12px 16px;
   border-bottom: 1px solid var(--border-color);
   flex-shrink: 0;
@@ -552,7 +551,7 @@ header {
   top: 0;
   background: var(--filter-bg);
   z-index: 10;
-  margin-top: 0;
+  margin: 0;
 }
 .facet { 
   margin-bottom:20px; 
@@ -1461,63 +1460,71 @@ function getTalentPriorityScore(talentId, mode, baseAttack, baseDefense, baseHp)
     const talent = talentEffectsMap[talentId];
     if (!talent) return -1;
     
-    const typeLower = talent.type.toLowerCase();
+    const typeName = talent.type;
     const isPercent = talent.isPercent;
     const value = talent.value;
     
     // Вычисляем фактическое значение бонуса
     let actualValue = 0;
     if (isPercent) {
-        if (typeLower.includes('атак')) actualValue = baseAttack * value / 100;
-        else if (typeLower.includes('защит')) actualValue = baseDefense * value / 100;
-        else if (typeLower.includes('жизн') || typeLower.includes('здоров')) actualValue = baseHp * value / 100;
+        if (typeName === 'Атака') actualValue = baseAttack * value / 100;
+        else if (typeName === 'Защита') actualValue = baseDefense * value / 100;
+        else if (typeName === 'Жизни') actualValue = baseHp * value / 100;
         else actualValue = value;
     } else {
         actualValue = value;
     }
     
+    // Определяем, является ли талант комбинированным (по значению)
+    // Атака + Защита: процентные значения 3% или 4% (это таланты 4, 5, 7, 8)
+    const isAttackDefense = (talentId === 4 || talentId === 5 || talentId === 7 || talentId === 8);
+    // Защита + Здоровье: это таланты 2, 5, 8? Нет, по факту таких нет в базе
+    // Проверим по типу и значению
+    const isDefenseHealth = (typeName === 'Защита' && isPercent && (value === 3 || value === 4)) || 
+                            (typeName === 'Жизни' && isPercent && (value === 3 || value === 4));
+    
     // Режим атаки
     if (mode === 'attack') {
-        // 1. Атака (наивысший приоритет)
-        if (typeLower.includes('атак')) {
-            // Атака + Защита имеет дополнительный бонус (выше, чем просто атака)
-            if (typeLower.includes('защит')) {
-                return 110000 + actualValue;
-            }
+        // 1. Атака + Защита (наивысший приоритет)
+        if (isAttackDefense) {
+            return 110000 + actualValue;
+        }
+        // 2. Атака
+        else if (typeName === 'Атака') {
             return 100000 + actualValue;
         }
-        // 2. Защита
-        else if (typeLower.includes('защит')) {
+        // 3. Защита
+        else if (typeName === 'Защита') {
             return 50000 + actualValue;
         }
-        // 3. Здоровье
-        else if (typeLower.includes('жизн') || typeLower.includes('здоров')) {
+        // 4. Здоровье
+        else if (typeName === 'Жизни') {
             return 10000 + actualValue;
         }
-        // 4. Всё остальное
+        // 5. Всё остальное
         else {
             return 1000 + actualValue;
         }
     }
     // Режим защиты
     else if (mode === 'defense') {
-        // 1. Защита (наивысший приоритет)
-        if (typeLower.includes('защит')) {
-            // Защита + Здоровье имеет дополнительный бонус (выше, чем просто защита)
-            if (typeLower.includes('жизн') || typeLower.includes('здоров')) {
-                return 110000 + actualValue;
-            }
+        // 1. Защита + Здоровье (наивысший приоритет)
+        if (isDefenseHealth) {
+            return 110000 + actualValue;
+        }
+        // 2. Защита
+        else if (typeName === 'Защита') {
             return 100000 + actualValue;
         }
-        // 2. Здоровье
-        else if (typeLower.includes('жизн') || typeLower.includes('здоров')) {
+        // 3. Здоровье
+        else if (typeName === 'Жизни') {
             return 50000 + actualValue;
         }
-        // 3. Атака
-        else if (typeLower.includes('атак')) {
+        // 4. Атака
+        else if (typeName === 'Атака') {
             return 10000 + actualValue;
         }
-        // 4. Всё остальное
+        // 5. Всё остальное
         else {
             return 1000 + actualValue;
         }
