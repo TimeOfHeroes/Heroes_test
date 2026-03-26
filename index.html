@@ -533,7 +533,7 @@ header {
   display: block;
 }
 .filters .panel { 
-  padding: 16px;
+  padding: 0 16px 16px 16px;
   background: var(--filter-bg);
   display: flex;
   flex-direction: column;
@@ -544,7 +544,7 @@ header {
   display:flex; 
   align-items:center; 
   justify-content:space-between; 
-  padding: 12px 16px;
+  padding: 12px 0;
   border-bottom: 1px solid var(--border-color);
   flex-shrink: 0;
   position: sticky;
@@ -1302,32 +1302,32 @@ function hideTalentTooltip() {
 }
 
 const talentEffectsMap = {
-    1: { type: 'Атака', value: 15, isPercent: false },
-    2: { type: 'Защита', value: 17, isPercent: false },
-    3: { type: 'Жизни', value: 35, isPercent: false },
-    4: { type: 'Атака', value: 3, isPercent: true },
-    5: { type: 'Защита', value: 3, isPercent: true },
-    6: { type: 'Жизни', value: 3, isPercent: true },
-    7: { type: 'Атака', value: 4, isPercent: true },
-    8: { type: 'Защита', value: 4, isPercent: true },
-    9: { type: 'Жизни', value: 4, isPercent: true },
-    10: { type: 'Исцеление', value: 2, isPercent: true },
-    11: { type: 'Крит', value: 2, isPercent: true },
-    12: { type: 'Бонус к скорости набора маны', value: 2, isPercent: true },
-    13: { type: 'Исцеление', value: 4, isPercent: true },
-    14: { type: 'Крит', value: 4, isPercent: true },
-    15: { type: 'Бонус к скорости набора маны', value: 4, isPercent: true },
-    16: { type: 'Шанс уклониться', value: 4, isPercent: true },
-    17: { type: 'Стойкость', value: 7, isPercent: true },
-    18: { type: 'Подавление магии', value: 3, isPercent: true },
-    19: { type: 'Концентрация', value: 6, isPercent: true },
-    20: { type: 'Магический разряд', value: 4, isPercent: true },
-    21: { type: 'Кровавый вихрь', value: 6, isPercent: true },
-    22: { type: 'Непоколебимость', value: 5, isPercent: true },
-    23: { type: 'Природный зов', value: 3, isPercent: true },
-    24: { type: 'Второе дыхание', value: 5, isPercent: true },
-    25: { type: 'Пробитие', value: 5, isPercent: true },
-    26: { type: 'Кровавый вихрь', value: 35, isPercent: true }
+    1: { type: 'Атака', value: 15, isPercent: false, isCombined: true },
+    2: { type: 'Защита', value: 17, isPercent: false, isCombined: true },
+    3: { type: 'Жизни', value: 35, isPercent: false, isCombined: false },
+    4: { type: 'Атака', value: 3, isPercent: true, isCombined: true },
+    5: { type: 'Защита', value: 3, isPercent: true, isCombined: true },
+    6: { type: 'Жизни', value: 3, isPercent: true, isCombined: false },
+    7: { type: 'Атака', value: 4, isPercent: true, isCombined: true },
+    8: { type: 'Защита', value: 4, isPercent: true, isCombined: true },
+    9: { type: 'Жизни', value: 4, isPercent: true, isCombined: false },
+    10: { type: 'Исцеление', value: 2, isPercent: true, isCombined: false },
+    11: { type: 'Крит', value: 2, isPercent: true, isCombined: false },
+    12: { type: 'Бонус к скорости набора маны', value: 2, isPercent: true, isCombined: false },
+    13: { type: 'Исцеление', value: 4, isPercent: true, isCombined: false },
+    14: { type: 'Крит', value: 4, isPercent: true, isCombined: false },
+    15: { type: 'Бонус к скорости набора маны', value: 4, isPercent: true, isCombined: false },
+    16: { type: 'Шанс уклониться', value: 4, isPercent: true, isCombined: false },
+    17: { type: 'Стойкость', value: 7, isPercent: true, isCombined: false },
+    18: { type: 'Подавление магии', value: 3, isPercent: true, isCombined: false },
+    19: { type: 'Концентрация', value: 6, isPercent: true, isCombined: false },
+    20: { type: 'Магический разряд', value: 4, isPercent: true, isCombined: false },
+    21: { type: 'Кровавый вихрь', value: 6, isPercent: true, isCombined: false },
+    22: { type: 'Непоколебимость', value: 5, isPercent: true, isCombined: false },
+    23: { type: 'Природный зов', value: 3, isPercent: true, isCombined: false },
+    24: { type: 'Второе дыхание', value: 5, isPercent: true, isCombined: false },
+    25: { type: 'Пробитие', value: 5, isPercent: true, isCombined: false },
+    26: { type: 'Кровавый вихрь', value: 35, isPercent: true, isCombined: false }
 };
 
 function getTalentDescriptionById(talentId) {
@@ -1336,11 +1336,21 @@ function getTalentDescriptionById(talentId) {
     const isPercent = talent.isPercent;
     const value = talent.value;
     const typeName = talent.type;
+    const isCombined = talent.isCombined || false;
     const suffix = isPercent ? '%' : '';
     
     let desc = '';
     
-    if (typeName === 'Кровавый вихрь') {
+    if (isCombined) {
+        if (typeName === 'Атака') {
+            desc = `Атака +${value}${suffix}, Защита +${value}${suffix}`;
+        } else if (typeName === 'Защита') {
+            desc = `Защита +${value}${suffix}, Атака +${value}${suffix}`;
+        } else {
+            desc = `${typeName} +${value}${suffix}`;
+        }
+    }
+    else if (typeName === 'Кровавый вихрь') {
         desc = 'Кровавый вихрь: +' + value + suffix + ' шанс вызвать кровотечение при обычной атаке. Наносит 60% урона каждый ход в течение 5 ходов.';
     } 
     else if (typeName === 'Исцеление') {
@@ -1400,17 +1410,39 @@ function getTalentEffects(numId) {
     if (!talent) return { attackPercent:0, attackFlat:0, defensePercent:0, defenseFlat:0, hpPercent:0, hpFlat:0 };
     const value = talent.value;
     const isPercent = talent.isPercent;
-    const typeLower = talent.type.toLowerCase();
+    const typeName = talent.type;
     let result = { attackPercent:0, attackFlat:0, defensePercent:0, defenseFlat:0, hpPercent:0, hpFlat:0 };
-    if (typeLower.includes('атак')) {
-        if (isPercent) result.attackPercent = value;
-        else result.attackFlat = value;
-    } else if (typeLower.includes('защит')) {
-        if (isPercent) result.defensePercent = value;
-        else result.defenseFlat = value;
-    } else if (typeLower.includes('жизн') || typeLower.includes('здоров')) {
-        if (isPercent) result.hpPercent = value;
-        else result.hpFlat = value;
+    
+    // Для комбинированных талантов добавляем оба бонуса
+    if (talent.isCombined) {
+        if (typeName === 'Атака') {
+            if (isPercent) {
+                result.attackPercent = value;
+                result.defensePercent = value;
+            } else {
+                result.attackFlat = value;
+                result.defenseFlat = value;
+            }
+        } else if (typeName === 'Защита') {
+            if (isPercent) {
+                result.defensePercent = value;
+                result.attackPercent = value;
+            } else {
+                result.defenseFlat = value;
+                result.attackFlat = value;
+            }
+        }
+    } else {
+        if (typeName === 'Атака') {
+            if (isPercent) result.attackPercent = value;
+            else result.attackFlat = value;
+        } else if (typeName === 'Защита') {
+            if (isPercent) result.defensePercent = value;
+            else result.defenseFlat = value;
+        } else if (typeName === 'Жизни') {
+            if (isPercent) result.hpPercent = value;
+            else result.hpFlat = value;
+        }
     }
     return result;
 }
@@ -1443,10 +1475,12 @@ function getTalentValue(talentId, statType, baseStat) {
     if (!talent) return 0;
     const isPercent = talent.isPercent;
     const value = talent.value;
-    const typeLower = talent.type.toLowerCase();
-    if (statType === 'attack' && !typeLower.includes('атак')) return 0;
-    if (statType === 'defense' && !typeLower.includes('защит')) return 0;
-    if (statType === 'hp' && !typeLower.includes('жизн') && !typeLower.includes('здоров')) return 0;
+    const typeName = talent.type;
+    
+    if (statType === 'attack' && typeName !== 'Атака') return 0;
+    if (statType === 'defense' && typeName !== 'Защита') return 0;
+    if (statType === 'hp' && typeName !== 'Жизни') return 0;
+    
     if (isPercent) return baseStat * value / 100;
     return value;
 }
@@ -1463,6 +1497,7 @@ function getTalentPriorityScore(talentId, mode, baseAttack, baseDefense, baseHp)
     const typeName = talent.type;
     const isPercent = talent.isPercent;
     const value = talent.value;
+    const isCombined = talent.isCombined || false;
     
     // Вычисляем фактическое значение бонуса
     let actualValue = 0;
@@ -1475,17 +1510,10 @@ function getTalentPriorityScore(talentId, mode, baseAttack, baseDefense, baseHp)
         actualValue = value;
     }
     
-    // Определяем комбинированные таланты по ID и типу
-    // Атака + Защита: плоские 15 (id:1) и 17 (id:2) — это базовые таланты, которые в игре дают оба бонуса
-    // По факту, в игре таланты 1 (Атака 15) и 2 (Защита 17) дают оба параметра
-    const isAttackDefense = (talentId === 1 || talentId === 2);
-    // Защита + Здоровье: таланты с защитой и здоровьем — таких нет в явном виде, но плоская защита (id:2) даёт и защиту, и здоровье? Нет, только защиту.
-    // Поэтому для защиты приоритет выше у комбинированных талантов с атакой
-    
     // Режим атаки
     if (mode === 'attack') {
-        // 1. Атака + Защита (наивысший приоритет)
-        if (isAttackDefense && typeName === 'Атака') {
+        // 1. Атака + Защита (комбинированный)
+        if (isCombined && (typeName === 'Атака' || typeName === 'Защита')) {
             return 110000 + actualValue;
         }
         // 2. Атака
@@ -1507,8 +1535,8 @@ function getTalentPriorityScore(talentId, mode, baseAttack, baseDefense, baseHp)
     }
     // Режим защиты
     else if (mode === 'defense') {
-        // 1. Защита + Атака (комбинированный) — наивысший приоритет, выше чем просто защита
-        if (isAttackDefense && typeName === 'Атака') {
+        // 1. Защита + Атака (комбинированный) — наивысший приоритет
+        if (isCombined && (typeName === 'Защита' || typeName === 'Атака')) {
             return 120000 + actualValue;
         }
         // 2. Защита
@@ -2101,7 +2129,7 @@ function attachEvents() {
         const headerHeight = document.querySelector('header').offsetHeight;
         const filterPanel = document.querySelector('.filters .panel');
         if (filterPanel) {
-            filterPanel.style.paddingTop = (headerHeight + 16) + 'px';
+            filterPanel.style.paddingTop = (headerHeight + 12) + 'px';
         }
         document.getElementById('filters').classList.add('show');
         document.getElementById('filterOverlay').classList.add('show');
@@ -2120,7 +2148,7 @@ function attachEvents() {
             const headerHeight = document.querySelector('header').offsetHeight;
             const filterPanel = document.querySelector('.filters .panel');
             if (filterPanel) {
-                filterPanel.style.paddingTop = (headerHeight + 16) + 'px';
+                filterPanel.style.paddingTop = (headerHeight + 12) + 'px';
             }
         }
     }
