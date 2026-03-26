@@ -1504,6 +1504,11 @@ function calculateStatsWithSelections(hero, selections, mode) {
     };
 }
 
+function getTalentType(talentId) {
+    const talent = talentEffectsMap[talentId];
+    return talent ? talent.type : '';
+}
+
 function calculateDefenseScore(talentId, baseDefense, baseHp) {
     const talent = talentEffectsMap[talentId];
     if (!talent) return 0;
@@ -1512,43 +1517,19 @@ function calculateDefenseScore(talentId, baseDefense, baseHp) {
     const value = talent.value;
     const typeLower = talent.type.toLowerCase();
     
-    let weight = 0;
-    let statValue = 0;
-    
-    if (typeLower.includes('защит')) {
-        weight = 10;
-        if (isPercent) {
-            statValue = baseDefense * value / 100;
-        } else {
-            statValue = value;
-        }
-    } 
-    else if (typeLower.includes('жизн') || typeLower.includes('здоров')) {
-        weight = 9;
-        if (isPercent) {
-            statValue = baseHp * value / 100;
-        } else {
-            statValue = value;
-        }
-    }
-    else if (typeLower.includes('атак')) {
-        weight = 8;
-        statValue = value;
+    // Для атаки, скорости маны, крита и остальных считаем "полезность"
+    if (typeLower.includes('атак')) {
+        return value * 1.0; // атака
     }
     else if (typeLower.includes('бонус к скорости набора маны') || typeLower.includes('скорость маны')) {
-        weight = 7;
-        statValue = value;
+        return value * 0.9; // скорость маны
     }
     else if (typeLower.includes('крит')) {
-        weight = 6;
-        statValue = value;
+        return value * 0.8; // крит
     }
     else {
-        weight = 5;
-        statValue = value;
+        return value * 0.5; // всё остальное
     }
-    
-    return weight * statValue;
 }
 
 function getOptimalSelections(hero, mode) {
@@ -1604,30 +1585,56 @@ function getOptimalSelections(hero, mode) {
             }
         } 
         else if (mode === 'defense') {
-            let bestScore = -1;
-            let bestSide = null;
+            let hasDefenseTalent = false;
+            let defenseSide = null;
+            let healthSide = null;
+            let bestOtherScore = -1;
+            let bestOtherSide = null;
             
             for (const talent of group) {
                 if (!talent.isMandatory) {
+                    // Проверяем левый талант
                     if (talent.leftTalentId) {
-                        const score = calculateDefenseScore(talent.leftTalentId, baseDefense, baseHp);
-                        if (score > bestScore) {
-                            bestScore = score;
-                            bestSide = 'left';
+                        const typeLower = getTalentType(talent.leftTalentId).toLowerCase();
+                        if (typeLower.includes('защит')) {
+                            hasDefenseTalent = true;
+                            defenseSide = 'left';
+                        } else if (typeLower.includes('жизн') || typeLower.includes('здоров')) {
+                            healthSide = 'left';
+                        } else {
+                            const score = calculateDefenseScore(talent.leftTalentId, baseDefense, baseHp);
+                            if (score > bestOtherScore) {
+                                bestOtherScore = score;
+                                bestOtherSide = 'left';
+                            }
                         }
                     }
+                    // Проверяем правый талант
                     if (talent.rightTalentId) {
-                        const score = calculateDefenseScore(talent.rightTalentId, baseDefense, baseHp);
-                        if (score > bestScore) {
-                            bestScore = score;
-                            bestSide = 'right';
+                        const typeLower = getTalentType(talent.rightTalentId).toLowerCase();
+                        if (typeLower.includes('защит')) {
+                            hasDefenseTalent = true;
+                            defenseSide = 'right';
+                        } else if (typeLower.includes('жизн') || typeLower.includes('здоров')) {
+                            healthSide = 'right';
+                        } else {
+                            const score = calculateDefenseScore(talent.rightTalentId, baseDefense, baseHp);
+                            if (score > bestOtherScore) {
+                                bestOtherScore = score;
+                                bestOtherSide = 'right';
+                            }
                         }
                     }
                 }
             }
             
-            if (bestSide !== null) {
-                selections[groupId] = bestSide;
+            // Приоритет: сначала защита, потом здоровье, потом всё остальное
+            if (hasDefenseTalent && defenseSide !== null) {
+                selections[groupId] = defenseSide;
+            } else if (healthSide !== null) {
+                selections[groupId] = healthSide;
+            } else if (bestOtherSide !== null) {
+                selections[groupId] = bestOtherSide;
             } else {
                 selections[groupId] = 'left';
             }
