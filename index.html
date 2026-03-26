@@ -1560,6 +1560,7 @@ function getOptimalSelections(hero, mode) {
         } else if (rightScore > leftScore) {
             selections[groupId] = 'right';
         } else {
+            // Если равны, выбираем левую ветку
             selections[groupId] = 'left';
         }
     }
@@ -1567,6 +1568,60 @@ function getOptimalSelections(hero, mode) {
     return selections;
 }
 
+function getBranchScore(branchTalents, mode, baseAttack, baseDefense, baseHp) {
+    // branchTalents — массив талантов в одной ветке (левой или правой)
+    let hasDefense = false;
+    let hasHealth = false;
+    let hasAttack = false;
+    let totalValue = 0;
+    
+    for (const talentId of branchTalents) {
+        if (!talentId) continue;
+        const talent = talentEffectsMap[talentId];
+        if (!talent) continue;
+        
+        const typeName = talent.type;
+        const isPercent = talent.isPercent;
+        const value = talent.value;
+        
+        // Вычисляем значение
+        let actualValue = 0;
+        if (isPercent) {
+            if (typeName === 'Атака') actualValue = baseAttack * value / 100;
+            else if (typeName === 'Защита') actualValue = baseDefense * value / 100;
+            else if (typeName === 'Жизни') actualValue = baseHp * value / 100;
+            else actualValue = value;
+        } else {
+            actualValue = value;
+        }
+        
+        totalValue += actualValue;
+        
+        if (typeName === 'Защита') hasDefense = true;
+        if (typeName === 'Жизни') hasHealth = true;
+        if (typeName === 'Атака') hasAttack = true;
+    }
+    
+    if (mode === 'attack') {
+        // Приоритет в атаке: Атака > Защита > Здоровье
+        if (hasAttack) return 100000 + totalValue;
+        if (hasDefense) return 50000 + totalValue;
+        if (hasHealth) return 10000 + totalValue;
+        return 1000 + totalValue;
+    } 
+    else if (mode === 'defense') {
+        // Приоритет в защите: Защита+Здоровье > Защита > Здоровье > Защита+Атака > Атака
+        if (hasDefense && hasHealth) return 120000 + totalValue;
+        if (hasDefense && !hasHealth && !hasAttack) return 100000 + totalValue;
+        if (hasHealth && !hasDefense) return 50000 + totalValue;
+        if (hasDefense && hasAttack) return 40000 + totalValue;
+        if (hasAttack) return 10000 + totalValue;
+        return 1000 + totalValue;
+    }
+    
+    return 0;
+}
+  
 function renderTalentTree(hero, selections, mode) {
     const heroClass = hero[HERO_FIELDS.clazz];
     if (!classTalents[heroClass]) {
