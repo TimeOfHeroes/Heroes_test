@@ -1475,18 +1475,17 @@ function getTalentPriorityScore(talentId, mode, baseAttack, baseDefense, baseHp)
         actualValue = value;
     }
     
-    // Определяем, является ли талант комбинированным (по значению)
-    // Атака + Защита: процентные значения 3% или 4% (это таланты 4, 5, 7, 8)
-    const isAttackDefense = (talentId === 4 || talentId === 5 || talentId === 7 || talentId === 8);
-    // Защита + Здоровье: это таланты 2, 5, 8? Нет, по факту таких нет в базе
-    // Проверим по типу и значению
-    const isDefenseHealth = (typeName === 'Защита' && isPercent && (value === 3 || value === 4)) || 
-                            (typeName === 'Жизни' && isPercent && (value === 3 || value === 4));
+    // Определяем комбинированные таланты по ID и типу
+    // Атака + Защита: плоские 15 (id:1) и 17 (id:2) — это базовые таланты, которые в игре дают оба бонуса
+    // По факту, в игре таланты 1 (Атака 15) и 2 (Защита 17) дают оба параметра
+    const isAttackDefense = (talentId === 1 || talentId === 2);
+    // Защита + Здоровье: таланты с защитой и здоровьем — таких нет в явном виде, но плоская защита (id:2) даёт и защиту, и здоровье? Нет, только защиту.
+    // Поэтому для защиты приоритет выше у комбинированных талантов с атакой
     
     // Режим атаки
     if (mode === 'attack') {
         // 1. Атака + Защита (наивысший приоритет)
-        if (isAttackDefense) {
+        if (isAttackDefense && typeName === 'Атака') {
             return 110000 + actualValue;
         }
         // 2. Атака
@@ -1508,9 +1507,9 @@ function getTalentPriorityScore(talentId, mode, baseAttack, baseDefense, baseHp)
     }
     // Режим защиты
     else if (mode === 'defense') {
-        // 1. Защита + Здоровье (наивысший приоритет)
-        if (isDefenseHealth) {
-            return 110000 + actualValue;
+        // 1. Защита + Атака (комбинированный) — наивысший приоритет, выше чем просто защита
+        if (isAttackDefense && typeName === 'Атака') {
+            return 120000 + actualValue;
         }
         // 2. Защита
         else if (typeName === 'Защита') {
