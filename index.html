@@ -1479,26 +1479,29 @@ function getBranchScore(branchTalents, mode, baseAttack, baseDefense, baseHp) {
     }
     
     if (mode === 'attack') {
-        // Атака макс: Атака+Защита > Атака > Защита > Здоровье
+        // Атака макс: главное наличие атаки
         if (hasAttack && hasDefense) return 100000 + totalValue;
-        if (hasAttack) return 80000 + totalValue;
-        if (hasDefense) return 60000 + totalValue;
-        if (hasHealth) return 40000 + totalValue;
-        return 20000 + totalValue;
+        if (hasAttack) return 90000 + totalValue;
+        if (hasDefense) return 80000 + totalValue;
+        if (hasHealth) return 70000 + totalValue;
+        return 60000 + totalValue;
     } 
     else if (mode === 'defense') {
-        // Защита макс: Защита+Здоровье > Защита > Здоровье > Защита+Атака > Атака
-        if (hasDefense && hasHealth) return 100000 + totalValue;
-        if (hasDefense && !hasHealth && !hasAttack) return 80000 + totalValue;
-        if (hasHealth && !hasDefense) return 60000 + totalValue;
-        if (hasDefense && hasAttack) return 40000 + totalValue;
-        if (hasAttack) return 20000 + totalValue;
-        return 10000 + totalValue;
+        // Защита макс: главное наличие защиты
+        // Сначала проверяем наличие защиты
+        if (hasDefense) {
+            // Среди веток с защитой выбираем ту, где есть еще и здоровье
+            if (hasHealth) return 100000 + totalValue;
+            return 90000 + totalValue;
+        }
+        // Если защиты нет, то смотрим на здоровье
+        if (hasHealth) return 70000 + totalValue;
+        if (hasAttack) return 60000 + totalValue;
+        return 50000 + totalValue;
     }
     
     return 0;
 }
-
 function calculateStatsWithSelections(hero, selections, mode) {
     const heroClass = hero[HERO_FIELDS.clazz];
     const baseAttack = toNum(hero[HERO_FIELDS.attack]) || 0;
