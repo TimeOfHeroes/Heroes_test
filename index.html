@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Галерея героев</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' font-size='80' fill='%230a7'%3E🦸%3C/text%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <style>
@@ -46,6 +47,35 @@
   --tooltip-bg: #2d2d2d;
   --tooltip-text: #fff;
   --overlay-bg: rgba(0,0,0,0.5);
+
+  /* Цвета для тегов */
+  --tag-damage: #ff6b6b;
+  --tag-heal: #51cf66;
+  --tag-shield: #4dabf7;
+  --tag-debuff: #cc5de8;
+  --tag-buff: #fcc419;
+  --tag-dot: #ff922b;
+  --tag-hot: #20c997;
+  --tag-cleanse: #845ef7;
+  --tag-summon: #f06595;
+  --tag-reflect: #22b8cf;
+  --tag-block: #868e96;
+  --tag-steal: #e8590c;
+  --tag-single: #fa5252;
+  --tag-aoe: #fab005;
+  --tag-chain: #fd7e14;
+  --tag-self: #adb5bd;
+  --tag-allies: #339af0;
+  --tag-enemies: #e03131;
+  --tag-mana: #5c7cfa;
+  --tag-crit: #ffd43b;
+  --tag-accuracy: #748ffc;
+  --tag-antihil: #f03e3e;
+  --tag-counter: #f59f00;
+  --tag-provoke: #d6336c;
+  --tag-resurrection: #94d82d;
+  --tag-element: #a9e34b;
+  --tag-default: #adb5bd;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -86,6 +116,34 @@
     --tooltip-bg: #1a1a1a;
     --tooltip-text: #eee;
     --overlay-bg: rgba(0,0,0,0.7);
+
+    --tag-damage: #e03131;
+    --tag-heal: #2b8a3e;
+    --tag-shield: #1c7ed6;
+    --tag-debuff: #9c36b5;
+    --tag-buff: #e67700;
+    --tag-dot: #e8590c;
+    --tag-hot: #0c9e7a;
+    --tag-cleanse: #6741d9;
+    --tag-summon: #c2255c;
+    --tag-reflect: #0b7285;
+    --tag-block: #5c5c5c;
+    --tag-steal: #c92a2a;
+    --tag-single: #c92a2a;
+    --tag-aoe: #e67700;
+    --tag-chain: #d9480f;
+    --tag-self: #868e96;
+    --tag-allies: #1864ab;
+    --tag-enemies: #c92a2a;
+    --tag-mana: #364fc7;
+    --tag-crit: #e67700;
+    --tag-accuracy: #4263f5;
+    --tag-antihil: #c92a2a;
+    --tag-counter: #e67700;
+    --tag-provoke: #a61e4d;
+    --tag-resurrection: #5c940d;
+    --tag-element: #74b816;
+    --tag-default: #868e96;
   }
 }
 
@@ -513,7 +571,7 @@ header {
   border:1px solid var(--border-color); 
   border-radius:12px;
   box-shadow: 0 2px 10px rgba(0,0,0,.05);
-  width: 320px;
+  width: 360px;
   position: fixed;
   top: 0;
   left: 0;
@@ -571,30 +629,30 @@ header {
   font-size: 13px;
 }
 .facet { 
-  margin-bottom:20px; 
+  margin-bottom:16px; 
   flex-shrink: 0;
 }
 .facet h3 { 
-  margin:0 0 10px; 
-  font-size:15px; 
+  margin:0 0 6px; 
+  font-size:14px; 
   font-weight: 500;
 }
 .opts { 
-  max-height:200px; 
+  max-height:150px; 
   overflow-y: auto;
   border:1px solid var(--border-color); 
-  border-radius:8px; 
-  padding:8px; 
+  border-radius:6px; 
+  padding:6px; 
   background: var(--secondary-color);
 }
 .opt { 
   display:flex; 
   align-items:center; 
-  gap:8px; 
-  margin-bottom:6px; 
-  font-size:14px; 
+  gap:6px; 
+  margin-bottom:4px; 
+  font-size:13px; 
   cursor: pointer;
-  padding: 4px 6px;
+  padding: 3px 6px;
   border-radius: 4px;
   transition: background 0.2s;
 }
@@ -602,52 +660,108 @@ header {
   background: rgba(0,0,0,.1);
 }
 .opt input[type="checkbox"] { 
-  width: 18px; 
-  height: 18px; 
+  width: 16px; 
+  height: 16px; 
   cursor: pointer; 
   flex-shrink: 0;
   accent-color: var(--primary-color);
 }
+.opt .tag-color {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 4px;
+  flex-shrink: 0;
+}
 .facet .actions { 
   display:flex; 
-  gap:8px; 
-  margin-top:10px; 
+  gap:6px; 
+  margin-top:6px; 
 }
 .facet .actions .btn { 
-  font-size:13px; 
-  padding:6px 10px; 
+  font-size:12px; 
+  padding:4px 8px; 
 }
 
 .apply-filters-container {
   margin-top: auto;
-  padding-top: 16px;
+  padding-top: 12px;
   border-top: 1px solid var(--border-color);
   flex-shrink: 0;
 }
 .apply-filters-btn {
   width: 100%;
-  padding: 12px;
-  font-size: 16px;
+  padding: 10px;
+  font-size: 14px;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
+
+/* Теги на карточках */
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  padding: 4px 8px 8px;
+}
+.tag {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 10px;
+  text-transform: lowercase;
+  letter-spacing: 0.3px;
+  color: #fff;
+  background: var(--tag-default);
+  cursor: default;
+}
+.tag-damage { background: var(--tag-damage); }
+.tag-heal { background: var(--tag-heal); }
+.tag-shield { background: var(--tag-shield); }
+.tag-debuff { background: var(--tag-debuff); }
+.tag-buff { background: var(--tag-buff); }
+.tag-dot { background: var(--tag-dot); }
+.tag-hot { background: var(--tag-hot); }
+.tag-cleanse { background: var(--tag-cleanse); }
+.tag-summon { background: var(--tag-summon); }
+.tag-reflect { background: var(--tag-reflect); }
+.tag-block { background: var(--tag-block); }
+.tag-steal { background: var(--tag-steal); }
+.tag-single { background: var(--tag-single); }
+.tag-aoe { background: var(--tag-aoe); }
+.tag-chain { background: var(--tag-chain); }
+.tag-self { background: var(--tag-self); }
+.tag-allies { background: var(--tag-allies); }
+.tag-enemies { background: var(--tag-enemies); }
+.tag-mana { background: var(--tag-mana); }
+.tag-crit { background: var(--tag-crit); }
+.tag-accuracy { background: var(--tag-accuracy); }
+.tag-antihil { background: var(--tag-antihil); }
+.tag-counter { background: var(--tag-counter); }
+.tag-provoke { background: var(--tag-provoke); }
+.tag-resurrection { background: var(--tag-resurrection); }
+.tag-element { background: var(--tag-element); }
+.tag-default { background: var(--tag-default); }
 
 .content { 
   min-height:60vh; 
   width: 100%;
 }
 #count { 
-  margin:0 0 20px; 
+  margin:0 0 16px; 
   opacity: 0.7;
-  font-size:15px;
-  padding: 8px 0;
+  font-size:14px;
+  padding: 6px 0;
   font-weight: 500;
 }
 
 .cards { 
   display:grid; 
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
-  gap:20px; 
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); 
+  gap:16px; 
   width: 100%;
 }
 
@@ -678,18 +792,18 @@ header {
 
 .thumb { 
   width:100%; 
-  height: 190px;
+  height: 170px;
   display:flex; 
   align-items:center; 
   justify-content:center; 
   overflow:hidden;
-  margin-top: 12px;
+  margin-top: 8px;
 }
 .thumb img { 
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 12px;
+  padding: 8px;
   transition: transform 0.3s;
 }
 .card:hover .thumb img {
@@ -697,39 +811,39 @@ header {
 }
 
 .card h3 { 
-  margin:16px 12px 6px;
-  font-size:16px; 
+  margin:12px 12px 4px;
+  font-size:15px; 
   font-weight: 600;
   line-height: 1.3;
   text-align: center;
 }
 .meta { 
-  margin:0 12px 6px; 
+  margin:0 12px 4px; 
   display:flex; 
-  gap:6px; 
+  gap:4px; 
   flex-wrap:wrap; 
-  font-size:13px;
+  font-size:12px;
   justify-content: center;
   text-align: center;
 }
 .stats { 
-  margin:0 12px 12px; 
+  margin:0 12px 8px; 
   display:flex; 
-  gap:6px; 
+  gap:4px; 
   flex-wrap:wrap;
   justify-content: center;
   font-weight: 600;
-  font-size: 14px;
+  font-size:13px;
 }
 .stats .pill {
-  font-size: 13px;
-  padding: 5px 10px;
+  font-size: 12px;
+  padding: 3px 8px;
 }
 
 .pill { 
   border-radius:999px; 
-  padding:4px 8px; 
-  font-size:12px;
+  padding:3px 8px; 
+  font-size:11px;
   white-space: nowrap;
   font-weight: 500;
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -745,22 +859,22 @@ header {
 .toggle-abilities {
   background: none;
   border: none;
-  font-size: 11px;
+  font-size: 10px;
   cursor: pointer;
   padding: 2px 6px;
-  margin: 12px auto 8px;
+  margin: 6px auto 4px;
   text-decoration: underline;
   display: block;
   color: var(--text-color);
 }
 .card-abilities-full {
   display: none;
-  font-size: 11px;
-  padding: 0 12px 8px;
+  font-size: 10px;
+  padding: 0 12px 6px;
   line-height: 1.4;
   border-top: 1px solid rgba(0,0,0,0.08);
   margin-top: 4px;
-  padding-top: 8px;
+  padding-top: 6px;
 }
 
 .modal { 
@@ -815,24 +929,34 @@ header {
   padding: 8px;
 }
 .dialog h2 { 
-  margin: 0 0 12px; 
-  font-size:28px; 
+  margin: 0 0 8px; 
+  font-size:26px; 
   font-weight: 700;
 }
 .dialog .meta { 
   display:flex; 
-  gap:10px; 
+  gap:8px; 
   flex-wrap:wrap; 
   opacity: 0.8;
-  margin-bottom:10px; 
-  font-size:15px;
+  margin-bottom:8px; 
+  font-size:14px;
   justify-content: flex-start;
 }
 .dialog .mStats { 
   display:flex; 
-  gap:10px; 
+  gap:8px; 
   flex-wrap:wrap; 
-  margin:12px 0 20px;
+  margin:8px 0 16px;
+}
+.dialog .modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+.dialog .modal-tags .tag {
+  font-size: 11px;
+  padding: 3px 10px;
 }
 .pre { 
   white-space: pre-line; 
@@ -840,10 +964,10 @@ header {
   border:1px solid var(--border-color); 
   border-radius:10px; 
   padding:12px; 
-  font-size:15px; 
+  font-size:14px; 
   overflow-wrap: break-word;
   line-height: 1.5;
-  margin: 8px 0;
+  margin: 6px 0;
 }
 .close { 
   position: absolute; 
@@ -891,35 +1015,37 @@ header {
 .nav.prev { left: 12px; } 
 .nav.next { right: 12px; }
 .open-img { 
-  margin-top:12px; 
+  margin-top:8px; 
   display:inline-block; 
-  font-size:14px; 
+  font-size:13px; 
   color:var(--primary-color); 
   text-decoration:none;
 }
 .talent-mode-selector {
-  margin: 15px 0;
+  margin: 12px 0;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 .talent-mode-selector label {
   font-weight: 500;
+  font-size: 14px;
 }
 .talent-mode-selector select {
-  padding: 8px 12px;
+  padding: 6px 10px;
   border-radius: 8px;
   border: 1px solid var(--border-color);
   background: var(--card-bg);
   color: var(--text-color);
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
   flex: 1;
 }
 .talent-mode-selector .btn {
-  padding: 8px 12px;
+  padding: 6px 10px;
   white-space: nowrap;
+  font-size: 13px;
 }
 
 .tree-panel {
@@ -1202,6 +1328,7 @@ header {
 <div class="facet" data-facet="attackType"><h3>Способ атаки</h3><div class="opts" id="facet-attackType"></div><div class="actions"><button class="btn" data-action="all" data-facet="attackType">Все</button><button class="btn" data-action="none" data-facet="attackType">Снять</button></div></div>
 <div class="facet" data-facet="summon"><h3>Место призыва</h3><div class="opts" id="facet-summon"></div><div class="actions"><button class="btn" data-action="all" data-facet="summon">Все</button><button class="btn" data-action="none" data-facet="summon">Снять</button></div></div>
 <div class="facet" data-facet="clazz"><h3>Класс</h3><div class="opts" id="facet-clazz"></div><div class="actions"><button class="btn" data-action="all" data-facet="clazz">Все</button><button class="btn" data-action="none" data-facet="clazz">Снять</button></div></div>
+<div class="facet" data-facet="tags"><h3>Теги способностей</h3><div class="opts" id="facet-tags"></div><div class="actions"><button class="btn" data-action="all" data-facet="tags">Все</button><button class="btn" data-action="none" data-facet="tags">Снять</button></div></div>
 <div class="apply-filters-container"><button id="applyFiltersMobileBtn" class="btn primary apply-filters-btn">Применить фильтры</button></div>
 </div>
 </aside>
@@ -1226,6 +1353,7 @@ header {
     <div id="mMeta1" class="meta"></div>
     <div id="mMeta2" class="meta"></div>
     <div id="mStats" class="mStats"></div>
+    <div id="modalTags" class="modal-tags"></div>
     <div class="talent-mode-selector">
       <label>Режим талантов:</label>
       <select id="talentModeSelect">
@@ -1295,6 +1423,104 @@ let currentMode = 'none';
 let isDragging = false;
 let dragStartX = 0, dragStartY = 0;
 let tooltipElement = null;
+
+// ==================== СИСТЕМА ТЕГОВ ====================
+
+const TAG_RULES = {
+    'урон': { keywords: ['урон', 'наносит', 'повреждает', 'атака', 'удара'], weight: 10, color: 'var(--tag-damage)' },
+    'лечение': { keywords: ['восстанавливает', 'лечение', 'исцеляет', 'здоровье', 'хп'], weight: 10, color: 'var(--tag-heal)' },
+    'щит': { keywords: ['защита', 'щит', 'броня', 'уменьшает урон'], weight: 9, color: 'var(--tag-shield)' },
+    'ослабление': { keywords: ['снижает', 'уменьшает', 'ослабляет', '-%', 'понижает'], weight: 8, color: 'var(--tag-debuff)' },
+    'усиление': { keywords: ['повышает', 'увеличивает', 'усиление', '+%', 'бафф'], weight: 8, color: 'var(--tag-buff)' },
+    'доты': { keywords: ['за 6 ходов', 'за 5 ходов', 'за 4 хода', 'за 3 хода', 'каждый ход', 'в течение', 'урона за', 'кровотечение', 'ожог', 'отравление'], weight: 7, color: 'var(--tag-dot)' },
+    'хоты': { keywords: ['восстанавливает за', 'лечение за', 'хп за'], weight: 7, color: 'var(--tag-hot)' },
+    'снятие': { keywords: ['снимает', 'убирает', 'очищает', 'диспел'], weight: 6, color: 'var(--tag-cleanse)' },
+    'призыв': { keywords: ['призывает', 'прислужник', 'миньон', 'помощник'], weight: 6, color: 'var(--tag-summon)' },
+    'отражение': { keywords: ['отражает', 'зеркалит', 'рикошет'], weight: 6, color: 'var(--tag-reflect)' },
+    'блокировка': { keywords: ['блокирует', 'запрещает', 'невосприимчив', 'игнорирует'], weight: 5, color: 'var(--tag-block)' },
+    'кража': { keywords: ['крадет', 'ворует', 'забирает', 'похищает'], weight: 5, color: 'var(--tag-steal)' },
+    'одиночный': { keywords: ['одному врагу', 'одной цели', 'врагу', 'цели'], weight: 5, color: 'var(--tag-single)' },
+    'все_враги': { keywords: ['всем', 'всем противникам', 'всем врагам', 'всех'], weight: 5, color: 'var(--tag-aoe)' },
+    'цепь': { keywords: ['ближайшим', 'по цепочке', 'рядом', 'соседним'], weight: 4, color: 'var(--tag-chain)' },
+    'себя': { keywords: ['себе', 'своей', 'собой'], weight: 4, color: 'var(--tag-self)' },
+    'союзники': { keywords: ['союзникам', 'союзников', 'команде'], weight: 4, color: 'var(--tag-allies)' },
+    'враги': { keywords: ['противникам', 'врагам', 'врагов'], weight: 4, color: 'var(--tag-enemies)' },
+    'мана': { keywords: ['маны', 'мана', 'регенерация маны', 'восстановление маны'], weight: 5, color: 'var(--tag-mana)' },
+    'крит': { keywords: ['критический удар', 'крит', 'шанс крита'], weight: 5, color: 'var(--tag-crit)' },
+    'меткость': { keywords: ['меткость', 'точность', 'уклонение'], weight: 4, color: 'var(--tag-accuracy)' },
+    'антихил': { keywords: ['забирает исцеление', 'снижает исцеление', 'уменьшает лечение'], weight: 4, color: 'var(--tag-antihil)' },
+    'контратака': { keywords: ['контратака', 'ответный удар'], weight: 4, color: 'var(--tag-counter)' },
+    'провокация': { keywords: ['провокация', 'агро', 'привлекает внимание'], weight: 4, color: 'var(--tag-provoke)' },
+    'воскрешение': { keywords: ['воскреснет', 'возрождается', 'оживает'], weight: 5, color: 'var(--tag-resurrection)' },
+    'баф_стихии': { keywords: ['стихии', 'элемент', 'против стихии', 'защита от стихии'], weight: 3, color: 'var(--tag-element)' }
+};
+
+function parseTagsFromAbility(abilityText) {
+    if (!abilityText || abilityText.trim() === '') return [];
+    
+    const text = abilityText.toLowerCase();
+    const tagScores = {};
+    
+    for (const [tag, rule] of Object.entries(TAG_RULES)) {
+        let found = false;
+        for (const keyword of rule.keywords) {
+            if (text.includes(keyword.toLowerCase())) {
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            if (!tagScores[tag]) tagScores[tag] = 0;
+            tagScores[tag] += rule.weight;
+        }
+    }
+    
+    const sortedTags = Object.entries(tagScores)
+        .sort((a, b) => b[1] - a[1])
+        .filter(([tag, score]) => score >= 4)
+        .map(([tag]) => tag);
+    
+    return sortedTags.slice(0, 8);
+}
+
+function getTagClass(tag) {
+    const tagMap = {
+        'урон': 'tag-damage',
+        'лечение': 'tag-heal',
+        'щит': 'tag-shield',
+        'ослабление': 'tag-debuff',
+        'усиление': 'tag-buff',
+        'доты': 'tag-dot',
+        'хоты': 'tag-hot',
+        'снятие': 'tag-cleanse',
+        'призыв': 'tag-summon',
+        'отражение': 'tag-reflect',
+        'блокировка': 'tag-block',
+        'кража': 'tag-steal',
+        'одиночный': 'tag-single',
+        'все_враги': 'tag-aoe',
+        'цепь': 'tag-chain',
+        'себя': 'tag-self',
+        'союзники': 'tag-allies',
+        'враги': 'tag-enemies',
+        'мана': 'tag-mana',
+        'крит': 'tag-crit',
+        'меткость': 'tag-accuracy',
+        'антихил': 'tag-antihil',
+        'контратака': 'tag-counter',
+        'провокация': 'tag-provoke',
+        'воскрешение': 'tag-resurrection',
+        'баф_стихии': 'tag-element'
+    };
+    return tagMap[tag] || 'tag-default';
+}
+
+function renderTags(tags) {
+    if (!tags || tags.length === 0) return '';
+    return tags.map(tag => `<span class="tag ${getTagClass(tag)}">#${tag}</span>`).join('');
+}
+
+// ==================== ОСТАЛЬНОЙ КОД ====================
 
 function initTooltip() {
     if (!tooltipElement) {
@@ -1939,16 +2165,30 @@ function uniq(arr) { return [...new Set(arr.filter(v => v !== null && v !== unde
 function sortAlpha(a,b) { return String(a).localeCompare(String(b),'ru',{numeric:true}); }
 function fileCellToUrl(v) { let s=String(v||''); let m=s.match(/\((https?:\/\/[^)]+)\)/i); if(m) return m[1]; let m2=s.match(/https?:\/\/\S+/i); return m2 ? m2[0].replace(/[),]+$/, '') : ''; }
 
-function buildFacet(container, values, facetKey) {
+function buildFacet(container, values, facetKey, isTags = false) {
     let opts = uniq(values);
     if (facetKey === 'mana') opts.sort((a,b)=>{let o=['Очень медленно','Медленно','Средне','Быстро','Очень быстро','Легендарно быстро']; return o.indexOf(a)-o.indexOf(b);});
     else if (facetKey === 'stars') opts.sort((a,b)=>toNum(a)-toNum(b));
+    else if (isTags) opts.sort((a,b)=>a.localeCompare(b));
     else opts.sort(sortAlpha);
-    container.innerHTML = opts.map(v => '<label class="opt"><input type="checkbox" data-facet="' + facetKey + '" value="' + String(v).replace(/"/g,'&quot;') + '" ' + (selected[facetKey].has(String(v)) ? 'checked' : '') + '><span>' + v + '</span></label>').join('');
-    container.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.addEventListener('change', () => { let s = selected[cb.dataset.facet]; if(cb.checked) s.add(cb.value); else s.delete(cb.value); }));
+    
+    container.innerHTML = opts.map(v => {
+        let tagHtml = '';
+        if (isTags) {
+            const tagClass = getTagClass(v);
+            tagHtml = `<span class="tag-color" style="background:var(--${tagClass.replace('tag-', '')})"></span>`;
+        }
+        return `<label class="opt"><input type="checkbox" data-facet="${facetKey}" value="${String(v).replace(/"/g,'&quot;')}" ${selected[facetKey].has(String(v)) ? 'checked' : ''}>${tagHtml}<span>${v}</span></label>`;
+    }).join('');
+    
+    container.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.addEventListener('change', () => { 
+        let s = selected[cb.dataset.facet]; 
+        if(cb.checked) s.add(cb.value); 
+        else s.delete(cb.value); 
+    }));
 }
 
-const selected = { element: new Set(), stars: new Set(), mana: new Set(), attackType: new Set(), summon: new Set(), clazz: new Set(), heroes: new Set() };
+const selected = { element: new Set(), stars: new Set(), mana: new Set(), attackType: new Set(), summon: new Set(), clazz: new Set(), heroes: new Set(), tags: new Set() };
 
 function initAllFacets(heroes) {
     buildFacet(document.getElementById('facet-element'), heroes.map(r => r[HERO_FIELDS.element]), 'element');
@@ -1957,6 +2197,14 @@ function initAllFacets(heroes) {
     buildFacet(document.getElementById('facet-attackType'), heroes.map(r => r[HERO_FIELDS.attackType]), 'attackType');
     buildFacet(document.getElementById('facet-summon'), heroes.map(r => r[HERO_FIELDS.summon]), 'summon');
     buildFacet(document.getElementById('facet-clazz'), heroes.map(r => r[HERO_FIELDS.clazz]), 'clazz');
+    
+    // Теги
+    const allTags = new Set();
+    heroes.forEach(r => {
+        if (r._tags) r._tags.forEach(t => allTags.add(t));
+    });
+    buildFacet(document.getElementById('facet-tags'), Array.from(allTags), 'tags', true);
+    
     allHeroNames = uniq(heroes.map(r => r[HERO_FIELDS.name])).sort(sortAlpha);
     filteredHeroNames = [...allHeroNames];
     updateHeroCheckboxes();
@@ -1989,7 +2237,8 @@ function applyFilters() {
         let summonMatch = selected.summon.size === 0 || selected.summon.has(String(r[HERO_FIELDS.summon]));
         let clazzMatch = selected.clazz.size === 0 || selected.clazz.has(String(r[HERO_FIELDS.clazz]));
         let heroMatch = selected.heroes.size === 0 || selected.heroes.has(String(r[HERO_FIELDS.name]));
-        return nameMatch && elemMatch && starsMatch && manaMatch && atkMatch && summonMatch && clazzMatch && heroMatch;
+        let tagMatch = selected.tags.size === 0 || (r._tags && r._tags.some(t => selected.tags.has(t)));
+        return nameMatch && elemMatch && starsMatch && manaMatch && atkMatch && summonMatch && clazzMatch && heroMatch && tagMatch;
     });
     let by = document.getElementById('sortSelect').value;
     viewHeroes.sort((a,b) => { let av = a[by], bv = b[by]; let an = toNum(av), bn = toNum(bv); let cmp = (an != null && bn != null) ? an - bn : String(av || '').localeCompare(String(bv || ''), 'ru', {numeric:true}); return sortDirection === 'asc' ? cmp : -cmp; });
@@ -2007,7 +2256,8 @@ function renderCards(heroes) {
         let abilitiesFull = String(r[HERO_FIELDS.abilities] || '');
         let cleaned = abilitiesFull.replace(/^'|'$/g, '');
         let hasAbil = cleaned.trim().length > 0;
-        return '<article class="card" data-idx="' + i + '" data-element="' + (r[HERO_FIELDS.element] || '') + '"><div class="thumb">' + (img ? '<img src="' + img + '" alt="' + r[HERO_FIELDS.name] + '" loading="lazy" onerror="this.style.display=\'none\'">' : '<div style="padding:20px;">Нет изображения</div>') + '</div><h3>' + r[HERO_FIELDS.name] + '</h3><div class="meta"><span>' + r[HERO_FIELDS.element] + '</span> • <span>' + r[HERO_FIELDS.stars] + '★</span> • <span>' + r[HERO_FIELDS.mana] + '</span></div><div class="meta"><span>' + r[HERO_FIELDS.attackType] + '</span> • <span>' + r[HERO_FIELDS.summon] + '</span> • <span>' + r[HERO_FIELDS.clazz] + '</span></div><div class="stats"><span class="pill">С: ' + r[HERO_FIELDS.power] + '</span><span class="pill">А: ' + r[HERO_FIELDS.attack] + '</span><span class="pill">З: ' + r[HERO_FIELDS.defense] + '</span><span class="pill">Ж: ' + r[HERO_FIELDS.hp] + '</span></div>' + (hasAbil ? '<button class="toggle-abilities" data-idx="' + i + '">Показать способности</button><div class="card-abilities-full" id="abilities-' + i + '">' + cleaned.replace(/\n/g,'<br>') + '</div>' : '') + '</article>';
+        let tagsHtml = r._tags ? renderTags(r._tags.slice(0, 5)) : '';
+        return '<article class="card" data-idx="' + i + '" data-element="' + (r[HERO_FIELDS.element] || '') + '"><div class="thumb">' + (img ? '<img src="' + img + '" alt="' + r[HERO_FIELDS.name] + '" loading="lazy" onerror="this.style.display=\'none\'">' : '<div style="padding:20px;">Нет изображения</div>') + '</div><h3>' + r[HERO_FIELDS.name] + '</h3><div class="meta"><span>' + r[HERO_FIELDS.element] + '</span> • <span>' + r[HERO_FIELDS.stars] + '★</span> • <span>' + r[HERO_FIELDS.mana] + '</span></div><div class="meta"><span>' + r[HERO_FIELDS.attackType] + '</span> • <span>' + r[HERO_FIELDS.summon] + '</span> • <span>' + r[HERO_FIELDS.clazz] + '</span></div><div class="stats"><span class="pill">С: ' + r[HERO_FIELDS.power] + '</span><span class="pill">А: ' + r[HERO_FIELDS.attack] + '</span><span class="pill">З: ' + r[HERO_FIELDS.defense] + '</span><span class="pill">Ж: ' + r[HERO_FIELDS.hp] + '</span></div>' + (tagsHtml ? '<div class="hero-tags">' + tagsHtml + '</div>' : '') + (hasAbil ? '<button class="toggle-abilities" data-idx="' + i + '">Показать способности</button><div class="card-abilities-full" id="abilities-' + i + '">' + cleaned.replace(/\n/g,'<br>') + '</div>' : '') + '</article>';
     }).join('');
     document.querySelectorAll('.toggle-abilities').forEach(btn => btn.addEventListener('click', function(e) { e.stopPropagation(); let idx = this.dataset.idx; let div = document.getElementById('abilities-' + idx); if(div.style.display === 'block') { div.style.display = 'none'; this.textContent = 'Показать способности'; } else { div.style.display = 'block'; this.textContent = 'Скрыть способности'; } }));
 }
@@ -2035,6 +2285,11 @@ function fillModal(hero) {
     container.setAttribute('data-element', hero[HERO_FIELDS.element] || '');
     const calc = calculateStatsWithSelections(hero, currentHeroTalents, 'none');
     document.getElementById('mStats').innerHTML = '<span class="pill">С: ' + hero[HERO_FIELDS.power] + '</span><span class="pill">А: ' + calc.attack + '</span><span class="pill">З: ' + calc.defense + '</span><span class="pill">Ж: ' + calc.hp + '</span>';
+    
+    // Теги в модалке
+    const tagsHtml = hero._tags ? renderTags(hero._tags) : '';
+    document.getElementById('modalTags').innerHTML = tagsHtml ? '<strong>Теги:</strong> ' + tagsHtml : '';
+    
     document.getElementById('mAbilities').textContent = String(hero[HERO_FIELDS.abilities] || '—').replace(/^'|'$/g, '');
     document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive] || '—').replace(/^'|'$/g, '');
 }
@@ -2062,9 +2317,10 @@ function attachEvents() {
                     case 'attackType': return r[HERO_FIELDS.attackType];
                     case 'summon': return r[HERO_FIELDS.summon];
                     case 'clazz': return r[HERO_FIELDS.clazz];
+                    case 'tags': return r._tags ? r._tags : [];
                     default: return null;
                 }
-            })).filter(v => v);
+            })).flat().filter(v => v);
             selected[f] = new Set(vals.map(String));
         } else selected[f].clear();
         initAllFacets(allHeroes);
@@ -2132,7 +2388,17 @@ function attachEvents() {
 }
 
 Promise.all([
-    new Promise((res,rej) => Papa.parse(DATA_URL, {download:true,header:true,skipEmptyLines:true,complete:r => { allHeroes = r.data.filter(row => row && row[HERO_FIELDS.name]); console.log('✅ Герои загружены:', allHeroes.length); res(); }, error:rej})),
+    new Promise((res,rej) => Papa.parse(DATA_URL, {download:true,header:true,skipEmptyLines:true,complete:r => { 
+        allHeroes = r.data.filter(row => row && row[HERO_FIELDS.name]).map(row => {
+            const abilities = row[HERO_FIELDS.abilities] || '';
+            const passive = row[HERO_FIELDS.passive] || '';
+            const fullText = abilities + ' ' + passive;
+            const tags = parseTagsFromAbility(fullText);
+            return { ...row, _tags: tags };
+        });
+        console.log('✅ Герои загружены:', allHeroes.length); 
+        res(); 
+    }, error:rej})),
     new Promise((res,rej) => Papa.parse(CLASSES_URL, {download:true,header:true,skipEmptyLines:true,complete:r => {
         r.data.forEach(row => {
             if(!row[CLASS_TALENT_FIELDS.class_id]) return;
