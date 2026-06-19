@@ -48,7 +48,6 @@
   --tooltip-text: #fff;
   --overlay-bg: rgba(0,0,0,0.5);
 
-  /* Цвета для тегов */
   --tag-damage: #ff6b6b;
   --tag-heal: #51cf66;
   --tag-shield: #4dabf7;
@@ -698,25 +697,38 @@ header {
   margin-bottom: 6px;
 }
 
-/* Теги на карточках */
-.hero-tags {
+/* Теги в модалке */
+.modal-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
-  justify-content: center;
-  padding: 4px 8px 8px;
+  gap: 6px;
+  margin: 8px 0 12px;
 }
-.tag {
+.modal-tags .tag {
   display: inline-block;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 600;
-  padding: 2px 6px;
-  border-radius: 10px;
+  padding: 4px 12px;
+  border-radius: 12px;
   text-transform: lowercase;
   letter-spacing: 0.3px;
   color: #fff;
   background: var(--tag-default);
-  cursor: default;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.modal-tags .tag:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.modal-tags .tag:active {
+  transform: scale(0.95);
+}
+.modal-tags .tag-label {
+  font-weight: 500;
+  margin-right: 4px;
+  color: var(--text-color);
+  opacity: 0.7;
 }
 .tag-damage { background: var(--tag-damage); }
 .tag-heal { background: var(--tag-heal); }
@@ -947,16 +959,6 @@ header {
   gap:8px; 
   flex-wrap:wrap; 
   margin:8px 0 16px;
-}
-.dialog .modal-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-bottom: 12px;
-}
-.dialog .modal-tags .tag {
-  font-size: 11px;
-  padding: 3px 10px;
 }
 .pre { 
   white-space: pre-line; 
@@ -1427,61 +1429,33 @@ let tooltipElement = null;
 // ==================== СИСТЕМА ТЕГОВ ====================
 
 const TAG_RULES = {
-    'урон': { keywords: ['урон', 'наносит', 'повреждает', 'атака', 'удара'], weight: 10, color: 'var(--tag-damage)' },
-    'лечение': { keywords: ['восстанавливает', 'лечение', 'исцеляет', 'здоровье', 'хп'], weight: 10, color: 'var(--tag-heal)' },
-    'щит': { keywords: ['защита', 'щит', 'броня', 'уменьшает урон'], weight: 9, color: 'var(--tag-shield)' },
-    'ослабление': { keywords: ['снижает', 'уменьшает', 'ослабляет', '-%', 'понижает'], weight: 8, color: 'var(--tag-debuff)' },
-    'усиление': { keywords: ['повышает', 'увеличивает', 'усиление', '+%', 'бафф'], weight: 8, color: 'var(--tag-buff)' },
-    'доты': { keywords: ['за 6 ходов', 'за 5 ходов', 'за 4 хода', 'за 3 хода', 'каждый ход', 'в течение', 'урона за', 'кровотечение', 'ожог', 'отравление'], weight: 7, color: 'var(--tag-dot)' },
-    'хоты': { keywords: ['восстанавливает за', 'лечение за', 'хп за'], weight: 7, color: 'var(--tag-hot)' },
-    'снятие': { keywords: ['снимает', 'убирает', 'очищает', 'диспел'], weight: 6, color: 'var(--tag-cleanse)' },
-    'призыв': { keywords: ['призывает', 'прислужник', 'миньон', 'помощник'], weight: 6, color: 'var(--tag-summon)' },
-    'отражение': { keywords: ['отражает', 'зеркалит', 'рикошет'], weight: 6, color: 'var(--tag-reflect)' },
-    'блокировка': { keywords: ['блокирует', 'запрещает', 'невосприимчив', 'игнорирует'], weight: 5, color: 'var(--tag-block)' },
-    'кража': { keywords: ['крадет', 'ворует', 'забирает', 'похищает'], weight: 5, color: 'var(--tag-steal)' },
-    'одиночный': { keywords: ['одному врагу', 'одной цели', 'врагу', 'цели'], weight: 5, color: 'var(--tag-single)' },
-    'все_враги': { keywords: ['всем', 'всем противникам', 'всем врагам', 'всех'], weight: 5, color: 'var(--tag-aoe)' },
-    'цепь': { keywords: ['ближайшим', 'по цепочке', 'рядом', 'соседним'], weight: 4, color: 'var(--tag-chain)' },
-    'себя': { keywords: ['себе', 'своей', 'собой'], weight: 4, color: 'var(--tag-self)' },
-    'союзники': { keywords: ['союзникам', 'союзников', 'команде'], weight: 4, color: 'var(--tag-allies)' },
-    'враги': { keywords: ['противникам', 'врагам', 'врагов'], weight: 4, color: 'var(--tag-enemies)' },
-    'мана': { keywords: ['маны', 'мана', 'регенерация маны', 'восстановление маны'], weight: 5, color: 'var(--tag-mana)' },
-    'крит': { keywords: ['критический удар', 'крит', 'шанс крита'], weight: 5, color: 'var(--tag-crit)' },
-    'меткость': { keywords: ['меткость', 'точность', 'уклонение'], weight: 4, color: 'var(--tag-accuracy)' },
-    'антихил': { keywords: ['забирает исцеление', 'снижает исцеление', 'уменьшает лечение'], weight: 4, color: 'var(--tag-antihil)' },
-    'контратака': { keywords: ['контратака', 'ответный удар'], weight: 4, color: 'var(--tag-counter)' },
-    'провокация': { keywords: ['провокация', 'агро', 'привлекает внимание'], weight: 4, color: 'var(--tag-provoke)' },
-    'воскрешение': { keywords: ['воскреснет', 'возрождается', 'оживает'], weight: 5, color: 'var(--tag-resurrection)' },
-    'баф_стихии': { keywords: ['стихии', 'элемент', 'против стихии', 'защита от стихии'], weight: 3, color: 'var(--tag-element)' }
+    'урон': { keywords: ['урон', 'наносит', 'повреждает', 'атака', 'удара'], weight: 10 },
+    'лечение': { keywords: ['восстанавливает', 'лечение', 'исцеляет', 'здоровье', 'хп'], weight: 10 },
+    'щит': { keywords: ['защита', 'щит', 'броня', 'уменьшает урон'], weight: 9 },
+    'ослабление': { keywords: ['снижает', 'уменьшает', 'ослабляет', '-%', 'понижает'], weight: 8 },
+    'усиление': { keywords: ['повышает', 'увеличивает', 'усиление', '+%', 'бафф'], weight: 8 },
+    'доты': { keywords: ['за 6 ходов', 'за 5 ходов', 'за 4 хода', 'за 3 хода', 'каждый ход', 'в течение', 'урона за', 'кровотечение', 'ожог', 'отравление'], weight: 7 },
+    'хоты': { keywords: ['восстанавливает за', 'лечение за', 'хп за'], weight: 7 },
+    'снятие': { keywords: ['снимает', 'убирает', 'очищает', 'диспел'], weight: 6 },
+    'призыв': { keywords: ['призывает', 'прислужник', 'миньон', 'помощник'], weight: 6 },
+    'отражение': { keywords: ['отражает', 'зеркалит', 'рикошет'], weight: 6 },
+    'блокировка': { keywords: ['блокирует', 'запрещает', 'невосприимчив', 'игнорирует'], weight: 5 },
+    'кража': { keywords: ['крадет', 'ворует', 'забирает', 'похищает'], weight: 5 },
+    'одиночный': { keywords: ['одному врагу', 'одной цели', 'врагу', 'цели'], weight: 5 },
+    'все_враги': { keywords: ['всем', 'всем противникам', 'всем врагам', 'всех'], weight: 5 },
+    'цепь': { keywords: ['ближайшим', 'по цепочке', 'рядом', 'соседним'], weight: 4 },
+    'себя': { keywords: ['себе', 'своей', 'собой'], weight: 4 },
+    'союзники': { keywords: ['союзникам', 'союзников', 'команде'], weight: 4 },
+    'враги': { keywords: ['противникам', 'врагам', 'врагов'], weight: 4 },
+    'мана': { keywords: ['маны', 'мана', 'регенерация маны', 'восстановление маны'], weight: 5 },
+    'крит': { keywords: ['критический удар', 'крит', 'шанс крита'], weight: 5 },
+    'меткость': { keywords: ['меткость', 'точность', 'уклонение'], weight: 4 },
+    'антихил': { keywords: ['забирает исцеление', 'снижает исцеление', 'уменьшает лечение'], weight: 4 },
+    'контратака': { keywords: ['контратака', 'ответный удар'], weight: 4 },
+    'провокация': { keywords: ['провокация', 'агро', 'привлекает внимание'], weight: 4 },
+    'воскрешение': { keywords: ['воскреснет', 'возрождается', 'оживает'], weight: 5 },
+    'баф_стихии': { keywords: ['стихии', 'элемент', 'против стихии', 'защита от стихии'], weight: 3 }
 };
-
-function parseTagsFromAbility(abilityText) {
-    if (!abilityText || abilityText.trim() === '') return [];
-    
-    const text = abilityText.toLowerCase();
-    const tagScores = {};
-    
-    for (const [tag, rule] of Object.entries(TAG_RULES)) {
-        let found = false;
-        for (const keyword of rule.keywords) {
-            if (text.includes(keyword.toLowerCase())) {
-                found = true;
-                break;
-            }
-        }
-        if (found) {
-            if (!tagScores[tag]) tagScores[tag] = 0;
-            tagScores[tag] += rule.weight;
-        }
-    }
-    
-    const sortedTags = Object.entries(tagScores)
-        .sort((a, b) => b[1] - a[1])
-        .filter(([tag, score]) => score >= 4)
-        .map(([tag]) => tag);
-    
-    return sortedTags.slice(0, 8);
-}
 
 function getTagClass(tag) {
     const tagMap = {
@@ -1515,9 +1489,39 @@ function getTagClass(tag) {
     return tagMap[tag] || 'tag-default';
 }
 
-function renderTags(tags) {
+function parseTagsFromAbility(abilityText) {
+    if (!abilityText || abilityText.trim() === '') return [];
+    
+    const text = abilityText.toLowerCase();
+    const tagScores = {};
+    
+    for (const [tag, rule] of Object.entries(TAG_RULES)) {
+        let found = false;
+        for (const keyword of rule.keywords) {
+            if (text.includes(keyword.toLowerCase())) {
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            if (!tagScores[tag]) tagScores[tag] = 0;
+            tagScores[tag] += rule.weight;
+        }
+    }
+    
+    const sortedTags = Object.entries(tagScores)
+        .sort((a, b) => b[1] - a[1])
+        .filter(([tag, score]) => score >= 4)
+        .map(([tag]) => tag);
+    
+    return sortedTags.slice(0, 8);
+}
+
+function renderModalTags(tags, onClick) {
     if (!tags || tags.length === 0) return '';
-    return tags.map(tag => `<span class="tag ${getTagClass(tag)}">#${tag}</span>`).join('');
+    return tags.map(tag => 
+        `<span class="tag ${getTagClass(tag)}" data-tag="${tag}">#${tag}</span>`
+    ).join('');
 }
 
 // ==================== ОСТАЛЬНОЙ КОД ====================
@@ -2198,7 +2202,6 @@ function initAllFacets(heroes) {
     buildFacet(document.getElementById('facet-summon'), heroes.map(r => r[HERO_FIELDS.summon]), 'summon');
     buildFacet(document.getElementById('facet-clazz'), heroes.map(r => r[HERO_FIELDS.clazz]), 'clazz');
     
-    // Теги
     const allTags = new Set();
     heroes.forEach(r => {
         if (r._tags) r._tags.forEach(t => allTags.add(t));
@@ -2256,8 +2259,7 @@ function renderCards(heroes) {
         let abilitiesFull = String(r[HERO_FIELDS.abilities] || '');
         let cleaned = abilitiesFull.replace(/^'|'$/g, '');
         let hasAbil = cleaned.trim().length > 0;
-        let tagsHtml = r._tags ? renderTags(r._tags.slice(0, 5)) : '';
-        return '<article class="card" data-idx="' + i + '" data-element="' + (r[HERO_FIELDS.element] || '') + '"><div class="thumb">' + (img ? '<img src="' + img + '" alt="' + r[HERO_FIELDS.name] + '" loading="lazy" onerror="this.style.display=\'none\'">' : '<div style="padding:20px;">Нет изображения</div>') + '</div><h3>' + r[HERO_FIELDS.name] + '</h3><div class="meta"><span>' + r[HERO_FIELDS.element] + '</span> • <span>' + r[HERO_FIELDS.stars] + '★</span> • <span>' + r[HERO_FIELDS.mana] + '</span></div><div class="meta"><span>' + r[HERO_FIELDS.attackType] + '</span> • <span>' + r[HERO_FIELDS.summon] + '</span> • <span>' + r[HERO_FIELDS.clazz] + '</span></div><div class="stats"><span class="pill">С: ' + r[HERO_FIELDS.power] + '</span><span class="pill">А: ' + r[HERO_FIELDS.attack] + '</span><span class="pill">З: ' + r[HERO_FIELDS.defense] + '</span><span class="pill">Ж: ' + r[HERO_FIELDS.hp] + '</span></div>' + (tagsHtml ? '<div class="hero-tags">' + tagsHtml + '</div>' : '') + (hasAbil ? '<button class="toggle-abilities" data-idx="' + i + '">Показать способности</button><div class="card-abilities-full" id="abilities-' + i + '">' + cleaned.replace(/\n/g,'<br>') + '</div>' : '') + '</article>';
+        return '<article class="card" data-idx="' + i + '" data-element="' + (r[HERO_FIELDS.element] || '') + '"><div class="thumb">' + (img ? '<img src="' + img + '" alt="' + r[HERO_FIELDS.name] + '" loading="lazy" onerror="this.style.display=\'none\'">' : '<div style="padding:20px;">Нет изображения</div>') + '</div><h3>' + r[HERO_FIELDS.name] + '</h3><div class="meta"><span>' + r[HERO_FIELDS.element] + '</span> • <span>' + r[HERO_FIELDS.stars] + '★</span> • <span>' + r[HERO_FIELDS.mana] + '</span></div><div class="meta"><span>' + r[HERO_FIELDS.attackType] + '</span> • <span>' + r[HERO_FIELDS.summon] + '</span> • <span>' + r[HERO_FIELDS.clazz] + '</span></div><div class="stats"><span class="pill">С: ' + r[HERO_FIELDS.power] + '</span><span class="pill">А: ' + r[HERO_FIELDS.attack] + '</span><span class="pill">З: ' + r[HERO_FIELDS.defense] + '</span><span class="pill">Ж: ' + r[HERO_FIELDS.hp] + '</span></div>' + (hasAbil ? '<button class="toggle-abilities" data-idx="' + i + '">Показать способности</button><div class="card-abilities-full" id="abilities-' + i + '">' + cleaned.replace(/\n/g,'<br>') + '</div>' : '') + '</article>';
     }).join('');
     document.querySelectorAll('.toggle-abilities').forEach(btn => btn.addEventListener('click', function(e) { e.stopPropagation(); let idx = this.dataset.idx; let div = document.getElementById('abilities-' + idx); if(div.style.display === 'block') { div.style.display = 'none'; this.textContent = 'Показать способности'; } else { div.style.display = 'block'; this.textContent = 'Скрыть способности'; } }));
 }
@@ -2286,9 +2288,36 @@ function fillModal(hero) {
     const calc = calculateStatsWithSelections(hero, currentHeroTalents, 'none');
     document.getElementById('mStats').innerHTML = '<span class="pill">С: ' + hero[HERO_FIELDS.power] + '</span><span class="pill">А: ' + calc.attack + '</span><span class="pill">З: ' + calc.defense + '</span><span class="pill">Ж: ' + calc.hp + '</span>';
     
-    // Теги в модалке
-    const tagsHtml = hero._tags ? renderTags(hero._tags) : '';
-    document.getElementById('modalTags').innerHTML = tagsHtml ? '<strong>Теги:</strong> ' + tagsHtml : '';
+    // Теги в модалке с обработчиками кликов
+    const tagsContainer = document.getElementById('modalTags');
+    if (hero._tags && hero._tags.length > 0) {
+        const tagsHtml = hero._tags.map(tag => 
+            `<span class="tag ${getTagClass(tag)}" data-tag="${tag}">#${tag}</span>`
+        ).join('');
+        tagsContainer.innerHTML = '<span class="tag-label">Теги:</span> ' + tagsHtml;
+        
+        // Добавляем обработчики кликов на теги
+        tagsContainer.querySelectorAll('.tag').forEach(el => {
+            el.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const tag = this.dataset.tag;
+                if (tag) {
+                    // Очищаем текущие выбранные теги и устанавливаем только этот
+                    selected.tags.clear();
+                    selected.tags.add(tag);
+                    // Закрываем модалку и применяем фильтр
+                    closeModal();
+                    applyFilters();
+                    // Открываем панель фильтров, чтобы показать выбранный тег
+                    document.getElementById('filters').classList.add('show');
+                    document.getElementById('filterOverlay').classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+    } else {
+        tagsContainer.innerHTML = '';
+    }
     
     document.getElementById('mAbilities').textContent = String(hero[HERO_FIELDS.abilities] || '—').replace(/^'|'$/g, '');
     document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive] || '—').replace(/^'|'$/g, '');
