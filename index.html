@@ -697,7 +697,6 @@ header {
   margin-bottom: 6px;
 }
 
-/* Теги в модалке */
 .modal-tags {
   display: flex;
   flex-wrap: wrap;
@@ -1517,13 +1516,6 @@ function parseTagsFromAbility(abilityText) {
     return sortedTags.slice(0, 8);
 }
 
-function renderModalTags(tags, onClick) {
-    if (!tags || tags.length === 0) return '';
-    return tags.map(tag => 
-        `<span class="tag ${getTagClass(tag)}" data-tag="${tag}">#${tag}</span>`
-    ).join('');
-}
-
 // ==================== ОСТАЛЬНОЙ КОД ====================
 
 function initTooltip() {
@@ -2302,16 +2294,24 @@ function fillModal(hero) {
                 e.stopPropagation();
                 const tag = this.dataset.tag;
                 if (tag) {
-                    // Очищаем текущие выбранные теги и устанавливаем только этот
+                    // Очищаем ВСЕ фильтры
+                    selected.element.clear();
+                    selected.stars.clear();
+                    selected.mana.clear();
+                    selected.attackType.clear();
+                    selected.summon.clear();
+                    selected.clazz.clear();
+                    selected.heroes.clear();
+                    selected.search = '';
+                    // Устанавливаем только выбранный тег
                     selected.tags.clear();
                     selected.tags.add(tag);
-                    // Закрываем модалку и применяем фильтр
+                    // Очищаем поиск
+                    document.getElementById('searchInput').value = '';
+                    // Закрываем модалку
                     closeModal();
+                    // Применяем фильтр
                     applyFilters();
-                    // Открываем панель фильтров, чтобы показать выбранный тег
-                    document.getElementById('filters').classList.add('show');
-                    document.getElementById('filterOverlay').classList.add('show');
-                    document.body.style.overflow = 'hidden';
                 }
             });
         });
