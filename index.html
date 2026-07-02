@@ -2388,29 +2388,16 @@ function attachEvents() {
 }
 
 Promise.all([
- new Promise((res,rej) => Papa.parse(DATA_URL, {download:true,header:true,skipEmptyLines:true,complete:r => { 
-    // Проверяем, есть ли колонка Теги
-    const firstRow = r.data[0];
-    console.log('📊 Доступные колонки:', Object.keys(firstRow));
-    console.log('📊 Пример строки:', firstRow);
-    
-    allHeroes = r.data.filter(row => row && row[HERO_FIELDS.name]).map(row => {
-        // Ищем колонку с тегами по разным вариантам названия
-        let tagsStr = row['Теги'] || row['tags'] || row['Tags'] || '';
-        // Если это массив (бывает при экспорте), превращаем в строку
-        if (Array.isArray(tagsStr)) {
-            tagsStr = tagsStr.join(',');
-        }
-        // Разбиваем и чистим
-        const tags = tagsStr.split(',').map(t => t.trim()).filter(t => t !== '');
-        return { ...row, _tags: tags };
-    });
-    console.log('✅ Герои загружены:', allHeroes.length);
-    // Проверяем первого героя с тегами
-    const heroWithTags = allHeroes.find(h => h._tags && h._tags.length > 0);
-    console.log('🏷️ Пример героя с тегами:', heroWithTags ? heroWithTags[HERO_FIELDS.name] : 'нет', heroWithTags ? heroWithTags._tags : []);
-    res(); 
-}, error:rej})),
+    new Promise((res,rej) => Papa.parse(DATA_URL, {download:true,header:true,skipEmptyLines:true,complete:r => { 
+        allHeroes = r.data.filter(row => row && row[HERO_FIELDS.name]).map(row => {
+            // Читаем теги из столбца "Теги" (разделитель - запятая)
+            const tagsStr = row['Теги'] || '';
+            const tags = tagsStr.split(',').map(t => t.trim()).filter(t => t !== '');
+            return { ...row, _tags: tags };
+        });
+        console.log('✅ Герои загружены:', allHeroes.length); 
+        res(); 
+    }, error:rej})),
     new Promise((res,rej) => Papa.parse(CLASSES_URL, {download:true,header:true,skipEmptyLines:true,complete:r => {
         r.data.forEach(row => {
             if(!row[CLASS_TALENT_FIELDS.class_id]) return;
