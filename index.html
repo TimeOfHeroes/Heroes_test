@@ -1425,36 +1425,7 @@ let isDragging = false;
 let dragStartX = 0, dragStartY = 0;
 let tooltipElement = null;
 
-// ==================== СИСТЕМА ТЕГОВ ====================
-
-const TAG_RULES = {
-    'урон': { keywords: ['урон', 'наносит', 'повреждает', 'атака', 'удара'], weight: 10 },
-    'лечение': { keywords: ['восстанавливает', 'лечение', 'исцеляет', 'здоровье', 'хп'], weight: 10 },
-    'щит': { keywords: ['защита', 'щит', 'броня', 'уменьшает урон'], weight: 9 },
-    'ослабление': { keywords: ['снижает', 'уменьшает', 'ослабляет', '-%', 'понижает'], weight: 8 },
-    'усиление': { keywords: ['повышает', 'увеличивает', 'усиление', '+%', 'бафф'], weight: 8 },
-    'доты': { keywords: ['за 6 ходов', 'за 5 ходов', 'за 4 хода', 'за 3 хода', 'каждый ход', 'в течение', 'урона за', 'кровотечение', 'ожог', 'отравление'], weight: 7 },
-    'хоты': { keywords: ['восстанавливает за', 'лечение за', 'хп за'], weight: 7 },
-    'снятие': { keywords: ['снимает', 'убирает', 'очищает', 'диспел'], weight: 6 },
-    'призыв': { keywords: ['призывает', 'прислужник', 'миньон', 'помощник'], weight: 6 },
-    'отражение': { keywords: ['отражает', 'зеркалит', 'рикошет'], weight: 6 },
-    'блокировка': { keywords: ['блокирует', 'запрещает', 'невосприимчив', 'игнорирует'], weight: 5 },
-    'кража': { keywords: ['крадет', 'ворует', 'забирает', 'похищает'], weight: 5 },
-    'одиночный': { keywords: ['одному врагу', 'одной цели', 'врагу', 'цели'], weight: 5 },
-    'все_враги': { keywords: ['всем', 'всем противникам', 'всем врагам', 'всех'], weight: 5 },
-    'цепь': { keywords: ['ближайшим', 'по цепочке', 'рядом', 'соседним'], weight: 4 },
-    'себя': { keywords: ['себе', 'своей', 'собой'], weight: 4 },
-    'союзники': { keywords: ['союзникам', 'союзников', 'команде'], weight: 4 },
-    'враги': { keywords: ['противникам', 'врагам', 'врагов'], weight: 4 },
-    'мана': { keywords: ['маны', 'мана', 'регенерация маны', 'восстановление маны'], weight: 5 },
-    'крит': { keywords: ['критический удар', 'крит', 'шанс крита'], weight: 5 },
-    'меткость': { keywords: ['меткость', 'точность', 'уклонение'], weight: 4 },
-    'антихил': { keywords: ['забирает исцеление', 'снижает исцеление', 'уменьшает лечение'], weight: 4 },
-    'контратака': { keywords: ['контратака', 'ответный удар'], weight: 4 },
-    'провокация': { keywords: ['провокация', 'агро', 'привлекает внимание'], weight: 4 },
-    'воскрешение': { keywords: ['воскреснет', 'возрождается', 'оживает'], weight: 5 },
-    'баф_стихии': { keywords: ['стихии', 'элемент', 'против стихии', 'защита от стихии'], weight: 3 }
-};
+// ==================== СИСТЕМА ТЕГОВ (только стилизация) ====================
 
 function getTagClass(tag) {
     const tagMap = {
@@ -1483,37 +1454,37 @@ function getTagClass(tag) {
         'контратака': 'tag-counter',
         'провокация': 'tag-provoke',
         'воскрешение': 'tag-resurrection',
-        'баф_стихии': 'tag-element'
+        'баф_стихии': 'tag-element',
+        'усил. атаки': 'tag-buff',
+        'усил. защиты': 'tag-shield',
+        'усил. атаки_навык': 'tag-buff',
+        'усил. защиты_навык': 'tag-shield',
+        'ослаб. атаки': 'tag-debuff',
+        'ослаб. защиты': 'tag-debuff',
+        'ослаб. атаки_себе': 'tag-debuff',
+        'ослаб. защиты_себе': 'tag-debuff',
+        'ослаб. метк_себе': 'tag-debuff',
+        'похищ._лечения': 'tag-antihil',
+        'мана_ускор.': 'tag-mana',
+        'мана_замедл.': 'tag-mana',
+        'мана_срез': 'tag-mana',
+        'мана_блок': 'tag-block',
+        'деление_себе': 'tag-shield',
+        'деление_против.': 'tag-debuff',
+        'увеличение здоровья': 'tag-heal',
+        'пробитие': 'tag-damage',
+        'снятие_против.': 'tag-cleanse',
+        'снятие_себе': 'tag-cleanse',
+        'блок_снятие_усил.': 'tag-block',
+        'нельзя снять': 'tag-block',
+        'метка': 'tag-debuff',
+        'безумие': 'tag-debuff',
+        'ярость': 'tag-buff',
+        'антиприслужник': 'tag-summon',
+        'похищ._маны': 'tag-steal',
+        'сокращ.длит.эффект.': 'tag-debuff'
     };
     return tagMap[tag] || 'tag-default';
-}
-
-function parseTagsFromAbility(abilityText) {
-    if (!abilityText || abilityText.trim() === '') return [];
-    
-    const text = abilityText.toLowerCase();
-    const tagScores = {};
-    
-    for (const [tag, rule] of Object.entries(TAG_RULES)) {
-        let found = false;
-        for (const keyword of rule.keywords) {
-            if (text.includes(keyword.toLowerCase())) {
-                found = true;
-                break;
-            }
-        }
-        if (found) {
-            if (!tagScores[tag]) tagScores[tag] = 0;
-            tagScores[tag] += rule.weight;
-        }
-    }
-    
-    const sortedTags = Object.entries(tagScores)
-        .sort((a, b) => b[1] - a[1])
-        .filter(([tag, score]) => score >= 4)
-        .map(([tag]) => tag);
-    
-    return sortedTags.slice(0, 8);
 }
 
 // ==================== ОСТАЛЬНОЙ КОД ====================
@@ -2302,12 +2273,11 @@ function fillModal(hero) {
                     selected.summon.clear();
                     selected.clazz.clear();
                     selected.heroes.clear();
-                    selected.search = '';
+                    // Очищаем поиск
+                    document.getElementById('searchInput').value = '';
                     // Устанавливаем только выбранный тег
                     selected.tags.clear();
                     selected.tags.add(tag);
-                    // Очищаем поиск
-                    document.getElementById('searchInput').value = '';
                     // Закрываем модалку
                     closeModal();
                     // Применяем фильтр
@@ -2358,6 +2328,7 @@ function attachEvents() {
         document.getElementById('searchInput').value = '';
         document.getElementById('sortSelect').value = 'Сила';
         sortDirection = 'desc';
+        document.getElementById('sortBtn').className = 'sort-btn desc';
         Object.keys(selected).forEach(k => selected[k].clear());
         filteredHeroNames = [...allHeroNames];
         initAllFacets(allHeroes);
@@ -2419,10 +2390,9 @@ function attachEvents() {
 Promise.all([
     new Promise((res,rej) => Papa.parse(DATA_URL, {download:true,header:true,skipEmptyLines:true,complete:r => { 
         allHeroes = r.data.filter(row => row && row[HERO_FIELDS.name]).map(row => {
-            const abilities = row[HERO_FIELDS.abilities] || '';
-            const passive = row[HERO_FIELDS.passive] || '';
-            const fullText = abilities + ' ' + passive;
-            const tags = parseTagsFromAbility(fullText);
+            // Читаем теги из столбца "Теги" (разделитель - запятая)
+            const tagsStr = row['Теги'] || '';
+            const tags = tagsStr.split(',').map(t => t.trim()).filter(t => t !== '');
             return { ...row, _tags: tags };
         });
         console.log('✅ Герои загружены:', allHeroes.length); 
