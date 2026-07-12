@@ -1050,111 +1050,140 @@ header {
 }
 
 /* --- Стили для блока прокачки --- */
+.upgrade-toggle-btn {
+    display: inline-block;
+    padding: 6px 14px;
+    font-size: 13px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+    margin: 6px 0 10px;
+}
+.upgrade-toggle-btn:hover {
+    background: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+}
+.upgrade-toggle-btn.active {
+    background: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+}
+.upgrade-section-wrapper {
+    display: none;
+    margin-top: 8px;
+}
+.upgrade-section-wrapper.show {
+    display: block;
+}
 .upgrade-section {
-  margin-top: 16px;
-  padding: 12px 14px;
-  background: var(--secondary-color);
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
+    padding: 12px 14px;
+    background: var(--secondary-color);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
 }
 .upgrade-section-title {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-color);
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-color);
 }
 .upgrade-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
 }
 .upgrade-btn {
-  padding: 4px 12px;
-  font-size: 12px;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  background: var(--card-bg);
-  color: var(--text-color);
-  cursor: pointer;
-  transition: all 0.15s;
-  font-weight: 500;
+    padding: 4px 12px;
+    font-size: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-weight: 500;
 }
 .upgrade-btn:hover {
-  background: var(--accent-color);
-  color: #fff;
+    background: var(--accent-color);
+    color: #fff;
 }
 .upgrade-btn.active {
-  background: var(--accent-color);
-  color: #fff;
-  border-color: var(--accent-color);
+    background: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
 }
 .upgrade-content {
-  display: none;
-  padding: 10px 12px;
-  background: var(--card-bg);
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
+    display: none;
+    padding: 10px 12px;
+    background: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
 }
 .upgrade-content.show {
-  display: block;
+    display: block;
 }
 .upgrade-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 4px 0;
-  font-size: 13px;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 0;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 .upgrade-item:last-child {
-  border-bottom: none;
+    border-bottom: none;
 }
 .upgrade-item img {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-  border-radius: 4px;
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    border-radius: 4px;
 }
 .upgrade-item .name {
-  flex: 1;
+    flex: 1;
 }
 .upgrade-item .count {
-  font-weight: 600;
-  color: var(--primary-color);
+    font-weight: 600;
+    color: var(--primary-color);
 }
 .upgrade-tokens {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 4px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 4px 0;
 }
 .upgrade-tokens .token {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  background: var(--secondary-color);
-  padding: 4px 10px 4px 6px;
-  border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    background: var(--secondary-color);
+    padding: 4px 10px 4px 6px;
+    border-radius: 16px;
 }
 .upgrade-tokens .token img {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    border-radius: 50%;
 }
 .upgrade-tokens .token .count {
-  font-weight: 600;
-  color: var(--primary-color);
+    font-weight: 600;
+    color: var(--primary-color);
 }
 .upgrade-total {
-  font-weight: 600;
-  font-size: 15px;
-  margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 6px;
 }
 /* --- Конец стилей прокачки --- */
 
@@ -1475,35 +1504,39 @@ header {
       <button id="openTreeBtn" class="btn secondary">🌳 Дерево талантов</button>
     </div>
     
-    <!-- Блок прокачки героя -->
-    <div id="upgradeContainer" class="upgrade-section" style="display:none;">
-      <div class="upgrade-section-title">📈 Прокачка героя</div>
-      
-      <!-- Повышение звездности -->
-      <div style="margin-bottom:12px;">
-        <div style="font-size:13px; font-weight:500; margin-bottom:4px;">⭐ Повышение звездности</div>
-        <div class="upgrade-buttons" id="starButtons"></div>
-        <div class="upgrade-content" id="starContent"></div>
-      </div>
-      
-      <!-- Книги навыков -->
-      <div style="margin-bottom:12px;">
-        <div style="font-size:13px; font-weight:500; margin-bottom:4px;">📚 Книги навыков</div>
-        <div class="upgrade-buttons" id="bookButtons"></div>
-        <div class="upgrade-content" id="bookContent"></div>
-      </div>
-      
-      <!-- Жетоны талантов -->
-      <div>
-        <div style="font-size:13px; font-weight:500; margin-bottom:4px;">🎯 Жетоны талантов</div>
-        <div id="talentTokensContent"></div>
-      </div>
-    </div>
-    
     <h3>Способности</h3>
     <div id="mAbilities" class="pre"></div>
     <h3>Пассивные способности</h3>
     <div id="mPassive" class="pre"></div>
+    
+    <!-- Блок прокачки героя -->
+    <button id="upgradeToggleBtn" class="upgrade-toggle-btn">📈 Прокачка героя</button>
+    <div id="upgradeSectionWrapper" class="upgrade-section-wrapper">
+      <div id="upgradeContainer" class="upgrade-section">
+        <div class="upgrade-section-title">📈 Прокачка героя</div>
+        
+        <!-- Повышение звездности -->
+        <div style="margin-bottom:12px;">
+          <div style="font-size:13px; font-weight:500; margin-bottom:4px;">⭐ Повышение звездности</div>
+          <div class="upgrade-buttons" id="starButtons"></div>
+          <div class="upgrade-content" id="starContent"></div>
+        </div>
+        
+        <!-- Книги навыков -->
+        <div style="margin-bottom:12px;">
+          <div style="font-size:13px; font-weight:500; margin-bottom:4px;">📚 Книги навыков</div>
+          <div class="upgrade-buttons" id="bookButtons"></div>
+          <div class="upgrade-content" id="bookContent"></div>
+        </div>
+        
+        <!-- Жетоны талантов -->
+        <div>
+          <div style="font-size:13px; font-weight:500; margin-bottom:4px;">🎯 Жетоны талантов</div>
+          <div id="talentTokensContent"></div>
+        </div>
+      </div>
+    </div>
+    
   </div>
 </div>
 </div>
@@ -1645,9 +1678,7 @@ function fileCellToUrl(v) {
 
 function getItemImage(itemName) {
     if (!itemName) return '';
-    // Прямое совпадение
     if (itemImages[itemName]) return itemImages[itemName];
-    // Поиск по частичному совпадению
     for (const [key, url] of Object.entries(itemImages)) {
         if (itemName.includes(key) || key.includes(itemName)) {
             return url;
@@ -1657,116 +1688,43 @@ function getItemImage(itemName) {
 }
 
 function getStarTargets(heroStars) {
-    // Возвращает возможные цели для повышения звездности
     const starNum = parseInt(heroStars);
     const targets = [];
-    if (starNum < 3) targets.push('3★');
-    if (starNum < 4) targets.push('4★');
-    if (starNum < 5) targets.push('5★');
+    if (starNum < 3) targets.push('3');
+    if (starNum < 4) targets.push('4');
+    if (starNum < 5) targets.push('5');
     return targets;
 }
 
 function getMaterialsForStar(heroElement, heroStars, targetStar) {
     const starKey = heroStars + '★';
     const data = materialsData[starKey] || [];
-    const targetKey = targetStar.replace('★', '');
-    // Ищем материалы для данной стихии и целевой звезды
-    const result = data.filter(item => 
-        item['Стихия'] === heroElement && 
-        String(item['Целевая звезда']) === targetKey
-    );
+    const result = data.filter(item => {
+        const itemElement = String(item['Стихия'] || '').trim();
+        const itemTarget = String(item['Целевая звезда'] || '').trim();
+        return itemElement === heroElement && itemTarget === targetStar;
+    });
     return result;
 }
 
 function getBooksForStar(heroStars, level) {
     const starKey = heroStars + '★';
-    const result = booksData.filter(item => 
-        item['Звездность героев'] === starKey && 
-        item['Уровень навыка'] === level
-    );
+    const result = booksData.filter(item => {
+        const itemStars = String(item['Звездность героев'] || '').trim();
+        const itemLevel = String(item['Уровень навыка'] || '').trim();
+        return itemStars === starKey && itemLevel === level;
+    });
     return result.length > 0 ? result[0] : null;
 }
 
 function getTokensForHero(heroStars, heroClass) {
     const starKey = heroStars + '★';
-    const result = tokensData.filter(item => 
-        item['Количество звезд'] === starKey && 
-        item['Класс'] === heroClass
-    );
-    return result.length > 0 ? result[0] : null;
-}
-
-function renderUpgradeSection(hero) {
-    const container = document.getElementById('upgradeContainer');
-    if (!hero) {
-        container.style.display = 'none';
-        return;
-    }
-    container.style.display = 'block';
-    
-    const heroStars = hero['Количество звезд'] || '4';
-    const heroElement = hero['Стихия'] || '';
-    const heroClass = hero['Класс'] || '';
-    
-    // --- Повышение звездности ---
-    const starTargets = getStarTargets(heroStars);
-    const starButtons = document.getElementById('starButtons');
-    const starContent = document.getElementById('starContent');
-    
-    starButtons.innerHTML = '';
-    if (starTargets.length === 0) {
-        starButtons.innerHTML = '<span style="font-size:12px; opacity:0.6;">Максимальная звездность</span>';
-        starContent.innerHTML = '';
-        starContent.classList.remove('show');
-    } else {
-        starTargets.forEach(target => {
-            const btn = document.createElement('button');
-            btn.className = 'upgrade-btn';
-            btn.textContent = target;
-            btn.dataset.target = target;
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('#starButtons .upgrade-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                showStarMaterials(heroElement, heroStars, target, starContent);
-            });
-            starButtons.appendChild(btn);
-        });
-        // Автоматически показываем первый
-        const firstBtn = starButtons.querySelector('.upgrade-btn');
-        if (firstBtn) {
-            firstBtn.classList.add('active');
-            showStarMaterials(heroElement, heroStars, starTargets[0], starContent);
-        }
-    }
-    
-    // --- Книги навыков ---
-    const bookLevels = ['2/8', '3/8', '4/8', '5/8', '6/8', '7/8', '8/8'];
-    const bookButtons = document.getElementById('bookButtons');
-    const bookContent = document.getElementById('bookContent');
-    
-    bookButtons.innerHTML = '';
-    bookLevels.forEach(level => {
-        const btn = document.createElement('button');
-        btn.className = 'upgrade-btn';
-        btn.textContent = level;
-        btn.dataset.level = level;
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('#bookButtons .upgrade-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            showBookMaterials(heroStars, level, bookContent);
-        });
-        bookButtons.appendChild(btn);
+    const result = tokensData.filter(item => {
+        const itemStars = String(item['Количество звезд'] || '').trim();
+        const itemClass = String(item['Класс'] || '').trim();
+        return itemStars === starKey && itemClass === heroClass;
     });
-    // Автоматически показываем первый
-    const firstBookBtn = bookButtons.querySelector('.upgrade-btn');
-    if (firstBookBtn) {
-        firstBookBtn.classList.add('active');
-        showBookMaterials(heroStars, '2/8', bookContent);
-    }
-    
-    // --- Жетоны талантов ---
-    const tokensContent = document.getElementById('talentTokensContent');
-    showTalentTokens(heroStars, heroClass, tokensContent);
+    return result.length > 0 ? result[0] : null;
 }
 
 function showStarMaterials(element, stars, target, container) {
@@ -1833,14 +1791,88 @@ function showTalentTokens(stars, heroClass, container) {
     }
     const total = tokenData['Количество жетонов'] || 0;
     let html = `<div class="upgrade-total">Всего: ${total} жетонов</div><div class="upgrade-tokens">`;
-    // Показываем разбивку по типам — в текущей структуре у нас только общее количество
-    // Если есть детализация, можно добавить
     html += `<div class="token">
         <span style="font-size:13px;">🎯</span>
         <span>Всего жетонов: <span class="count">${total}</span></span>
     </div>`;
     html += '</div>';
     container.innerHTML = html;
+}
+
+function renderUpgradeSection(hero) {
+    const container = document.getElementById('upgradeContainer');
+    const wrapper = document.getElementById('upgradeSectionWrapper');
+    const toggleBtn = document.getElementById('upgradeToggleBtn');
+    
+    if (!hero) {
+        container.style.display = 'none';
+        wrapper.classList.remove('show');
+        toggleBtn.textContent = '📈 Прокачка героя';
+        return;
+    }
+    container.style.display = 'block';
+    
+    const heroStars = String(hero['Количество звезд'] || '4').trim();
+    const heroElement = String(hero['Стихия'] || '').trim();
+    const heroClass = String(hero['Класс'] || '').trim();
+    
+    // --- Повышение звездности ---
+    const starTargets = getStarTargets(heroStars);
+    const starButtons = document.getElementById('starButtons');
+    const starContent = document.getElementById('starContent');
+    
+    starButtons.innerHTML = '';
+    if (starTargets.length === 0) {
+        starButtons.innerHTML = '<span style="font-size:12px; opacity:0.6;">Максимальная звездность</span>';
+        starContent.innerHTML = '';
+        starContent.classList.remove('show');
+    } else {
+        starTargets.forEach(target => {
+            const btn = document.createElement('button');
+            btn.className = 'upgrade-btn';
+            btn.textContent = target + '★';
+            btn.dataset.target = target;
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#starButtons .upgrade-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                showStarMaterials(heroElement, heroStars, target, starContent);
+            });
+            starButtons.appendChild(btn);
+        });
+        const firstBtn = starButtons.querySelector('.upgrade-btn');
+        if (firstBtn) {
+            firstBtn.classList.add('active');
+            showStarMaterials(heroElement, heroStars, starTargets[0], starContent);
+        }
+    }
+    
+    // --- Книги навыков ---
+    const bookLevels = ['2/8', '3/8', '4/8', '5/8', '6/8', '7/8', '8/8'];
+    const bookButtons = document.getElementById('bookButtons');
+    const bookContent = document.getElementById('bookContent');
+    
+    bookButtons.innerHTML = '';
+    bookLevels.forEach(level => {
+        const btn = document.createElement('button');
+        btn.className = 'upgrade-btn';
+        btn.textContent = level;
+        btn.dataset.level = level;
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('#bookButtons .upgrade-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            showBookMaterials(heroStars, level, bookContent);
+        });
+        bookButtons.appendChild(btn);
+    });
+    const firstBookBtn = bookButtons.querySelector('.upgrade-btn');
+    if (firstBookBtn) {
+        firstBookBtn.classList.add('active');
+        showBookMaterials(heroStars, '2/8', bookContent);
+    }
+    
+    // --- Жетоны талантов ---
+    const tokensContent = document.getElementById('talentTokensContent');
+    showTalentTokens(heroStars, heroClass, tokensContent);
 }
 
 // ==================== ОСТАЛЬНОЙ КОД ====================
@@ -2606,7 +2638,6 @@ function fillModal(hero) {
     const calc = calculateStatsWithSelections(hero, currentHeroTalents, 'none');
     document.getElementById('mStats').innerHTML = '<span class="pill">С: ' + hero[HERO_FIELDS.power] + '</span><span class="pill">А: ' + calc.attack + '</span><span class="pill">З: ' + calc.defense + '</span><span class="pill">Ж: ' + calc.hp + '</span>';
     
-    // Теги в модалке с обработчиками кликов
     const tagsContainer = document.getElementById('modalTags');
     if (hero._tags && hero._tags.length > 0) {
         const tagsHtml = hero._tags.map(tag => 
@@ -2637,11 +2668,14 @@ function fillModal(hero) {
         tagsContainer.innerHTML = '';
     }
     
-    // Обновляем блок прокачки
-    renderUpgradeSection(hero);
-    
     document.getElementById('mAbilities').textContent = String(hero[HERO_FIELDS.abilities] || '—').replace(/^'|'$/g, '');
     document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive] || '—').replace(/^'|'$/g, '');
+    
+    // Блок прокачки
+    const wrapper = document.getElementById('upgradeSectionWrapper');
+    wrapper.classList.remove('show');
+    document.getElementById('upgradeToggleBtn').textContent = '📈 Прокачка героя';
+    renderUpgradeSection(hero);
 }
 
 function closeModal() { document.getElementById('modal').classList.remove('show'); document.body.style.overflow = ''; currentIdx = -1; closeTreePanel(); }
@@ -2684,6 +2718,21 @@ function attachEvents() {
         filteredHeroNames = [...allHeroNames];
         initAllFacets(allHeroes);
         applyFilters();
+    });
+    
+    // Кнопка раскрытия прокачки
+    document.getElementById('upgradeToggleBtn').addEventListener('click', function() {
+        const wrapper = document.getElementById('upgradeSectionWrapper');
+        const isOpen = wrapper.classList.contains('show');
+        if (isOpen) {
+            wrapper.classList.remove('show');
+            this.textContent = '📈 Прокачка героя';
+        } else {
+            wrapper.classList.add('show');
+            this.textContent = '📈 Скрыть прокачку';
+            const hero = viewHeroes[currentIdx];
+            if (hero) renderUpgradeSection(hero);
+        }
     });
     
     function openFiltersPanel() {
