@@ -2664,10 +2664,11 @@ function fillModal(hero) {
     document.getElementById('mAbilities').textContent = String(hero[HERO_FIELDS.abilities] || '—').replace(/^'|'$/g, '');
     document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive] || '—').replace(/^'|'$/g, '');
     
-    // Блок прокачки
+    // Блок прокачки — всегда скрыт при открытии
     const wrapper = document.getElementById('upgradeSectionWrapper');
     wrapper.classList.remove('show');
     document.getElementById('upgradeToggleBtn').textContent = '📈 Прокачка героя';
+    // Рендерим данные, но они будут скрыты до нажатия кнопки
     renderUpgradeSection(hero);
 }
 
@@ -2721,10 +2722,11 @@ function attachEvents() {
             wrapper.classList.remove('show');
             this.textContent = '📈 Прокачка героя';
         } else {
-            wrapper.classList.add('show');
-            this.textContent = '📈 Скрыть прокачку';
+            // Перед открытием обновляем данные
             const hero = viewHeroes[currentIdx];
             if (hero) renderUpgradeSection(hero);
+            wrapper.classList.add('show');
+            this.textContent = '📈 Скрыть прокачку';
         }
     });
     
