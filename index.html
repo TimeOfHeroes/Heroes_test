@@ -1717,12 +1717,11 @@ function getBooksForStar(heroStars, level) {
     return result.length > 0 ? result[0] : null;
 }
 
-function getTokensForHero(heroStars, heroClass) {
+function getTokensForHero(heroStars) {
     const starKey = heroStars + '★';
     const result = tokensData.filter(item => {
         const itemStars = String(item['Количество звезд'] || '').trim();
-        const itemClass = String(item['Класс'] || '').trim();
-        return itemStars === starKey && itemClass === heroClass;
+        return itemStars === starKey;
     });
     return result.length > 0 ? result[0] : null;
 }
@@ -1782,11 +1781,11 @@ function showBookMaterials(stars, level, container) {
     container.classList.add('show');
 }
 
-function showTalentTokens(stars, heroClass, container) {
-    const tokenData = getTokensForHero(stars, heroClass);
+function showTalentTokens(stars, container) {
+    const tokenData = getTokensForHero(stars);
     container.innerHTML = '';
     if (!tokenData) {
-        container.innerHTML = '<div style="font-size:12px; opacity:0.6;">Нет данных о жетонах для этого класса</div>';
+        container.innerHTML = '<div style="font-size:12px; opacity:0.6;">Нет данных о жетонах для этой звёздности</div>';
         return;
     }
     const total = tokenData['Количество жетонов'] || 0;
@@ -1801,20 +1800,14 @@ function showTalentTokens(stars, heroClass, container) {
 
 function renderUpgradeSection(hero) {
     const container = document.getElementById('upgradeContainer');
-    const wrapper = document.getElementById('upgradeSectionWrapper');
-    const toggleBtn = document.getElementById('upgradeToggleBtn');
-    
     if (!hero) {
         container.style.display = 'none';
-        wrapper.classList.remove('show');
-        toggleBtn.textContent = '📈 Прокачка героя';
         return;
     }
     container.style.display = 'block';
     
     const heroStars = String(hero['Количество звезд'] || '4').trim();
     const heroElement = String(hero['Стихия'] || '').trim();
-    const heroClass = String(hero['Класс'] || '').trim();
     
     // --- Повышение звездности ---
     const starTargets = getStarTargets(heroStars);
@@ -1872,7 +1865,7 @@ function renderUpgradeSection(hero) {
     
     // --- Жетоны талантов ---
     const tokensContent = document.getElementById('talentTokensContent');
-    showTalentTokens(heroStars, heroClass, tokensContent);
+    showTalentTokens(heroStars, tokensContent);
 }
 
 // ==================== ОСТАЛЬНОЙ КОД ====================
@@ -2842,7 +2835,7 @@ Promise.all([
         res();
     }, error:rej})),
     new Promise((res,rej) => Papa.parse(TOKENS_URL, {download:true,header:true,skipEmptyLines:true,complete:r => {
-        tokensData = r.data.filter(row => row['Количество звезд'] && row['Класс']);
+        tokensData = r.data.filter(row => row['Количество звезд'] && row['Количество жетонов']);
         console.log('✅ Жетоны талантов загружены:', tokensData.length);
         res();
     }, error:rej})),
