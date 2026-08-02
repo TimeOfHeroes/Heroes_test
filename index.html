@@ -70,7 +70,6 @@
   --tag-resurrection: #94d82d;
   --tag-element: #a9e34b;
   --tag-default: #adb5bd;
-  --stat-icon-size: 20px;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -242,20 +241,33 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .tag-element { background:var(--tag-element); }
 .tag-default { background:var(--tag-default); }
 
-.stat-icon {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 13px;
-    font-weight: 600;
+/* ===== ПРИНУДИТЕЛЬНЫЙ РАЗМЕР ВСЕХ ИКОНОК ===== */
+.stats .pill img,
+.dialog .mStats .stat-item img,
+.upgrade-toggle-btn img,
+.upgrade-section-title img,
+.tree-header h3 img,
+#treeBtnIcon,
+#upgradeIcon,
+#upgradeSectionIcon,
+#treeIcon,
+.nav-btn img {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
 }
-.stat-icon img {
-    width: var(--stat-icon-size);
-    height: var(--stat-icon-size);
-    object-fit: contain;
-    vertical-align: middle;
+.meta .star-icon {
+    width: 18px !important;
+    height: 18px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
 }
-
 .content { min-height:60vh; width:100%; }
 #count { margin:0 0 16px; opacity:0.7; font-size:14px; padding:6px 0; font-weight:500; }
 .cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:16px; width:100%; }
@@ -271,7 +283,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .card:hover .thumb img { transform:scale(1.05); }
 .card h3 { margin:12px 12px 4px; font-size:15px; font-weight:600; line-height:1.3; text-align:center; }
 .meta { margin:0 12px 4px; display:flex; gap:4px; flex-wrap:wrap; font-size:12px; justify-content:center; text-align:center; }
-.meta .star-icon { display:inline-block; width:14px; height:14px; vertical-align:middle; }
 .stats { margin:0 12px 8px; display:flex; gap:8px; flex-wrap:wrap; justify-content:center; font-weight:600; font-size:13px; }
 .stats .pill { font-size:12px; padding:3px 10px; display:flex; align-items:center; gap:4px; }
 .pill { border-radius:999px; padding:3px 8px; font-size:11px; white-space:nowrap; font-weight:500; box-shadow:0 1px 3px rgba(0,0,0,0.05); }
@@ -298,46 +309,53 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     max-height:calc(90vh - 60px); 
 }
 
-/* Группа навигации — внутри modal-content, справа сверху */
-.nav-group {
+/* Кнопки навигации — справа сверху, синий фон, порядок: ← → ✕ */
+.nav-btn {
     position: absolute;
     top: 12px;
-    right: 12px;
-    display: flex;
-    gap: 6px;
-    z-index: 10;
-    background: rgba(0,0,0,0.5);
-    padding: 6px 8px;
-    border-radius: 30px;
-    backdrop-filter: blur(8px);
-}
-.nav-group .nav-btn {
-    width: 36px;
-    height: 36px;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
     border: none;
-    background: transparent;
+    background: var(--accent-color) !important;
     color: #fff;
     cursor: pointer;
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     transition: all 0.2s;
     border-radius: 50%;
     padding: 0;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
-.nav-group .nav-btn:hover {
-    background: rgba(255,255,255,0.2);
+.nav-btn:hover {
+    background: #1d4ed8 !important;
     transform: scale(1.05);
 }
-.nav-group .nav-btn img {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
-    filter: brightness(0) invert(1);
+.nav-btn:active {
+    transform: scale(0.95);
 }
-.nav-group .nav-btn.close-btn img {
-    width: 24px;
-    height: 24px;
+.nav-prev {
+    right: 56px;
+}
+.nav-next {
+    right: 12px;
+}
+.nav-close {
+    right: 100px;
+}
+.nav-btn img {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+    object-fit: contain !important;
+    filter: brightness(0) invert(1);
+    display: inline-block !important;
 }
 
 .image-container { background:var(--element-unknown); border-radius:12px; padding:12px; transition:background 0.3s; }
@@ -349,10 +367,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .dialog img { width:100%; height:auto; max-height:350px; object-fit:contain; border-radius:12px; background:transparent; padding:8px; }
 .dialog h2 { margin:0 0 8px; font-size:26px; font-weight:700; }
 .dialog .meta { display:flex; gap:8px; flex-wrap:wrap; opacity:0.8; margin-bottom:8px; font-size:14px; justify-content:flex-start; }
-.dialog .meta .star-icon { display:inline-block; width:18px; height:18px; vertical-align:middle; }
 .dialog .mStats { display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 16px; align-items:center; }
 .dialog .mStats .stat-item { display:flex; align-items:center; gap:6px; font-size:14px; font-weight:600; padding:4px 10px; border-radius:999px; background:var(--secondary-color); }
-.dialog .mStats .stat-item img { width:24px; height:24px; object-fit:contain; }
 .pre { white-space:pre-line; background:var(--secondary-color); border:1px solid var(--border-color); border-radius:10px; padding:12px; font-size:14px; overflow-wrap:break-word; line-height:1.5; margin:6px 0; }
 .open-img { margin-top:8px; display:inline-block; font-size:13px; color:var(--primary-color); text-decoration:none; }
 .talent-mode-selector { margin:12px 0; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
@@ -390,12 +406,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     color: #fff;
     border-color: var(--accent-color);
 }
-.upgrade-toggle-btn img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-    vertical-align: middle;
-}
 .upgrade-section-wrapper {
     display: none;
     margin-top: 8px;
@@ -417,11 +427,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     align-items: center;
     gap: 8px;
     color: var(--text-color);
-}
-.upgrade-section-title img {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
 }
 .upgrade-buttons {
     display: flex;
@@ -527,19 +532,17 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 /* --- Конец стилей прокачки --- */
 
-/* --- Увеличенные иконки в карточках --- */
-.stats .pill img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-    vertical-align: middle;
-}
-
 /* Иконка в дереве талантов */
 .tree-header h3 img {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
 }
 
 .tree-panel { position:fixed; top:50%; right:20px; transform:translateY(-50%); width:420px; max-width:calc(100vw - 40px); background:var(--card-bg); border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.3); z-index:2100; display:none; flex-direction:column; overflow:hidden; border:1px solid var(--border-color); cursor:default; }
@@ -548,7 +551,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .tree-header { padding:12px 16px; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; background:var(--card-bg); cursor:grab; }
 .tree-panel.dragging .tree-header { cursor:grabbing; }
 .tree-header h3 { margin:0; font-size:16px; font-weight:600; user-select:none; display:flex; align-items:center; gap:8px; }
-.tree-header h3 img { width:28px; height:28px; object-fit:contain; }
 .tree-close { background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; width:32px; height:32px; display:flex; align-items:center; justify-content:center; border-radius:50%; }
 .tree-close:hover { opacity:1; background:var(--secondary-color); }
 .tree-content { padding:16px; overflow-y:auto; max-height:60vh; }
@@ -576,72 +578,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-dialog .date { text-align:center; font-style:italic; color:var(--text-color); opacity:0.6; margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color); }
 .info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
 .info-close:hover { opacity:1; }
-/* ===== ПРИНУДИТЕЛЬНЫЙ РАЗМЕР ВСЕХ ИКОНОК ===== */
-.stats .pill img,
-.dialog .mStats .stat-item img,
-.upgrade-toggle-btn img,
-.upgrade-section-title img,
-.tree-header h3 img {
-    width: 24px !important;
-    height: 24px !important;
-    min-width: 24px !important;
-    min-height: 24px !important;
-    max-width: 24px !important;
-    max-height: 24px !important;
-    object-fit: contain;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-/* Кнопки навигации — каждая отдельно, справа сверху */
-.nav-left,
-.nav-right,
-.nav-close {
-    position: absolute;
-    top: 12px;
-    width: 36px;
-    height: 36px;
-    border: none;
-    background: rgba(0,0,0,0.6);
-    color: #fff;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    border-radius: 50%;
-    padding: 0;
-    z-index: 10;
-    backdrop-filter: blur(4px);
-}
-.nav-left:hover,
-.nav-right:hover,
-.nav-close:hover {
-    background: rgba(0,0,0,0.9);
-    transform: scale(1.05);
-}
-.nav-left {
-    right: 56px;
-}
-.nav-right {
-    right: 12px;
-}
-.nav-close {
-    right: 100px;
-}
-.nav-left img,
-.nav-right img,
-.nav-close img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-    filter: brightness(0) invert(1);
-}
-
-/* Удаляем старый nav-group если был */
-.nav-group {
-    display: none !important;
-}
 </style>
 </head>
 <body>
@@ -710,13 +646,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 <div id="empty" style="display:none;">Ничего не найдено. Измените фильтры.</div>
 </section>
 </div>
+
+<!-- ===== МОДАЛЬНОЕ ОКНО ===== -->
 <div id="modal" class="modal">
 <div class="dialog">
 <div class="modal-content" style="position:relative;">
-    <!-- Кнопки навигации справа сверху (каждая отдельно) -->
-    <button id="mPrev" class="nav-left"><img id="leftBtnIcon" src="" alt="Назад"></button>
-    <button id="mNext" class="nav-right"><img id="rightBtnIcon" src="" alt="Вперёд"></button>
-    <button id="mClose" class="nav-close"><img id="closeBtnIcon" src="" alt="Закрыть"></button>
+    <!-- Кнопки навигации справа сверху: ← → ✕ -->
+    <button id="mPrev" class="nav-btn nav-prev"><img id="leftBtnIcon" src="" alt="Назад"></button>
+    <button id="mNext" class="nav-btn nav-next"><img id="rightBtnIcon" src="" alt="Вперёд"></button>
+    <button id="mClose" class="nav-btn nav-close"><img id="closeBtnIcon" src="" alt="Закрыть"></button>
     
     <div class="image-container" id="modalImageContainer"><img id="mImg" src=""><a id="mOpenImg" class="open-img" href="#" target="_blank">Открыть изображение в новой вкладке</a></div>
     <div class="info-container">
@@ -725,6 +663,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <div id="mMeta2" class="meta"></div>
         <div id="mStats" class="mStats"></div>
         <div id="modalTags" class="modal-tags"></div>
+        
         <div class="talent-mode-selector">
             <label>Режим талантов:</label>
             <div class="select-wrapper">
@@ -738,18 +677,22 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
                     <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
                 </div>
             </div>
-            <button id="openTreeBtn" class="btn secondary">🌳 Дерево талантов</button>
+            <button id="openTreeBtn" class="btn secondary" style="display:flex;align-items:center;gap:6px;padding:6px 12px;">
+                <img id="treeBtnIcon" src="" alt="Дерево" style="width:24px;height:24px;object-fit:contain;display:inline-block;vertical-align:middle;"> Дерево талантов
+            </button>
         </div>
+        
         <h3>Способности</h3>
         <div id="mAbilities" class="pre"></div>
         <h3>Пассивные способности</h3>
         <div id="mPassive" class="pre"></div>
+        
         <button id="upgradeToggleBtn" class="upgrade-toggle-btn">
-            <img id="upgradeIcon" src="" alt="Прокачка"> Прокачка героя
+            <img id="upgradeIcon" src="" alt="Прокачка" style="width:24px;height:24px;object-fit:contain;display:inline-block;vertical-align:middle;"> Прокачка героя
         </button>
         <div id="upgradeSectionWrapper" class="upgrade-section-wrapper">
             <div id="upgradeContainer" class="upgrade-section">
-                <div class="upgrade-section-title"><img id="upgradeSectionIcon" src="" alt="Прокачка"> Прокачка героя</div>
+                <div class="upgrade-section-title"><img id="upgradeSectionIcon" src="" alt="Прокачка" style="width:24px;height:24px;object-fit:contain;display:inline-block;vertical-align:middle;"> Прокачка героя</div>
                 <div style="margin-bottom:12px;"><div style="font-size:13px; font-weight:500; margin-bottom:4px;">📦 Материалы для повышения</div><div class="upgrade-buttons" id="starButtons"></div><div class="upgrade-content" id="starContent"></div></div>
                 <div style="margin-bottom:12px;"><div style="font-size:13px; font-weight:500; margin-bottom:4px;">📚 Книги навыков</div><div class="upgrade-buttons" id="bookButtons"></div><div class="upgrade-content" id="bookContent"></div></div>
                 <div><div style="font-size:13px; font-weight:500; margin-bottom:4px;">🎯 Жетоны талантов</div><div id="talentTokensContent"></div></div>
@@ -759,13 +702,14 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 </div>
 </div>
 </div>
-<div id="treePanel" class="tree-panel"><div class="tree-header" id="treeHeader"><h3><img id="treeIcon" src="" alt="Дерево"> Дерево талантов — <span id="treeHeroName"></span></h3><button id="closeTreeBtn" class="tree-close">×</button></div><div class="tree-content" id="treeContent"><div class="talent-table" id="talentTable"></div></div></div>
+
+<div id="treePanel" class="tree-panel"><div class="tree-header" id="treeHeader"><h3><img id="treeIcon" src="" alt="Дерево" style="width:24px;height:24px;object-fit:contain;display:inline-block;vertical-align:middle;"> Дерево талантов — <span id="treeHeroName"></span></h3><button id="closeTreeBtn" class="tree-close">×</button></div><div class="tree-content" id="treeContent"><div class="talent-table" id="talentTable"></div></div></div>
 <div id="infoModal" class="info-modal"><div class="info-dialog"><button id="infoClose" class="info-close">×</button><h2>О галерее героев</h2><p>Эта галерея содержит информацию о героях игры "Время Героев", их характеристиках и способностях.</p><div class="clan"><strong>Разработано:</strong><br>Евгений Поташко и Владимир Плотников<br><strong>Клан: "Рожденные в СССР."</strong><br>скрины героев предоставлены великим и могучим Козырем</div><div class="contact"><strong>Обратная связь:</strong><br>Нашли ошибку или есть предложения?<br>Пишите: <a href="mailto:master-Erasm@yandex.ru">master-Erasm@yandex.ru</a></div><p>База данных регулярно обновляется с учетом новых героев и изменений в балансе игры.</p><p class="date">Дата последнего обновления: <span id="updateDate"></span></p></div></div>
+
 <script>
 const HERO_FIELDS = { id:'id', name:'Герой', element:'Стихия', stars:'Количество звезд', mana:'Скорость маны', power:'Сила', attack:'Атака', defense:'Защита', hp:'Жизни', attackType:'Способ атаки', abilities:'Способности', passive:'Пассивные способности', summon:'Место призыва', clazz:'Класс', image:'Картинка' };
 const CLASS_TALENT_FIELDS = { class_id:'class_id', row_number:'row_number', is_mandatory:'is_mandatory', branch_group:'branch_group', left_talent_id:'left_talent_id', center_talent_id:'center_talent_id', right_talent_id:'right_talent_id' };
 const TALENT_DESC_FIELDS = { id:'id', talent_id:'talent_id', effect_type:'effect_type', value:'value', is_percent:'is_percent', image_active:'Картинка активная', image_inactive:'Картинка неактивная' };
-
 const DATA_URL = 'heroes.csv?ts=' + Date.now();
 const CLASSES_URL = 'Classes.csv?ts=' + Date.now();
 const TALENT_DESC_URL = 'Talent_description.csv?ts=' + Date.now();
@@ -968,16 +912,8 @@ function renderUpgradeSection(hero) {
     const upgradeSectionIconEl = document.querySelector('.upgrade-section-title img');
     
     if (upgradeIcon) {
-        if (upgradeIconEl) {
-            upgradeIconEl.src = upgradeIcon;
-            upgradeIconEl.style.width = '24px';
-            upgradeIconEl.style.height = '24px';
-        }
-        if (upgradeSectionIconEl) {
-            upgradeSectionIconEl.src = upgradeIcon;
-            upgradeSectionIconEl.style.width = '24px';
-            upgradeSectionIconEl.style.height = '24px';
-        }
+        if (upgradeIconEl) upgradeIconEl.src = upgradeIcon;
+        if (upgradeSectionIconEl) upgradeSectionIconEl.src = upgradeIcon;
     }
     
     const heroStars = String(hero['Количество звезд'] || '1').trim();
@@ -995,7 +931,7 @@ function renderUpgradeSection(hero) {
             const btn = document.createElement('button');
             btn.className = 'upgrade-btn';
             if (starIcon) {
-                btn.innerHTML = '<img src="' + starIcon + '" alt="★" style="width:14px;height:14px;"> ' + target;
+                btn.innerHTML = '<img src="'+starIcon+'" alt="★" style="width:14px;height:14px;"> ' + target;
             } else {
                 btn.innerHTML = '<span class="star">★</span> ' + target;
             }
@@ -1268,19 +1204,12 @@ function renderTalentTree(hero, selections, mode) {
         return;
     }
     
-    // Устанавливаем иконку дерева талантов с принудительным размером
-    const treeIcon = getTreeIcon();
+    // Устанавливаем иконку дерева талантов
+    const treeIcon = getIcon('TalantTree_icon');
     const treeIconEl = document.getElementById('treeIcon');
     if (treeIcon && treeIconEl) {
         treeIconEl.src = treeIcon;
-        treeIconEl.style.display = 'inline-block';
-        treeIconEl.style.width = '24px';
-        treeIconEl.style.height = '24px';
-        treeIconEl.style.minWidth = '24px';
-        treeIconEl.style.minHeight = '24px';
-        treeIconEl.style.maxWidth = '24px';
-        treeIconEl.style.maxHeight = '24px';
-        treeIconEl.style.objectFit = 'contain';
+        treeIconEl.style.cssText = 'width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;max-width:24px !important;max-height:24px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;';
     }
     
     const talents = classTalents[heroClass];
@@ -1470,47 +1399,49 @@ function renderTalentTree(hero, selections, mode) {
 }
 
 function renderStatsHTML(hero, calc) {
-    const swordIcon = getSwordIcon();
-    const shieldIcon = getShieldIcon();
-    const healthIcon = getHealthIcon();
+    const swordIcon = getIcon('Sword_icon');
+    const shieldIcon = getIcon('Shield_icon');
+    const healthIcon = getIcon('Health_icon');
+    
     let html = '';
     if (swordIcon) {
-        html += '<span class="stat-item"><img src="'+swordIcon+'" alt="Атака"> '+calc.attack+'</span>';
+        html += '<span class="stat-item"><img src="' + swordIcon + '" alt="Атака" style="width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;object-fit:contain;vertical-align:middle;"> ' + calc.attack + '</span>';
     } else {
-        html += '<span class="stat-item">⚔️ '+calc.attack+'</span>';
+        html += '<span class="stat-item">⚔️ ' + calc.attack + '</span>';
     }
     if (shieldIcon) {
-        html += '<span class="stat-item"><img src="'+shieldIcon+'" alt="Защита"> '+calc.defense+'</span>';
+        html += '<span class="stat-item"><img src="' + shieldIcon + '" alt="Защита" style="width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;object-fit:contain;vertical-align:middle;"> ' + calc.defense + '</span>';
     } else {
-        html += '<span class="stat-item">🛡️ '+calc.defense+'</span>';
+        html += '<span class="stat-item">🛡️ ' + calc.defense + '</span>';
     }
     if (healthIcon) {
-        html += '<span class="stat-item"><img src="'+healthIcon+'" alt="Жизни"> '+calc.hp+'</span>';
+        html += '<span class="stat-item"><img src="' + healthIcon + '" alt="Жизни" style="width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;object-fit:contain;vertical-align:middle;"> ' + calc.hp + '</span>';
     } else {
-        html += '<span class="stat-item">❤️ '+calc.hp+'</span>';
+        html += '<span class="stat-item">❤️ ' + calc.hp + '</span>';
     }
     return html;
 }
 
 function renderCardStats(hero) {
-    const swordIcon = getSwordIcon();
-    const shieldIcon = getShieldIcon();
-    const healthIcon = getHealthIcon();
+    const swordIcon = getIcon('Sword_icon');
+    const shieldIcon = getIcon('Shield_icon');
+    const healthIcon = getIcon('Health_icon');
+    
     let html = '';
     if (swordIcon) {
-        html += '<span class="pill"><img src="'+swordIcon+'" alt="Атака"> '+hero[HERO_FIELDS.attack]+'</span>';
+        html += '<span class="pill"><img src="' + swordIcon + '" alt="Атака" style="width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;object-fit:contain;vertical-align:middle;"> ' + hero[HERO_FIELDS.attack] + '</span>';
     } else {
-        html += '<span class="pill">⚔️ '+hero[HERO_FIELDS.attack]+'</span>';
+        html += '<span class="pill">⚔️ ' + hero[HERO_FIELDS.attack] + '</span>';
     }
     if (shieldIcon) {
-        html += '<span class="pill"><img src="'+shieldIcon+'" alt="Защита"> '+hero[HERO_FIELDS.defense]+'</span>';
+        html += '<span class="pill"><img src="' + shieldIcon + '" alt="Защита" style="width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;object-fit:contain;vertical-align:middle;"> ' + hero[HERO_FIELDS.defense] + '</span>';
     } else {
-        html += '<span class="pill">🛡️ '+hero[HERO_FIELDS.defense]+'</span>';
+        html += '<span class="pill">🛡️ ' + hero[HERO_FIELDS.defense] + '</span>';
     }
     if (healthIcon) {
-        html += '<span class="pill"><img src="'+healthIcon+'" alt="Жизни"> '+hero[HERO_FIELDS.hp]+'</span>';
+        html += '<span class="pill"><img src="' + healthIcon + '" alt="Жизни" style="width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;object-fit:contain;vertical-align:middle;"> ' + hero[HERO_FIELDS.hp] + '</span>';
     } else {
-        html += '<span class="pill">❤️ '+hero[HERO_FIELDS.hp]+'</span>';
+        html += '<span class="pill">❤️ ' + hero[HERO_FIELDS.hp] + '</span>';
     }
     return html;
 }
@@ -1661,16 +1592,16 @@ function openModal(idx){
     document.body.style.overflow='hidden';
 }
 
-function fillModal(hero) {
+function fillModal(hero){
     let img = fileCellToUrl(hero[HERO_FIELDS.image]);
     document.getElementById('mImg').src = img || '';
     document.getElementById('mOpenImg').href = img || '#';
     document.getElementById('mName').textContent = hero[HERO_FIELDS.name] || '';
     
-    // Устанавливаем иконки навигации
-    const leftIcon = getItemImage('Left_button');
-    const rightIcon = getItemImage('Right_button');
-    const closeIcon = getItemImage('Close_button');
+    // ===== ИКОНКИ НАВИГАЦИИ =====
+    const leftIcon = getIcon('Left_button');
+    const rightIcon = getIcon('Right_button');
+    const closeIcon = getIcon('Close_button');
     
     const leftBtnIcon = document.getElementById('leftBtnIcon');
     const rightBtnIcon = document.getElementById('rightBtnIcon');
@@ -1678,23 +1609,29 @@ function fillModal(hero) {
     
     if (leftIcon && leftBtnIcon) {
         leftBtnIcon.src = leftIcon;
-        leftBtnIcon.style.width = '24px';
-        leftBtnIcon.style.height = '24px';
+        leftBtnIcon.style.cssText = 'width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;object-fit:contain;display:inline-block;';
     }
     if (rightIcon && rightBtnIcon) {
         rightBtnIcon.src = rightIcon;
-        rightBtnIcon.style.width = '24px';
-        rightBtnIcon.style.height = '24px';
+        rightBtnIcon.style.cssText = 'width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;object-fit:contain;display:inline-block;';
     }
     if (closeIcon && closeBtnIcon) {
         closeBtnIcon.src = closeIcon;
-        closeBtnIcon.style.width = '24px';
-        closeBtnIcon.style.height = '24px';
+        closeBtnIcon.style.cssText = 'width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;object-fit:contain;display:inline-block;';
     }
     
-    const starIcon = getStarIcon();
+    // ===== ИКОНКА ДЛЯ КНОПКИ "ДЕРЕВО ТАЛАНТОВ" =====
+    const treeIcon = getIcon('TalantTree_icon');
+    const treeBtnIcon = document.getElementById('treeBtnIcon');
+    if (treeIcon && treeBtnIcon) {
+        treeBtnIcon.src = treeIcon;
+        treeBtnIcon.style.cssText = 'width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;object-fit:contain;display:inline-block;vertical-align:middle;';
+    }
+    
+    // ===== ЗВЁЗДЫ =====
+    const starIcon = getIcon('Star_icon');
     const starsDisplay = starIcon ?
-        '<img src="' + starIcon + '" alt="★" class="star-icon" style="width:18px;height:18px;"> ' + hero[HERO_FIELDS.stars] :
+        '<img src="' + starIcon + '" alt="★" style="width:18px !important;height:18px !important;min-width:18px !important;min-height:18px !important;object-fit:contain;vertical-align:middle;"> ' + hero[HERO_FIELDS.stars] :
         hero[HERO_FIELDS.stars] + '★';
     document.getElementById('mMeta1').innerHTML = '<span>' + hero[HERO_FIELDS.element] + '</span> <span>' + starsDisplay + '</span> <span>' + hero[HERO_FIELDS.mana] + '</span>';
     document.getElementById('mMeta2').innerHTML = '<span>' + hero[HERO_FIELDS.attackType] + '</span> <span>' + hero[HERO_FIELDS.summon] + '</span> <span>' + hero[HERO_FIELDS.clazz] + '</span>';
@@ -1704,6 +1641,7 @@ function fillModal(hero) {
     const calc = calculateStatsWithSelections(hero, currentHeroTalents, 'none');
     document.getElementById('mStats').innerHTML = renderStatsHTML(hero, calc);
     
+    // ===== ТЕГИ =====
     const tagsContainer = document.getElementById('modalTags');
     if (hero._tags && hero._tags.length > 0) {
         const tagsHtml = hero._tags.map(tag => '<span class="tag ' + getTagClass(tag) + '" data-tag="' + tag + '">#' + tag + '</span>').join('');
@@ -1731,13 +1669,15 @@ function fillModal(hero) {
     } else {
         tagsContainer.innerHTML = '';
     }
+    
     document.getElementById('mAbilities').textContent = String(hero[HERO_FIELDS.abilities] || '—').replace(/^'|'$/g, '');
     document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive] || '—').replace(/^'|'$/g, '');
     
-    const upgradeIcon = getUpgradeIcon();
+    // ===== ПРОКАЧКА =====
+    const upgradeIcon = getIcon('Upgrade_icon');
     const toggleBtn = document.getElementById('upgradeToggleBtn');
     if (upgradeIcon && toggleBtn) {
-        toggleBtn.innerHTML = '<img src="' + upgradeIcon + '" alt="Прокачка" style="width:24px;height:24px;vertical-align:middle;"> Прокачка героя';
+        toggleBtn.innerHTML = '<img src="' + upgradeIcon + '" alt="Прокачка" style="width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;object-fit:contain;vertical-align:middle;"> Прокачка героя';
     } else if (toggleBtn) {
         toggleBtn.innerHTML = '📈 Прокачка героя';
     }
@@ -1788,28 +1728,28 @@ filteredHeroNames=[...allHeroNames];
 initAllFacets(allHeroes);
 applyFilters();
 });
-document.getElementById('upgradeToggleBtn').addEventListener('click', function() {
-    const wrapper = document.getElementById('upgradeSectionWrapper');
-    if (!wrapper) return;
-    const isOpen = wrapper.classList.contains('show');
-    const upgradeIcon = getUpgradeIcon();
-    if (isOpen) {
-        wrapper.classList.remove('show');
-        if (upgradeIcon) {
-            this.innerHTML = '<img src="' + upgradeIcon + '" alt="Прокачка" style="width:24px;height:24px;vertical-align:middle;"> Прокачка героя';
-        } else {
-            this.innerHTML = '📈 Прокачка героя';
-        }
-    } else {
-        const hero = viewHeroes[currentIdx];
-        if (hero) renderUpgradeSection(hero);
-        wrapper.classList.add('show');
-        if (upgradeIcon) {
-            this.innerHTML = '<img src="' + upgradeIcon + '" alt="Прокачка" style="width:24px;height:24px;vertical-align:middle;"> Скрыть прокачку';
-        } else {
-            this.innerHTML = '📈 Скрыть прокачку';
-        }
-    }
+document.getElementById('upgradeToggleBtn').addEventListener('click', function(){
+const wrapper=document.getElementById('upgradeSectionWrapper');
+if (!wrapper) return;
+const isOpen=wrapper.classList.contains('show');
+const upgradeIcon = getIcon('Upgrade_icon');
+if(isOpen){
+wrapper.classList.remove('show');
+if (upgradeIcon) {
+    this.innerHTML = '<img src="' + upgradeIcon + '" alt="Прокачка" style="width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;object-fit:contain;vertical-align:middle;"> Прокачка героя';
+} else {
+    this.innerHTML = '📈 Прокачка героя';
+}
+} else {
+const hero=viewHeroes[currentIdx];
+if(hero) renderUpgradeSection(hero);
+wrapper.classList.add('show');
+if (upgradeIcon) {
+    this.innerHTML = '<img src="' + upgradeIcon + '" alt="Прокачка" style="width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;object-fit:contain;vertical-align:middle;"> Скрыть прокачку';
+} else {
+    this.innerHTML = '📈 Скрыть прокачку';
+}
+}
 });
 function openFiltersPanel(){ const headerHeight=document.querySelector('header').offsetHeight; const filterPanel=document.querySelector('.filters .panel'); if(filterPanel) filterPanel.style.paddingTop=(headerHeight)+'px'; document.getElementById('filters').classList.add('show'); document.getElementById('filterOverlay').classList.add('show'); document.body.style.overflow='hidden'; }
 function closeFiltersPanel(){ document.getElementById('filters').classList.remove('show'); document.getElementById('filterOverlay').classList.remove('show'); document.body.style.overflow=''; }
