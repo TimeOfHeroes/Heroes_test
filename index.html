@@ -5,8 +5,8 @@
 <title>Галерея героев</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' font-size='80' fill='%230a7'%3E🦸%3C/text%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <style>
-/* ===== ВСЕ ВАШИ СТИЛИ (КОПИРУЙТЕ ИЗ ПРЕДЫДУЩЕЙ ВЕРСИИ) ===== */
 :root {
   color-scheme: light dark;
   --hdrH: 70px;
@@ -242,9 +242,25 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .tag-element { background:var(--tag-element); }
 .tag-default { background:var(--tag-default); }
 
-.stat-icon { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; }
-.stat-icon img { width: var(--stat-icon-size); height: var(--stat-icon-size); object-fit: contain; vertical-align: middle; }
-.stats .pill img { width: 20px; height: 20px; object-fit: contain; vertical-align: middle; }
+.stat-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 600;
+}
+.stat-icon img {
+    width: var(--stat-icon-size);
+    height: var(--stat-icon-size);
+    object-fit: contain;
+    vertical-align: middle;
+}
+.stats .pill img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    vertical-align: middle;
+}
 
 .content { min-height:60vh; width:100%; }
 #count { margin:0 0 16px; opacity:0.7; font-size:14px; padding:6px 0; font-weight:500; }
@@ -274,63 +290,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .card:not([data-element]) .pill { background-color:var(--pill-default); }
 .toggle-abilities { background:none; border:none; font-size:10px; cursor:pointer; padding:2px 6px; margin:6px auto 4px; text-decoration:underline; display:block; color:var(--text-color); }
 .card-abilities-full { display:none; font-size:10px; padding:0 12px 6px; line-height:1.4; border-top:1px solid rgba(0,0,0,0.08); margin-top:4px; padding-top:6px; }
-
-/* --- Модальное окно --- */
 .modal { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center; padding:20px; z-index:2000; }
 .modal.show { display:flex; }
 .dialog { position:relative; background:var(--card-bg); max-width:1200px; width:min(1200px, 95vw); max-height:90vh; overflow:hidden; border-radius:16px; display:flex; flex-direction:column; box-shadow:0 20px 40px rgba(0,0,0,0.3); }
-.dialog .modal-content { 
-    position:relative;
-    display:grid; 
-    grid-template-columns:320px 1fr; 
-    gap:20px; 
-    padding:20px; 
-    overflow-y:auto; 
-    max-height:calc(90vh - 60px); 
-}
-
-/* Группа навигации — внутри modal-content, справа сверху */
-.nav-group {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    display: flex;
-    gap: 6px;
-    z-index: 10;
-    background: rgba(0,0,0,0.5);
-    padding: 6px 8px;
-    border-radius: 30px;
-    backdrop-filter: blur(8px);
-}
-.nav-group .nav-btn {
-    width: 36px;
-    height: 36px;
-    border: none;
-    background: transparent;
-    color: #fff;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    border-radius: 50%;
-    padding: 0;
-}
-.nav-group .nav-btn:hover {
-    background: rgba(255,255,255,0.2);
-    transform: scale(1.05);
-}
-.nav-group .nav-btn img {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
-    filter: brightness(0) invert(1);
-}
-.nav-group .nav-btn.close-btn img {
-    width: 24px;
-    height: 24px;
-}
-
+.dialog .modal-content { display:grid; grid-template-columns:320px 1fr; gap:20px; padding:20px; overflow-y:auto; max-height:calc(90vh - 60px); }
 .image-container { background:var(--element-unknown); border-radius:12px; padding:12px; transition:background 0.3s; }
 .image-container[data-element="Синий"] { background:var(--element-blue); }
 .image-container[data-element="Зеленый"] { background:var(--element-green); }
@@ -345,6 +308,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .dialog .mStats .stat-item { display:flex; align-items:center; gap:6px; font-size:14px; font-weight:600; padding:4px 10px; border-radius:999px; background:var(--secondary-color); }
 .dialog .mStats .stat-item img { width:20px; height:20px; object-fit:contain; }
 .pre { white-space:pre-line; background:var(--secondary-color); border:1px solid var(--border-color); border-radius:10px; padding:12px; font-size:14px; overflow-wrap:break-word; line-height:1.5; margin:6px 0; }
+.close { position:absolute; top:12px; right:12px; border:none; background:rgba(0,0,0,.7); color:#fff; font-size:24px; line-height:1; width:40px; height:40px; border-radius:50%; cursor:pointer; z-index:10; display:flex; align-items:center; justify-content:center; }
+.close:hover { background:rgba(0,0,0,.9); transform:scale(1.05); }
+.nav { position:absolute; top:50%; transform:translateY(-50%); border:none; background:rgba(0,0,0,.7); color:#fff; font-size:28px; width:44px; height:44px; border-radius:50%; cursor:pointer; z-index:10; display:flex; align-items:center; justify-content:center; }
+.nav:hover { background:rgba(0,0,0,.9); transform:translateY(-50%) scale(1.05); }
+.nav.prev { left:12px; }
+.nav.next { right:12px; }
 .open-img { margin-top:8px; display:inline-block; font-size:13px; color:var(--primary-color); text-decoration:none; }
 .talent-mode-selector { margin:12px 0; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
 .talent-mode-selector label { font-weight:500; font-size:14px; }
@@ -551,52 +520,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-dialog .date { text-align:center; font-style:italic; color:var(--text-color); opacity:0.6; margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color); }
 .info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
 .info-close:hover { opacity:1; }
-
-/* Стили для загрузки файлов */
-.file-loader {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 30px;
-    text-align: center;
-    background: var(--card-bg);
-    border-radius: 16px;
-    border: 2px dashed var(--border-color);
-}
-.file-loader h2 { margin-top: 0; }
-.file-loader .file-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 20px 0;
-}
-.file-loader .file-input-group label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 16px;
-    background: var(--secondary-color);
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-}
-.file-loader .file-input-group label:hover {
-    background: var(--accent-color);
-    color: #fff;
-}
-.file-loader .file-input-group input[type="file"] {
-    display: none;
-}
-.file-loader .load-btn {
-    padding: 12px 32px;
-    font-size: 16px;
-    font-weight: 600;
-}
-.file-loader .status {
-    margin-top: 16px;
-    font-size: 14px;
-    color: var(--text-color);
-    opacity: 0.7;
-}
 </style>
 </head>
 <body>
@@ -660,20 +583,17 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 </aside>
 <div class="wrap">
 <section class="content">
-<div id="count">📁 Загрузите CSV-файлы для начала работы</div>
-<div id="fileLoaderContainer"></div>
+<div id="count">Загрузка...</div>
 <div id="cards" class="cards"></div>
 <div id="empty" style="display:none;">Ничего не найдено. Измените фильтры.</div>
 </section>
 </div>
 <div id="modal" class="modal">
 <div class="dialog">
+<button id="mClose" class="close">×</button>
+<button id="mPrev" class="nav prev">‹</button>
+<button id="mNext" class="nav next">›</button>
 <div class="modal-content">
-<div class="nav-group">
-    <button id="mPrev" class="nav-btn"><img id="leftBtnIcon" src="" alt="Назад"></button>
-    <button id="mNext" class="nav-btn"><img id="rightBtnIcon" src="" alt="Вперёд"></button>
-    <button id="mClose" class="nav-btn close-btn"><img id="closeBtnIcon" src="" alt="Закрыть"></button>
-</div>
   <div class="image-container" id="modalImageContainer"><img id="mImg" src=""><a id="mOpenImg" class="open-img" href="#" target="_blank">Открыть изображение в новой вкладке</a></div>
   <div class="info-container">
     <h2 id="mName"></h2>
@@ -717,12 +637,19 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 </div>
 <div id="treePanel" class="tree-panel"><div class="tree-header" id="treeHeader"><h3><img id="treeIcon" src="" alt="Дерево"> Дерево талантов — <span id="treeHeroName"></span></h3><button id="closeTreeBtn" class="tree-close">×</button></div><div class="tree-content" id="treeContent"><div class="talent-table" id="talentTable"></div></div></div>
 <div id="infoModal" class="info-modal"><div class="info-dialog"><button id="infoClose" class="info-close">×</button><h2>О галерее героев</h2><p>Эта галерея содержит информацию о героях игры "Время Героев", их характеристиках и способностях.</p><div class="clan"><strong>Разработано:</strong><br>Евгений Поташко и Владимир Плотников<br><strong>Клан: "Рожденные в СССР."</strong><br>скрины героев предоставлены великим и могучим Козырем</div><div class="contact"><strong>Обратная связь:</strong><br>Нашли ошибку или есть предложения?<br>Пишите: <a href="mailto:master-Erasm@yandex.ru">master-Erasm@yandex.ru</a></div><p>База данных регулярно обновляется с учетом новых героев и изменений в балансе игры.</p><p class="date">Дата последнего обновления: <span id="updateDate"></span></p></div></div>
-
 <script>
-// ===== ВСЕ ОСНОВНЫЕ КОНСТАНТЫ И ПЕРЕМЕННЫЕ =====
 const HERO_FIELDS = { id:'id', name:'Герой', element:'Стихия', stars:'Количество звезд', mana:'Скорость маны', power:'Сила', attack:'Атака', defense:'Защита', hp:'Жизни', attackType:'Способ атаки', abilities:'Способности', passive:'Пассивные способности', summon:'Место призыва', clazz:'Класс', image:'Картинка' };
 const CLASS_TALENT_FIELDS = { class_id:'class_id', row_number:'row_number', is_mandatory:'is_mandatory', branch_group:'branch_group', left_talent_id:'left_talent_id', center_talent_id:'center_talent_id', right_talent_id:'right_talent_id' };
 const TALENT_DESC_FIELDS = { id:'id', talent_id:'talent_id', effect_type:'effect_type', value:'value', is_percent:'is_percent', image_active:'Картинка активная', image_inactive:'Картинка неактивная' };
+
+const DATA_URL = 'heroes.csv?ts=' + Date.now();
+const CLASSES_URL = 'Classes.csv?ts=' + Date.now();
+const TALENT_DESC_URL = 'Talent_description.csv?ts=' + Date.now();
+const MATERIALS_4_URL = 'materials_4.csv?ts=' + Date.now();
+const MATERIALS_5_URL = 'materials_5.csv?ts=' + Date.now();
+const BOOKS_URL = 'books.csv?ts=' + Date.now();
+const TOKENS_URL = 'number_of_talents.csv?ts=' + Date.now();
+const IMAGES_URL = 'item_images.csv?ts=' + Date.now();
 
 const ICON_NAMES = {
     star: 'Star_icon',
@@ -747,9 +674,7 @@ let isDragging = false;
 let dragStartX = 0, dragStartY = 0;
 let tooltipElement = null;
 let iconCache = {};
-let isDataLoaded = false;
 
-// ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =====
 function getTagClass(tag) {
     const tagMap = { 'урон':'tag-damage', 'лечение':'tag-heal', 'щит':'tag-shield', 'ослабление':'tag-debuff', 'усиление':'tag-buff', 'доты':'tag-dot', 'хоты':'tag-hot', 'снятие':'tag-cleanse', 'призыв':'tag-summon', 'отражение':'tag-reflect', 'блокировка':'tag-block', 'кража':'tag-steal', 'одиночный':'tag-single', 'все_враги':'tag-aoe', 'цепь':'tag-chain', 'себя':'tag-self', 'союзники':'tag-allies', 'враги':'tag-enemies', 'мана':'tag-mana', 'крит':'tag-crit', 'меткость':'tag-accuracy', 'антихил':'tag-antihil', 'контратака':'tag-counter', 'провокация':'tag-provoke', 'воскрешение':'tag-resurrection', 'баф_стихии':'tag-element', 'усил. атаки':'tag-buff', 'усил. защиты':'tag-shield', 'усил. атаки_навык':'tag-buff', 'усил. защиты_навык':'tag-shield', 'ослаб. атаки':'tag-debuff', 'ослаб. защиты':'tag-debuff', 'ослаб. атаки_себе':'tag-debuff', 'ослаб. защиты_себе':'tag-debuff', 'ослаб. метк_себе':'tag-debuff', 'похищ._лечения':'tag-antihil', 'мана_ускор.':'tag-mana', 'мана_замедл.':'tag-mana', 'мана_срез':'tag-mana', 'мана_блок':'tag-block', 'деление_себе':'tag-shield', 'деление_против.':'tag-debuff', 'увеличение здоровья':'tag-heal', 'пробитие':'tag-damage', 'снятие_врагам':'tag-cleanse', 'снятие_своим':'tag-cleanse', 'блок_снятие_усил.':'tag-block', 'нельзя снять':'tag-block', 'метка':'tag-debuff', 'безумие':'tag-debuff', 'ярость':'tag-buff', 'антиприслужник':'tag-summon', 'похищ._маны':'tag-steal', 'сокращ.длит.эффект.':'tag-debuff' };
     return tagMap[tag] || 'tag-default';
@@ -784,30 +709,8 @@ function getUpgradeIcon() { return getIcon(ICON_NAMES.upgrade); }
 
 function normalizeStarKey(star) { return String(star).replace(/★/g,'').trim(); }
 
-function toNum(v){ let n=parseFloat(String(v).replace(',','.')); return isNaN(n)?null:n; }
-function uniq(arr){ return [...new Set(arr.filter(v=>v!==null&&v!==undefined&&String(v).trim()!==''))]; }
-function sortAlpha(a,b){ return String(a).localeCompare(String(b),'ru',{numeric:true}); }
+// ==================== СИСТЕМА ПРОКАЧКИ ====================
 
-// ===== СИСТЕМА ПАРСИНГА CSV =====
-function parseCSV(text) {
-    const lines = text.split('\n').filter(line => line.trim());
-    if (lines.length === 0) return [];
-    const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
-    const result = [];
-    for (let i = 1; i < lines.length; i++) {
-        const values = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, ''));
-        const row = {};
-        headers.forEach((h, idx) => {
-            row[h] = values[idx] !== undefined ? values[idx] : '';
-        });
-        if (Object.values(row).some(v => v !== '')) {
-            result.push(row);
-        }
-    }
-    return result;
-}
-
-// ===== СИСТЕМА ПРОКАЧКИ =====
 function getStarTargets(heroStars) { return ['2', '3', '4', '5']; }
 
 function getMaterialsForStar(heroElement, heroStars, targetStar) {
@@ -945,7 +848,7 @@ function renderUpgradeSection(hero) {
     const heroStars = String(hero['Количество звезд'] || '1').trim();
     const heroElement = String(hero['Стихия'] || '').trim();
     
-    // Повышение звездности
+    // --- Повышение звездности ---
     const starTargets = ['2', '3', '4', '5'];
     const starButtons = document.getElementById('starButtons');
     const starContent = document.getElementById('starContent');
@@ -974,7 +877,7 @@ function renderUpgradeSection(hero) {
         showStarMaterials(heroElement, heroStars, '2', starContent);
     }
     
-    // Книги навыков
+    // --- Книги навыков ---
     const bookLevels = ['2/8', '3/8', '4/8', '5/8', '6/8', '7/8', '8/8'];
     const bookButtons = document.getElementById('bookButtons');
     const bookContent = document.getElementById('bookContent');
@@ -998,12 +901,17 @@ function renderUpgradeSection(hero) {
         showBookMaterials(heroStars, '2/8', bookContent);
     }
     
-    // Жетоны талантов
+    // --- Жетоны талантов ---
     const tokensContent = document.getElementById('talentTokensContent');
     showTalentTokens(heroStars, hero, tokensContent);
 }
 
-// ===== СИСТЕМА ТАЛАНТОВ =====
+// ==================== ОСТАЛЬНОЙ КОД ====================
+
+function initTooltip() { if(!tooltipElement){ tooltipElement=document.createElement('div'); tooltipElement.className='talent-tooltip hidden'; document.body.appendChild(tooltipElement); } }
+function showTalentTooltip(talentId, x, y) { if(!tooltipElement) initTooltip(); const desc=getTalentDescriptionById(talentId); if(desc){ tooltipElement.innerHTML=desc; tooltipElement.classList.remove('hidden'); tooltipElement.style.left=(x+15)+'px'; tooltipElement.style.top=(y-10)+'px'; } }
+function hideTalentTooltip() { if(tooltipElement) tooltipElement.classList.add('hidden'); }
+
 const talentEffectsMap = {
     1:{type:'Атака',value:15,isPercent:false},
     2:{type:'Защита',value:17,isPercent:false},
@@ -1384,11 +1292,6 @@ function renderCardStats(hero) {
     return html;
 }
 
-// ===== ФИЛЬТРЫ И ОТОБРАЖЕНИЕ =====
-function initTooltip() { if(!tooltipElement){ tooltipElement=document.createElement('div'); tooltipElement.className='talent-tooltip hidden'; document.body.appendChild(tooltipElement); } }
-function showTalentTooltip(talentId, x, y) { if(!tooltipElement) initTooltip(); const desc=getTalentDescriptionById(talentId); if(desc){ tooltipElement.innerHTML=desc; tooltipElement.classList.remove('hidden'); tooltipElement.style.left=(x+15)+'px'; tooltipElement.style.top=(y-10)+'px'; } }
-function hideTalentTooltip() { if(tooltipElement) tooltipElement.classList.add('hidden'); }
-
 function initDragAndDrop() {
     const panel=document.getElementById('treePanel');
     const header=document.getElementById('treeHeader');
@@ -1432,6 +1335,9 @@ function initDragAndDrop() {
 function openTreePanel(){ const hero=viewHeroes[currentIdx]; if(!hero) return; const panel=document.getElementById('treePanel'); if(!panel.style.left && !panel.style.top){ panel.style.left=''; panel.style.right='20px'; panel.style.top='50%'; panel.style.transform='translateY(-50%)'; } document.getElementById('treeHeroName').textContent=hero[HERO_FIELDS.name]; renderTalentTree(hero, currentHeroTalents, currentMode); panel.classList.add('show'); }
 function closeTreePanel(){ document.getElementById('treePanel').classList.remove('show'); hideTalentTooltip(); }
 function updateMainModalStats(){ const hero=viewHeroes[currentIdx]; if(!hero) return; currentMode=document.getElementById('talentModeSelect').value; let selections={}; if(currentMode==='none'){ selections={}; currentHeroTalents={}; } else if(currentMode==='attack'){ selections=getOptimalSelections(hero,'attack'); currentHeroTalents=selections; } else if(currentMode==='defense'){ selections=getOptimalSelections(hero,'defense'); currentHeroTalents=selections; } else if(currentMode==='manual'){ selections=currentHeroTalents; } const calc=calculateStatsWithSelections(hero, selections, currentMode); document.getElementById('mStats').innerHTML=renderStatsHTML(hero, calc); if(document.getElementById('treePanel').classList.contains('show')){ renderTalentTree(hero, currentHeroTalents, currentMode); } }
+function toNum(v){ let n=parseFloat(String(v).replace(',','.')); return isNaN(n)?null:n; }
+function uniq(arr){ return [...new Set(arr.filter(v=>v!==null&&v!==undefined&&String(v).trim()!==''))]; }
+function sortAlpha(a,b){ return String(a).localeCompare(String(b),'ru',{numeric:true}); }
 
 function buildFacet(container, values, facetKey, isTags) {
     let opts=uniq(values);
@@ -1520,7 +1426,6 @@ function renderCards(heroes){
     document.querySelectorAll('.toggle-abilities').forEach(btn=>btn.addEventListener('click',function(e){ e.stopPropagation(); let idx=this.dataset.idx; let div=document.getElementById('abilities-'+idx); if(div.style.display==='block'){ div.style.display='none'; this.textContent='Показать способности'; } else { div.style.display='block'; this.textContent='Скрыть способности'; } }));
 }
 
-// ===== МОДАЛЬНОЕ ОКНО =====
 function openModal(idx){
     if(!viewHeroes.length) return;
     currentIdx=idx;
@@ -1538,15 +1443,6 @@ function fillModal(hero){
     document.getElementById('mImg').src=img||'';
     document.getElementById('mOpenImg').href=img||'#';
     document.getElementById('mName').textContent=hero[HERO_FIELDS.name]||'';
-    
-    // Устанавливаем иконки навигации
-    const leftIcon = getItemImage('Left_button');
-    const rightIcon = getItemImage('Right_button');
-    const closeIcon = getItemImage('Close_button');
-    
-    if (leftIcon) document.getElementById('leftBtnIcon').src = leftIcon;
-    if (rightIcon) document.getElementById('rightBtnIcon').src = rightIcon;
-    if (closeIcon) document.getElementById('closeBtnIcon').src = closeIcon;
     
     const starIcon = getStarIcon();
     const starsDisplay = starIcon ?
@@ -1604,7 +1500,6 @@ function fillModal(hero){
 function closeModal(){ document.getElementById('modal').classList.remove('show'); document.body.style.overflow=''; currentIdx=-1; closeTreePanel(); }
 function go(delta){ if(currentIdx<0||!viewHeroes.length) return; currentIdx=(currentIdx+delta+viewHeroes.length)%viewHeroes.length; openModal(currentIdx); }
 
-// ===== ОБРАБОТЧИКИ СОБЫТИЙ =====
 function attachEvents(){
 document.getElementById('searchInput').addEventListener('input', applyFilters);
 document.getElementById('sortSelect').addEventListener('change', applyFilters);
@@ -1691,220 +1586,22 @@ initTooltip();
 initDragAndDrop();
 }
 
-// ===== ЗАГРУЗКА ФАЙЛОВ ЧЕРЕЗ ИНТЕРФЕЙС =====
-function showFileLoader() {
-    const container = document.getElementById('fileLoaderContainer');
-    const fileNames = [
-        { id: 'heroesFile', label: '📊 heroes.csv (герои)' },
-        { id: 'classesFile', label: '📊 Classes.csv (классы и таланты)' },
-        { id: 'talentDescFile', label: '📊 Talent_description.csv (описания талантов)' },
-        { id: 'materials4File', label: '📊 materials_4.csv (материалы 4★)' },
-        { id: 'materials5File', label: '📊 materials_5.csv (материалы 5★)' },
-        { id: 'booksFile', label: '📊 books.csv (книги навыков)' },
-        { id: 'tokensFile', label: '📊 number_of_talents.csv (жетоны)' },
-        { id: 'imagesFile', label: '📊 item_images.csv (иконки)' }
-    ];
-    
-    let html = `
-    <div class="file-loader">
-        <h2>📁 Загрузите CSV-файлы</h2>
-        <p>Выберите все файлы по очереди или загрузите их в папку с сайтом</p>
-        <div class="file-input-group">
-    `;
-    
-    fileNames.forEach(f => {
-        html += `
-        <label for="${f.id}">
-            <span>📄</span> ${f.label}
-            <input type="file" id="${f.id}" accept=".csv">
-            <span id="${f.id}-status" style="margin-left:auto;font-size:12px;opacity:0.6;">не выбран</span>
-        </label>
-        `;
-    });
-    
-    html += `
-        </div>
-        <button id="loadDataBtn" class="btn primary load-btn">🚀 Загрузить все данные</button>
-        <div id="loadStatus" class="status">Выберите все файлы и нажмите "Загрузить все данные"</div>
-    </div>
-    `;
-    
-    container.innerHTML = html;
-    
-    // Отслеживаем выбор файлов
-    fileNames.forEach(f => {
-        const input = document.getElementById(f.id);
-        const status = document.getElementById(f.id + '-status');
-        if (input) {
-            input.addEventListener('change', function() {
-                if (this.files.length > 0) {
-                    status.textContent = '✅ ' + this.files[0].name;
-                    status.style.color = 'var(--primary-color)';
-                } else {
-                    status.textContent = 'не выбран';
-                    status.style.color = '';
-                }
-            });
-        }
-    });
-    
-    // Кнопка загрузки
-    document.getElementById('loadDataBtn').addEventListener('click', function() {
-        loadFilesFromInputs();
-    });
-}
-
-function loadFilesFromInputs() {
-    const fileIds = ['heroesFile', 'classesFile', 'talentDescFile', 'materials4File', 'materials5File', 'booksFile', 'tokensFile', 'imagesFile'];
-    const fileData = {};
-    let allLoaded = true;
-    
-    fileIds.forEach(id => {
-        const input = document.getElementById(id);
-        if (input && input.files.length > 0) {
-            fileData[id] = input.files[0];
-        } else {
-            allLoaded = false;
-        }
-    });
-    
-    if (!allLoaded) {
-        document.getElementById('loadStatus').textContent = '⚠️ Пожалуйста, выберите все CSV-файлы!';
-        document.getElementById('loadStatus').style.color = 'orange';
-        return;
-    }
-    
-    document.getElementById('loadStatus').textContent = '⏳ Загрузка данных...';
-    document.getElementById('loadStatus').style.color = '';
-    document.getElementById('loadDataBtn').disabled = true;
-    
-    const readers = {};
-    const promises = [];
-    
-    Object.keys(fileData).forEach(key => {
-        const promise = new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const text = e.target.result;
-                    const data = parseCSV(text);
-                    readers[key] = data;
-                    resolve();
-                } catch (err) {
-                    reject(err);
-                }
-            };
-            reader.onerror = reject;
-            reader.readAsText(fileData[key]);
-        });
-        promises.push(promise);
-    });
-    
-    Promise.all(promises)
-        .then(() => {
-            // Обрабатываем загруженные данные
-            processLoadedData(readers);
-        })
-        .catch(err => {
-            console.error('Ошибка чтения файлов:', err);
-            document.getElementById('loadStatus').textContent = '❌ Ошибка чтения файлов: ' + err.message;
-            document.getElementById('loadStatus').style.color = 'red';
-            document.getElementById('loadDataBtn').disabled = false;
-        });
-}
-
-function processLoadedData(readers) {
-    try {
-        // Герои
-        const heroesData = readers['heroesFile'] || [];
-        allHeroes = heroesData.filter(row => row && row[HERO_FIELDS.name]).map(row => {
-            const tagsStr = row['Теги'] || '';
-            const tags = tagsStr.split(',').map(t => t.trim()).filter(t => t !== '');
-            return { ...row, _tags: tags };
-        });
-        console.log('✅ Герои загружены:', allHeroes.length);
-        
-        // Классы и таланты
-        const classesData = readers['classesFile'] || [];
-        classTalents = {};
-        classesData.forEach(row => {
-            if (!row[CLASS_TALENT_FIELDS.class_id]) return;
-            let cn = row[CLASS_TALENT_FIELDS.class_id];
-            if (!classTalents[cn]) classTalents[cn] = [];
-            classTalents[cn].push({
-                rowNumber: parseInt(row[CLASS_TALENT_FIELDS.row_number]) || 0,
-                isMandatory: String(row[CLASS_TALENT_FIELDS.is_mandatory]).toLowerCase() === 'true',
-                branchGroup: row[CLASS_TALENT_FIELDS.branch_group],
-                leftTalentId: row[CLASS_TALENT_FIELDS.left_talent_id] ? parseInt(row[CLASS_TALENT_FIELDS.left_talent_id]) : null,
-                centerTalentId: row[CLASS_TALENT_FIELDS.center_talent_id] ? parseInt(row[CLASS_TALENT_FIELDS.center_talent_id]) : null,
-                rightTalentId: row[CLASS_TALENT_FIELDS.right_talent_id] ? parseInt(row[CLASS_TALENT_FIELDS.right_talent_id]) : null
-            });
-        });
-        Object.keys(classTalents).forEach(cn => classTalents[cn].sort((a, b) => a.rowNumber - b.rowNumber));
-        console.log('✅ Классы с талантами загружены:', Object.keys(classTalents).length);
-        
-        // Описания талантов
-        const talentDescData = readers['talentDescFile'] || [];
-        talentDescriptions = talentDescData.filter(row => row[TALENT_DESC_FIELDS.talent_id]);
-        console.log('✅ Описания талантов загружены:', talentDescriptions.length);
-        
-        // Материалы
-        const materials4Data = readers['materials4File'] || [];
-        const materials5Data = readers['materials5File'] || [];
-        materialsData['4★'] = materials4Data.filter(row => row['Стихия'] && row['Предмет']);
-        materialsData['5★'] = materials5Data.filter(row => row['Стихия'] && row['Предмет']);
-        console.log('✅ Материалы загружены: 4★ -', materialsData['4★'].length, '5★ -', materialsData['5★'].length);
-        
-        // Книги
-        const booksDataRaw = readers['booksFile'] || [];
-        booksData = booksDataRaw.filter(row => row['Звездность героев'] && row['Уровень навыка']);
-        console.log('✅ Книги навыков загружены:', booksData.length);
-        
-        // Жетоны
-        const tokensDataRaw = readers['tokensFile'] || [];
-        tokensData = tokensDataRaw.filter(row => row['Количество звезд'] && row['Количество жетонов']);
-        console.log('✅ Жетоны талантов загружены:', tokensData.length);
-        
-        // Изображения
-        const imagesDataRaw = readers['imagesFile'] || [];
-        itemImages = {};
-        imagesDataRaw.forEach(row => {
-            if (row['Название'] && row['Картинка']) {
-                const url = fileCellToUrl(row['Картинка']);
-                if (url) itemImages[row['Название']] = url;
-            }
-        });
-        console.log('✅ Картинки предметов загружены:', Object.keys(itemImages).length);
-        
-        if (!allHeroes.length) {
-            document.getElementById('loadStatus').textContent = '❌ Данные не найдены. Проверьте файлы CSV.';
-            document.getElementById('loadStatus').style.color = 'red';
-            document.getElementById('loadDataBtn').disabled = false;
-            return;
-        }
-        
-        // Инициализация
-        document.getElementById('loadStatus').textContent = '✅ Все данные загружены успешно!';
-        document.getElementById('loadStatus').style.color = 'var(--primary-color)';
-        document.getElementById('fileLoaderContainer').style.display = 'none';
-        document.getElementById('count').textContent = 'Загрузка...';
-        
-        isDataLoaded = true;
-        initAllFacets(allHeroes);
-        attachEvents();
-        applyFilters();
-        console.log('🚀 Сайт готов к работе!');
-        
-    } catch (err) {
-        console.error('Ошибка обработки данных:', err);
-        document.getElementById('loadStatus').textContent = '❌ Ошибка обработки данных: ' + err.message;
-        document.getElementById('loadStatus').style.color = 'red';
-        document.getElementById('loadDataBtn').disabled = false;
-    }
-}
-
-// ===== ЗАПУСК =====
-showFileLoader();
+Promise.all([
+new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]).map(row=>{ const tagsStr=row['Теги']||''; const tags=tagsStr.split(',').map(t=>t.trim()).filter(t=>t!==''); return {...row,_tags:tags}; }); console.log('✅ Герои загружены:',allHeroes.length); res(); },error:rej})),
+new Promise((res,rej)=>Papa.parse(CLASSES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ r.data.forEach(row=>{ if(!row[CLASS_TALENT_FIELDS.class_id]) return; let cn=row[CLASS_TALENT_FIELDS.class_id]; if(!classTalents[cn]) classTalents[cn]=[]; classTalents[cn].push({ rowNumber:parseInt(row[CLASS_TALENT_FIELDS.row_number])||0, isMandatory:String(row[CLASS_TALENT_FIELDS.is_mandatory]).toLowerCase()==='true', branchGroup:row[CLASS_TALENT_FIELDS.branch_group], leftTalentId:row[CLASS_TALENT_FIELDS.left_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.left_talent_id]):null, centerTalentId:row[CLASS_TALENT_FIELDS.center_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.center_talent_id]):null, rightTalentId:row[CLASS_TALENT_FIELDS.right_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.right_talent_id]):null }); }); Object.keys(classTalents).forEach(cn=>classTalents[cn].sort((a,b)=>a.rowNumber-b.rowNumber)); console.log('✅ Классы с талантами загружены:',Object.keys(classTalents).length); res(); },error:rej})),
+new Promise((res,rej)=>Papa.parse(TALENT_DESC_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ console.log('📥 Загружено строк из Talent_description:',r.data.length); talentDescriptions=[]; r.data.forEach(row=>{ if(row[TALENT_DESC_FIELDS.talent_id]) talentDescriptions.push(row); }); console.log('✅ Описания талантов загружены:',talentDescriptions.length); res(); },error:rej})),
+new Promise((res,rej)=>Papa.parse(MATERIALS_4_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ materialsData['4★']=r.data.filter(row=>row['Стихия']&&row['Предмет']); console.log('✅ Материалы 4★ загружены:',materialsData['4★'].length); res(); },error:rej})),
+new Promise((res,rej)=>Papa.parse(MATERIALS_5_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ materialsData['5★']=r.data.filter(row=>row['Стихия']&&row['Предмет']); console.log('✅ Материалы 5★ загружены:',materialsData['5★'].length); res(); },error:rej})),
+new Promise((res,rej)=>Papa.parse(BOOKS_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ booksData=r.data.filter(row=>row['Звездность героев']&&row['Уровень навыка']); console.log('✅ Книги навыков загружены:',booksData.length); res(); },error:rej})),
+new Promise((res,rej)=>Papa.parse(TOKENS_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ tokensData=r.data.filter(row=>row['Количество звезд']&&row['Количество жетонов']); console.log('✅ Жетоны талантов загружены:',tokensData.length); res(); },error:rej})),
+new Promise((res,rej)=>Papa.parse(IMAGES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ r.data.forEach(row=>{ if(row['Название']&&row['Картинка']){ const url=fileCellToUrl(row['Картинка']); if(url) itemImages[row['Название']]=url; } }); console.log('✅ Картинки предметов загружены:',Object.keys(itemImages).length); res(); },error:rej}))
+]).then(()=>{
+if(!allHeroes.length){ document.getElementById('count').textContent='Данные не найдены'; return; }
+initAllFacets(allHeroes);
+attachEvents();
+applyFilters();
+console.log('🚀 Сайт готов к работе!');
+}).catch(e=>{ console.error('❌ Ошибка загрузки данных:',e); document.getElementById('count').textContent='Ошибка загрузки данных.'; });
 </script>
 </body>
 </html>
