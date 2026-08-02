@@ -576,6 +576,72 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-dialog .date { text-align:center; font-style:italic; color:var(--text-color); opacity:0.6; margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color); }
 .info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
 .info-close:hover { opacity:1; }
+/* ===== ПРИНУДИТЕЛЬНЫЙ РАЗМЕР ВСЕХ ИКОНОК ===== */
+.stats .pill img,
+.dialog .mStats .stat-item img,
+.upgrade-toggle-btn img,
+.upgrade-section-title img,
+.tree-header h3 img {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+    object-fit: contain;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Кнопки навигации — каждая отдельно, справа сверху */
+.nav-left,
+.nav-right,
+.nav-close {
+    position: absolute;
+    top: 12px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    border-radius: 50%;
+    padding: 0;
+    z-index: 10;
+    backdrop-filter: blur(4px);
+}
+.nav-left:hover,
+.nav-right:hover,
+.nav-close:hover {
+    background: rgba(0,0,0,0.9);
+    transform: scale(1.05);
+}
+.nav-left {
+    right: 56px;
+}
+.nav-right {
+    right: 12px;
+}
+.nav-close {
+    right: 100px;
+}
+.nav-left img,
+.nav-right img,
+.nav-close img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+/* Удаляем старый nav-group если был */
+.nav-group {
+    display: none !important;
+}
 </style>
 </head>
 <body>
@@ -647,12 +713,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 <div id="modal" class="modal">
 <div class="dialog">
 <div class="modal-content" style="position:relative;">
-    <!-- Навигация справа сверху -->
-    <div class="nav-group">
-        <button id="mPrev" class="nav-btn"><img id="leftBtnIcon" src="" alt="Назад"></button>
-        <button id="mNext" class="nav-btn"><img id="rightBtnIcon" src="" alt="Вперёд"></button>
-        <button id="mClose" class="nav-btn close-btn"><img id="closeBtnIcon" src="" alt="Закрыть"></button>
-    </div>
+    <!-- Кнопки навигации справа сверху (каждая отдельно) -->
+    <button id="mPrev" class="nav-left"><img id="leftBtnIcon" src="" alt="Назад"></button>
+    <button id="mNext" class="nav-right"><img id="rightBtnIcon" src="" alt="Вперёд"></button>
+    <button id="mClose" class="nav-close"><img id="closeBtnIcon" src="" alt="Закрыть"></button>
+    
     <div class="image-container" id="modalImageContainer"><img id="mImg" src=""><a id="mOpenImg" class="open-img" href="#" target="_blank">Открыть изображение в новой вкладке</a></div>
     <div class="info-container">
         <h2 id="mName"></h2>
@@ -903,8 +968,16 @@ function renderUpgradeSection(hero) {
     const upgradeSectionIconEl = document.querySelector('.upgrade-section-title img');
     
     if (upgradeIcon) {
-        if (upgradeIconEl) upgradeIconEl.src = upgradeIcon;
-        if (upgradeSectionIconEl) upgradeSectionIconEl.src = upgradeIcon;
+        if (upgradeIconEl) {
+            upgradeIconEl.src = upgradeIcon;
+            upgradeIconEl.style.width = '24px';
+            upgradeIconEl.style.height = '24px';
+        }
+        if (upgradeSectionIconEl) {
+            upgradeSectionIconEl.src = upgradeIcon;
+            upgradeSectionIconEl.style.width = '24px';
+            upgradeSectionIconEl.style.height = '24px';
+        }
     }
     
     const heroStars = String(hero['Количество звезд'] || '1').trim();
@@ -922,7 +995,7 @@ function renderUpgradeSection(hero) {
             const btn = document.createElement('button');
             btn.className = 'upgrade-btn';
             if (starIcon) {
-                btn.innerHTML = '<img src="'+starIcon+'" alt="★"> ' + target;
+                btn.innerHTML = '<img src="' + starIcon + '" alt="★" style="width:14px;height:14px;"> ' + target;
             } else {
                 btn.innerHTML = '<span class="star">★</span> ' + target;
             }
@@ -1189,128 +1262,207 @@ function getOptimalSelections(hero, mode) {
 }
 
 function renderTalentTree(hero, selections, mode) {
-    const heroClass=hero[HERO_FIELDS.clazz];
-    if(!classTalents[heroClass]){ document.getElementById('talentTable').innerHTML='<p>Нет данных о талантах для этого класса</p>'; return; }
+    const heroClass = hero[HERO_FIELDS.clazz];
+    if (!classTalents[heroClass]) {
+        document.getElementById('talentTable').innerHTML = '<p>Нет данных о талантах для этого класса</p>';
+        return;
+    }
     
+    // Устанавливаем иконку дерева талантов с принудительным размером
     const treeIcon = getTreeIcon();
     const treeIconEl = document.getElementById('treeIcon');
     if (treeIcon && treeIconEl) {
         treeIconEl.src = treeIcon;
-        treeIconEl.style.display = 'inline';
-        treeIconEl.style.width = '28px';
-        treeIconEl.style.height = '28px';
+        treeIconEl.style.display = 'inline-block';
+        treeIconEl.style.width = '24px';
+        treeIconEl.style.height = '24px';
+        treeIconEl.style.minWidth = '24px';
+        treeIconEl.style.minHeight = '24px';
+        treeIconEl.style.maxWidth = '24px';
+        treeIconEl.style.maxHeight = '24px';
+        treeIconEl.style.objectFit = 'contain';
     }
     
-    const talents=classTalents[heroClass];
-    const groups=[]; let currentGroup=[];
-    for(const talent of talents){
-        if(currentGroup.length===0 || currentGroup[0].branchGroup===talent.branchGroup){ currentGroup.push(talent); }
-        else { groups.push([...currentGroup]); currentGroup=[talent]; }
-    }
-    if(currentGroup.length>0) groups.push(currentGroup);
-    let html=''; let rowCounter=1;
-    const showActive=mode!=='none';
-    const isManual=mode==='manual';
-    let maxSelectableGroup=0;
-    if(isManual){
-        for(let i=0;i<groups.length;i++){ const groupId=groups[i][0].branchGroup; if(selections[groupId]){ maxSelectableGroup=i+1; } else { break; } }
-    }
-    for(let gIdx=0;gIdx<groups.length;gIdx++){
-        const group=groups[gIdx]; const groupId=group[0].branchGroup; const selectedSide=selections[groupId];
-        const isGroupSelectable=isManual?(gIdx<=maxSelectableGroup):true;
-        for(const talent of group){
-            html+='<div class="talent-row">';
-            if(talent.leftTalentId){
-                const isActive=showActive && selectedSide==='left';
-                const imgUrl=getTalentImage(talent.leftTalentId, isActive);
-                const selectableClass=(isManual && isGroupSelectable && !talent.isMandatory)?'selectable':'';
-                const activeClass=isActive?'active':'';
-                const disabledAttr=(isManual && !isGroupSelectable && !talent.isMandatory)?' data-disabled="true"':'';
-                html+='<div class="talent-cell '+activeClass+' '+selectableClass+'" data-group="'+groupId+'" data-side="left" data-talent-id="'+talent.leftTalentId+'" data-row="'+rowCounter+'" data-group-idx="'+gIdx+'"'+disabledAttr+'>';
-                if(imgUrl) html+='<img src="'+imgUrl+'" alt="Талант" loading="lazy" onerror="this.style.display=\'none\'">';
-                else html+='<div style="font-size:10px; text-align:center;">'+talent.leftTalentId+'</div>';
-                html+='</div>';
-            } else { html+='<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>'; }
-            if(talent.centerTalentId){
-                const imgUrl=getTalentImage(talent.centerTalentId, true);
-                html+='<div class="talent-cell mandatory" data-talent-id="'+talent.centerTalentId+'" data-row="'+rowCounter+'">';
-                if(imgUrl) html+='<img src="'+imgUrl+'" alt="Обязательный талант" loading="lazy" onerror="this.style.display=\'none\'">';
-                else html+='<div style="font-size:10px; text-align:center;">'+talent.centerTalentId+'</div>';
-                html+='</div>';
-            } else { html+='<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>'; }
-            if(talent.rightTalentId){
-                const isActive=showActive && selectedSide==='right';
-                const imgUrl=getTalentImage(talent.rightTalentId, isActive);
-                const selectableClass=(isManual && isGroupSelectable && !talent.isMandatory)?'selectable':'';
-                const activeClass=isActive?'active':'';
-                const disabledAttr=(isManual && !isGroupSelectable && !talent.isMandatory)?' data-disabled="true"':'';
-                html+='<div class="talent-cell '+activeClass+' '+selectableClass+'" data-group="'+groupId+'" data-side="right" data-talent-id="'+talent.rightTalentId+'" data-row="'+rowCounter+'" data-group-idx="'+gIdx+'"'+disabledAttr+'>';
-                if(imgUrl) html+='<img src="'+imgUrl+'" alt="Талант" loading="lazy" onerror="this.style.display=\'none\'">';
-                else html+='<div style="font-size:10px; text-align:center;">'+talent.rightTalentId+'</div>';
-                html+='</div>';
-            } else { html+='<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>'; }
-            html+='</div>'; rowCounter++;
+    const talents = classTalents[heroClass];
+    const groups = [];
+    let currentGroup = [];
+    for (const talent of talents) {
+        if (currentGroup.length === 0 || currentGroup[0].branchGroup === talent.branchGroup) {
+            currentGroup.push(talent);
+        } else {
+            groups.push([...currentGroup]);
+            currentGroup = [talent];
         }
     }
-    document.getElementById('talentTable').innerHTML=html;
-    document.querySelectorAll('#talentTable .talent-cell').forEach(cell=>{
-        const talentId=parseInt(cell.dataset.talentId);
-        if(talentId){
-            cell.addEventListener('mouseenter',(e)=>{ const rect=cell.getBoundingClientRect(); showTalentTooltip(talentId, rect.right, rect.top); });
-            cell.addEventListener('mouseleave',()=>{ hideTalentTooltip(); });
+    if (currentGroup.length > 0) groups.push(currentGroup);
+    
+    let html = '';
+    let rowCounter = 1;
+    const showActive = mode !== 'none';
+    const isManual = mode === 'manual';
+    let maxSelectableGroup = 0;
+    if (isManual) {
+        for (let i = 0; i < groups.length; i++) {
+            const groupId = groups[i][0].branchGroup;
+            if (selections[groupId]) {
+                maxSelectableGroup = i + 1;
+            } else {
+                break;
+            }
+        }
+    }
+    
+    for (let gIdx = 0; gIdx < groups.length; gIdx++) {
+        const group = groups[gIdx];
+        const groupId = group[0].branchGroup;
+        const selectedSide = selections[groupId];
+        const isGroupSelectable = isManual ? (gIdx <= maxSelectableGroup) : true;
+        
+        for (const talent of group) {
+            html += '<div class="talent-row">';
+            
+            if (talent.leftTalentId) {
+                const isActive = showActive && selectedSide === 'left';
+                const imgUrl = getTalentImage(talent.leftTalentId, isActive);
+                const selectableClass = (isManual && isGroupSelectable && !talent.isMandatory) ? 'selectable' : '';
+                const activeClass = isActive ? 'active' : '';
+                const disabledAttr = (isManual && !isGroupSelectable && !talent.isMandatory) ? ' data-disabled="true"' : '';
+                html += '<div class="talent-cell ' + activeClass + ' ' + selectableClass + '" data-group="' + groupId + '" data-side="left" data-talent-id="' + talent.leftTalentId + '" data-row="' + rowCounter + '" data-group-idx="' + gIdx + '"' + disabledAttr + '>';
+                if (imgUrl) html += '<img src="' + imgUrl + '" alt="Талант" loading="lazy" onerror="this.style.display=\'none\'">';
+                else html += '<div style="font-size:10px; text-align:center;">' + talent.leftTalentId + '</div>';
+                html += '</div>';
+            } else {
+                html += '<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>';
+            }
+            
+            if (talent.centerTalentId) {
+                const imgUrl = getTalentImage(talent.centerTalentId, true);
+                html += '<div class="talent-cell mandatory" data-talent-id="' + talent.centerTalentId + '" data-row="' + rowCounter + '">';
+                if (imgUrl) html += '<img src="' + imgUrl + '" alt="Обязательный талант" loading="lazy" onerror="this.style.display=\'none\'">';
+                else html += '<div style="font-size:10px; text-align:center;">' + talent.centerTalentId + '</div>';
+                html += '</div>';
+            } else {
+                html += '<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>';
+            }
+            
+            if (talent.rightTalentId) {
+                const isActive = showActive && selectedSide === 'right';
+                const imgUrl = getTalentImage(talent.rightTalentId, isActive);
+                const selectableClass = (isManual && isGroupSelectable && !talent.isMandatory) ? 'selectable' : '';
+                const activeClass = isActive ? 'active' : '';
+                const disabledAttr = (isManual && !isGroupSelectable && !talent.isMandatory) ? ' data-disabled="true"' : '';
+                html += '<div class="talent-cell ' + activeClass + ' ' + selectableClass + '" data-group="' + groupId + '" data-side="right" data-talent-id="' + talent.rightTalentId + '" data-row="' + rowCounter + '" data-group-idx="' + gIdx + '"' + disabledAttr + '>';
+                if (imgUrl) html += '<img src="' + imgUrl + '" alt="Талант" loading="lazy" onerror="this.style.display=\'none\'">';
+                else html += '<div style="font-size:10px; text-align:center;">' + talent.rightTalentId + '</div>';
+                html += '</div>';
+            } else {
+                html += '<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>';
+            }
+            
+            html += '</div>';
+            rowCounter++;
+        }
+    }
+    
+    document.getElementById('talentTable').innerHTML = html;
+    
+    document.querySelectorAll('#talentTable .talent-cell').forEach(cell => {
+        const talentId = parseInt(cell.dataset.talentId);
+        if (talentId) {
+            cell.addEventListener('mouseenter', (e) => {
+                const rect = cell.getBoundingClientRect();
+                showTalentTooltip(talentId, rect.right, rect.top);
+            });
+            cell.addEventListener('mouseleave', () => {
+                hideTalentTooltip();
+            });
         }
     });
-    if(isManual){
-        document.querySelectorAll('#talentTable .talent-cell.selectable').forEach(cell=>{
-            if(cell.dataset.disabled==='true'){ cell.style.opacity='0.5'; cell.style.cursor='not-allowed'; return; }
-            cell.addEventListener('click',(e)=>{
-                e.stopPropagation(); const groupId=cell.dataset.group; const side=cell.dataset.side;
-                const talentId=parseInt(cell.dataset.talentId); const groupIdx=parseInt(cell.dataset.groupIdx);
-                if(!groupId || !side) return;
-                let allPreviousSelected=true;
-                for(let i=0;i<groupIdx;i++){ const prevGroupId=groups[i][0].branchGroup; if(!currentHeroTalents[prevGroupId]){ allPreviousSelected=false; break; } }
-                if(!allPreviousSelected){
-                    const msg=document.createElement('div');
-                    msg.textContent='⚠️ Сначала выберите таланты в предыдущих строках!';
-                    msg.style.position='fixed'; msg.style.bottom='20px'; msg.style.left='50%';
-                    msg.style.transform='translateX(-50%)';
-                    msg.style.backgroundColor='var(--tooltip-bg)';
-                    msg.style.color='var(--tooltip-text)';
-                    msg.style.padding='8px 16px';
-                    msg.style.borderRadius='8px';
-                    msg.style.zIndex='10001';
-                    msg.style.fontSize='13px';
-                    msg.style.border='1px solid var(--border-color)';
+    
+    if (isManual) {
+        document.querySelectorAll('#talentTable .talent-cell.selectable').forEach(cell => {
+            if (cell.dataset.disabled === 'true') {
+                cell.style.opacity = '0.5';
+                cell.style.cursor = 'not-allowed';
+                return;
+            }
+            
+            cell.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const groupId = cell.dataset.group;
+                const side = cell.dataset.side;
+                const talentId = parseInt(cell.dataset.talentId);
+                const groupIdx = parseInt(cell.dataset.groupIdx);
+                
+                if (!groupId || !side) return;
+                
+                let allPreviousSelected = true;
+                for (let i = 0; i < groupIdx; i++) {
+                    const prevGroupId = groups[i][0].branchGroup;
+                    if (!currentHeroTalents[prevGroupId]) {
+                        allPreviousSelected = false;
+                        break;
+                    }
+                }
+                
+                if (!allPreviousSelected) {
+                    const msg = document.createElement('div');
+                    msg.textContent = '⚠️ Сначала выберите таланты в предыдущих строках!';
+                    msg.style.position = 'fixed';
+                    msg.style.bottom = '20px';
+                    msg.style.left = '50%';
+                    msg.style.transform = 'translateX(-50%)';
+                    msg.style.backgroundColor = 'var(--tooltip-bg)';
+                    msg.style.color = 'var(--tooltip-text)';
+                    msg.style.padding = '8px 16px';
+                    msg.style.borderRadius = '8px';
+                    msg.style.zIndex = '10001';
+                    msg.style.fontSize = '13px';
+                    msg.style.border = '1px solid var(--border-color)';
                     document.body.appendChild(msg);
-                    setTimeout(()=>msg.remove(),2000);
+                    setTimeout(() => msg.remove(), 2000);
                     return;
                 }
-                const groupCells=document.querySelectorAll('#talentTable .talent-cell[data-group="'+groupId+'"]');
-                groupCells.forEach(c=>{
-                    if(!c.classList.contains('mandatory')){
-                        const tid=c.dataset.talentId;
-                        if(tid){ const newImgUrl=getTalentImage(parseInt(tid), false); const img=c.querySelector('img'); if(img && newImgUrl) img.src=newImgUrl; }
+                
+                const groupCells = document.querySelectorAll('#talentTable .talent-cell[data-group="' + groupId + '"]');
+                groupCells.forEach(c => {
+                    if (!c.classList.contains('mandatory')) {
+                        const tid = c.dataset.talentId;
+                        if (tid) {
+                            const newImgUrl = getTalentImage(parseInt(tid), false);
+                            const img = c.querySelector('img');
+                            if (img && newImgUrl) img.src = newImgUrl;
+                        }
                         c.classList.remove('active');
                     }
                 });
-                const newImgUrl=getTalentImage(talentId, true);
-                const img=cell.querySelector('img');
-                if(img && newImgUrl) img.src=newImgUrl;
+                
+                const newImgUrl = getTalentImage(talentId, true);
+                const img = cell.querySelector('img');
+                if (img && newImgUrl) img.src = newImgUrl;
                 cell.classList.add('active');
-                const sameSideCells=document.querySelectorAll('#talentTable .talent-cell[data-group="'+groupId+'"][data-side="'+side+'"]');
-                sameSideCells.forEach(c=>{
-                    if(!c.classList.contains('mandatory')){
-                        const tid=c.dataset.talentId;
-                        if(tid){ const newUrl=getTalentImage(parseInt(tid), true); const cImg=c.querySelector('img'); if(cImg && newUrl) cImg.src=newUrl; }
+                
+                const sameSideCells = document.querySelectorAll('#talentTable .talent-cell[data-group="' + groupId + '"][data-side="' + side + '"]');
+                sameSideCells.forEach(c => {
+                    if (!c.classList.contains('mandatory')) {
+                        const tid = c.dataset.talentId;
+                        if (tid) {
+                            const newUrl = getTalentImage(parseInt(tid), true);
+                            const cImg = c.querySelector('img');
+                            if (cImg && newUrl) cImg.src = newUrl;
+                        }
                         c.classList.add('active');
                     }
                 });
-                currentHeroTalents[groupId]=side;
-                const heroData=viewHeroes[currentIdx];
-                if(heroData){
-                    const calc=calculateStatsWithSelections(heroData, currentHeroTalents, currentMode);
-                    document.getElementById('mStats').innerHTML=renderStatsHTML(heroData, calc);
+                
+                currentHeroTalents[groupId] = side;
+                
+                const heroData = viewHeroes[currentIdx];
+                if (heroData) {
+                    const calc = calculateStatsWithSelections(heroData, currentHeroTalents, currentMode);
+                    document.getElementById('mStats').innerHTML = renderStatsHTML(heroData, calc);
                 }
+                
                 renderTalentTree(heroData, currentHeroTalents, currentMode);
             });
         });
@@ -1509,11 +1661,11 @@ function openModal(idx){
     document.body.style.overflow='hidden';
 }
 
-function fillModal(hero){
-    let img=fileCellToUrl(hero[HERO_FIELDS.image]);
-    document.getElementById('mImg').src=img||'';
-    document.getElementById('mOpenImg').href=img||'#';
-    document.getElementById('mName').textContent=hero[HERO_FIELDS.name]||'';
+function fillModal(hero) {
+    let img = fileCellToUrl(hero[HERO_FIELDS.image]);
+    document.getElementById('mImg').src = img || '';
+    document.getElementById('mOpenImg').href = img || '#';
+    document.getElementById('mName').textContent = hero[HERO_FIELDS.name] || '';
     
     // Устанавливаем иконки навигации
     const leftIcon = getItemImage('Left_button');
@@ -1524,31 +1676,43 @@ function fillModal(hero){
     const rightBtnIcon = document.getElementById('rightBtnIcon');
     const closeBtnIcon = document.getElementById('closeBtnIcon');
     
-    if (leftIcon && leftBtnIcon) leftBtnIcon.src = leftIcon;
-    if (rightIcon && rightBtnIcon) rightBtnIcon.src = rightIcon;
-    if (closeIcon && closeBtnIcon) closeBtnIcon.src = closeIcon;
+    if (leftIcon && leftBtnIcon) {
+        leftBtnIcon.src = leftIcon;
+        leftBtnIcon.style.width = '24px';
+        leftBtnIcon.style.height = '24px';
+    }
+    if (rightIcon && rightBtnIcon) {
+        rightBtnIcon.src = rightIcon;
+        rightBtnIcon.style.width = '24px';
+        rightBtnIcon.style.height = '24px';
+    }
+    if (closeIcon && closeBtnIcon) {
+        closeBtnIcon.src = closeIcon;
+        closeBtnIcon.style.width = '24px';
+        closeBtnIcon.style.height = '24px';
+    }
     
     const starIcon = getStarIcon();
     const starsDisplay = starIcon ?
-        '<img src="'+starIcon+'" alt="★" class="star-icon"> ' + hero[HERO_FIELDS.stars] :
+        '<img src="' + starIcon + '" alt="★" class="star-icon" style="width:18px;height:18px;"> ' + hero[HERO_FIELDS.stars] :
         hero[HERO_FIELDS.stars] + '★';
-    document.getElementById('mMeta1').innerHTML='<span>'+hero[HERO_FIELDS.element]+'</span> <span>'+starsDisplay+'</span> <span>'+hero[HERO_FIELDS.mana]+'</span>';
-    document.getElementById('mMeta2').innerHTML='<span>'+hero[HERO_FIELDS.attackType]+'</span> <span>'+hero[HERO_FIELDS.summon]+'</span> <span>'+hero[HERO_FIELDS.clazz]+'</span>';
+    document.getElementById('mMeta1').innerHTML = '<span>' + hero[HERO_FIELDS.element] + '</span> <span>' + starsDisplay + '</span> <span>' + hero[HERO_FIELDS.mana] + '</span>';
+    document.getElementById('mMeta2').innerHTML = '<span>' + hero[HERO_FIELDS.attackType] + '</span> <span>' + hero[HERO_FIELDS.summon] + '</span> <span>' + hero[HERO_FIELDS.clazz] + '</span>';
     
-    const container=document.getElementById('modalImageContainer');
-    container.setAttribute('data-element', hero[HERO_FIELDS.element]||'');
-    const calc=calculateStatsWithSelections(hero, currentHeroTalents, 'none');
-    document.getElementById('mStats').innerHTML=renderStatsHTML(hero, calc);
+    const container = document.getElementById('modalImageContainer');
+    container.setAttribute('data-element', hero[HERO_FIELDS.element] || '');
+    const calc = calculateStatsWithSelections(hero, currentHeroTalents, 'none');
+    document.getElementById('mStats').innerHTML = renderStatsHTML(hero, calc);
     
-    const tagsContainer=document.getElementById('modalTags');
-    if(hero._tags && hero._tags.length>0){
-        const tagsHtml=hero._tags.map(tag=>'<span class="tag '+getTagClass(tag)+'" data-tag="'+tag+'">#'+tag+'</span>').join('');
-        tagsContainer.innerHTML='<span class="tag-label">Теги:</span> '+tagsHtml;
-        tagsContainer.querySelectorAll('.tag').forEach(el=>{
-            el.addEventListener('click',function(e){
+    const tagsContainer = document.getElementById('modalTags');
+    if (hero._tags && hero._tags.length > 0) {
+        const tagsHtml = hero._tags.map(tag => '<span class="tag ' + getTagClass(tag) + '" data-tag="' + tag + '">#' + tag + '</span>').join('');
+        tagsContainer.innerHTML = '<span class="tag-label">Теги:</span> ' + tagsHtml;
+        tagsContainer.querySelectorAll('.tag').forEach(el => {
+            el.addEventListener('click', function(e) {
                 e.stopPropagation();
-                const tag=this.dataset.tag;
-                if(tag){
+                const tag = this.dataset.tag;
+                if (tag) {
                     selected.element.clear();
                     selected.stars.clear();
                     selected.mana.clear();
@@ -1556,7 +1720,7 @@ function fillModal(hero){
                     selected.summon.clear();
                     selected.clazz.clear();
                     selected.heroes.clear();
-                    document.getElementById('searchInput').value='';
+                    document.getElementById('searchInput').value = '';
                     selected.tags.clear();
                     selected.tags.add(tag);
                     closeModal();
@@ -1564,19 +1728,21 @@ function fillModal(hero){
                 }
             });
         });
-    } else { tagsContainer.innerHTML=''; }
-    document.getElementById('mAbilities').textContent=String(hero[HERO_FIELDS.abilities]||'—').replace(/^'|'$/g,'');
-    document.getElementById('mPassive').textContent=String(hero[HERO_FIELDS.passive]||'—').replace(/^'|'$/g,'');
+    } else {
+        tagsContainer.innerHTML = '';
+    }
+    document.getElementById('mAbilities').textContent = String(hero[HERO_FIELDS.abilities] || '—').replace(/^'|'$/g, '');
+    document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive] || '—').replace(/^'|'$/g, '');
     
     const upgradeIcon = getUpgradeIcon();
     const toggleBtn = document.getElementById('upgradeToggleBtn');
     if (upgradeIcon && toggleBtn) {
-        toggleBtn.innerHTML = '<img src="'+upgradeIcon+'" alt="Прокачка" style="width:24px;height:24px;vertical-align:middle;"> Прокачка героя';
+        toggleBtn.innerHTML = '<img src="' + upgradeIcon + '" alt="Прокачка" style="width:24px;height:24px;vertical-align:middle;"> Прокачка героя';
     } else if (toggleBtn) {
         toggleBtn.innerHTML = '📈 Прокачка героя';
     }
     
-    const wrapper=document.getElementById('upgradeSectionWrapper');
+    const wrapper = document.getElementById('upgradeSectionWrapper');
     if (wrapper) wrapper.classList.remove('show');
     renderUpgradeSection(hero);
 }
@@ -1622,28 +1788,28 @@ filteredHeroNames=[...allHeroNames];
 initAllFacets(allHeroes);
 applyFilters();
 });
-document.getElementById('upgradeToggleBtn').addEventListener('click', function(){
-const wrapper=document.getElementById('upgradeSectionWrapper');
-if (!wrapper) return;
-const isOpen=wrapper.classList.contains('show');
-const upgradeIcon = getUpgradeIcon();
-if(isOpen){
-wrapper.classList.remove('show');
-if (upgradeIcon) {
-    this.innerHTML = '<img src="'+upgradeIcon+'" alt="Прокачка" style="width:24px;height:24px;vertical-align:middle;"> Прокачка героя';
-} else {
-    this.innerHTML = '📈 Прокачка героя';
-}
-} else {
-const hero=viewHeroes[currentIdx];
-if(hero) renderUpgradeSection(hero);
-wrapper.classList.add('show');
-if (upgradeIcon) {
-    this.innerHTML = '<img src="'+upgradeIcon+'" alt="Прокачка" style="width:24px;height:24px;vertical-align:middle;"> Скрыть прокачку';
-} else {
-    this.innerHTML = '📈 Скрыть прокачку';
-}
-}
+document.getElementById('upgradeToggleBtn').addEventListener('click', function() {
+    const wrapper = document.getElementById('upgradeSectionWrapper');
+    if (!wrapper) return;
+    const isOpen = wrapper.classList.contains('show');
+    const upgradeIcon = getUpgradeIcon();
+    if (isOpen) {
+        wrapper.classList.remove('show');
+        if (upgradeIcon) {
+            this.innerHTML = '<img src="' + upgradeIcon + '" alt="Прокачка" style="width:24px;height:24px;vertical-align:middle;"> Прокачка героя';
+        } else {
+            this.innerHTML = '📈 Прокачка героя';
+        }
+    } else {
+        const hero = viewHeroes[currentIdx];
+        if (hero) renderUpgradeSection(hero);
+        wrapper.classList.add('show');
+        if (upgradeIcon) {
+            this.innerHTML = '<img src="' + upgradeIcon + '" alt="Прокачка" style="width:24px;height:24px;vertical-align:middle;"> Скрыть прокачку';
+        } else {
+            this.innerHTML = '📈 Скрыть прокачку';
+        }
+    }
 });
 function openFiltersPanel(){ const headerHeight=document.querySelector('header').offsetHeight; const filterPanel=document.querySelector('.filters .panel'); if(filterPanel) filterPanel.style.paddingTop=(headerHeight)+'px'; document.getElementById('filters').classList.add('show'); document.getElementById('filterOverlay').classList.add('show'); document.body.style.overflow='hidden'; }
 function closeFiltersPanel(){ document.getElementById('filters').classList.remove('show'); document.getElementById('filterOverlay').classList.remove('show'); document.body.style.overflow=''; }
