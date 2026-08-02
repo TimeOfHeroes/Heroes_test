@@ -70,6 +70,7 @@
   --tag-resurrection: #94d82d;
   --tag-element: #a9e34b;
   --tag-default: #adb5bd;
+  --stat-icon-size: 20px;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -240,6 +241,22 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .tag-resurrection { background:var(--tag-resurrection); }
 .tag-element { background:var(--tag-element); }
 .tag-default { background:var(--tag-default); }
+
+/* Стили для иконок характеристик */
+.stat-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 600;
+}
+.stat-icon img {
+    width: var(--stat-icon-size);
+    height: var(--stat-icon-size);
+    object-fit: contain;
+    vertical-align: middle;
+}
+
 .content { min-height:60vh; width:100%; }
 #count { margin:0 0 16px; opacity:0.7; font-size:14px; padding:6px 0; font-weight:500; }
 .cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:16px; width:100%; }
@@ -255,8 +272,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .card:hover .thumb img { transform:scale(1.05); }
 .card h3 { margin:12px 12px 4px; font-size:15px; font-weight:600; line-height:1.3; text-align:center; }
 .meta { margin:0 12px 4px; display:flex; gap:4px; flex-wrap:wrap; font-size:12px; justify-content:center; text-align:center; }
-.stats { margin:0 12px 8px; display:flex; gap:4px; flex-wrap:wrap; justify-content:center; font-weight:600; font-size:13px; }
-.stats .pill { font-size:12px; padding:3px 8px; }
+.meta .star-icon { display:inline-block; width:14px; height:14px; vertical-align:middle; }
+.stats { margin:0 12px 8px; display:flex; gap:8px; flex-wrap:wrap; justify-content:center; font-weight:600; font-size:13px; }
+.stats .pill { font-size:12px; padding:3px 10px; display:flex; align-items:center; gap:4px; }
+.stats .pill img { width:16px; height:16px; object-fit:contain; }
 .pill { border-radius:999px; padding:3px 8px; font-size:11px; white-space:nowrap; font-weight:500; box-shadow:0 1px 3px rgba(0,0,0,0.05); }
 .card[data-element="Синий"] .pill { background-color:var(--pill-blue); }
 .card[data-element="Зеленый"] .pill { background-color:var(--pill-green); }
@@ -279,7 +298,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .dialog img { width:100%; height:auto; max-height:350px; object-fit:contain; border-radius:12px; background:transparent; padding:8px; }
 .dialog h2 { margin:0 0 8px; font-size:26px; font-weight:700; }
 .dialog .meta { display:flex; gap:8px; flex-wrap:wrap; opacity:0.8; margin-bottom:8px; font-size:14px; justify-content:flex-start; }
-.dialog .mStats { display:flex; gap:8px; flex-wrap:wrap; margin:8px 0 16px; }
+.dialog .meta .star-icon { display:inline-block; width:18px; height:18px; vertical-align:middle; }
+.dialog .mStats { display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 16px; align-items:center; }
+.dialog .mStats .stat-item { display:flex; align-items:center; gap:6px; font-size:14px; font-weight:600; padding:4px 10px; border-radius:999px; background:var(--secondary-color); }
+.dialog .mStats .stat-item img { width:20px; height:20px; object-fit:contain; }
 .pre { white-space:pre-line; background:var(--secondary-color); border:1px solid var(--border-color); border-radius:10px; padding:12px; font-size:14px; overflow-wrap:break-word; line-height:1.5; margin:6px 0; }
 .close { position:absolute; top:12px; right:12px; border:none; background:rgba(0,0,0,.7); color:#fff; font-size:24px; line-height:1; width:40px; height:40px; border-radius:50%; cursor:pointer; z-index:10; display:flex; align-items:center; justify-content:center; }
 .close:hover { background:rgba(0,0,0,.9); transform:scale(1.05); }
@@ -293,9 +315,33 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .talent-mode-selector select { padding:6px 10px; border-radius:8px; border:1px solid var(--border-color); background:var(--card-bg); color:var(--text-color); cursor:pointer; font-size:13px; flex:1; }
 .talent-mode-selector .btn { padding:6px 10px; white-space:nowrap; font-size:13px; }
 
+/* Стили для выпадающего списка талантов */
+.talent-mode-selector select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 18px 18px;
+    padding-right: 36px;
+    background-color: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+    min-width: 200px;
+}
+.talent-mode-selector select option {
+    background: var(--card-bg);
+    color: var(--text-color);
+}
+.talent-mode-selector select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+}
+
 /* --- Стили для блока прокачки --- */
 .upgrade-toggle-btn {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     padding: 6px 14px;
     font-size: 13px;
     border: 1px solid var(--border-color);
@@ -316,6 +362,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     background: var(--accent-color);
     color: #fff;
     border-color: var(--accent-color);
+}
+.upgrade-toggle-btn img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
 .upgrade-section-wrapper {
     display: none;
@@ -338,6 +389,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     align-items: center;
     gap: 8px;
     color: var(--text-color);
+}
+.upgrade-section-title img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
 }
 .upgrade-buttons {
     display: flex;
@@ -442,7 +498,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .tree-panel.dragging { opacity:0.9; cursor:grabbing; }
 .tree-header { padding:12px 16px; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; background:var(--card-bg); cursor:grab; }
 .tree-panel.dragging .tree-header { cursor:grabbing; }
-.tree-header h3 { margin:0; font-size:16px; font-weight:600; user-select:none; }
+.tree-header h3 { margin:0; font-size:16px; font-weight:600; user-select:none; display:flex; align-items:center; gap:8px; }
+.tree-header h3 img { width:24px; height:24px; object-fit:contain; }
 .tree-close { background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; width:32px; height:32px; display:flex; align-items:center; justify-content:center; border-radius:50%; }
 .tree-close:hover { opacity:1; background:var(--secondary-color); }
 .tree-content { padding:16px; overflow-y:auto; max-height:60vh; }
@@ -565,10 +622,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 <div id="mAbilities" class="pre"></div>
 <h3>Пассивные способности</h3>
 <div id="mPassive" class="pre"></div>
-<button id="upgradeToggleBtn" class="upgrade-toggle-btn">📈 Прокачка героя</button>
+<button id="upgradeToggleBtn" class="upgrade-toggle-btn">
+<img id="upgradeIcon" src="" alt="Прокачка"> Прокачка героя
+</button>
 <div id="upgradeSectionWrapper" class="upgrade-section-wrapper">
 <div id="upgradeContainer" class="upgrade-section">
-<div class="upgrade-section-title">📈 Прокачка героя</div>
+<div class="upgrade-section-title"><img id="upgradeSectionIcon" src="" alt="Прокачка"> Прокачка героя</div>
 <div style="margin-bottom:12px;"><div style="font-size:13px; font-weight:500; margin-bottom:4px;">📦 Материалы для повышения</div><div class="upgrade-buttons" id="starButtons"></div><div class="upgrade-content" id="starContent"></div></div>
 <div style="margin-bottom:12px;"><div style="font-size:13px; font-weight:500; margin-bottom:4px;">📚 Книги навыков</div><div class="upgrade-buttons" id="bookButtons"></div><div class="upgrade-content" id="bookContent"></div></div>
 <div><div style="font-size:13px; font-weight:500; margin-bottom:4px;">🎯 Жетоны талантов</div><div id="talentTokensContent"></div></div>
@@ -578,7 +637,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 </div>
 </div>
 </div>
-<div id="treePanel" class="tree-panel"><div class="tree-header" id="treeHeader"><h3>🌳 Дерево талантов — <span id="treeHeroName"></span></h3><button id="closeTreeBtn" class="tree-close">×</button></div><div class="tree-content" id="treeContent"><div class="talent-table" id="talentTable"></div></div></div>
+<div id="treePanel" class="tree-panel"><div class="tree-header" id="treeHeader"><h3><img id="treeIcon" src="" alt="Дерево"> Дерево талантов — <span id="treeHeroName"></span></h3><button id="closeTreeBtn" class="tree-close">×</button></div><div class="tree-content" id="treeContent"><div class="talent-table" id="talentTable"></div></div></div>
 <div id="infoModal" class="info-modal"><div class="info-dialog"><button id="infoClose" class="info-close">×</button><h2>О галерее героев</h2><p>Эта галерея содержит информацию о героях игры "Время Героев", их характеристиках и способностях.</p><div class="clan"><strong>Разработано:</strong><br>Евгений Поташко и Владимир Плотников<br><strong>Клан: "Рожденные в СССР."</strong><br>скрины героев предоставлены великим и могучим Козырем</div><div class="contact"><strong>Обратная связь:</strong><br>Нашли ошибку или есть предложения?<br>Пишите: <a href="mailto:master-Erasm@yandex.ru">master-Erasm@yandex.ru</a></div><p>База данных регулярно обновляется с учетом новых героев и изменений в балансе игры.</p><p class="date">Дата последнего обновления: <span id="updateDate"></span></p></div></div>
 <script>
 const HERO_FIELDS = { id:'id', name:'Герой', element:'Стихия', stars:'Количество звезд', mana:'Скорость маны', power:'Сила', attack:'Атака', defense:'Защита', hp:'Жизни', attackType:'Способ атаки', abilities:'Способности', passive:'Пассивные способности', summon:'Место призыва', clazz:'Класс', image:'Картинка' };
@@ -592,6 +651,17 @@ const MATERIALS_5_URL = 'materials_5.csv?ts=' + Date.now();
 const BOOKS_URL = 'books.csv?ts=' + Date.now();
 const TOKENS_URL = 'number_of_talents.csv?ts=' + Date.now();
 const IMAGES_URL = 'item_images.csv?ts=' + Date.now();
+
+// Названия иконок в БД
+const ICON_NAMES = {
+    star: 'Star_icon',
+    sword: 'Sword_icon',
+    shield: 'Shield_icon',
+    health: 'Health_icon',
+    tree: 'TalantTree_icon',
+    upgrade: 'Upgrade_icon'
+};
+
 let allHeroes = [], viewHeroes = [], currentIdx = -1, allHeroNames = [], filteredHeroNames = [];
 let sortDirection = 'desc';
 let classTalents = {};
@@ -605,21 +675,45 @@ let itemImages = {};
 let isDragging = false;
 let dragStartX = 0, dragStartY = 0;
 let tooltipElement = null;
+let iconCache = {};
 
 function getTagClass(tag) {
     const tagMap = { 'урон':'tag-damage', 'лечение':'tag-heal', 'щит':'tag-shield', 'ослабление':'tag-debuff', 'усиление':'tag-buff', 'доты':'tag-dot', 'хоты':'tag-hot', 'снятие':'tag-cleanse', 'призыв':'tag-summon', 'отражение':'tag-reflect', 'блокировка':'tag-block', 'кража':'tag-steal', 'одиночный':'tag-single', 'все_враги':'tag-aoe', 'цепь':'tag-chain', 'себя':'tag-self', 'союзники':'tag-allies', 'враги':'tag-enemies', 'мана':'tag-mana', 'крит':'tag-crit', 'меткость':'tag-accuracy', 'антихил':'tag-antihil', 'контратака':'tag-counter', 'провокация':'tag-provoke', 'воскрешение':'tag-resurrection', 'баф_стихии':'tag-element', 'усил. атаки':'tag-buff', 'усил. защиты':'tag-shield', 'усил. атаки_навык':'tag-buff', 'усил. защиты_навык':'tag-shield', 'ослаб. атаки':'tag-debuff', 'ослаб. защиты':'tag-debuff', 'ослаб. атаки_себе':'tag-debuff', 'ослаб. защиты_себе':'tag-debuff', 'ослаб. метк_себе':'tag-debuff', 'похищ._лечения':'tag-antihil', 'мана_ускор.':'tag-mana', 'мана_замедл.':'tag-mana', 'мана_срез':'tag-mana', 'мана_блок':'tag-block', 'деление_себе':'tag-shield', 'деление_против.':'tag-debuff', 'увеличение здоровья':'tag-heal', 'пробитие':'tag-damage', 'снятие_врагам':'tag-cleanse', 'снятие_своим':'tag-cleanse', 'блок_снятие_усил.':'tag-block', 'нельзя снять':'tag-block', 'метка':'tag-debuff', 'безумие':'tag-debuff', 'ярость':'tag-buff', 'антиприслужник':'tag-summon', 'похищ._маны':'tag-steal', 'сокращ.длит.эффект.':'tag-debuff' };
     return tagMap[tag] || 'tag-default';
 }
+
 function fileCellToUrl(v) { let s=String(v||''); let m=s.match(/\((https?:\/\/[^)]+)\)/i); if(m) return m[1]; let m2=s.match(/https?:\/\/\S+/i); return m2 ? m2[0].replace(/[),]+$/,'') : ''; }
-function getItemImage(itemName) { if(!itemName) return ''; if(itemImages[itemName]) return itemImages[itemName]; for(const [key,url] of Object.entries(itemImages)) { if(itemName.includes(key) || key.includes(itemName)) return url; } return ''; }
+
+function getItemImage(itemName) {
+    if (!itemName) return '';
+    if (itemImages[itemName]) return itemImages[itemName];
+    for (const [key, url] of Object.entries(itemImages)) {
+        if (itemName.includes(key) || key.includes(itemName)) {
+            return url;
+        }
+    }
+    return '';
+}
+
+function getIcon(iconName) {
+    if (iconCache[iconName]) return iconCache[iconName];
+    const url = getItemImage(iconName);
+    if (url) iconCache[iconName] = url;
+    return url || '';
+}
+
+function getStarIcon() { return getIcon(ICON_NAMES.star); }
+function getSwordIcon() { return getIcon(ICON_NAMES.sword); }
+function getShieldIcon() { return getIcon(ICON_NAMES.shield); }
+function getHealthIcon() { return getIcon(ICON_NAMES.health); }
+function getTreeIcon() { return getIcon(ICON_NAMES.tree); }
+function getUpgradeIcon() { return getIcon(ICON_NAMES.upgrade); }
+
 function normalizeStarKey(star) { return String(star).replace(/★/g,'').trim(); }
 
 // ==================== СИСТЕМА ПРОКАЧКИ ====================
 
-function getStarTargets(heroStars) {
-    // Всегда показываем все уровни 2★, 3★, 4★, 5★
-    return ['2', '3', '4', '5'];
-}
+function getStarTargets(heroStars) { return ['2', '3', '4', '5']; }
 
 function getMaterialsForStar(heroElement, heroStars, targetStar) {
     const heroStarNormalized = normalizeStarKey(heroStars);
@@ -671,7 +765,7 @@ function showStarMaterials(element, stars, target, container) {
         const count = item['Количество'] || 0;
         const imgUrl = getItemImage(itemName);
         html += '<div class="upgrade-item">' +
-            (imgUrl ? '<img src="'+imgUrl+'" alt="'+itemName+'" loading="lazy">' : '<div style="width:28px;height:28px;border-radius:4px;background:var(--secondary-color);display:flex;align-items:center;justify-content:center;font-size:14px;">📦</div>') +
+            (imgUrl ? '<img src="'+imgUrl+'" alt="'+itemName+'" loading="lazy">' : '<div style="width:36px;height:36px;border-radius:4px;background:var(--secondary-color);display:flex;align-items:center;justify-content:center;font-size:14px;">📦</div>') +
             '<span class="name">'+itemName+'</span><span class="count">×'+count+'</span>' +
         '</div>';
     });
@@ -700,7 +794,7 @@ function showBookMaterials(stars, level, container) {
             const imgKey = bookKeys[idx];
             const imgUrl = getItemImage(imgKey);
             html += '<div class="upgrade-item">' +
-                (imgUrl ? '<img src="'+imgUrl+'" alt="'+name+'" loading="lazy">' : '<div style="width:28px;height:28px;border-radius:4px;background:var(--secondary-color);display:flex;align-items:center;justify-content:center;font-size:14px;">📖</div>') +
+                (imgUrl ? '<img src="'+imgUrl+'" alt="'+name+'" loading="lazy">' : '<div style="width:36px;height:36px;border-radius:4px;background:var(--secondary-color);display:flex;align-items:center;justify-content:center;font-size:14px;">📖</div>') +
                 '<span class="name">'+name+'</span><span class="count">×'+count+'</span>' +
             '</div>';
         }
@@ -747,6 +841,13 @@ function renderUpgradeSection(hero) {
     }
     container.style.display = 'block';
     
+    // Обновляем иконку прокачки
+    const upgradeIcon = getUpgradeIcon();
+    if (upgradeIcon) {
+        document.getElementById('upgradeIcon').src = upgradeIcon;
+        document.querySelector('.upgrade-section-title img').src = upgradeIcon;
+    }
+    
     const heroStars = String(hero['Количество звезд'] || '1').trim();
     const heroElement = String(hero['Стихия'] || '').trim();
     
@@ -756,10 +857,15 @@ function renderUpgradeSection(hero) {
     const starContent = document.getElementById('starContent');
     
     starButtons.innerHTML = '';
+    const starIcon = getStarIcon();
     starTargets.forEach(target => {
         const btn = document.createElement('button');
         btn.className = 'upgrade-btn';
-        btn.innerHTML = '<span class="star">★</span> ' + target;
+        if (starIcon) {
+            btn.innerHTML = '<img src="'+starIcon+'" alt="★" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"> ' + target;
+        } else {
+            btn.innerHTML = '<span class="star">★</span> ' + target;
+        }
         btn.dataset.target = target;
         btn.addEventListener('click', () => {
             document.querySelectorAll('#starButtons .upgrade-btn').forEach(b => b.classList.remove('active'));
@@ -1020,6 +1126,13 @@ function getOptimalSelections(hero, mode) {
 function renderTalentTree(hero, selections, mode) {
     const heroClass=hero[HERO_FIELDS.clazz];
     if(!classTalents[heroClass]){ document.getElementById('talentTable').innerHTML='<p>Нет данных о талантах для этого класса</p>'; return; }
+    
+    // Обновляем иконку дерева
+    const treeIcon = getTreeIcon();
+    if (treeIcon) {
+        document.getElementById('treeIcon').src = treeIcon;
+    }
+    
     const talents=classTalents[heroClass];
     const groups=[]; let currentGroup=[];
     for(const talent of talents){
@@ -1128,12 +1241,35 @@ function renderTalentTree(hero, selections, mode) {
                 const heroData=viewHeroes[currentIdx];
                 if(heroData){
                     const calc=calculateStatsWithSelections(heroData, currentHeroTalents, currentMode);
-                    document.getElementById('mStats').innerHTML='<span class="pill">С: '+heroData[HERO_FIELDS.power]+'</span><span class="pill">А: '+calc.attack+'</span><span class="pill">З: '+calc.defense+'</span><span class="pill">Ж: '+calc.hp+'</span>';
+                    document.getElementById('mStats').innerHTML=renderStatsHTML(heroData, calc);
                 }
                 renderTalentTree(heroData, currentHeroTalents, currentMode);
             });
         });
     }
+}
+
+function renderStatsHTML(hero, calc) {
+    const swordIcon = getSwordIcon();
+    const shieldIcon = getShieldIcon();
+    const healthIcon = getHealthIcon();
+    let html = '';
+    if (swordIcon) {
+        html += '<span class="stat-item"><img src="'+swordIcon+'" alt="Атака"> '+calc.attack+'</span>';
+    } else {
+        html += '<span class="stat-item">⚔️ '+calc.attack+'</span>';
+    }
+    if (shieldIcon) {
+        html += '<span class="stat-item"><img src="'+shieldIcon+'" alt="Защита"> '+calc.defense+'</span>';
+    } else {
+        html += '<span class="stat-item">🛡️ '+calc.defense+'</span>';
+    }
+    if (healthIcon) {
+        html += '<span class="stat-item"><img src="'+healthIcon+'" alt="Жизни"> '+calc.hp+'</span>';
+    } else {
+        html += '<span class="stat-item">❤️ '+calc.hp+'</span>';
+    }
+    return html;
 }
 
 function initDragAndDrop() {
@@ -1178,7 +1314,7 @@ function initDragAndDrop() {
 
 function openTreePanel(){ const hero=viewHeroes[currentIdx]; if(!hero) return; const panel=document.getElementById('treePanel'); if(!panel.style.left && !panel.style.top){ panel.style.left=''; panel.style.right='20px'; panel.style.top='50%'; panel.style.transform='translateY(-50%)'; } document.getElementById('treeHeroName').textContent=hero[HERO_FIELDS.name]; renderTalentTree(hero, currentHeroTalents, currentMode); panel.classList.add('show'); }
 function closeTreePanel(){ document.getElementById('treePanel').classList.remove('show'); hideTalentTooltip(); }
-function updateMainModalStats(){ const hero=viewHeroes[currentIdx]; if(!hero) return; currentMode=document.getElementById('talentModeSelect').value; let selections={}; if(currentMode==='none'){ selections={}; currentHeroTalents={}; } else if(currentMode==='attack'){ selections=getOptimalSelections(hero,'attack'); currentHeroTalents=selections; } else if(currentMode==='defense'){ selections=getOptimalSelections(hero,'defense'); currentHeroTalents=selections; } else if(currentMode==='manual'){ selections=currentHeroTalents; } const calc=calculateStatsWithSelections(hero, selections, currentMode); document.getElementById('mStats').innerHTML='<span class="pill">С: '+hero[HERO_FIELDS.power]+'</span><span class="pill">А: '+calc.attack+'</span><span class="pill">З: '+calc.defense+'</span><span class="pill">Ж: '+calc.hp+'</span>'; if(document.getElementById('treePanel').classList.contains('show')){ renderTalentTree(hero, currentHeroTalents, currentMode); } }
+function updateMainModalStats(){ const hero=viewHeroes[currentIdx]; if(!hero) return; currentMode=document.getElementById('talentModeSelect').value; let selections={}; if(currentMode==='none'){ selections={}; currentHeroTalents={}; } else if(currentMode==='attack'){ selections=getOptimalSelections(hero,'attack'); currentHeroTalents=selections; } else if(currentMode==='defense'){ selections=getOptimalSelections(hero,'defense'); currentHeroTalents=selections; } else if(currentMode==='manual'){ selections=currentHeroTalents; } const calc=calculateStatsWithSelections(hero, selections, currentMode); document.getElementById('mStats').innerHTML=renderStatsHTML(hero, calc); if(document.getElementById('treePanel').classList.contains('show')){ renderTalentTree(hero, currentHeroTalents, currentMode); } }
 function toNum(v){ let n=parseFloat(String(v).replace(',','.')); return isNaN(n)?null:n; }
 function uniq(arr){ return [...new Set(arr.filter(v=>v!==null&&v!==undefined&&String(v).trim()!==''))]; }
 function sortAlpha(a,b){ return String(a).localeCompare(String(b),'ru',{numeric:true}); }
@@ -1254,14 +1390,43 @@ function applyFilters(){
 function renderCards(heroes){
     if(!heroes.length){ document.getElementById('cards').innerHTML=''; document.getElementById('empty').style.display='block'; return; }
     document.getElementById('empty').style.display='none';
+    const starIcon = getStarIcon();
     document.getElementById('cards').innerHTML=heroes.map((r,i)=>{
         let img=fileCellToUrl(r[HERO_FIELDS.image]);
         let abilitiesFull=String(r[HERO_FIELDS.abilities]||'');
         let cleaned=abilitiesFull.replace(/^'|'$/g,'');
         let hasAbil=cleaned.trim().length>0;
-        return '<article class="card" data-idx="'+i+'" data-element="'+(r[HERO_FIELDS.element]||'')+'"><div class="thumb">'+(img?'<img src="'+img+'" alt="'+r[HERO_FIELDS.name]+'" loading="lazy" onerror="this.style.display=\'none\'">':'<div style="padding:20px;">Нет изображения</div>')+'</div><h3>'+r[HERO_FIELDS.name]+'</h3><div class="meta"><span>'+r[HERO_FIELDS.element]+'</span> • <span>'+r[HERO_FIELDS.stars]+'★</span> • <span>'+r[HERO_FIELDS.mana]+'</span></div><div class="meta"><span>'+r[HERO_FIELDS.attackType]+'</span> • <span>'+r[HERO_FIELDS.summon]+'</span> • <span>'+r[HERO_FIELDS.clazz]+'</span></div><div class="stats"><span class="pill">С: '+r[HERO_FIELDS.power]+'</span><span class="pill">А: '+r[HERO_FIELDS.attack]+'</span><span class="pill">З: '+r[HERO_FIELDS.defense]+'</span><span class="pill">Ж: '+r[HERO_FIELDS.hp]+'</span></div>'+(hasAbil?'<button class="toggle-abilities" data-idx="'+i+'">Показать способности</button><div class="card-abilities-full" id="abilities-'+i+'">'+cleaned.replace(/\n/g,'<br>')+'</div>':'')+'</article>';
+        const starsDisplay = starIcon ? 
+            '<img src="'+starIcon+'" alt="★" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"> ' + r[HERO_FIELDS.stars] :
+            r[HERO_FIELDS.stars] + '★';
+        return '<article class="card" data-idx="'+i+'" data-element="'+(r[HERO_FIELDS.element]||'')+'"><div class="thumb">'+(img?'<img src="'+img+'" alt="'+r[HERO_FIELDS.name]+'" loading="lazy" onerror="this.style.display=\'none\'">':'<div style="padding:20px;">Нет изображения</div>')+'</div><h3>'+r[HERO_FIELDS.name]+'</h3><div class="meta"><span>'+r[HERO_FIELDS.element]+'</span> • <span>'+starsDisplay+'</span> • <span>'+r[HERO_FIELDS.mana]+'</span></div><div class="meta"><span>'+r[HERO_FIELDS.attackType]+'</span> • <span>'+r[HERO_FIELDS.summon]+'</span> • <span>'+r[HERO_FIELDS.clazz]+'</span></div><div class="stats">' +
+            renderCardStats(r) +
+            '</div>'+(hasAbil?'<button class="toggle-abilities" data-idx="'+i+'">Показать способности</button><div class="card-abilities-full" id="abilities-'+i+'">'+cleaned.replace(/\n/g,'<br>')+'</div>':'')+'</article>';
     }).join('');
     document.querySelectorAll('.toggle-abilities').forEach(btn=>btn.addEventListener('click',function(e){ e.stopPropagation(); let idx=this.dataset.idx; let div=document.getElementById('abilities-'+idx); if(div.style.display==='block'){ div.style.display='none'; this.textContent='Показать способности'; } else { div.style.display='block'; this.textContent='Скрыть способности'; } }));
+}
+
+function renderCardStats(hero) {
+    const swordIcon = getSwordIcon();
+    const shieldIcon = getShieldIcon();
+    const healthIcon = getHealthIcon();
+    let html = '';
+    if (swordIcon) {
+        html += '<span class="pill"><img src="'+swordIcon+'" alt="Атака"> '+hero[HERO_FIELDS.attack]+'</span>';
+    } else {
+        html += '<span class="pill">⚔️ '+hero[HERO_FIELDS.attack]+'</span>';
+    }
+    if (shieldIcon) {
+        html += '<span class="pill"><img src="'+shieldIcon+'" alt="Защита"> '+hero[HERO_FIELDS.defense]+'</span>';
+    } else {
+        html += '<span class="pill">🛡️ '+hero[HERO_FIELDS.defense]+'</span>';
+    }
+    if (healthIcon) {
+        html += '<span class="pill"><img src="'+healthIcon+'" alt="Жизни"> '+hero[HERO_FIELDS.hp]+'</span>';
+    } else {
+        html += '<span class="pill">❤️ '+hero[HERO_FIELDS.hp]+'</span>';
+    }
+    return html;
 }
 
 function openModal(idx){
@@ -1281,12 +1446,19 @@ function fillModal(hero){
     document.getElementById('mImg').src=img||'';
     document.getElementById('mOpenImg').href=img||'#';
     document.getElementById('mName').textContent=hero[HERO_FIELDS.name]||'';
-    document.getElementById('mMeta1').innerHTML='<span>'+hero[HERO_FIELDS.element]+'</span> <span>'+hero[HERO_FIELDS.stars]+'★</span> <span>'+hero[HERO_FIELDS.mana]+'</span>';
+    
+    const starIcon = getStarIcon();
+    const starsDisplay = starIcon ?
+        '<img src="'+starIcon+'" alt="★" class="star-icon"> ' + hero[HERO_FIELDS.stars] :
+        hero[HERO_FIELDS.stars] + '★';
+    document.getElementById('mMeta1').innerHTML='<span>'+hero[HERO_FIELDS.element]+'</span> <span>'+starsDisplay+'</span> <span>'+hero[HERO_FIELDS.mana]+'</span>';
     document.getElementById('mMeta2').innerHTML='<span>'+hero[HERO_FIELDS.attackType]+'</span> <span>'+hero[HERO_FIELDS.summon]+'</span> <span>'+hero[HERO_FIELDS.clazz]+'</span>';
+    
     const container=document.getElementById('modalImageContainer');
     container.setAttribute('data-element', hero[HERO_FIELDS.element]||'');
     const calc=calculateStatsWithSelections(hero, currentHeroTalents, 'none');
-    document.getElementById('mStats').innerHTML='<span class="pill">С: '+hero[HERO_FIELDS.power]+'</span><span class="pill">А: '+calc.attack+'</span><span class="pill">З: '+calc.defense+'</span><span class="pill">Ж: '+calc.hp+'</span>';
+    document.getElementById('mStats').innerHTML=renderStatsHTML(hero, calc);
+    
     const tagsContainer=document.getElementById('modalTags');
     if(hero._tags && hero._tags.length>0){
         const tagsHtml=hero._tags.map(tag=>'<span class="tag '+getTagClass(tag)+'" data-tag="'+tag+'">#'+tag+'</span>').join('');
@@ -1316,7 +1488,7 @@ function fillModal(hero){
     document.getElementById('mPassive').textContent=String(hero[HERO_FIELDS.passive]||'—').replace(/^'|'$/g,'');
     const wrapper=document.getElementById('upgradeSectionWrapper');
     wrapper.classList.remove('show');
-    document.getElementById('upgradeToggleBtn').textContent='📈 Прокачка героя';
+    document.getElementById('upgradeToggleBtn').innerHTML = '<img id="upgradeIcon" src="'+getUpgradeIcon()+'" alt="Прокачка"> Прокачка героя';
     renderUpgradeSection(hero);
 }
 
@@ -1366,12 +1538,12 @@ const wrapper=document.getElementById('upgradeSectionWrapper');
 const isOpen=wrapper.classList.contains('show');
 if(isOpen){
 wrapper.classList.remove('show');
-this.textContent='📈 Прокачка героя';
+this.innerHTML = '<img src="'+getUpgradeIcon()+'" alt="Прокачка"> Прокачка героя';
 } else {
 const hero=viewHeroes[currentIdx];
 if(hero) renderUpgradeSection(hero);
 wrapper.classList.add('show');
-this.textContent='📈 Скрыть прокачку';
+this.innerHTML = '<img src="'+getUpgradeIcon()+'" alt="Прокачка"> Скрыть прокачку';
 }
 });
 function openFiltersPanel(){ const headerHeight=document.querySelector('header').offsetHeight; const filterPanel=document.querySelector('.filters .panel'); if(filterPanel) filterPanel.style.paddingTop=(headerHeight)+'px'; document.getElementById('filters').classList.add('show'); document.getElementById('filterOverlay').classList.add('show'); document.body.style.overflow='hidden'; }
