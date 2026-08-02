@@ -1667,7 +1667,11 @@ function getTagClass(tag) {
 }
 
 // ==================== СИСТЕМА ПРОКАЧКИ ====================
-
+function normalizeStarKey(star) {
+    // Приводим к единому формату: '5' → '5', '5★' → '5'
+    return String(star).replace(/★/g, '').trim();
+}
+  
 function fileCellToUrl(v) {
     let s = String(v || '');
     let m = s.match(/\((https?:\/\/[^)]+)\)/i);
@@ -1688,7 +1692,7 @@ function getItemImage(itemName) {
 }
 
 function getStarTargets(heroStars) {
-    const starNum = parseInt(heroStars);
+    const starNum = parseInt(normalizeStarKey(heroStars));
     const targets = [];
     if (starNum < 3) targets.push('3');
     if (starNum < 4) targets.push('4');
@@ -1697,9 +1701,16 @@ function getStarTargets(heroStars) {
 }
 
 function getMaterialsForStar(heroElement, heroStars, targetStar) {
-    const starKey = heroStars + '★';
-    const data = materialsData[starKey] || [];
-    const result = data.filter(item => {
+   const heroStarNormalized = normalizeStarKey(heroStars);
+    // Ищем в обоих источниках (4★ и 5★)
+    let allData = [];
+    if (heroStarNormalized === '4') allData = materialsData['4★'] || [];
+    else if (heroStarNormalized === '5') allData = materialsData['5★'] || [];
+    else {
+        // Если не нашли, пробуем оба
+        allData = [...(materialsData['4★'] || []), ...(materialsData['5★'] || [])];
+    }
+    const result = allData.filter(item => {
         const itemElement = String(item['Стихия'] || '').trim();
         const itemTarget = String(item['Целевая звезда'] || '').trim();
         return itemElement === heroElement && itemTarget === targetStar;
@@ -1708,20 +1719,19 @@ function getMaterialsForStar(heroElement, heroStars, targetStar) {
 }
 
 function getBooksForStar(heroStars, level) {
-    const starKey = heroStars + '★';
+  const heroStarNormalized = normalizeStarKey(heroStars);
     const result = booksData.filter(item => {
-        const itemStars = String(item['Звездность героев'] || '').trim();
-        const itemLevel = String(item['Уровень навыка'] || '').trim();
-        return itemStars === starKey && itemLevel === level;
+        const itemStars = normalizeStarKey(item['Звездность героев'] || '');
+        return itemStars === heroStarNormalized && item['Уровень навыка'] === level;
     });
     return result.length > 0 ? result[0] : null;
 }
 
 function getTokensForHero(heroStars) {
-    const starKey = heroStars + '★';
+    const heroStarNormalized = normalizeStarKey(heroStars);
     const result = tokensData.filter(item => {
-        const itemStars = String(item['Количество звезд'] || '').trim();
-        return itemStars === starKey;
+        const itemStars = normalizeStarKey(item['Количество звезд'] || '');
+        return itemStars === heroStarNormalized;
     });
     return result.length > 0 ? result[0] : null;
 }
