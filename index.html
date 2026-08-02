@@ -651,10 +651,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 <div id="modal" class="modal">
 <div class="dialog">
 <div class="modal-content" style="position:relative;">
-    <!-- Кнопки навигации справа сверху: ← → ✕ -->
-    <button id="mPrev" class="nav-btn nav-prev"><img id="leftBtnIcon" src="" alt="Назад"></button>
-    <button id="mNext" class="nav-btn nav-next"><img id="rightBtnIcon" src="" alt="Вперёд"></button>
-    <button id="mClose" class="nav-btn nav-close"><img id="closeBtnIcon" src="" alt="Закрыть"></button>
+    <!-- Кнопки навигации справа сверху: ← → ✕ (порядок слева направо) -->
+    <button id="mPrev" class="nav-btn nav-prev"><img id="leftBtnIcon" src="" alt="Назад" width="24" height="24" style="width:24px;height:24px;min-width:24px;min-height:24px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;"></button>
+    <button id="mNext" class="nav-btn nav-next"><img id="rightBtnIcon" src="" alt="Вперёд" width="24" height="24" style="width:24px;height:24px;min-width:24px;min-height:24px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;"></button>
+    <button id="mClose" class="nav-btn nav-close"><img id="closeBtnIcon" src="" alt="Закрыть" width="24" height="24" style="width:24px;height:24px;min-width:24px;min-height:24px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;"></button>
     
     <div class="image-container" id="modalImageContainer"><img id="mImg" src=""><a id="mOpenImg" class="open-img" href="#" target="_blank">Открыть изображение в новой вкладке</a></div>
     <div class="info-container">
@@ -678,7 +678,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
                 </div>
             </div>
             <button id="openTreeBtn" class="btn secondary" style="display:flex;align-items:center;gap:6px;padding:6px 12px;">
-                <img id="treeBtnIcon" src="" alt="Дерево" style="width:24px;height:24px;object-fit:contain;display:inline-block;vertical-align:middle;"> Дерево талантов
+                <img id="treeBtnIcon" src="" alt="Дерево" width="24" height="24" style="width:24px;height:24px;min-width:24px;min-height:24px;object-fit:contain;display:inline-block;vertical-align:middle;"> Дерево талантов
             </button>
         </div>
         
@@ -687,12 +687,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <h3>Пассивные способности</h3>
         <div id="mPassive" class="pre"></div>
         
-        <button id="upgradeToggleBtn" class="upgrade-toggle-btn">
-            <img id="upgradeIcon" src="" alt="Прокачка" style="width:24px;height:24px;object-fit:contain;display:inline-block;vertical-align:middle;"> Прокачка героя
+        <button id="upgradeToggleBtn" class="upgrade-toggle-btn" style="background:var(--accent-color);color:#fff;border-color:var(--accent-color);display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-weight:500;cursor:pointer;border:1px solid var(--accent-color);">
+            <img id="upgradeIcon" src="" alt="Прокачка" width="20" height="20" style="width:20px;height:20px;min-width:20px;min-height:20px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;"> Прокачка героя
         </button>
         <div id="upgradeSectionWrapper" class="upgrade-section-wrapper">
             <div id="upgradeContainer" class="upgrade-section">
-                <div class="upgrade-section-title"><img id="upgradeSectionIcon" src="" alt="Прокачка" style="width:24px;height:24px;object-fit:contain;display:inline-block;vertical-align:middle;"> Прокачка героя</div>
+                <div class="upgrade-section-title"><img id="upgradeSectionIcon" src="" alt="Прокачка" width="20" height="20" style="width:20px;height:20px;min-width:20px;min-height:20px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;"> Прокачка героя</div>
                 <div style="margin-bottom:12px;"><div style="font-size:13px; font-weight:500; margin-bottom:4px;">📦 Материалы для повышения</div><div class="upgrade-buttons" id="starButtons"></div><div class="upgrade-content" id="starContent"></div></div>
                 <div style="margin-bottom:12px;"><div style="font-size:13px; font-weight:500; margin-bottom:4px;">📚 Книги навыков</div><div class="upgrade-buttons" id="bookButtons"></div><div class="upgrade-content" id="bookContent"></div></div>
                 <div><div style="font-size:13px; font-weight:500; margin-bottom:4px;">🎯 Жетоны талантов</div><div id="talentTokensContent"></div></div>
