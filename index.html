@@ -833,16 +833,19 @@ function showTalentTokens(stars, hero, container) {
 
 function renderUpgradeSection(hero) {
     const container = document.getElementById('upgradeContainer');
-    if (!hero) {
-        container.style.display = 'none';
+    if (!hero || !container) {
+        if (container) container.style.display = 'none';
         return;
     }
     container.style.display = 'block';
     
     const upgradeIcon = getUpgradeIcon();
+    const upgradeIconEl = document.getElementById('upgradeIcon');
+    const upgradeSectionIconEl = document.querySelector('.upgrade-section-title img');
+    
     if (upgradeIcon) {
-        document.getElementById('upgradeIcon').src = upgradeIcon;
-        document.querySelector('.upgrade-section-title img').src = upgradeIcon;
+        if (upgradeIconEl) upgradeIconEl.src = upgradeIcon;
+        if (upgradeSectionIconEl) upgradeSectionIconEl.src = upgradeIcon;
     }
     
     const heroStars = String(hero['Количество звезд'] || '1').trim();
@@ -853,28 +856,30 @@ function renderUpgradeSection(hero) {
     const starButtons = document.getElementById('starButtons');
     const starContent = document.getElementById('starContent');
     
-    starButtons.innerHTML = '';
-    const starIcon = getStarIcon();
-    starTargets.forEach(target => {
-        const btn = document.createElement('button');
-        btn.className = 'upgrade-btn';
-        if (starIcon) {
-            btn.innerHTML = '<img src="'+starIcon+'" alt="★"> ' + target;
-        } else {
-            btn.innerHTML = '<span class="star">★</span> ' + target;
-        }
-        btn.dataset.target = target;
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('#starButtons .upgrade-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            showStarMaterials(heroElement, heroStars, target, starContent);
+    if (starButtons && starContent) {
+        starButtons.innerHTML = '';
+        const starIcon = getStarIcon();
+        starTargets.forEach(target => {
+            const btn = document.createElement('button');
+            btn.className = 'upgrade-btn';
+            if (starIcon) {
+                btn.innerHTML = '<img src="'+starIcon+'" alt="★"> ' + target;
+            } else {
+                btn.innerHTML = '<span class="star">★</span> ' + target;
+            }
+            btn.dataset.target = target;
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#starButtons .upgrade-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                showStarMaterials(heroElement, heroStars, target, starContent);
+            });
+            starButtons.appendChild(btn);
         });
-        starButtons.appendChild(btn);
-    });
-    const firstBtn = starButtons.querySelector('.upgrade-btn');
-    if (firstBtn) {
-        firstBtn.classList.add('active');
-        showStarMaterials(heroElement, heroStars, '2', starContent);
+        const firstBtn = starButtons.querySelector('.upgrade-btn');
+        if (firstBtn) {
+            firstBtn.classList.add('active');
+            showStarMaterials(heroElement, heroStars, '2', starContent);
+        }
     }
     
     // --- Книги навыков ---
@@ -882,28 +887,32 @@ function renderUpgradeSection(hero) {
     const bookButtons = document.getElementById('bookButtons');
     const bookContent = document.getElementById('bookContent');
     
-    bookButtons.innerHTML = '';
-    bookLevels.forEach(level => {
-        const btn = document.createElement('button');
-        btn.className = 'upgrade-btn';
-        btn.textContent = level;
-        btn.dataset.level = level;
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('#bookButtons .upgrade-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            showBookMaterials(heroStars, level, bookContent);
+    if (bookButtons && bookContent) {
+        bookButtons.innerHTML = '';
+        bookLevels.forEach(level => {
+            const btn = document.createElement('button');
+            btn.className = 'upgrade-btn';
+            btn.textContent = level;
+            btn.dataset.level = level;
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#bookButtons .upgrade-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                showBookMaterials(heroStars, level, bookContent);
+            });
+            bookButtons.appendChild(btn);
         });
-        bookButtons.appendChild(btn);
-    });
-    const firstBookBtn = bookButtons.querySelector('.upgrade-btn');
-    if (firstBookBtn) {
-        firstBookBtn.classList.add('active');
-        showBookMaterials(heroStars, '2/8', bookContent);
+        const firstBookBtn = bookButtons.querySelector('.upgrade-btn');
+        if (firstBookBtn) {
+            firstBookBtn.classList.add('active');
+            showBookMaterials(heroStars, '2/8', bookContent);
+        }
     }
     
     // --- Жетоны талантов ---
     const tokensContent = document.getElementById('talentTokensContent');
-    showTalentTokens(heroStars, hero, tokensContent);
+    if (tokensContent) {
+        showTalentTokens(heroStars, hero, tokensContent);
+    }
 }
 
 // ==================== ОСТАЛЬНОЙ КОД ====================
@@ -1485,12 +1494,12 @@ function fillModal(hero){
     document.getElementById('mPassive').textContent=String(hero[HERO_FIELDS.passive]||'—').replace(/^'|'$/g,'');
     
     const upgradeIcon = getUpgradeIcon();
-    const toggleBtn = document.getElementById('upgradeToggleBtn');
-    if (upgradeIcon) {
-        toggleBtn.innerHTML = '<img src="'+upgradeIcon+'" alt="Прокачка" style="width:20px;height:20px;vertical-align:middle;"> Прокачка героя';
-    } else {
-        toggleBtn.innerHTML = '📈 Прокачка героя';
-    }
+const toggleBtn = document.getElementById('upgradeToggleBtn');
+if (upgradeIcon && toggleBtn) {
+    toggleBtn.innerHTML = '<img src="'+upgradeIcon+'" alt="Прокачка" style="width:20px;height:20px;vertical-align:middle;"> Прокачка героя';
+} else if (toggleBtn) {
+    toggleBtn.innerHTML = '📈 Прокачка героя';
+}
     
     const wrapper=document.getElementById('upgradeSectionWrapper');
     wrapper.classList.remove('show');
