@@ -490,14 +490,79 @@ function getTagClass(tag) {
 function fileCellToUrl(v) { let s=String(v||''); let m=s.match(/\((https?:\/\/[^)]+)\)/i); if(m) return m[1]; let m2=s.match(/https?:\/\/\S+/i); return m2 ? m2[0].replace(/[),]+$/,'') : ''; }
 function getItemImage(itemName) { if(!itemName) return ''; if(itemImages[itemName]) return itemImages[itemName]; for(const [key,url] of Object.entries(itemImages)) { if(itemName.includes(key) || key.includes(itemName)) return url; } return ''; }
 function normalizeStarKey(star) { return String(star).replace(/★/g,'').trim(); }
-function getStarTargets(heroStars) { const starNum=parseInt(normalizeStarKey(heroStars)); const targets=[]; for(let i=2;i<=5;i++){ if(i>starNum) targets.push(String(i)); } return targets; }
+function getStarTargets(heroStars) {
+    // Всегда показываем все уровни 2★, 3★, 4★, 5★
+    return ['2', '3', '4', '5'];
+}
 function getMaterialsForStar(heroElement, heroStars, targetStar) { const heroStarNormalized=normalizeStarKey(heroStars); let allData=[]; if(heroStarNormalized==='4') allData=materialsData['4★']||[]; else if(heroStarNormalized==='5') allData=materialsData['5★']||[]; else allData=materialsData['4★']||[]; const result=allData.filter(item=>{ const itemElement=String(item['Стихия']||'').trim(); const itemTarget=String(item['Целевая звезда']||'').trim(); return itemElement===heroElement && itemTarget===targetStar; }); return result; }
 function getBooksForStar(heroStars, level) { const heroStarNormalized=normalizeStarKey(heroStars); let starKey=heroStarNormalized; if(parseInt(starKey)<3) starKey='3'; const result=booksData.filter(item=>{ const itemStars=normalizeStarKey(item['Звездность героев']||''); return itemStars===starKey && item['Уровень навыка']===level; }); return result.length>0?result[0]:null; }
 function getTokensForHero(heroStars) { const heroStarNormalized=normalizeStarKey(heroStars); let starKey=heroStarNormalized; if(parseInt(starKey)<3) starKey='3'; const result=tokensData.filter(item=>{ const itemStars=normalizeStarKey(item['Количество звезд']||''); return itemStars===starKey; }); return result.length>0?result[0]:null; }
 function showStarMaterials(element, stars, target, container) { const materials=getMaterialsForStar(element, stars, target); container.innerHTML=''; if(materials.length===0){ container.innerHTML='<div style="font-size:12px; opacity:0.6;">Нет данных для этого уровня</div>'; container.classList.add('show'); return; } let html=''; materials.forEach(item=>{ const itemName=item['Предмет']||''; const count=item['Количество']||0; const imgUrl=getItemImage(itemName); html+='<div class="upgrade-item">'+(imgUrl?'<img src="'+imgUrl+'" alt="'+itemName+'" loading="lazy">':'<div style="width:28px;height:28px;border-radius:4px;background:var(--secondary-color);display:flex;align-items:center;justify-content:center;font-size:14px;">📦</div>')+'<span class="name">'+itemName+'</span><span class="count">×'+count+'</span></div>'; }); container.innerHTML=html; container.classList.add('show'); }
 function showBookMaterials(stars, level, container) { const bookData=getBooksForStar(stars, level); container.innerHTML=''; if(!bookData){ container.innerHTML='<div style="font-size:12px; opacity:0.6;">Нет данных для этого уровня</div>'; container.classList.add('show'); return; } const bookTypes=['Книга_I','Книга_II','Книга_III','Книга_IV','Книга_V']; const bookNames=['Книга_I','Книга_II','Книга_III','Книга_IV','Книга_V']; let html=''; let hasData=false; bookTypes.forEach((key,idx)=>{ const count=parseInt(bookData[key])||0; if(count>0){ hasData=true; const name=bookNames[idx]; const imgUrl=getItemImage(name); const displayName=name.replace('_',' '); html+='<div class="upgrade-item">'+(imgUrl?'<img src="'+imgUrl+'" alt="'+displayName+'" loading="lazy">':'<div style="width:28px;height:28px;border-radius:4px;background:var(--secondary-color);display:flex;align-items:center;justify-content:center;font-size:14px;">📖</div>')+'<span class="name">'+displayName+'</span><span class="count">×'+count+'</span></div>'; } }); if(!hasData) html='<div style="font-size:12px; opacity:0.6;">Нет данных для этого уровня</div>'; container.innerHTML=html; container.classList.add('show'); }
 function showTalentTokens(stars, container) { const tokenData=getTokensForHero(stars); container.innerHTML=''; if(!tokenData){ container.innerHTML='<div style="font-size:12px; opacity:0.6;">Нет данных о жетонах для этой звёздности</div>'; return; } const total=tokenData['Количество жетонов']||0; let html='<div class="upgrade-total">Всего: '+total+' жетонов</div><div class="upgrade-tokens"><div class="token"><span style="font-size:13px;">🎯</span><span>Всего жетонов: <span class="count">'+total+'</span></span></div></div>'; container.innerHTML=html; }
-function renderUpgradeSection(hero) { const container=document.getElementById('upgradeContainer'); if(!hero){ container.style.display='none'; return; } container.style.display='block'; const heroStars=String(hero['Количество звезд']||'1').trim(); const heroElement=String(hero['Стихия']||'').trim(); const starTargets=getStarTargets(heroStars); const starButtons=document.getElementById('starButtons'); const starContent=document.getElementById('starContent'); starButtons.innerHTML=''; if(starTargets.length===0){ starButtons.innerHTML='<span style="font-size:12px; opacity:0.6;">Максимальная звездность</span>'; starContent.innerHTML=''; starContent.classList.remove('show'); } else { starTargets.forEach(target=>{ const btn=document.createElement('button'); btn.className='upgrade-btn'; btn.textContent=target+'★'; btn.dataset.target=target; btn.addEventListener('click',()=>{ document.querySelectorAll('#starButtons .upgrade-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); showStarMaterials(heroElement, heroStars, target, starContent); }); starButtons.appendChild(btn); }); const firstBtn=starButtons.querySelector('.upgrade-btn'); if(firstBtn){ firstBtn.classList.add('active'); showStarMaterials(heroElement, heroStars, starTargets[0], starContent); } } const bookLevels=['2/8','3/8','4/8','5/8','6/8','7/8','8/8']; const bookButtons=document.getElementById('bookButtons'); const bookContent=document.getElementById('bookContent'); bookButtons.innerHTML=''; bookLevels.forEach(level=>{ const btn=document.createElement('button'); btn.className='upgrade-btn'; btn.textContent=level; btn.dataset.level=level; btn.addEventListener('click',()=>{ document.querySelectorAll('#bookButtons .upgrade-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); showBookMaterials(heroStars, level, bookContent); }); bookButtons.appendChild(btn); }); const firstBookBtn=bookButtons.querySelector('.upgrade-btn'); if(firstBookBtn){ firstBookBtn.classList.add('active'); showBookMaterials(heroStars, '2/8', bookContent); } const tokensContent=document.getElementById('talentTokensContent'); showTalentTokens(heroStars, tokensContent); }
+function renderUpgradeSection(hero) {
+    const container = document.getElementById('upgradeContainer');
+    if (!hero) {
+        container.style.display = 'none';
+        return;
+    }
+    container.style.display = 'block';
+    
+    const heroStars = String(hero['Количество звезд'] || '1').trim();
+    const heroElement = String(hero['Стихия'] || '').trim();
+    
+    // --- Повышение звездности ---
+    const starTargets = ['2', '3', '4', '5'];
+    const starButtons = document.getElementById('starButtons');
+    const starContent = document.getElementById('starContent');
+    
+    starButtons.innerHTML = '';
+    starTargets.forEach(target => {
+        const btn = document.createElement('button');
+        btn.className = 'upgrade-btn';
+        btn.textContent = target + '★';
+        btn.dataset.target = target;
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('#starButtons .upgrade-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            showStarMaterials(heroElement, heroStars, target, starContent);
+        });
+        starButtons.appendChild(btn);
+    });
+    const firstBtn = starButtons.querySelector('.upgrade-btn');
+    if (firstBtn) {
+        firstBtn.classList.add('active');
+        showStarMaterials(heroElement, heroStars, '2', starContent);
+    }
+    
+    // --- Книги навыков ---
+    const bookLevels = ['2/8', '3/8', '4/8', '5/8', '6/8', '7/8', '8/8'];
+    const bookButtons = document.getElementById('bookButtons');
+    const bookContent = document.getElementById('bookContent');
+    
+    bookButtons.innerHTML = '';
+    bookLevels.forEach(level => {
+        const btn = document.createElement('button');
+        btn.className = 'upgrade-btn';
+        btn.textContent = level;
+        btn.dataset.level = level;
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('#bookButtons .upgrade-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            showBookMaterials(heroStars, level, bookContent);
+        });
+        bookButtons.appendChild(btn);
+    });
+    const firstBookBtn = bookButtons.querySelector('.upgrade-btn');
+    if (firstBookBtn) {
+        firstBookBtn.classList.add('active');
+        showBookMaterials(heroStars, '2/8', bookContent);
+    }
+    
+    // --- Жетоны талантов ---
+    const tokensContent = document.getElementById('talentTokensContent');
+    showTalentTokens(heroStars, tokensContent);
+}
 function initTooltip() { if(!tooltipElement){ tooltipElement=document.createElement('div'); tooltipElement.className='talent-tooltip hidden'; document.body.appendChild(tooltipElement); } }
 function showTalentTooltip(talentId, x, y) { if(!tooltipElement) initTooltip(); const desc=getTalentDescriptionById(talentId); if(desc){ tooltipElement.innerHTML=desc; tooltipElement.classList.remove('hidden'); tooltipElement.style.left=(x+15)+'px'; tooltipElement.style.top=(y-10)+'px'; } }
 function hideTalentTooltip() { if(tooltipElement) tooltipElement.classList.add('hidden'); }
