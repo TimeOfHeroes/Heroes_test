@@ -1760,7 +1760,7 @@ function showStarMaterials(element, stars, target, container) {
 }
 
 function showBookMaterials(stars, level, container) {
-    const bookData = getBooksForStar(stars, level);
+   const bookData = getBooksForStar(stars, level);
     container.innerHTML = '';
     if (!bookData) {
         container.innerHTML = '<div style="font-size:12px; opacity:0.6;">Нет данных для этого уровня</div>';
@@ -1768,7 +1768,8 @@ function showBookMaterials(stars, level, container) {
         return;
     }
     const bookTypes = ['Книга_I', 'Книга_II', 'Книга_III', 'Книга_IV', 'Книга_V'];
-    const bookNames = ['Книга I', 'Книга II', 'Книга III', 'Книга IV', 'Книга V'];
+    // Названия для отображения и поиска картинок (с подчёркиванием, как в item_images.csv)
+    const bookNames = ['Книга_I', 'Книга_II', 'Книга_III', 'Книга_IV', 'Книга_V'];
     let html = '';
     let hasData = false;
     bookTypes.forEach((key, idx) => {
@@ -1777,11 +1778,20 @@ function showBookMaterials(stars, level, container) {
             hasData = true;
             const name = bookNames[idx];
             const imgUrl = getItemImage(name);
+            // Для отображения убираем подчёркивание
+            const displayName = name.replace('_', ' ');
             html += `<div class="upgrade-item">
-                ${imgUrl ? `<img src="${imgUrl}" alt="${name}" loading="lazy">` : `<div style="width:28px;height:28px;border-radius:4px;background:var(--secondary-color);display:flex;align-items:center;justify-content:center;font-size:14px;">📖</div>`}
-                <span class="name">${name}</span>
+                ${imgUrl ? `<img src="${imgUrl}" alt="${displayName}" loading="lazy">` : `<div style="width:28px;height:28px;border-radius:4px;background:var(--secondary-color);display:flex;align-items:center;justify-content:center;font-size:14px;">📖</div>`}
+                <span class="name">${displayName}</span>
                 <span class="count">×${count}</span>
             </div>`;
+        }
+    });
+    if (!hasData) {
+        html = '<div style="font-size:12px; opacity:0.6;">Нет данных для этого уровня</div>';
+    }
+    container.innerHTML = html;
+    container.classList.add('show');
         }
     });
     if (!hasData) {
