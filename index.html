@@ -1671,45 +1671,37 @@ function normalizeStarKey(star) {
     // Приводим к единому формату: '5' → '5', '5★' → '5'
     return String(star).replace(/★/g, '').trim();
 }
-  
-function fileCellToUrl(v) {
-    let s = String(v || '');
-    let m = s.match(/\((https?:\/\/[^)]+)\)/i);
-    if (m) return m[1];
-    let m2 = s.match(/https?:\/\/\S+/i);
-    return m2 ? m2[0].replace(/[),]+$/, '') : '';
-}
-
-function getItemImage(itemName) {
-    if (!itemName) return '';
-    if (itemImages[itemName]) return itemImages[itemName];
-    for (const [key, url] of Object.entries(itemImages)) {
-        if (itemName.includes(key) || key.includes(itemName)) {
-            return url;
-        }
-    }
-    return '';
-}
 
 function getStarTargets(heroStars) {
+    // Для любого героя показываем все цели: 2★, 3★, 4★, 5★
+    // (в зависимости от текущей звёздности)
     const starNum = parseInt(normalizeStarKey(heroStars));
     const targets = [];
-    if (starNum < 3) targets.push('3');
-    if (starNum < 4) targets.push('4');
-    if (starNum < 5) targets.push('5');
+    // Всегда показываем все уровни, до которых можно прокачаться
+    // Если герой 1★ → можно прокачать до 2★, 3★, 4★, 5★
+    // Если герой 2★ → можно прокачать до 3★, 4★, 5★
+    // и т.д.
+    for (let i = 2; i <= 5; i++) {
+        if (i > starNum) {
+            targets.push(String(i));
+        }
+    }
     return targets;
 }
 
 function getMaterialsForStar(heroElement, heroStars, targetStar) {
-   const heroStarNormalized = normalizeStarKey(heroStars);
-    // Ищем в обоих источниках (4★ и 5★)
+    // heroStars — текущая звёздность героя (например, '4')
+    // targetStar — целевая звёздность (например, '5')
+    // Ищем материалы в зависимости от ТЕКУЩЕЙ звёздности героя
+    const heroStarNormalized = normalizeStarKey(heroStars);
     let allData = [];
     if (heroStarNormalized === '4') allData = materialsData['4★'] || [];
     else if (heroStarNormalized === '5') allData = materialsData['5★'] || [];
     else {
-        // Если не нашли, пробуем оба
-        allData = [...(materialsData['4★'] || []), ...(materialsData['5★'] || [])];
+        // Для 1★, 2★, 3★ используем материалы 4★ (или можно добавить отдельную таблицу)
+        allData = materialsData['4★'] || [];
     }
+    
     const result = allData.filter(item => {
         const itemElement = String(item['Стихия'] || '').trim();
         const itemTarget = String(item['Целевая звезда'] || '').trim();
@@ -1719,19 +1711,29 @@ function getMaterialsForStar(heroElement, heroStars, targetStar) {
 }
 
 function getBooksForStar(heroStars, level) {
-  const heroStarNormalized = normalizeStarKey(heroStars);
+    const heroStarNormalized = normalizeStarKey(heroStars);
+    // Для книг используем звёздность героя (3★, 4★, 5★)
+    let starKey = heroStarNormalized;
+    // Если герой 1★ или 2★, используем книги для 3★
+    if (parseInt(starKey) < 3) starKey = '3';
+    
     const result = booksData.filter(item => {
         const itemStars = normalizeStarKey(item['Звездность героев'] || '');
-        return itemStars === heroStarNormalized && item['Уровень навыка'] === level;
+        return itemStars === starKey && item['Уровень навыка'] === level;
     });
     return result.length > 0 ? result[0] : null;
 }
 
 function getTokensForHero(heroStars) {
     const heroStarNormalized = normalizeStarKey(heroStars);
+    // Для жетонов используем звёздность героя
+    let starKey = heroStarNormalized;
+    // Если герой 1★ или 2★, используем жетоны для 3★
+    if (parseInt(starKey) < 3) starKey = '3';
+    
     const result = tokensData.filter(item => {
         const itemStars = normalizeStarKey(item['Количество звезд'] || '');
-        return itemStars === heroStarNormalized;
+        return itemStars === starKey;
     });
     return result.length > 0 ? result[0] : null;
 }
@@ -1760,7 +1762,7 @@ function showStarMaterials(element, stars, target, container) {
 }
 
 function showBookMaterials(stars, level, container) {
-   const bookData = getBooksForStar(stars, level);
+    const bookData = getBooksForStar(stars, level);
     container.innerHTML = '';
     if (!bookData) {
         container.innerHTML = '<div style="font-size:12px; opacity:0.6;">Нет данных для этого уровня</div>';
@@ -1768,7 +1770,6 @@ function showBookMaterials(stars, level, container) {
         return;
     }
     const bookTypes = ['Книга_I', 'Книга_II', 'Книга_III', 'Книга_IV', 'Книга_V'];
-    // Названия для отображения и поиска картинок (с подчёркиванием, как в item_images.csv)
     const bookNames = ['Книга_I', 'Книга_II', 'Книга_III', 'Книга_IV', 'Книга_V'];
     let html = '';
     let hasData = false;
@@ -1778,20 +1779,12 @@ function showBookMaterials(stars, level, container) {
             hasData = true;
             const name = bookNames[idx];
             const imgUrl = getItemImage(name);
-            // Для отображения убираем подчёркивание
             const displayName = name.replace('_', ' ');
             html += `<div class="upgrade-item">
                 ${imgUrl ? `<img src="${imgUrl}" alt="${displayName}" loading="lazy">` : `<div style="width:28px;height:28px;border-radius:4px;background:var(--secondary-color);display:flex;align-items:center;justify-content:center;font-size:14px;">📖</div>`}
                 <span class="name">${displayName}</span>
                 <span class="count">×${count}</span>
             </div>`;
-        }
-    });
-    if (!hasData) {
-        html = '<div style="font-size:12px; opacity:0.6;">Нет данных для этого уровня</div>';
-    }
-    container.innerHTML = html;
-    container.classList.add('show');
         }
     });
     if (!hasData) {
@@ -1826,7 +1819,7 @@ function renderUpgradeSection(hero) {
     }
     container.style.display = 'block';
     
-    const heroStars = String(hero['Количество звезд'] || '4').trim();
+    const heroStars = String(hero['Количество звезд'] || '1').trim();
     const heroElement = String(hero['Стихия'] || '').trim();
     
     // --- Повышение звездности ---
