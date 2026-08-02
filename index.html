@@ -242,7 +242,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .tag-element { background:var(--tag-element); }
 .tag-default { background:var(--tag-default); }
 
-/* Стили для иконок характеристик */
 .stat-icon {
     display: inline-flex;
     align-items: center;
@@ -253,6 +252,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .stat-icon img {
     width: var(--stat-icon-size);
     height: var(--stat-icon-size);
+    object-fit: contain;
+    vertical-align: middle;
+}
+.stats .pill img {
+    width: 20px;
+    height: 20px;
     object-fit: contain;
     vertical-align: middle;
 }
@@ -275,7 +280,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .meta .star-icon { display:inline-block; width:14px; height:14px; vertical-align:middle; }
 .stats { margin:0 12px 8px; display:flex; gap:8px; flex-wrap:wrap; justify-content:center; font-weight:600; font-size:13px; }
 .stats .pill { font-size:12px; padding:3px 10px; display:flex; align-items:center; gap:4px; }
-.stats .pill img { width:16px; height:16px; object-fit:contain; }
+.stats .pill img { width:20px; height:20px; object-fit:contain; vertical-align:middle; }
 .pill { border-radius:999px; padding:3px 8px; font-size:11px; white-space:nowrap; font-weight:500; box-shadow:0 1px 3px rgba(0,0,0,0.05); }
 .card[data-element="Синий"] .pill { background-color:var(--pill-blue); }
 .card[data-element="Зеленый"] .pill { background-color:var(--pill-green); }
@@ -285,10 +290,55 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .card:not([data-element]) .pill { background-color:var(--pill-default); }
 .toggle-abilities { background:none; border:none; font-size:10px; cursor:pointer; padding:2px 6px; margin:6px auto 4px; text-decoration:underline; display:block; color:var(--text-color); }
 .card-abilities-full { display:none; font-size:10px; padding:0 12px 6px; line-height:1.4; border-top:1px solid rgba(0,0,0,0.08); margin-top:4px; padding-top:6px; }
+
+/* --- Модальное окно --- */
 .modal { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center; padding:20px; z-index:2000; }
 .modal.show { display:flex; }
 .dialog { position:relative; background:var(--card-bg); max-width:1200px; width:min(1200px, 95vw); max-height:90vh; overflow:hidden; border-radius:16px; display:flex; flex-direction:column; box-shadow:0 20px 40px rgba(0,0,0,0.3); }
 .dialog .modal-content { display:grid; grid-template-columns:320px 1fr; gap:20px; padding:20px; overflow-y:auto; max-height:calc(90vh - 60px); }
+
+/* Группа навигации — справа сверху */
+.nav-group {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    gap: 6px;
+    z-index: 10;
+    background: rgba(0,0,0,0.5);
+    padding: 6px 8px;
+    border-radius: 30px;
+    backdrop-filter: blur(8px);
+}
+.nav-group .nav-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    border-radius: 50%;
+    padding: 0;
+}
+.nav-group .nav-btn:hover {
+    background: rgba(255,255,255,0.2);
+    transform: scale(1.05);
+}
+.nav-group .nav-btn img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+.nav-group .nav-btn.close-btn img {
+    width: 24px;
+    height: 24px;
+}
+
 .image-container { background:var(--element-unknown); border-radius:12px; padding:12px; transition:background 0.3s; }
 .image-container[data-element="Синий"] { background:var(--element-blue); }
 .image-container[data-element="Зеленый"] { background:var(--element-green); }
@@ -303,39 +353,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .dialog .mStats .stat-item { display:flex; align-items:center; gap:6px; font-size:14px; font-weight:600; padding:4px 10px; border-radius:999px; background:var(--secondary-color); }
 .dialog .mStats .stat-item img { width:20px; height:20px; object-fit:contain; }
 .pre { white-space:pre-line; background:var(--secondary-color); border:1px solid var(--border-color); border-radius:10px; padding:12px; font-size:14px; overflow-wrap:break-word; line-height:1.5; margin:6px 0; }
-.close { position:absolute; top:12px; right:12px; border:none; background:rgba(0,0,0,.7); color:#fff; font-size:24px; line-height:1; width:40px; height:40px; border-radius:50%; cursor:pointer; z-index:10; display:flex; align-items:center; justify-content:center; }
-.close:hover { background:rgba(0,0,0,.9); transform:scale(1.05); }
-.nav { position:absolute; top:50%; transform:translateY(-50%); border:none; background:rgba(0,0,0,.7); color:#fff; font-size:28px; width:44px; height:44px; border-radius:50%; cursor:pointer; z-index:10; display:flex; align-items:center; justify-content:center; }
-.nav:hover { background:rgba(0,0,0,.9); transform:translateY(-50%) scale(1.05); }
-.nav.prev { left:12px; }
-.nav.next { right:12px; }
 .open-img { margin-top:8px; display:inline-block; font-size:13px; color:var(--primary-color); text-decoration:none; }
 .talent-mode-selector { margin:12px 0; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
 .talent-mode-selector label { font-weight:500; font-size:14px; }
-.talent-mode-selector select { padding:6px 10px; border-radius:8px; border:1px solid var(--border-color); background:var(--card-bg); color:var(--text-color); cursor:pointer; font-size:13px; flex:1; }
+.select-wrapper { position:relative; display:inline-block; flex:1; min-width:200px; max-width:300px; }
+.select-wrapper select { width:100%; padding:6px 12px; font-size:13px; border:1px solid var(--border-color); border-radius:8px; background:var(--card-bg); color:var(--text-color); cursor:pointer; appearance:none; -webkit-appearance:none; -moz-appearance:none; }
+.select-wrapper select:focus { outline:none; border-color:var(--accent-color); }
+.select-wrapper .arrow { position:absolute; right:0; top:0; bottom:0; width:32px; background:var(--accent-color); border-radius:0 8px 8px 0; display:flex; align-items:center; justify-content:center; pointer-events:none; }
+.select-wrapper .arrow svg { width:16px; height:16px; fill:white; }
 .talent-mode-selector .btn { padding:6px 10px; white-space:nowrap; font-size:13px; }
-
-/* Стили для выпадающего списка талантов */
-.talent-mode-selector select {
-    appearance: none;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M7 10l5 5 5-5z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-    background-size: 18px 18px;
-    padding-right: 36px;
-    background-color: var(--accent-color);
-    color: #fff;
-    border-color: var(--accent-color);
-    min-width: 200px;
-}
-.talent-mode-selector select option {
-    background: var(--card-bg);
-    color: var(--text-color);
-}
-.talent-mode-selector select:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
-}
 
 /* --- Стили для блока прокачки --- */
 .upgrade-toggle-btn {
@@ -414,6 +440,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .upgrade-btn .star {
     color: #ffd700;
+}
+.upgrade-btn img {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    vertical-align: middle;
 }
 .upgrade-btn:hover {
     background: var(--accent-color);
@@ -597,43 +629,50 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 </div>
 <div id="modal" class="modal">
 <div class="dialog">
-<button id="mClose" class="close">×</button>
-<button id="mPrev" class="nav prev">‹</button>
-<button id="mNext" class="nav next">›</button>
+<div class="nav-group">
+    <button id="mPrev" class="nav-btn"><img id="leftBtnIcon" src="" alt="Назад"></button>
+    <button id="mNext" class="nav-btn"><img id="rightBtnIcon" src="" alt="Вперёд"></button>
+    <button id="mClose" class="nav-btn close-btn"><img id="closeBtnIcon" src="" alt="Закрыть"></button>
+</div>
 <div class="modal-content">
-<div class="image-container" id="modalImageContainer"><img id="mImg" src=""><a id="mOpenImg" class="open-img" href="#" target="_blank">Открыть изображение в новой вкладке</a></div>
-<div class="info-container">
-<h2 id="mName"></h2>
-<div id="mMeta1" class="meta"></div>
-<div id="mMeta2" class="meta"></div>
-<div id="mStats" class="mStats"></div>
-<div id="modalTags" class="modal-tags"></div>
-<div class="talent-mode-selector">
-<label>Режим талантов:</label>
-<select id="talentModeSelect">
-<option value="none">Без талантов</option>
-<option value="manual">Ручной выбор</option>
-<option value="attack">Таланты в атаку (макс)</option>
-<option value="defense">Таланты в защиту (макс)</option>
-</select>
-<button id="openTreeBtn" class="btn secondary">🌳 Дерево талантов</button>
-</div>
-<h3>Способности</h3>
-<div id="mAbilities" class="pre"></div>
-<h3>Пассивные способности</h3>
-<div id="mPassive" class="pre"></div>
-<button id="upgradeToggleBtn" class="upgrade-toggle-btn">
-<img id="upgradeIcon" src="" alt="Прокачка"> Прокачка героя
-</button>
-<div id="upgradeSectionWrapper" class="upgrade-section-wrapper">
-<div id="upgradeContainer" class="upgrade-section">
-<div class="upgrade-section-title"><img id="upgradeSectionIcon" src="" alt="Прокачка"> Прокачка героя</div>
-<div style="margin-bottom:12px;"><div style="font-size:13px; font-weight:500; margin-bottom:4px;">📦 Материалы для повышения</div><div class="upgrade-buttons" id="starButtons"></div><div class="upgrade-content" id="starContent"></div></div>
-<div style="margin-bottom:12px;"><div style="font-size:13px; font-weight:500; margin-bottom:4px;">📚 Книги навыков</div><div class="upgrade-buttons" id="bookButtons"></div><div class="upgrade-content" id="bookContent"></div></div>
-<div><div style="font-size:13px; font-weight:500; margin-bottom:4px;">🎯 Жетоны талантов</div><div id="talentTokensContent"></div></div>
-</div>
-</div>
-</div>
+  <div class="image-container" id="modalImageContainer"><img id="mImg" src=""><a id="mOpenImg" class="open-img" href="#" target="_blank">Открыть изображение в новой вкладке</a></div>
+  <div class="info-container">
+    <h2 id="mName"></h2>
+    <div id="mMeta1" class="meta"></div>
+    <div id="mMeta2" class="meta"></div>
+    <div id="mStats" class="mStats"></div>
+    <div id="modalTags" class="modal-tags"></div>
+    <div class="talent-mode-selector">
+      <label>Режим талантов:</label>
+      <div class="select-wrapper">
+        <select id="talentModeSelect">
+          <option value="none">Без талантов</option>
+          <option value="manual">Ручной выбор</option>
+          <option value="attack">Таланты в атаку (макс)</option>
+          <option value="defense">Таланты в защиту (макс)</option>
+        </select>
+        <div class="arrow">
+          <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+      </div>
+      <button id="openTreeBtn" class="btn secondary">🌳 Дерево талантов</button>
+    </div>
+    <h3>Способности</h3>
+    <div id="mAbilities" class="pre"></div>
+    <h3>Пассивные способности</h3>
+    <div id="mPassive" class="pre"></div>
+    <button id="upgradeToggleBtn" class="upgrade-toggle-btn">
+      <img id="upgradeIcon" src="" alt="Прокачка"> Прокачка героя
+    </button>
+    <div id="upgradeSectionWrapper" class="upgrade-section-wrapper">
+      <div id="upgradeContainer" class="upgrade-section">
+        <div class="upgrade-section-title"><img id="upgradeSectionIcon" src="" alt="Прокачка"> Прокачка героя</div>
+        <div style="margin-bottom:12px;"><div style="font-size:13px; font-weight:500; margin-bottom:4px;">📦 Материалы для повышения</div><div class="upgrade-buttons" id="starButtons"></div><div class="upgrade-content" id="starContent"></div></div>
+        <div style="margin-bottom:12px;"><div style="font-size:13px; font-weight:500; margin-bottom:4px;">📚 Книги навыков</div><div class="upgrade-buttons" id="bookButtons"></div><div class="upgrade-content" id="bookContent"></div></div>
+        <div><div style="font-size:13px; font-weight:500; margin-bottom:4px;">🎯 Жетоны талантов</div><div id="talentTokensContent"></div></div>
+      </div>
+    </div>
+  </div>
 </div>
 </div>
 </div>
@@ -652,7 +691,6 @@ const BOOKS_URL = 'books.csv?ts=' + Date.now();
 const TOKENS_URL = 'number_of_talents.csv?ts=' + Date.now();
 const IMAGES_URL = 'item_images.csv?ts=' + Date.now();
 
-// Названия иконок в БД
 const ICON_NAMES = {
     star: 'Star_icon',
     sword: 'Sword_icon',
@@ -841,7 +879,6 @@ function renderUpgradeSection(hero) {
     }
     container.style.display = 'block';
     
-    // Обновляем иконку прокачки
     const upgradeIcon = getUpgradeIcon();
     if (upgradeIcon) {
         document.getElementById('upgradeIcon').src = upgradeIcon;
@@ -862,7 +899,7 @@ function renderUpgradeSection(hero) {
         const btn = document.createElement('button');
         btn.className = 'upgrade-btn';
         if (starIcon) {
-            btn.innerHTML = '<img src="'+starIcon+'" alt="★" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"> ' + target;
+            btn.innerHTML = '<img src="'+starIcon+'" alt="★"> ' + target;
         } else {
             btn.innerHTML = '<span class="star">★</span> ' + target;
         }
@@ -1127,10 +1164,10 @@ function renderTalentTree(hero, selections, mode) {
     const heroClass=hero[HERO_FIELDS.clazz];
     if(!classTalents[heroClass]){ document.getElementById('talentTable').innerHTML='<p>Нет данных о талантах для этого класса</p>'; return; }
     
-    // Обновляем иконку дерева
     const treeIcon = getTreeIcon();
     if (treeIcon) {
         document.getElementById('treeIcon').src = treeIcon;
+        document.getElementById('treeIcon').style.display = 'inline';
     }
     
     const talents=classTalents[heroClass];
@@ -1272,6 +1309,29 @@ function renderStatsHTML(hero, calc) {
     return html;
 }
 
+function renderCardStats(hero) {
+    const swordIcon = getSwordIcon();
+    const shieldIcon = getShieldIcon();
+    const healthIcon = getHealthIcon();
+    let html = '';
+    if (swordIcon) {
+        html += '<span class="pill"><img src="'+swordIcon+'" alt="Атака"> '+hero[HERO_FIELDS.attack]+'</span>';
+    } else {
+        html += '<span class="pill">⚔️ '+hero[HERO_FIELDS.attack]+'</span>';
+    }
+    if (shieldIcon) {
+        html += '<span class="pill"><img src="'+shieldIcon+'" alt="Защита"> '+hero[HERO_FIELDS.defense]+'</span>';
+    } else {
+        html += '<span class="pill">🛡️ '+hero[HERO_FIELDS.defense]+'</span>';
+    }
+    if (healthIcon) {
+        html += '<span class="pill"><img src="'+healthIcon+'" alt="Жизни"> '+hero[HERO_FIELDS.hp]+'</span>';
+    } else {
+        html += '<span class="pill">❤️ '+hero[HERO_FIELDS.hp]+'</span>';
+    }
+    return html;
+}
+
 function initDragAndDrop() {
     const panel=document.getElementById('treePanel');
     const header=document.getElementById('treeHeader');
@@ -1406,29 +1466,6 @@ function renderCards(heroes){
     document.querySelectorAll('.toggle-abilities').forEach(btn=>btn.addEventListener('click',function(e){ e.stopPropagation(); let idx=this.dataset.idx; let div=document.getElementById('abilities-'+idx); if(div.style.display==='block'){ div.style.display='none'; this.textContent='Показать способности'; } else { div.style.display='block'; this.textContent='Скрыть способности'; } }));
 }
 
-function renderCardStats(hero) {
-    const swordIcon = getSwordIcon();
-    const shieldIcon = getShieldIcon();
-    const healthIcon = getHealthIcon();
-    let html = '';
-    if (swordIcon) {
-        html += '<span class="pill"><img src="'+swordIcon+'" alt="Атака"> '+hero[HERO_FIELDS.attack]+'</span>';
-    } else {
-        html += '<span class="pill">⚔️ '+hero[HERO_FIELDS.attack]+'</span>';
-    }
-    if (shieldIcon) {
-        html += '<span class="pill"><img src="'+shieldIcon+'" alt="Защита"> '+hero[HERO_FIELDS.defense]+'</span>';
-    } else {
-        html += '<span class="pill">🛡️ '+hero[HERO_FIELDS.defense]+'</span>';
-    }
-    if (healthIcon) {
-        html += '<span class="pill"><img src="'+healthIcon+'" alt="Жизни"> '+hero[HERO_FIELDS.hp]+'</span>';
-    } else {
-        html += '<span class="pill">❤️ '+hero[HERO_FIELDS.hp]+'</span>';
-    }
-    return html;
-}
-
 function openModal(idx){
     if(!viewHeroes.length) return;
     currentIdx=idx;
@@ -1446,6 +1483,15 @@ function fillModal(hero){
     document.getElementById('mImg').src=img||'';
     document.getElementById('mOpenImg').href=img||'#';
     document.getElementById('mName').textContent=hero[HERO_FIELDS.name]||'';
+    
+    // Устанавливаем иконки навигации
+    const leftIcon = getItemImage('Left_button');
+    const rightIcon = getItemImage('Right_button');
+    const closeIcon = getItemImage('Close_button');
+    
+    if (leftIcon) document.getElementById('leftBtnIcon').src = leftIcon;
+    if (rightIcon) document.getElementById('rightBtnIcon').src = rightIcon;
+    if (closeIcon) document.getElementById('closeBtnIcon').src = closeIcon;
     
     const starIcon = getStarIcon();
     const starsDisplay = starIcon ?
@@ -1486,9 +1532,17 @@ function fillModal(hero){
     } else { tagsContainer.innerHTML=''; }
     document.getElementById('mAbilities').textContent=String(hero[HERO_FIELDS.abilities]||'—').replace(/^'|'$/g,'');
     document.getElementById('mPassive').textContent=String(hero[HERO_FIELDS.passive]||'—').replace(/^'|'$/g,'');
+    
+    const upgradeIcon = getUpgradeIcon();
+    const toggleBtn = document.getElementById('upgradeToggleBtn');
+    if (upgradeIcon) {
+        toggleBtn.innerHTML = '<img src="'+upgradeIcon+'" alt="Прокачка" style="width:20px;height:20px;vertical-align:middle;"> Прокачка героя';
+    } else {
+        toggleBtn.innerHTML = '📈 Прокачка героя';
+    }
+    
     const wrapper=document.getElementById('upgradeSectionWrapper');
     wrapper.classList.remove('show');
-    document.getElementById('upgradeToggleBtn').innerHTML = '<img id="upgradeIcon" src="'+getUpgradeIcon()+'" alt="Прокачка"> Прокачка героя';
     renderUpgradeSection(hero);
 }
 
@@ -1536,14 +1590,23 @@ applyFilters();
 document.getElementById('upgradeToggleBtn').addEventListener('click', function(){
 const wrapper=document.getElementById('upgradeSectionWrapper');
 const isOpen=wrapper.classList.contains('show');
+const upgradeIcon = getUpgradeIcon();
 if(isOpen){
 wrapper.classList.remove('show');
-this.innerHTML = '<img src="'+getUpgradeIcon()+'" alt="Прокачка"> Прокачка героя';
+if (upgradeIcon) {
+    this.innerHTML = '<img src="'+upgradeIcon+'" alt="Прокачка" style="width:20px;height:20px;vertical-align:middle;"> Прокачка героя';
+} else {
+    this.innerHTML = '📈 Прокачка героя';
+}
 } else {
 const hero=viewHeroes[currentIdx];
 if(hero) renderUpgradeSection(hero);
 wrapper.classList.add('show');
-this.innerHTML = '<img src="'+getUpgradeIcon()+'" alt="Прокачка"> Скрыть прокачку';
+if (upgradeIcon) {
+    this.innerHTML = '<img src="'+upgradeIcon+'" alt="Прокачка" style="width:20px;height:20px;vertical-align:middle;"> Скрыть прокачку';
+} else {
+    this.innerHTML = '📈 Скрыть прокачку';
+}
 }
 });
 function openFiltersPanel(){ const headerHeight=document.querySelector('header').offsetHeight; const filterPanel=document.querySelector('.filters .panel'); if(filterPanel) filterPanel.style.paddingTop=(headerHeight)+'px'; document.getElementById('filters').classList.add('show'); document.getElementById('filterOverlay').classList.add('show'); document.body.style.overflow='hidden'; }
