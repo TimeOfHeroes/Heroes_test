@@ -295,9 +295,17 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .modal { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center; padding:20px; z-index:2000; }
 .modal.show { display:flex; }
 .dialog { position:relative; background:var(--card-bg); max-width:1200px; width:min(1200px, 95vw); max-height:90vh; overflow:hidden; border-radius:16px; display:flex; flex-direction:column; box-shadow:0 20px 40px rgba(0,0,0,0.3); }
-.dialog .modal-content { display:grid; grid-template-columns:320px 1fr; gap:20px; padding:20px; overflow-y:auto; max-height:calc(90vh - 60px); }
+.dialog .modal-content { 
+    position:relative;
+    display:grid; 
+    grid-template-columns:320px 1fr; 
+    gap:20px; 
+    padding:20px; 
+    overflow-y:auto; 
+    max-height:calc(90vh - 60px); 
+}
 
-/* Группа навигации — справа сверху */
+/* Группа навигации — внутри modal-content, справа сверху */
 .nav-group {
     position: absolute;
     top: 12px;
@@ -629,12 +637,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 </div>
 <div id="modal" class="modal">
 <div class="dialog">
+<div class="modal-content">
 <div class="nav-group">
     <button id="mPrev" class="nav-btn"><img id="leftBtnIcon" src="" alt="Назад"></button>
     <button id="mNext" class="nav-btn"><img id="rightBtnIcon" src="" alt="Вперёд"></button>
     <button id="mClose" class="nav-btn close-btn"><img id="closeBtnIcon" src="" alt="Закрыть"></button>
 </div>
-<div class="modal-content">
   <div class="image-container" id="modalImageContainer"><img id="mImg" src=""><a id="mOpenImg" class="open-img" href="#" target="_blank">Открыть изображение в новой вкладке</a></div>
   <div class="info-container">
     <h2 id="mName"></h2>
