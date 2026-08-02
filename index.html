@@ -292,29 +292,149 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .talent-mode-selector label { font-weight:500; font-size:14px; }
 .talent-mode-selector select { padding:6px 10px; border-radius:8px; border:1px solid var(--border-color); background:var(--card-bg); color:var(--text-color); cursor:pointer; font-size:13px; flex:1; }
 .talent-mode-selector .btn { padding:6px 10px; white-space:nowrap; font-size:13px; }
-.upgrade-toggle-btn { display:inline-block; padding:6px 14px; font-size:13px; border:1px solid var(--border-color); border-radius:8px; background:var(--card-bg); color:var(--text-color); cursor:pointer; transition:all 0.2s; font-weight:500; margin:6px 0 10px; }
-.upgrade-toggle-btn:hover { background:var(--accent-color); color:#fff; border-color:var(--accent-color); }
-.upgrade-toggle-btn.active { background:var(--accent-color); color:#fff; border-color:var(--accent-color); }
-.upgrade-section-wrapper { display:none; margin-top:8px; }
-.upgrade-section-wrapper.show { display:block; }
-.upgrade-section { padding:12px 14px; background:var(--secondary-color); border-radius:10px; border:1px solid var(--border-color); }
-.upgrade-section-title { font-size:15px; font-weight:600; margin-bottom:8px; display:flex; align-items:center; gap:8px; color:var(--text-color); }
-.upgrade-buttons { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
-.upgrade-btn { padding:4px 12px; font-size:12px; border:1px solid var(--border-color); border-radius:6px; background:var(--card-bg); color:var(--text-color); cursor:pointer; transition:all 0.15s; font-weight:500; }
-.upgrade-btn:hover { background:var(--accent-color); color:#fff; }
-.upgrade-btn.active { background:var(--accent-color); color:#fff; border-color:var(--accent-color); }
-.upgrade-content { display:none; padding:10px 12px; background:var(--card-bg); border-radius:8px; border:1px solid var(--border-color); }
-.upgrade-content.show { display:block; }
-.upgrade-item { display:flex; align-items:center; gap:10px; padding:4px 0; font-size:13px; border-bottom:1px solid rgba(0,0,0,0.05); }
-.upgrade-item:last-child { border-bottom:none; }
-.upgrade-item img { width:28px; height:28px; object-fit:contain; border-radius:4px; }
-.upgrade-item .name { flex:1; }
-.upgrade-item .count { font-weight:600; color:var(--primary-color); }
-.upgrade-tokens { display:flex; flex-wrap:wrap; gap:8px; padding:4px 0; }
-.upgrade-tokens .token { display:flex; align-items:center; gap:6px; font-size:13px; background:var(--secondary-color); padding:4px 10px 4px 6px; border-radius:16px; }
-.upgrade-tokens .token img { width:24px; height:24px; object-fit:contain; border-radius:50%; }
-.upgrade-tokens .token .count { font-weight:600; color:var(--primary-color); }
-.upgrade-total { font-weight:600; font-size:15px; margin-bottom:6px; }
+
+/* --- Стили для блока прокачки --- */
+.upgrade-toggle-btn {
+    display: inline-block;
+    padding: 6px 14px;
+    font-size: 13px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+    margin: 6px 0 10px;
+}
+.upgrade-toggle-btn:hover {
+    background: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+}
+.upgrade-toggle-btn.active {
+    background: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+}
+.upgrade-section-wrapper {
+    display: none;
+    margin-top: 8px;
+}
+.upgrade-section-wrapper.show {
+    display: block;
+}
+.upgrade-section {
+    padding: 12px 14px;
+    background: var(--secondary-color);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+.upgrade-section-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-color);
+}
+.upgrade-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+.upgrade-btn {
+    padding: 4px 12px;
+    font-size: 12px;
+    border: 2px solid var(--accent-color);
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-weight: 600;
+}
+.upgrade-btn .star {
+    color: #ffd700;
+}
+.upgrade-btn:hover {
+    background: var(--accent-color);
+    color: #fff;
+}
+.upgrade-btn:hover .star {
+    color: #fff;
+}
+.upgrade-btn.active {
+    background: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+}
+.upgrade-btn.active .star {
+    color: #fff;
+}
+.upgrade-content {
+    display: none;
+    padding: 10px 12px;
+    background: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+.upgrade-content.show {
+    display: block;
+}
+.upgrade-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 0;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.upgrade-item:last-child {
+    border-bottom: none;
+}
+.upgrade-item img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+.upgrade-item .name {
+    flex: 1;
+}
+.upgrade-item .count {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+.upgrade-tokens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 4px 0;
+}
+.upgrade-tokens .token {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    background: var(--secondary-color);
+    padding: 4px 10px 4px 6px;
+    border-radius: 16px;
+}
+.upgrade-tokens .token img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+.upgrade-tokens .token .count {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+/* --- Конец стилей прокачки --- */
+
 .tree-panel { position:fixed; top:50%; right:20px; transform:translateY(-50%); width:420px; max-width:calc(100vw - 40px); background:var(--card-bg); border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.3); z-index:2100; display:none; flex-direction:column; overflow:hidden; border:1px solid var(--border-color); cursor:default; }
 .tree-panel.show { display:flex; }
 .tree-panel.dragging { opacity:0.9; cursor:grabbing; }
@@ -447,7 +567,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 <div id="upgradeSectionWrapper" class="upgrade-section-wrapper">
 <div id="upgradeContainer" class="upgrade-section">
 <div class="upgrade-section-title">📈 Прокачка героя</div>
-<div style="margin-bottom:12px;"><div style="font-size:13px; font-weight:500; margin-bottom:4px;">⭐ Повышение звездности</div><div class="upgrade-buttons" id="starButtons"></div><div class="upgrade-content" id="starContent"></div></div>
+<div style="margin-bottom:12px;"><div style="font-size:13px; font-weight:500; margin-bottom:4px;">📦 Материалы для повышения</div><div class="upgrade-buttons" id="starButtons"></div><div class="upgrade-content" id="starContent"></div></div>
 <div style="margin-bottom:12px;"><div style="font-size:13px; font-weight:500; margin-bottom:4px;">📚 Книги навыков</div><div class="upgrade-buttons" id="bookButtons"></div><div class="upgrade-content" id="bookContent"></div></div>
 <div><div style="font-size:13px; font-weight:500; margin-bottom:4px;">🎯 Жетоны талантов</div><div id="talentTokensContent"></div></div>
 </div>
@@ -483,6 +603,7 @@ let itemImages = {};
 let isDragging = false;
 let dragStartX = 0, dragStartY = 0;
 let tooltipElement = null;
+
 function getTagClass(tag) {
     const tagMap = { 'урон':'tag-damage', 'лечение':'tag-heal', 'щит':'tag-shield', 'ослабление':'tag-debuff', 'усиление':'tag-buff', 'доты':'tag-dot', 'хоты':'tag-hot', 'снятие':'tag-cleanse', 'призыв':'tag-summon', 'отражение':'tag-reflect', 'блокировка':'tag-block', 'кража':'tag-steal', 'одиночный':'tag-single', 'все_враги':'tag-aoe', 'цепь':'tag-chain', 'себя':'tag-self', 'союзники':'tag-allies', 'враги':'tag-enemies', 'мана':'tag-mana', 'крит':'tag-crit', 'меткость':'tag-accuracy', 'антихил':'tag-antihil', 'контратака':'tag-counter', 'провокация':'tag-provoke', 'воскрешение':'tag-resurrection', 'баф_стихии':'tag-element', 'усил. атаки':'tag-buff', 'усил. защиты':'tag-shield', 'усил. атаки_навык':'tag-buff', 'усил. защиты_навык':'tag-shield', 'ослаб. атаки':'tag-debuff', 'ослаб. защиты':'tag-debuff', 'ослаб. атаки_себе':'tag-debuff', 'ослаб. защиты_себе':'tag-debuff', 'ослаб. метк_себе':'tag-debuff', 'похищ._лечения':'tag-antihil', 'мана_ускор.':'tag-mana', 'мана_замедл.':'tag-mana', 'мана_срез':'tag-mana', 'мана_блок':'tag-block', 'деление_себе':'tag-shield', 'деление_против.':'tag-debuff', 'увеличение здоровья':'tag-heal', 'пробитие':'tag-damage', 'снятие_врагам':'tag-cleanse', 'снятие_своим':'tag-cleanse', 'блок_снятие_усил.':'tag-block', 'нельзя снять':'tag-block', 'метка':'tag-debuff', 'безумие':'tag-debuff', 'ярость':'tag-buff', 'антиприслужник':'tag-summon', 'похищ._маны':'tag-steal', 'сокращ.длит.эффект.':'tag-debuff' };
     return tagMap[tag] || 'tag-default';
@@ -490,16 +611,132 @@ function getTagClass(tag) {
 function fileCellToUrl(v) { let s=String(v||''); let m=s.match(/\((https?:\/\/[^)]+)\)/i); if(m) return m[1]; let m2=s.match(/https?:\/\/\S+/i); return m2 ? m2[0].replace(/[),]+$/,'') : ''; }
 function getItemImage(itemName) { if(!itemName) return ''; if(itemImages[itemName]) return itemImages[itemName]; for(const [key,url] of Object.entries(itemImages)) { if(itemName.includes(key) || key.includes(itemName)) return url; } return ''; }
 function normalizeStarKey(star) { return String(star).replace(/★/g,'').trim(); }
+
+// ==================== СИСТЕМА ПРОКАЧКИ ====================
+
 function getStarTargets(heroStars) {
     // Всегда показываем все уровни 2★, 3★, 4★, 5★
     return ['2', '3', '4', '5'];
 }
-function getMaterialsForStar(heroElement, heroStars, targetStar) { const heroStarNormalized=normalizeStarKey(heroStars); let allData=[]; if(heroStarNormalized==='4') allData=materialsData['4★']||[]; else if(heroStarNormalized==='5') allData=materialsData['5★']||[]; else allData=materialsData['4★']||[]; const result=allData.filter(item=>{ const itemElement=String(item['Стихия']||'').trim(); const itemTarget=String(item['Целевая звезда']||'').trim(); return itemElement===heroElement && itemTarget===targetStar; }); return result; }
-function getBooksForStar(heroStars, level) { const heroStarNormalized=normalizeStarKey(heroStars); let starKey=heroStarNormalized; if(parseInt(starKey)<3) starKey='3'; const result=booksData.filter(item=>{ const itemStars=normalizeStarKey(item['Звездность героев']||''); return itemStars===starKey && item['Уровень навыка']===level; }); return result.length>0?result[0]:null; }
-function getTokensForHero(heroStars) { const heroStarNormalized=normalizeStarKey(heroStars); let starKey=heroStarNormalized; if(parseInt(starKey)<3) starKey='3'; const result=tokensData.filter(item=>{ const itemStars=normalizeStarKey(item['Количество звезд']||''); return itemStars===starKey; }); return result.length>0?result[0]:null; }
-function showStarMaterials(element, stars, target, container) { const materials=getMaterialsForStar(element, stars, target); container.innerHTML=''; if(materials.length===0){ container.innerHTML='<div style="font-size:12px; opacity:0.6;">Нет данных для этого уровня</div>'; container.classList.add('show'); return; } let html=''; materials.forEach(item=>{ const itemName=item['Предмет']||''; const count=item['Количество']||0; const imgUrl=getItemImage(itemName); html+='<div class="upgrade-item">'+(imgUrl?'<img src="'+imgUrl+'" alt="'+itemName+'" loading="lazy">':'<div style="width:28px;height:28px;border-radius:4px;background:var(--secondary-color);display:flex;align-items:center;justify-content:center;font-size:14px;">📦</div>')+'<span class="name">'+itemName+'</span><span class="count">×'+count+'</span></div>'; }); container.innerHTML=html; container.classList.add('show'); }
-function showBookMaterials(stars, level, container) { const bookData=getBooksForStar(stars, level); container.innerHTML=''; if(!bookData){ container.innerHTML='<div style="font-size:12px; opacity:0.6;">Нет данных для этого уровня</div>'; container.classList.add('show'); return; } const bookTypes=['Книга_I','Книга_II','Книга_III','Книга_IV','Книга_V']; const bookNames=['Книга_I','Книга_II','Книга_III','Книга_IV','Книга_V']; let html=''; let hasData=false; bookTypes.forEach((key,idx)=>{ const count=parseInt(bookData[key])||0; if(count>0){ hasData=true; const name=bookNames[idx]; const imgUrl=getItemImage(name); const displayName=name.replace('_',' '); html+='<div class="upgrade-item">'+(imgUrl?'<img src="'+imgUrl+'" alt="'+displayName+'" loading="lazy">':'<div style="width:28px;height:28px;border-radius:4px;background:var(--secondary-color);display:flex;align-items:center;justify-content:center;font-size:14px;">📖</div>')+'<span class="name">'+displayName+'</span><span class="count">×'+count+'</span></div>'; } }); if(!hasData) html='<div style="font-size:12px; opacity:0.6;">Нет данных для этого уровня</div>'; container.innerHTML=html; container.classList.add('show'); }
-function showTalentTokens(stars, container) { const tokenData=getTokensForHero(stars); container.innerHTML=''; if(!tokenData){ container.innerHTML='<div style="font-size:12px; opacity:0.6;">Нет данных о жетонах для этой звёздности</div>'; return; } const total=tokenData['Количество жетонов']||0; let html='<div class="upgrade-total">Всего: '+total+' жетонов</div><div class="upgrade-tokens"><div class="token"><span style="font-size:13px;">🎯</span><span>Всего жетонов: <span class="count">'+total+'</span></span></div></div>'; container.innerHTML=html; }
+
+function getMaterialsForStar(heroElement, heroStars, targetStar) {
+    const heroStarNormalized = normalizeStarKey(heroStars);
+    let allData = [];
+    if (heroStarNormalized === '4') allData = materialsData['4★'] || [];
+    else if (heroStarNormalized === '5') allData = materialsData['5★'] || [];
+    else allData = materialsData['4★'] || [];
+    const result = allData.filter(item => {
+        const itemElement = String(item['Стихия'] || '').trim();
+        const itemTarget = String(item['Целевая звезда'] || '').trim();
+        return itemElement === heroElement && itemTarget === targetStar;
+    });
+    return result;
+}
+
+function getBooksForStar(heroStars, level) {
+    const heroStarNormalized = normalizeStarKey(heroStars);
+    let starKey = heroStarNormalized;
+    if (parseInt(starKey) < 3) starKey = '3';
+    const result = booksData.filter(item => {
+        const itemStars = normalizeStarKey(item['Звездность героев'] || '');
+        return itemStars === starKey && item['Уровень навыка'] === level;
+    });
+    return result.length > 0 ? result[0] : null;
+}
+
+function getTokensForHero(heroStars) {
+    const heroStarNormalized = normalizeStarKey(heroStars);
+    let starKey = heroStarNormalized;
+    if (parseInt(starKey) < 3) starKey = '3';
+    const result = tokensData.filter(item => {
+        const itemStars = normalizeStarKey(item['Количество звезд'] || '');
+        return itemStars === starKey;
+    });
+    return result.length > 0 ? result[0] : null;
+}
+
+function showStarMaterials(element, stars, target, container) {
+    const materials = getMaterialsForStar(element, stars, target);
+    container.innerHTML = '';
+    if (materials.length === 0) {
+        container.innerHTML = '<div style="font-size:12px; opacity:0.6;">Нет данных для этого уровня</div>';
+        container.classList.add('show');
+        return;
+    }
+    let html = '';
+    materials.forEach(item => {
+        const itemName = item['Предмет'] || '';
+        const count = item['Количество'] || 0;
+        const imgUrl = getItemImage(itemName);
+        html += '<div class="upgrade-item">' +
+            (imgUrl ? '<img src="'+imgUrl+'" alt="'+itemName+'" loading="lazy">' : '<div style="width:28px;height:28px;border-radius:4px;background:var(--secondary-color);display:flex;align-items:center;justify-content:center;font-size:14px;">📦</div>') +
+            '<span class="name">'+itemName+'</span><span class="count">×'+count+'</span>' +
+        '</div>';
+    });
+    container.innerHTML = html;
+    container.classList.add('show');
+}
+
+function showBookMaterials(stars, level, container) {
+    const bookData = getBooksForStar(stars, level);
+    container.innerHTML = '';
+    if (!bookData) {
+        container.innerHTML = '<div style="font-size:12px; opacity:0.6;">Нет данных для этого уровня</div>';
+        container.classList.add('show');
+        return;
+    }
+    const bookTypes = ['Книга_I', 'Книга_II', 'Книга_III', 'Книга_IV', 'Книга_V'];
+    const bookNames = ['Книга 1★', 'Книга 2★', 'Книга 3★', 'Книга 4★', 'Книга 5★'];
+    const bookKeys = ['Книга_I', 'Книга_II', 'Книга_III', 'Книга_IV', 'Книга_V'];
+    let html = '';
+    let hasData = false;
+    bookTypes.forEach((key, idx) => {
+        const count = parseInt(bookData[key]) || 0;
+        if (count > 0) {
+            hasData = true;
+            const name = bookNames[idx];
+            const imgKey = bookKeys[idx];
+            const imgUrl = getItemImage(imgKey);
+            html += '<div class="upgrade-item">' +
+                (imgUrl ? '<img src="'+imgUrl+'" alt="'+name+'" loading="lazy">' : '<div style="width:28px;height:28px;border-radius:4px;background:var(--secondary-color);display:flex;align-items:center;justify-content:center;font-size:14px;">📖</div>') +
+                '<span class="name">'+name+'</span><span class="count">×'+count+'</span>' +
+            '</div>';
+        }
+    });
+    if (!hasData) {
+        html = '<div style="font-size:12px; opacity:0.6;">Нет данных для этого уровня</div>';
+    }
+    container.innerHTML = html;
+    container.classList.add('show');
+}
+
+function showTalentTokens(stars, hero, container) {
+    const tokenData = getTokensForHero(stars);
+    container.innerHTML = '';
+    if (!tokenData) {
+        container.innerHTML = '<div style="font-size:12px; opacity:0.6;">Нет данных о жетонах для этой звёздности</div>';
+        return;
+    }
+    const total = tokenData['Количество жетонов'] || 0;
+    const heroClass = hero ? hero['Класс'] : '';
+    const classImgUrl = getItemImage(heroClass);
+    
+    let html = '<div class="upgrade-tokens">';
+    if (classImgUrl && heroClass) {
+        html += '<div class="token">' +
+            '<img src="'+classImgUrl+'" alt="'+heroClass+'" loading="lazy">' +
+            '<span>'+heroClass+': <span class="count">'+total+'</span></span>' +
+        '</div>';
+    } else {
+        html += '<div class="token">' +
+            '<span style="font-size:13px;">🎯</span>' +
+            '<span>Всего: <span class="count">'+total+'</span></span>' +
+        '</div>';
+    }
+    html += '</div>';
+    container.innerHTML = html;
+}
+
 function renderUpgradeSection(hero) {
     const container = document.getElementById('upgradeContainer');
     if (!hero) {
@@ -520,7 +757,7 @@ function renderUpgradeSection(hero) {
     starTargets.forEach(target => {
         const btn = document.createElement('button');
         btn.className = 'upgrade-btn';
-        btn.textContent = target + '★';
+        btn.innerHTML = '<span class="star">★</span> ' + target;
         btn.dataset.target = target;
         btn.addEventListener('click', () => {
             document.querySelectorAll('#starButtons .upgrade-btn').forEach(b => b.classList.remove('active'));
@@ -561,38 +798,529 @@ function renderUpgradeSection(hero) {
     
     // --- Жетоны талантов ---
     const tokensContent = document.getElementById('talentTokensContent');
-    showTalentTokens(heroStars, tokensContent);
+    showTalentTokens(heroStars, hero, tokensContent);
 }
+
+// ==================== ОСТАЛЬНОЙ КОД ====================
+
 function initTooltip() { if(!tooltipElement){ tooltipElement=document.createElement('div'); tooltipElement.className='talent-tooltip hidden'; document.body.appendChild(tooltipElement); } }
 function showTalentTooltip(talentId, x, y) { if(!tooltipElement) initTooltip(); const desc=getTalentDescriptionById(talentId); if(desc){ tooltipElement.innerHTML=desc; tooltipElement.classList.remove('hidden'); tooltipElement.style.left=(x+15)+'px'; tooltipElement.style.top=(y-10)+'px'; } }
 function hideTalentTooltip() { if(tooltipElement) tooltipElement.classList.add('hidden'); }
-const talentEffectsMap = { 1:{type:'Атака',value:15,isPercent:false}, 2:{type:'Защита',value:17,isPercent:false}, 3:{type:'Жизни',value:35,isPercent:false}, 4:{type:'Атака',value:3,isPercent:true}, 5:{type:'Защита',value:3,isPercent:true}, 6:{type:'Жизни',value:3,isPercent:true}, 7:{type:'Атака',value:4,isPercent:true}, 8:{type:'Защита',value:4,isPercent:true}, 9:{type:'Жизни',value:4,isPercent:true}, 10:{type:'Исцеление',value:2,isPercent:true}, 11:{type:'Крит',value:2,isPercent:true}, 12:{type:'Бонус к скорости набора маны',value:2,isPercent:true}, 13:{type:'Исцеление',value:4,isPercent:true}, 14:{type:'Крит',value:4,isPercent:true}, 15:{type:'Бонус к скорости набора маны',value:4,isPercent:true}, 16:{type:'Шанс уклониться',value:4,isPercent:true}, 17:{type:'Стойкость',value:7,isPercent:true}, 18:{type:'Подавление магии',value:3,isPercent:true}, 19:{type:'Концентрация',value:6,isPercent:true}, 20:{type:'Магический разряд',value:4,isPercent:true}, 21:{type:'Кровавый вихрь',value:6,isPercent:true}, 22:{type:'Непоколебимость',value:5,isPercent:true}, 23:{type:'Природный зов',value:3,isPercent:true}, 24:{type:'Второе дыхание',value:5,isPercent:true}, 25:{type:'Пробитие',value:5,isPercent:true}, 26:{type:'Кровавый вихрь',value:35,isPercent:true} };
-function getTalentDescriptionById(talentId) { const talent=talentEffectsMap[talentId]; if(!talent) return null; const isPercent=talent.isPercent; const value=talent.value; const typeName=talent.type; const suffix=isPercent?'%':''; let desc=''; if(typeName==='Кровавый вихрь'){ desc='Кровавый вихрь: +'+value+suffix+' шанс вызвать кровотечение при обычной атаке. Наносит 60% урона каждый ход в течение 5 ходов.'; } else if(typeName==='Исцеление'){ desc='Исцеление: эффективность лечения +'+value+suffix; } else if(typeName==='Крит'){ desc='Шанс критического удара +'+value+suffix; } else if(typeName==='Бонус к скорости набора маны'){ desc='Скорость набора маны +'+value+suffix; } else if(typeName==='Шанс уклониться'){ desc='Уклонение +'+value+suffix; } else if(typeName==='Стойкость'){ desc='Стойкость (шанс избежать ослабления) +'+value+suffix; } else if(typeName==='Подавление магии'){ desc='Подавление магии (шанс заблокировать урон от навыков) +'+value+suffix; } else if(typeName==='Концентрация'){ desc='Концентрация (шанс снять ослабление при использовании навыка) +'+value+suffix; } else if(typeName==='Магический разряд'){ desc='Магический разряд (урон по врагу при использовании навыка) +'+value+suffix; } else if(typeName==='Непоколебимость'){ desc='Непоколебимость (снижение получаемого урона) +'+value+suffix; } else if(typeName==='Природный зов'){ desc='Природный зов (шанс призвать помощника) +'+value+suffix; } else if(typeName==='Второе дыхание'){ desc='Второе дыхание (восстановление здоровья при критическом здоровье) +'+value+suffix; } else if(typeName==='Пробитие'){ desc='Пробитие (игнорирование защиты) +'+value+suffix; } else if(typeName==='Атака'){ desc='Атака +'+value+suffix; } else if(typeName==='Защита'){ desc='Защита +'+value+suffix; } else if(typeName==='Жизни'){ desc='Здоровье +'+value+suffix; } else { desc=typeName+' +'+value+suffix; } return desc; }
-function getTalentEffects(numId) { const talent=talentEffectsMap[numId]; if(!talent) return {attackPercent:0,attackFlat:0,defensePercent:0,defenseFlat:0,hpPercent:0,hpFlat:0}; const value=talent.value; const isPercent=talent.isPercent; const typeLower=talent.type.toLowerCase(); let result={attackPercent:0,attackFlat:0,defensePercent:0,defenseFlat:0,hpPercent:0,hpFlat:0}; if(typeLower.includes('атак')){ if(isPercent) result.attackPercent=value; else result.attackFlat=value; } else if(typeLower.includes('защит')){ if(isPercent) result.defensePercent=value; else result.defenseFlat=value; } else if(typeLower.includes('жизн')||typeLower.includes('здоров')){ if(isPercent) result.hpPercent=value; else result.hpFlat=value; } return result; }
-function getTalentImage(numId, active) { const talent=talentEffectsMap[numId]; if(!talent) return ''; const talentName=talent.type; const isPercent=talent.isPercent; const value=talent.value; for(const data of talentDescriptions){ const dataTalentId=data[TALENT_DESC_FIELDS.talent_id]; const dataValue=parseFloat(data[TALENT_DESC_FIELDS.value]); const dataIsPercent=String(data[TALENT_DESC_FIELDS.is_percent]).toLowerCase()==='true'; if(dataTalentId===talentName && Math.abs(dataValue-value)<0.01 && dataIsPercent===isPercent){ const field=active?TALENT_DESC_FIELDS.image_active:TALENT_DESC_FIELDS.image_inactive; let url=data[field]||''; if(!url) return ''; let m=url.match(/\((https?:\/\/[^)]+)\)/i); if(m) return m[1]; let m2=url.match(/https?:\/\/\S+/i); return m2 ? m2[0].replace(/[),]+$/,'') : ''; } } return ''; }
-function getTalentValue(talentId, statType, baseStat) { const talent=talentEffectsMap[talentId]; if(!talent) return 0; const isPercent=talent.isPercent; const value=talent.value; const typeLower=talent.type.toLowerCase(); if(statType==='attack' && !typeLower.includes('атак')) return 0; if(statType==='defense' && !typeLower.includes('защит')) return 0; if(statType==='hp' && !typeLower.includes('жизн') && !typeLower.includes('здоров')) return 0; if(isPercent) return baseStat*value/100; return value; }
-function getBranchScore(branchTalents, mode, baseAttack, baseDefense, baseHp) { let hasDefense=false; let hasHealth=false; let hasAttack=false; let totalValue=0; for(const talentId of branchTalents){ if(!talentId) continue; const talent=talentEffectsMap[talentId]; if(!talent) continue; const typeName=talent.type; const isPercent=talent.isPercent; const value=talent.value; let actualValue=0; if(isPercent){ if(typeName==='Атака') actualValue=baseAttack*value/100; else if(typeName==='Защита') actualValue=baseDefense*value/100; else if(typeName==='Жизни') actualValue=baseHp*value/100; else actualValue=value; } else { actualValue=value; } totalValue+=actualValue; if(typeName==='Защита') hasDefense=true; if(typeName==='Жизни') hasHealth=true; if(typeName==='Атака') hasAttack=true; } if(mode==='attack'){ if(hasAttack && hasDefense) return 100000+totalValue; if(hasAttack) return 90000+totalValue; if(hasDefense) return 80000+totalValue; if(hasHealth) return 70000+totalValue; return 60000+totalValue; } else if(mode==='defense'){ if(hasDefense){ if(hasHealth) return 100000+totalValue; return 90000+totalValue; } if(hasHealth) return 70000+totalValue; if(hasAttack) return 60000+totalValue; return 50000+totalValue; } return 0; }
-function calculateStatsWithSelections(hero, selections, mode) { const heroClass=hero[HERO_FIELDS.clazz]; const baseAttack=toNum(hero[HERO_FIELDS.attack])||0; const baseDefense=toNum(hero[HERO_FIELDS.defense])||0; const baseHp=toNum(hero[HERO_FIELDS.hp])||0; if(mode==='none'){ return { attack:Math.floor(baseAttack), defense:Math.floor(baseDefense), hp:Math.floor(baseHp) }; } if(!classTalents[heroClass]){ return { attack:Math.floor(baseAttack), defense:Math.floor(baseDefense), hp:Math.floor(baseHp) }; } const talents=classTalents[heroClass]; let attackFlat=0, attackPercent=0, defenseFlat=0, defensePercent=0, hpFlat=0, hpPercent=0; const groups=[]; let currentGroup=[]; for(const talent of talents){ if(currentGroup.length===0 || currentGroup[0].branchGroup===talent.branchGroup){ currentGroup.push(talent); } else { groups.push([...currentGroup]); currentGroup=[talent]; } } if(currentGroup.length>0) groups.push(currentGroup); for(const group of groups){ const groupId=group[0].branchGroup; for(const talent of group){ if(talent.isMandatory && talent.centerTalentId){ const effects=getTalentEffects(talent.centerTalentId); attackPercent+=effects.attackPercent; attackFlat+=effects.attackFlat; defensePercent+=effects.defensePercent; defenseFlat+=effects.defenseFlat; hpPercent+=effects.hpPercent; hpFlat+=effects.hpFlat; } } const selectedSide=selections[groupId]; if(selectedSide){ for(const talent of group){ if(!talent.isMandatory){ let talentId=null; if(selectedSide==='left' && talent.leftTalentId) talentId=talent.leftTalentId; if(selectedSide==='right' && talent.rightTalentId) talentId=talent.rightTalentId; if(talentId){ const effects=getTalentEffects(talentId); attackPercent+=effects.attackPercent; attackFlat+=effects.attackFlat; defensePercent+=effects.defensePercent; defenseFlat+=effects.defenseFlat; hpPercent+=effects.hpPercent; hpFlat+=effects.hpFlat; } } } } } const attackBonus=(baseAttack*attackPercent/100)+attackFlat; const defenseBonus=(baseDefense*defensePercent/100)+defenseFlat; const hpBonus=(baseHp*hpPercent/100)+hpFlat; return { attack:Math.floor(baseAttack+attackBonus), defense:Math.floor(baseDefense+defenseBonus), hp:Math.floor(baseHp+hpBonus) }; }
-function getOptimalSelections(hero, mode) { const heroClass=hero[HERO_FIELDS.clazz]; if(!classTalents[heroClass]) return {}; const baseAttack=toNum(hero[HERO_FIELDS.attack])||0; const baseDefense=toNum(hero[HERO_FIELDS.defense])||0; const baseHp=toNum(hero[HERO_FIELDS.hp])||0; const talents=classTalents[heroClass]; const groups=[]; let currentGroup=[]; for(const talent of talents){ if(currentGroup.length===0 || currentGroup[0].branchGroup===talent.branchGroup){ currentGroup.push(talent); } else { groups.push([...currentGroup]); currentGroup=[talent]; } } if(currentGroup.length>0) groups.push(currentGroup); const selections={}; for(const group of groups){ const groupId=group[0].branchGroup; let leftBranchTalents=[]; let rightBranchTalents=[]; for(const talent of group){ if(!talent.isMandatory){ if(talent.leftTalentId) leftBranchTalents.push(talent.leftTalentId); if(talent.rightTalentId) rightBranchTalents.push(talent.rightTalentId); } } const leftScore=getBranchScore(leftBranchTalents, mode, baseAttack, baseDefense, baseHp); const rightScore=getBranchScore(rightBranchTalents, mode, baseAttack, baseDefense, baseHp); if(leftScore>rightScore) selections[groupId]='left'; else if(rightScore>leftScore) selections[groupId]='right'; else selections[groupId]='left'; } return selections; }
-function renderTalentTree(hero, selections, mode) { const heroClass=hero[HERO_FIELDS.clazz]; if(!classTalents[heroClass]){ document.getElementById('talentTable').innerHTML='<p>Нет данных о талантах для этого класса</p>'; return; } const talents=classTalents[heroClass]; const groups=[]; let currentGroup=[]; for(const talent of talents){ if(currentGroup.length===0 || currentGroup[0].branchGroup===talent.branchGroup){ currentGroup.push(talent); } else { groups.push([...currentGroup]); currentGroup=[talent]; } } if(currentGroup.length>0) groups.push(currentGroup); let html=''; let rowCounter=1; const showActive=mode!=='none'; const isManual=mode==='manual'; let maxSelectableGroup=0; if(isManual){ for(let i=0;i<groups.length;i++){ const groupId=groups[i][0].branchGroup; if(selections[groupId]){ maxSelectableGroup=i+1; } else { break; } } } for(let gIdx=0;gIdx<groups.length;gIdx++){ const group=groups[gIdx]; const groupId=group[0].branchGroup; const selectedSide=selections[groupId]; const isGroupSelectable=isManual?(gIdx<=maxSelectableGroup):true; for(const talent of group){ html+='<div class="talent-row">'; if(talent.leftTalentId){ const isActive=showActive && selectedSide==='left'; const imgUrl=getTalentImage(talent.leftTalentId, isActive); const selectableClass=(isManual && isGroupSelectable && !talent.isMandatory)?'selectable':''; const activeClass=isActive?'active':''; const disabledAttr=(isManual && !isGroupSelectable && !talent.isMandatory)?' data-disabled="true"':''; html+='<div class="talent-cell '+activeClass+' '+selectableClass+'" data-group="'+groupId+'" data-side="left" data-talent-id="'+talent.leftTalentId+'" data-row="'+rowCounter+'" data-group-idx="'+gIdx+'"'+disabledAttr+'>'; if(imgUrl) html+='<img src="'+imgUrl+'" alt="Талант" loading="lazy" onerror="this.style.display=\'none\'">'; else html+='<div style="font-size:10px; text-align:center;">'+talent.leftTalentId+'</div>'; html+='</div>'; } else { html+='<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>'; } if(talent.centerTalentId){ const imgUrl=getTalentImage(talent.centerTalentId, true); html+='<div class="talent-cell mandatory" data-talent-id="'+talent.centerTalentId+'" data-row="'+rowCounter+'">'; if(imgUrl) html+='<img src="'+imgUrl+'" alt="Обязательный талант" loading="lazy" onerror="this.style.display=\'none\'">'; else html+='<div style="font-size:10px; text-align:center;">'+talent.centerTalentId+'</div>'; html+='</div>'; } else { html+='<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>'; } if(talent.rightTalentId){ const isActive=showActive && selectedSide==='right'; const imgUrl=getTalentImage(talent.rightTalentId, isActive); const selectableClass=(isManual && isGroupSelectable && !talent.isMandatory)?'selectable':''; const activeClass=isActive?'active':''; const disabledAttr=(isManual && !isGroupSelectable && !talent.isMandatory)?' data-disabled="true"':''; html+='<div class="talent-cell '+activeClass+' '+selectableClass+'" data-group="'+groupId+'" data-side="right" data-talent-id="'+talent.rightTalentId+'" data-row="'+rowCounter+'" data-group-idx="'+gIdx+'"'+disabledAttr+'>'; if(imgUrl) html+='<img src="'+imgUrl+'" alt="Талант" loading="lazy" onerror="this.style.display=\'none\'">'; else html+='<div style="font-size:10px; text-align:center;">'+talent.rightTalentId+'</div>'; html+='</div>'; } else { html+='<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>'; } html+='</div>'; rowCounter++; } } document.getElementById('talentTable').innerHTML=html; document.querySelectorAll('#talentTable .talent-cell').forEach(cell=>{ const talentId=parseInt(cell.dataset.talentId); if(talentId){ cell.addEventListener('mouseenter',(e)=>{ const rect=cell.getBoundingClientRect(); showTalentTooltip(talentId, rect.right, rect.top); }); cell.addEventListener('mouseleave',()=>{ hideTalentTooltip(); }); } }); if(isManual){ document.querySelectorAll('#talentTable .talent-cell.selectable').forEach(cell=>{ if(cell.dataset.disabled==='true'){ cell.style.opacity='0.5'; cell.style.cursor='not-allowed'; return; } cell.addEventListener('click',(e)=>{ e.stopPropagation(); const groupId=cell.dataset.group; const side=cell.dataset.side; const talentId=parseInt(cell.dataset.talentId); const groupIdx=parseInt(cell.dataset.groupIdx); if(!groupId || !side) return; let allPreviousSelected=true; for(let i=0;i<groupIdx;i++){ const prevGroupId=groups[i][0].branchGroup; if(!currentHeroTalents[prevGroupId]){ allPreviousSelected=false; break; } } if(!allPreviousSelected){ const msg=document.createElement('div'); msg.textContent='⚠️ Сначала выберите таланты в предыдущих строках!'; msg.style.position='fixed'; msg.style.bottom='20px'; msg.style.left='50%'; msg.style.transform='translateX(-50%)'; msg.style.backgroundColor='var(--tooltip-bg)'; msg.style.color='var(--tooltip-text)'; msg.style.padding='8px 16px'; msg.style.borderRadius='8px'; msg.style.zIndex='10001'; msg.style.fontSize='13px'; msg.style.border='1px solid var(--border-color)'; document.body.appendChild(msg); setTimeout(()=>msg.remove(),2000); return; } const groupCells=document.querySelectorAll('#talentTable .talent-cell[data-group="'+groupId+'"]'); groupCells.forEach(c=>{ if(!c.classList.contains('mandatory')){ const tid=c.dataset.talentId; if(tid){ const newImgUrl=getTalentImage(parseInt(tid), false); const img=c.querySelector('img'); if(img && newImgUrl) img.src=newImgUrl; } c.classList.remove('active'); } }); const newImgUrl=getTalentImage(talentId, true); const img=cell.querySelector('img'); if(img && newImgUrl) img.src=newImgUrl; cell.classList.add('active'); const sameSideCells=document.querySelectorAll('#talentTable .talent-cell[data-group="'+groupId+'"][data-side="'+side+'"]'); sameSideCells.forEach(c=>{ if(!c.classList.contains('mandatory')){ const tid=c.dataset.talentId; if(tid){ const newUrl=getTalentImage(parseInt(tid), true); const cImg=c.querySelector('img'); if(cImg && newUrl) cImg.src=newUrl; } c.classList.add('active'); } }); currentHeroTalents[groupId]=side; const heroData=viewHeroes[currentIdx]; if(heroData){ const calc=calculateStatsWithSelections(heroData, currentHeroTalents, currentMode); document.getElementById('mStats').innerHTML='<span class="pill">С: '+heroData[HERO_FIELDS.power]+'</span><span class="pill">А: '+calc.attack+'</span><span class="pill">З: '+calc.defense+'</span><span class="pill">Ж: '+calc.hp+'</span>'; } renderTalentTree(heroData, currentHeroTalents, currentMode); }); }); } }
-function initDragAndDrop() { const panel=document.getElementById('treePanel'); const header=document.getElementById('treeHeader'); function onMouseDown(e){ if(window.innerWidth<=480) return; if(e.target.closest('.tree-close')) return; isDragging=true; dragStartX=e.clientX-panel.offsetLeft; dragStartY=e.clientY-panel.offsetTop; panel.style.cursor='grabbing'; panel.classList.add('dragging'); document.addEventListener('mousemove', onMouseMove); document.addEventListener('mouseup', onMouseUp); e.preventDefault(); } function onMouseMove(e){ if(!isDragging) return; let newLeft=e.clientX-dragStartX; let newTop=e.clientY-dragStartY; const maxLeft=window.innerWidth-panel.offsetWidth-10; const minLeft=10; const maxTop=window.innerHeight-panel.offsetHeight-10; const minTop=10; newLeft=Math.min(Math.max(newLeft,minLeft),maxLeft); newTop=Math.min(Math.max(newTop,minTop),maxTop); panel.style.left=newLeft+'px'; panel.style.top=newTop+'px'; panel.style.right='auto'; panel.style.transform='none'; } function onMouseUp(){ isDragging=false; panel.style.cursor=''; panel.classList.remove('dragging'); document.removeEventListener('mousemove', onMouseMove); document.removeEventListener('mouseup', onMouseUp); } header.addEventListener('mousedown', onMouseDown); }
+
+const talentEffectsMap = {
+    1:{type:'Атака',value:15,isPercent:false},
+    2:{type:'Защита',value:17,isPercent:false},
+    3:{type:'Жизни',value:35,isPercent:false},
+    4:{type:'Атака',value:3,isPercent:true},
+    5:{type:'Защита',value:3,isPercent:true},
+    6:{type:'Жизни',value:3,isPercent:true},
+    7:{type:'Атака',value:4,isPercent:true},
+    8:{type:'Защита',value:4,isPercent:true},
+    9:{type:'Жизни',value:4,isPercent:true},
+    10:{type:'Исцеление',value:2,isPercent:true},
+    11:{type:'Крит',value:2,isPercent:true},
+    12:{type:'Бонус к скорости набора маны',value:2,isPercent:true},
+    13:{type:'Исцеление',value:4,isPercent:true},
+    14:{type:'Крит',value:4,isPercent:true},
+    15:{type:'Бонус к скорости набора маны',value:4,isPercent:true},
+    16:{type:'Шанс уклониться',value:4,isPercent:true},
+    17:{type:'Стойкость',value:7,isPercent:true},
+    18:{type:'Подавление магии',value:3,isPercent:true},
+    19:{type:'Концентрация',value:6,isPercent:true},
+    20:{type:'Магический разряд',value:4,isPercent:true},
+    21:{type:'Кровавый вихрь',value:6,isPercent:true},
+    22:{type:'Непоколебимость',value:5,isPercent:true},
+    23:{type:'Природный зов',value:3,isPercent:true},
+    24:{type:'Второе дыхание',value:5,isPercent:true},
+    25:{type:'Пробитие',value:5,isPercent:true},
+    26:{type:'Кровавый вихрь',value:35,isPercent:true}
+};
+
+function getTalentDescriptionById(talentId) {
+    const talent=talentEffectsMap[talentId]; if(!talent) return null;
+    const isPercent=talent.isPercent; const value=talent.value; const typeName=talent.type; const suffix=isPercent?'%':'';
+    let desc='';
+    if(typeName==='Кровавый вихрь'){ desc='Кровавый вихрь: +'+value+suffix+' шанс вызвать кровотечение при обычной атаке. Наносит 60% урона каждый ход в течение 5 ходов.'; }
+    else if(typeName==='Исцеление'){ desc='Исцеление: эффективность лечения +'+value+suffix; }
+    else if(typeName==='Крит'){ desc='Шанс критического удара +'+value+suffix; }
+    else if(typeName==='Бонус к скорости набора маны'){ desc='Скорость набора маны +'+value+suffix; }
+    else if(typeName==='Шанс уклониться'){ desc='Уклонение +'+value+suffix; }
+    else if(typeName==='Стойкость'){ desc='Стойкость (шанс избежать ослабления) +'+value+suffix; }
+    else if(typeName==='Подавление магии'){ desc='Подавление магии (шанс заблокировать урон от навыков) +'+value+suffix; }
+    else if(typeName==='Концентрация'){ desc='Концентрация (шанс снять ослабление при использовании навыка) +'+value+suffix; }
+    else if(typeName==='Магический разряд'){ desc='Магический разряд (урон по врагу при использовании навыка) +'+value+suffix; }
+    else if(typeName==='Непоколебимость'){ desc='Непоколебимость (снижение получаемого урона) +'+value+suffix; }
+    else if(typeName==='Природный зов'){ desc='Природный зов (шанс призвать помощника) +'+value+suffix; }
+    else if(typeName==='Второе дыхание'){ desc='Второе дыхание (восстановление здоровья при критическом здоровье) +'+value+suffix; }
+    else if(typeName==='Пробитие'){ desc='Пробитие (игнорирование защиты) +'+value+suffix; }
+    else if(typeName==='Атака'){ desc='Атака +'+value+suffix; }
+    else if(typeName==='Защита'){ desc='Защита +'+value+suffix; }
+    else if(typeName==='Жизни'){ desc='Здоровье +'+value+suffix; }
+    else { desc=typeName+' +'+value+suffix; }
+    return desc;
+}
+
+function getTalentEffects(numId) {
+    const talent=talentEffectsMap[numId]; if(!talent) return {attackPercent:0,attackFlat:0,defensePercent:0,defenseFlat:0,hpPercent:0,hpFlat:0};
+    const value=talent.value; const isPercent=talent.isPercent; const typeLower=talent.type.toLowerCase();
+    let result={attackPercent:0,attackFlat:0,defensePercent:0,defenseFlat:0,hpPercent:0,hpFlat:0};
+    if(typeLower.includes('атак')){ if(isPercent) result.attackPercent=value; else result.attackFlat=value; }
+    else if(typeLower.includes('защит')){ if(isPercent) result.defensePercent=value; else result.defenseFlat=value; }
+    else if(typeLower.includes('жизн')||typeLower.includes('здоров')){ if(isPercent) result.hpPercent=value; else result.hpFlat=value; }
+    return result;
+}
+
+function getTalentImage(numId, active) {
+    const talent=talentEffectsMap[numId]; if(!talent) return '';
+    const talentName=talent.type; const isPercent=talent.isPercent; const value=talent.value;
+    for(const data of talentDescriptions){
+        const dataTalentId=data[TALENT_DESC_FIELDS.talent_id];
+        const dataValue=parseFloat(data[TALENT_DESC_FIELDS.value]);
+        const dataIsPercent=String(data[TALENT_DESC_FIELDS.is_percent]).toLowerCase()==='true';
+        if(dataTalentId===talentName && Math.abs(dataValue-value)<0.01 && dataIsPercent===isPercent){
+            const field=active?TALENT_DESC_FIELDS.image_active:TALENT_DESC_FIELDS.image_inactive;
+            let url=data[field]||'';
+            if(!url) return '';
+            let m=url.match(/\((https?:\/\/[^)]+)\)/i);
+            if(m) return m[1];
+            let m2=url.match(/https?:\/\/\S+/i);
+            return m2 ? m2[0].replace(/[),]+$/,'') : '';
+        }
+    }
+    return '';
+}
+
+function getTalentValue(talentId, statType, baseStat) {
+    const talent=talentEffectsMap[talentId]; if(!talent) return 0;
+    const isPercent=talent.isPercent; const value=talent.value; const typeLower=talent.type.toLowerCase();
+    if(statType==='attack' && !typeLower.includes('атак')) return 0;
+    if(statType==='defense' && !typeLower.includes('защит')) return 0;
+    if(statType==='hp' && !typeLower.includes('жизн') && !typeLower.includes('здоров')) return 0;
+    if(isPercent) return baseStat*value/100;
+    return value;
+}
+
+function getBranchScore(branchTalents, mode, baseAttack, baseDefense, baseHp) {
+    let hasDefense=false; let hasHealth=false; let hasAttack=false; let totalValue=0;
+    for(const talentId of branchTalents){
+        if(!talentId) continue;
+        const talent=talentEffectsMap[talentId]; if(!talent) continue;
+        const typeName=talent.type; const isPercent=talent.isPercent; const value=talent.value;
+        let actualValue=0;
+        if(isPercent){
+            if(typeName==='Атака') actualValue=baseAttack*value/100;
+            else if(typeName==='Защита') actualValue=baseDefense*value/100;
+            else if(typeName==='Жизни') actualValue=baseHp*value/100;
+            else actualValue=value;
+        } else { actualValue=value; }
+        totalValue+=actualValue;
+        if(typeName==='Защита') hasDefense=true;
+        if(typeName==='Жизни') hasHealth=true;
+        if(typeName==='Атака') hasAttack=true;
+    }
+    if(mode==='attack'){
+        if(hasAttack && hasDefense) return 100000+totalValue;
+        if(hasAttack) return 90000+totalValue;
+        if(hasDefense) return 80000+totalValue;
+        if(hasHealth) return 70000+totalValue;
+        return 60000+totalValue;
+    } else if(mode==='defense'){
+        if(hasDefense){
+            if(hasHealth) return 100000+totalValue;
+            return 90000+totalValue;
+        }
+        if(hasHealth) return 70000+totalValue;
+        if(hasAttack) return 60000+totalValue;
+        return 50000+totalValue;
+    }
+    return 0;
+}
+
+function calculateStatsWithSelections(hero, selections, mode) {
+    const heroClass=hero[HERO_FIELDS.clazz];
+    const baseAttack=toNum(hero[HERO_FIELDS.attack])||0;
+    const baseDefense=toNum(hero[HERO_FIELDS.defense])||0;
+    const baseHp=toNum(hero[HERO_FIELDS.hp])||0;
+    if(mode==='none'){ return { attack:Math.floor(baseAttack), defense:Math.floor(baseDefense), hp:Math.floor(baseHp) }; }
+    if(!classTalents[heroClass]){ return { attack:Math.floor(baseAttack), defense:Math.floor(baseDefense), hp:Math.floor(baseHp) }; }
+    const talents=classTalents[heroClass];
+    let attackFlat=0, attackPercent=0, defenseFlat=0, defensePercent=0, hpFlat=0, hpPercent=0;
+    const groups=[]; let currentGroup=[];
+    for(const talent of talents){
+        if(currentGroup.length===0 || currentGroup[0].branchGroup===talent.branchGroup){ currentGroup.push(talent); }
+        else { groups.push([...currentGroup]); currentGroup=[talent]; }
+    }
+    if(currentGroup.length>0) groups.push(currentGroup);
+    for(const group of groups){
+        const groupId=group[0].branchGroup;
+        for(const talent of group){
+            if(talent.isMandatory && talent.centerTalentId){
+                const effects=getTalentEffects(talent.centerTalentId);
+                attackPercent+=effects.attackPercent; attackFlat+=effects.attackFlat;
+                defensePercent+=effects.defensePercent; defenseFlat+=effects.defenseFlat;
+                hpPercent+=effects.hpPercent; hpFlat+=effects.hpFlat;
+            }
+        }
+        const selectedSide=selections[groupId];
+        if(selectedSide){
+            for(const talent of group){
+                if(!talent.isMandatory){
+                    let talentId=null;
+                    if(selectedSide==='left' && talent.leftTalentId) talentId=talent.leftTalentId;
+                    if(selectedSide==='right' && talent.rightTalentId) talentId=talent.rightTalentId;
+                    if(talentId){
+                        const effects=getTalentEffects(talentId);
+                        attackPercent+=effects.attackPercent; attackFlat+=effects.attackFlat;
+                        defensePercent+=effects.defensePercent; defenseFlat+=effects.defenseFlat;
+                        hpPercent+=effects.hpPercent; hpFlat+=effects.hpFlat;
+                    }
+                }
+            }
+        }
+    }
+    const attackBonus=(baseAttack*attackPercent/100)+attackFlat;
+    const defenseBonus=(baseDefense*defensePercent/100)+defenseFlat;
+    const hpBonus=(baseHp*hpPercent/100)+hpFlat;
+    return { attack:Math.floor(baseAttack+attackBonus), defense:Math.floor(baseDefense+defenseBonus), hp:Math.floor(baseHp+hpBonus) };
+}
+
+function getOptimalSelections(hero, mode) {
+    const heroClass=hero[HERO_FIELDS.clazz]; if(!classTalents[heroClass]) return {};
+    const baseAttack=toNum(hero[HERO_FIELDS.attack])||0;
+    const baseDefense=toNum(hero[HERO_FIELDS.defense])||0;
+    const baseHp=toNum(hero[HERO_FIELDS.hp])||0;
+    const talents=classTalents[heroClass];
+    const groups=[]; let currentGroup=[];
+    for(const talent of talents){
+        if(currentGroup.length===0 || currentGroup[0].branchGroup===talent.branchGroup){ currentGroup.push(talent); }
+        else { groups.push([...currentGroup]); currentGroup=[talent]; }
+    }
+    if(currentGroup.length>0) groups.push(currentGroup);
+    const selections={};
+    for(const group of groups){
+        const groupId=group[0].branchGroup;
+        let leftBranchTalents=[]; let rightBranchTalents=[];
+        for(const talent of group){
+            if(!talent.isMandatory){
+                if(talent.leftTalentId) leftBranchTalents.push(talent.leftTalentId);
+                if(talent.rightTalentId) rightBranchTalents.push(talent.rightTalentId);
+            }
+        }
+        const leftScore=getBranchScore(leftBranchTalents, mode, baseAttack, baseDefense, baseHp);
+        const rightScore=getBranchScore(rightBranchTalents, mode, baseAttack, baseDefense, baseHp);
+        if(leftScore>rightScore) selections[groupId]='left';
+        else if(rightScore>leftScore) selections[groupId]='right';
+        else selections[groupId]='left';
+    }
+    return selections;
+}
+
+function renderTalentTree(hero, selections, mode) {
+    const heroClass=hero[HERO_FIELDS.clazz];
+    if(!classTalents[heroClass]){ document.getElementById('talentTable').innerHTML='<p>Нет данных о талантах для этого класса</p>'; return; }
+    const talents=classTalents[heroClass];
+    const groups=[]; let currentGroup=[];
+    for(const talent of talents){
+        if(currentGroup.length===0 || currentGroup[0].branchGroup===talent.branchGroup){ currentGroup.push(talent); }
+        else { groups.push([...currentGroup]); currentGroup=[talent]; }
+    }
+    if(currentGroup.length>0) groups.push(currentGroup);
+    let html=''; let rowCounter=1;
+    const showActive=mode!=='none';
+    const isManual=mode==='manual';
+    let maxSelectableGroup=0;
+    if(isManual){
+        for(let i=0;i<groups.length;i++){ const groupId=groups[i][0].branchGroup; if(selections[groupId]){ maxSelectableGroup=i+1; } else { break; } }
+    }
+    for(let gIdx=0;gIdx<groups.length;gIdx++){
+        const group=groups[gIdx]; const groupId=group[0].branchGroup; const selectedSide=selections[groupId];
+        const isGroupSelectable=isManual?(gIdx<=maxSelectableGroup):true;
+        for(const talent of group){
+            html+='<div class="talent-row">';
+            if(talent.leftTalentId){
+                const isActive=showActive && selectedSide==='left';
+                const imgUrl=getTalentImage(talent.leftTalentId, isActive);
+                const selectableClass=(isManual && isGroupSelectable && !talent.isMandatory)?'selectable':'';
+                const activeClass=isActive?'active':'';
+                const disabledAttr=(isManual && !isGroupSelectable && !talent.isMandatory)?' data-disabled="true"':'';
+                html+='<div class="talent-cell '+activeClass+' '+selectableClass+'" data-group="'+groupId+'" data-side="left" data-talent-id="'+talent.leftTalentId+'" data-row="'+rowCounter+'" data-group-idx="'+gIdx+'"'+disabledAttr+'>';
+                if(imgUrl) html+='<img src="'+imgUrl+'" alt="Талант" loading="lazy" onerror="this.style.display=\'none\'">';
+                else html+='<div style="font-size:10px; text-align:center;">'+talent.leftTalentId+'</div>';
+                html+='</div>';
+            } else { html+='<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>'; }
+            if(talent.centerTalentId){
+                const imgUrl=getTalentImage(talent.centerTalentId, true);
+                html+='<div class="talent-cell mandatory" data-talent-id="'+talent.centerTalentId+'" data-row="'+rowCounter+'">';
+                if(imgUrl) html+='<img src="'+imgUrl+'" alt="Обязательный талант" loading="lazy" onerror="this.style.display=\'none\'">';
+                else html+='<div style="font-size:10px; text-align:center;">'+talent.centerTalentId+'</div>';
+                html+='</div>';
+            } else { html+='<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>'; }
+            if(talent.rightTalentId){
+                const isActive=showActive && selectedSide==='right';
+                const imgUrl=getTalentImage(talent.rightTalentId, isActive);
+                const selectableClass=(isManual && isGroupSelectable && !talent.isMandatory)?'selectable':'';
+                const activeClass=isActive?'active':'';
+                const disabledAttr=(isManual && !isGroupSelectable && !talent.isMandatory)?' data-disabled="true"':'';
+                html+='<div class="talent-cell '+activeClass+' '+selectableClass+'" data-group="'+groupId+'" data-side="right" data-talent-id="'+talent.rightTalentId+'" data-row="'+rowCounter+'" data-group-idx="'+gIdx+'"'+disabledAttr+'>';
+                if(imgUrl) html+='<img src="'+imgUrl+'" alt="Талант" loading="lazy" onerror="this.style.display=\'none\'">';
+                else html+='<div style="font-size:10px; text-align:center;">'+talent.rightTalentId+'</div>';
+                html+='</div>';
+            } else { html+='<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>'; }
+            html+='</div>'; rowCounter++;
+        }
+    }
+    document.getElementById('talentTable').innerHTML=html;
+    document.querySelectorAll('#talentTable .talent-cell').forEach(cell=>{
+        const talentId=parseInt(cell.dataset.talentId);
+        if(talentId){
+            cell.addEventListener('mouseenter',(e)=>{ const rect=cell.getBoundingClientRect(); showTalentTooltip(talentId, rect.right, rect.top); });
+            cell.addEventListener('mouseleave',()=>{ hideTalentTooltip(); });
+        }
+    });
+    if(isManual){
+        document.querySelectorAll('#talentTable .talent-cell.selectable').forEach(cell=>{
+            if(cell.dataset.disabled==='true'){ cell.style.opacity='0.5'; cell.style.cursor='not-allowed'; return; }
+            cell.addEventListener('click',(e)=>{
+                e.stopPropagation(); const groupId=cell.dataset.group; const side=cell.dataset.side;
+                const talentId=parseInt(cell.dataset.talentId); const groupIdx=parseInt(cell.dataset.groupIdx);
+                if(!groupId || !side) return;
+                let allPreviousSelected=true;
+                for(let i=0;i<groupIdx;i++){ const prevGroupId=groups[i][0].branchGroup; if(!currentHeroTalents[prevGroupId]){ allPreviousSelected=false; break; } }
+                if(!allPreviousSelected){
+                    const msg=document.createElement('div');
+                    msg.textContent='⚠️ Сначала выберите таланты в предыдущих строках!';
+                    msg.style.position='fixed'; msg.style.bottom='20px'; msg.style.left='50%';
+                    msg.style.transform='translateX(-50%)';
+                    msg.style.backgroundColor='var(--tooltip-bg)';
+                    msg.style.color='var(--tooltip-text)';
+                    msg.style.padding='8px 16px';
+                    msg.style.borderRadius='8px';
+                    msg.style.zIndex='10001';
+                    msg.style.fontSize='13px';
+                    msg.style.border='1px solid var(--border-color)';
+                    document.body.appendChild(msg);
+                    setTimeout(()=>msg.remove(),2000);
+                    return;
+                }
+                const groupCells=document.querySelectorAll('#talentTable .talent-cell[data-group="'+groupId+'"]');
+                groupCells.forEach(c=>{
+                    if(!c.classList.contains('mandatory')){
+                        const tid=c.dataset.talentId;
+                        if(tid){ const newImgUrl=getTalentImage(parseInt(tid), false); const img=c.querySelector('img'); if(img && newImgUrl) img.src=newImgUrl; }
+                        c.classList.remove('active');
+                    }
+                });
+                const newImgUrl=getTalentImage(talentId, true);
+                const img=cell.querySelector('img');
+                if(img && newImgUrl) img.src=newImgUrl;
+                cell.classList.add('active');
+                const sameSideCells=document.querySelectorAll('#talentTable .talent-cell[data-group="'+groupId+'"][data-side="'+side+'"]');
+                sameSideCells.forEach(c=>{
+                    if(!c.classList.contains('mandatory')){
+                        const tid=c.dataset.talentId;
+                        if(tid){ const newUrl=getTalentImage(parseInt(tid), true); const cImg=c.querySelector('img'); if(cImg && newUrl) cImg.src=newUrl; }
+                        c.classList.add('active');
+                    }
+                });
+                currentHeroTalents[groupId]=side;
+                const heroData=viewHeroes[currentIdx];
+                if(heroData){
+                    const calc=calculateStatsWithSelections(heroData, currentHeroTalents, currentMode);
+                    document.getElementById('mStats').innerHTML='<span class="pill">С: '+heroData[HERO_FIELDS.power]+'</span><span class="pill">А: '+calc.attack+'</span><span class="pill">З: '+calc.defense+'</span><span class="pill">Ж: '+calc.hp+'</span>';
+                }
+                renderTalentTree(heroData, currentHeroTalents, currentMode);
+            });
+        });
+    }
+}
+
+function initDragAndDrop() {
+    const panel=document.getElementById('treePanel');
+    const header=document.getElementById('treeHeader');
+    function onMouseDown(e){
+        if(window.innerWidth<=480) return;
+        if(e.target.closest('.tree-close')) return;
+        isDragging=true;
+        dragStartX=e.clientX-panel.offsetLeft;
+        dragStartY=e.clientY-panel.offsetTop;
+        panel.style.cursor='grabbing';
+        panel.classList.add('dragging');
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+        e.preventDefault();
+    }
+    function onMouseMove(e){
+        if(!isDragging) return;
+        let newLeft=e.clientX-dragStartX;
+        let newTop=e.clientY-dragStartY;
+        const maxLeft=window.innerWidth-panel.offsetWidth-10;
+        const minLeft=10;
+        const maxTop=window.innerHeight-panel.offsetHeight-10;
+        const minTop=10;
+        newLeft=Math.min(Math.max(newLeft,minLeft),maxLeft);
+        newTop=Math.min(Math.max(newTop,minTop),maxTop);
+        panel.style.left=newLeft+'px';
+        panel.style.top=newTop+'px';
+        panel.style.right='auto';
+        panel.style.transform='none';
+    }
+    function onMouseUp(){
+        isDragging=false;
+        panel.style.cursor='';
+        panel.classList.remove('dragging');
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+    }
+    header.addEventListener('mousedown', onMouseDown);
+}
+
 function openTreePanel(){ const hero=viewHeroes[currentIdx]; if(!hero) return; const panel=document.getElementById('treePanel'); if(!panel.style.left && !panel.style.top){ panel.style.left=''; panel.style.right='20px'; panel.style.top='50%'; panel.style.transform='translateY(-50%)'; } document.getElementById('treeHeroName').textContent=hero[HERO_FIELDS.name]; renderTalentTree(hero, currentHeroTalents, currentMode); panel.classList.add('show'); }
 function closeTreePanel(){ document.getElementById('treePanel').classList.remove('show'); hideTalentTooltip(); }
 function updateMainModalStats(){ const hero=viewHeroes[currentIdx]; if(!hero) return; currentMode=document.getElementById('talentModeSelect').value; let selections={}; if(currentMode==='none'){ selections={}; currentHeroTalents={}; } else if(currentMode==='attack'){ selections=getOptimalSelections(hero,'attack'); currentHeroTalents=selections; } else if(currentMode==='defense'){ selections=getOptimalSelections(hero,'defense'); currentHeroTalents=selections; } else if(currentMode==='manual'){ selections=currentHeroTalents; } const calc=calculateStatsWithSelections(hero, selections, currentMode); document.getElementById('mStats').innerHTML='<span class="pill">С: '+hero[HERO_FIELDS.power]+'</span><span class="pill">А: '+calc.attack+'</span><span class="pill">З: '+calc.defense+'</span><span class="pill">Ж: '+calc.hp+'</span>'; if(document.getElementById('treePanel').classList.contains('show')){ renderTalentTree(hero, currentHeroTalents, currentMode); } }
 function toNum(v){ let n=parseFloat(String(v).replace(',','.')); return isNaN(n)?null:n; }
 function uniq(arr){ return [...new Set(arr.filter(v=>v!==null&&v!==undefined&&String(v).trim()!==''))]; }
 function sortAlpha(a,b){ return String(a).localeCompare(String(b),'ru',{numeric:true}); }
-function buildFacet(container, values, facetKey, isTags) { let opts=uniq(values); if(facetKey==='mana') opts.sort((a,b)=>{let o=['Очень медленно','Медленно','Средне','Быстро','Очень быстро','Легендарно быстро']; return o.indexOf(a)-o.indexOf(b);}); else if(facetKey==='stars') opts.sort((a,b)=>toNum(a)-toNum(b)); else if(isTags) opts.sort((a,b)=>a.localeCompare(b)); else opts.sort(sortAlpha); container.innerHTML=opts.map(v=>{ let tagHtml=''; if(isTags){ const tagClass=getTagClass(v); tagHtml='<span class="tag-color" style="background:var(--'+tagClass.replace('tag-','')+')"></span>'; } return '<label class="opt"><input type="checkbox" data-facet="'+facetKey+'" value="'+String(v).replace(/"/g,'&quot;')+'" '+(selected[facetKey].has(String(v))?'checked':'')+'>'+tagHtml+'<span>'+v+'</span></label>'; }).join(''); container.querySelectorAll('input[type="checkbox"]').forEach(cb=>cb.addEventListener('change',()=>{ let s=selected[cb.dataset.facet]; if(cb.checked) s.add(cb.value); else s.delete(cb.value); })); }
+
+function buildFacet(container, values, facetKey, isTags) {
+    let opts=uniq(values);
+    if(facetKey==='mana') opts.sort((a,b)=>{let o=['Очень медленно','Медленно','Средне','Быстро','Очень быстро','Легендарно быстро']; return o.indexOf(a)-o.indexOf(b);});
+    else if(facetKey==='stars') opts.sort((a,b)=>toNum(a)-toNum(b));
+    else if(isTags) opts.sort((a,b)=>a.localeCompare(b));
+    else opts.sort(sortAlpha);
+    container.innerHTML=opts.map(v=>{
+        let tagHtml='';
+        if(isTags){ const tagClass=getTagClass(v); tagHtml='<span class="tag-color" style="background:var(--'+tagClass.replace('tag-','')+')"></span>'; }
+        return '<label class="opt"><input type="checkbox" data-facet="'+facetKey+'" value="'+String(v).replace(/"/g,'&quot;')+'" '+(selected[facetKey].has(String(v))?'checked':'')+'>'+tagHtml+'<span>'+v+'</span></label>';
+    }).join('');
+    container.querySelectorAll('input[type="checkbox"]').forEach(cb=>cb.addEventListener('change',()=>{ let s=selected[cb.dataset.facet]; if(cb.checked) s.add(cb.value); else s.delete(cb.value); }));
+}
+
 const selected = { element:new Set(), stars:new Set(), mana:new Set(), attackType:new Set(), summon:new Set(), clazz:new Set(), heroes:new Set(), tags:new Set() };
-function initAllFacets(heroes){ buildFacet(document.getElementById('facet-element'), heroes.map(r=>r[HERO_FIELDS.element]), 'element'); buildFacet(document.getElementById('facet-stars'), heroes.map(r=>r[HERO_FIELDS.stars]), 'stars'); buildFacet(document.getElementById('facet-mana'), heroes.map(r=>r[HERO_FIELDS.mana]), 'mana'); buildFacet(document.getElementById('facet-attackType'), heroes.map(r=>r[HERO_FIELDS.attackType]), 'attackType'); buildFacet(document.getElementById('facet-summon'), heroes.map(r=>r[HERO_FIELDS.summon]), 'summon'); buildFacet(document.getElementById('facet-clazz'), heroes.map(r=>r[HERO_FIELDS.clazz]), 'clazz'); const allTags=new Set(); heroes.forEach(r=>{ if(r._tags) r._tags.forEach(t=>allTags.add(t)); }); buildFacet(document.getElementById('facet-tags'), Array.from(allTags), 'tags', true); allHeroNames=uniq(heroes.map(r=>r[HERO_FIELDS.name])).sort(sortAlpha); filteredHeroNames=[...allHeroNames]; updateHeroCheckboxes(); }
-function updateHeroCheckboxes(){ let names=filteredHeroNames.length?filteredHeroNames:allHeroNames; document.getElementById('heroCheckboxesList').innerHTML=names.map(name=>'<div class="hero-checkbox-item"><input type="checkbox" id="hero-'+name.replace(/[^a-zа-я0-9]/gi,'_')+'" data-hero="'+name+'" '+(selected.heroes.has(name)?'checked':'')+'><label>'+name+'</label></div>').join(''); document.querySelectorAll('#heroCheckboxesList input').forEach(cb=>cb.addEventListener('change',function(){ let n=this.dataset.hero; if(this.checked) selected.heroes.add(n); else selected.heroes.delete(n); updateHeroSelectDisplay(); })); updateHeroSelectDisplay(); }
-function updateHeroSelectDisplay(){ let c=selected.heroes.size; document.getElementById('heroSelectedCount').textContent=c+' выбрано'; if(c===0) document.getElementById('heroSelectText').textContent='Выберите героя'; else if(c===1) document.getElementById('heroSelectText').textContent=Array.from(selected.heroes)[0]; else if(c===allHeroNames.length) document.getElementById('heroSelectText').textContent='Все герои'; else document.getElementById('heroSelectText').textContent=Array.from(selected.heroes)[0]+' и еще '+(c-1); }
-function applyFilters(){ let q=document.getElementById('searchInput').value.trim().toLowerCase(); viewHeroes=allHeroes.filter(r=>{ let nameMatch=!q||String(r[HERO_FIELDS.name]).toLowerCase().includes(q)||String(r[HERO_FIELDS.abilities]).toLowerCase().includes(q); let elemMatch=selected.element.size===0||selected.element.has(String(r[HERO_FIELDS.element])); let starsMatch=selected.stars.size===0||selected.stars.has(String(r[HERO_FIELDS.stars])); let manaMatch=selected.mana.size===0||selected.mana.has(String(r[HERO_FIELDS.mana])); let atkMatch=selected.attackType.size===0||selected.attackType.has(String(r[HERO_FIELDS.attackType])); let summonMatch=selected.summon.size===0||selected.summon.has(String(r[HERO_FIELDS.summon])); let clazzMatch=selected.clazz.size===0||selected.clazz.has(String(r[HERO_FIELDS.clazz])); let heroMatch=selected.heroes.size===0||selected.heroes.has(String(r[HERO_FIELDS.name])); let tagMatch=selected.tags.size===0||(r._tags && r._tags.some(t=>selected.tags.has(t))); return nameMatch && elemMatch && starsMatch && manaMatch && atkMatch && summonMatch && clazzMatch && heroMatch && tagMatch; }); let by=document.getElementById('sortSelect').value; viewHeroes.sort((a,b)=>{ let av=a[by], bv=b[by]; let an=toNum(av), bn=toNum(bv); let cmp=(an!=null && bn!=null)?an-bn:String(av||'').localeCompare(String(bv||''),'ru',{numeric:true}); return sortDirection==='asc'?cmp:-cmp; }); document.getElementById('count').textContent='Найдено: '+viewHeroes.length; renderCards(viewHeroes); filteredHeroNames=uniq(viewHeroes.map(r=>r[HERO_FIELDS.name])).sort(sortAlpha); updateHeroCheckboxes(); }
-function renderCards(heroes){ if(!heroes.length){ document.getElementById('cards').innerHTML=''; document.getElementById('empty').style.display='block'; return; } document.getElementById('empty').style.display='none'; document.getElementById('cards').innerHTML=heroes.map((r,i)=>{ let img=fileCellToUrl(r[HERO_FIELDS.image]); let abilitiesFull=String(r[HERO_FIELDS.abilities]||''); let cleaned=abilitiesFull.replace(/^'|'$/g,''); let hasAbil=cleaned.trim().length>0; return '<article class="card" data-idx="'+i+'" data-element="'+(r[HERO_FIELDS.element]||'')+'"><div class="thumb">'+(img?'<img src="'+img+'" alt="'+r[HERO_FIELDS.name]+'" loading="lazy" onerror="this.style.display=\'none\'">':'<div style="padding:20px;">Нет изображения</div>')+'</div><h3>'+r[HERO_FIELDS.name]+'</h3><div class="meta"><span>'+r[HERO_FIELDS.element]+'</span> • <span>'+r[HERO_FIELDS.stars]+'★</span> • <span>'+r[HERO_FIELDS.mana]+'</span></div><div class="meta"><span>'+r[HERO_FIELDS.attackType]+'</span> • <span>'+r[HERO_FIELDS.summon]+'</span> • <span>'+r[HERO_FIELDS.clazz]+'</span></div><div class="stats"><span class="pill">С: '+r[HERO_FIELDS.power]+'</span><span class="pill">А: '+r[HERO_FIELDS.attack]+'</span><span class="pill">З: '+r[HERO_FIELDS.defense]+'</span><span class="pill">Ж: '+r[HERO_FIELDS.hp]+'</span></div>'+(hasAbil?'<button class="toggle-abilities" data-idx="'+i+'">Показать способности</button><div class="card-abilities-full" id="abilities-'+i+'">'+cleaned.replace(/\n/g,'<br>')+'</div>':'')+'</article>'; }).join(''); document.querySelectorAll('.toggle-abilities').forEach(btn=>btn.addEventListener('click',function(e){ e.stopPropagation(); let idx=this.dataset.idx; let div=document.getElementById('abilities-'+idx); if(div.style.display==='block'){ div.style.display='none'; this.textContent='Показать способности'; } else { div.style.display='block'; this.textContent='Скрыть способности'; } })); }
-function openModal(idx){ if(!viewHeroes.length) return; currentIdx=idx; const hero=viewHeroes[currentIdx]; currentMode='none'; document.getElementById('talentModeSelect').value='none'; currentHeroTalents={}; fillModal(hero); document.getElementById('modal').classList.add('show'); document.body.style.overflow='hidden'; }
-function fillModal(hero){ let img=fileCellToUrl(hero[HERO_FIELDS.image]); document.getElementById('mImg').src=img||''; document.getElementById('mOpenImg').href=img||'#'; document.getElementById('mName').textContent=hero[HERO_FIELDS.name]||''; document.getElementById('mMeta1').innerHTML='<span>'+hero[HERO_FIELDS.element]+'</span> <span>'+hero[HERO_FIELDS.stars]+'★</span> <span>'+hero[HERO_FIELDS.mana]+'</span>'; document.getElementById('mMeta2').innerHTML='<span>'+hero[HERO_FIELDS.attackType]+'</span> <span>'+hero[HERO_FIELDS.summon]+'</span> <span>'+hero[HERO_FIELDS.clazz]+'</span>'; const container=document.getElementById('modalImageContainer'); container.setAttribute('data-element', hero[HERO_FIELDS.element]||''); const calc=calculateStatsWithSelections(hero, currentHeroTalents, 'none'); document.getElementById('mStats').innerHTML='<span class="pill">С: '+hero[HERO_FIELDS.power]+'</span><span class="pill">А: '+calc.attack+'</span><span class="pill">З: '+calc.defense+'</span><span class="pill">Ж: '+calc.hp+'</span>'; const tagsContainer=document.getElementById('modalTags'); if(hero._tags && hero._tags.length>0){ const tagsHtml=hero._tags.map(tag=>'<span class="tag '+getTagClass(tag)+'" data-tag="'+tag+'">#'+tag+'</span>').join(''); tagsContainer.innerHTML='<span class="tag-label">Теги:</span> '+tagsHtml; tagsContainer.querySelectorAll('.tag').forEach(el=>{ el.addEventListener('click',function(e){ e.stopPropagation(); const tag=this.dataset.tag; if(tag){ selected.element.clear(); selected.stars.clear(); selected.mana.clear(); selected.attackType.clear(); selected.summon.clear(); selected.clazz.clear(); selected.heroes.clear(); document.getElementById('searchInput').value=''; selected.tags.clear(); selected.tags.add(tag); closeModal(); applyFilters(); } }); }); } else { tagsContainer.innerHTML=''; } document.getElementById('mAbilities').textContent=String(hero[HERO_FIELDS.abilities]||'—').replace(/^'|'$/g,''); document.getElementById('mPassive').textContent=String(hero[HERO_FIELDS.passive]||'—').replace(/^'|'$/g,''); const wrapper=document.getElementById('upgradeSectionWrapper'); wrapper.classList.remove('show'); document.getElementById('upgradeToggleBtn').textContent='📈 Прокачка героя'; renderUpgradeSection(hero); }
+
+function initAllFacets(heroes){
+    buildFacet(document.getElementById('facet-element'), heroes.map(r=>r[HERO_FIELDS.element]), 'element');
+    buildFacet(document.getElementById('facet-stars'), heroes.map(r=>r[HERO_FIELDS.stars]), 'stars');
+    buildFacet(document.getElementById('facet-mana'), heroes.map(r=>r[HERO_FIELDS.mana]), 'mana');
+    buildFacet(document.getElementById('facet-attackType'), heroes.map(r=>r[HERO_FIELDS.attackType]), 'attackType');
+    buildFacet(document.getElementById('facet-summon'), heroes.map(r=>r[HERO_FIELDS.summon]), 'summon');
+    buildFacet(document.getElementById('facet-clazz'), heroes.map(r=>r[HERO_FIELDS.clazz]), 'clazz');
+    const allTags=new Set(); heroes.forEach(r=>{ if(r._tags) r._tags.forEach(t=>allTags.add(t)); });
+    buildFacet(document.getElementById('facet-tags'), Array.from(allTags), 'tags', true);
+    allHeroNames=uniq(heroes.map(r=>r[HERO_FIELDS.name])).sort(sortAlpha);
+    filteredHeroNames=[...allHeroNames];
+    updateHeroCheckboxes();
+}
+
+function updateHeroCheckboxes(){
+    let names=filteredHeroNames.length?filteredHeroNames:allHeroNames;
+    document.getElementById('heroCheckboxesList').innerHTML=names.map(name=>'<div class="hero-checkbox-item"><input type="checkbox" id="hero-'+name.replace(/[^a-zа-я0-9]/gi,'_')+'" data-hero="'+name+'" '+(selected.heroes.has(name)?'checked':'')+'><label>'+name+'</label></div>').join('');
+    document.querySelectorAll('#heroCheckboxesList input').forEach(cb=>cb.addEventListener('change',function(){ let n=this.dataset.hero; if(this.checked) selected.heroes.add(n); else selected.heroes.delete(n); updateHeroSelectDisplay(); }));
+    updateHeroSelectDisplay();
+}
+
+function updateHeroSelectDisplay(){
+    let c=selected.heroes.size;
+    document.getElementById('heroSelectedCount').textContent=c+' выбрано';
+    if(c===0) document.getElementById('heroSelectText').textContent='Выберите героя';
+    else if(c===1) document.getElementById('heroSelectText').textContent=Array.from(selected.heroes)[0];
+    else if(c===allHeroNames.length) document.getElementById('heroSelectText').textContent='Все герои';
+    else document.getElementById('heroSelectText').textContent=Array.from(selected.heroes)[0]+' и еще '+(c-1);
+}
+
+function applyFilters(){
+    let q=document.getElementById('searchInput').value.trim().toLowerCase();
+    viewHeroes=allHeroes.filter(r=>{
+        let nameMatch=!q||String(r[HERO_FIELDS.name]).toLowerCase().includes(q)||String(r[HERO_FIELDS.abilities]).toLowerCase().includes(q);
+        let elemMatch=selected.element.size===0||selected.element.has(String(r[HERO_FIELDS.element]));
+        let starsMatch=selected.stars.size===0||selected.stars.has(String(r[HERO_FIELDS.stars]));
+        let manaMatch=selected.mana.size===0||selected.mana.has(String(r[HERO_FIELDS.mana]));
+        let atkMatch=selected.attackType.size===0||selected.attackType.has(String(r[HERO_FIELDS.attackType]));
+        let summonMatch=selected.summon.size===0||selected.summon.has(String(r[HERO_FIELDS.summon]));
+        let clazzMatch=selected.clazz.size===0||selected.clazz.has(String(r[HERO_FIELDS.clazz]));
+        let heroMatch=selected.heroes.size===0||selected.heroes.has(String(r[HERO_FIELDS.name]));
+        let tagMatch=selected.tags.size===0||(r._tags && r._tags.some(t=>selected.tags.has(t)));
+        return nameMatch && elemMatch && starsMatch && manaMatch && atkMatch && summonMatch && clazzMatch && heroMatch && tagMatch;
+    });
+    let by=document.getElementById('sortSelect').value;
+    viewHeroes.sort((a,b)=>{ let av=a[by], bv=b[by]; let an=toNum(av), bn=toNum(bv); let cmp=(an!=null && bn!=null)?an-bn:String(av||'').localeCompare(String(bv||''),'ru',{numeric:true}); return sortDirection==='asc'?cmp:-cmp; });
+    document.getElementById('count').textContent='Найдено: '+viewHeroes.length;
+    renderCards(viewHeroes);
+    filteredHeroNames=uniq(viewHeroes.map(r=>r[HERO_FIELDS.name])).sort(sortAlpha);
+    updateHeroCheckboxes();
+}
+
+function renderCards(heroes){
+    if(!heroes.length){ document.getElementById('cards').innerHTML=''; document.getElementById('empty').style.display='block'; return; }
+    document.getElementById('empty').style.display='none';
+    document.getElementById('cards').innerHTML=heroes.map((r,i)=>{
+        let img=fileCellToUrl(r[HERO_FIELDS.image]);
+        let abilitiesFull=String(r[HERO_FIELDS.abilities]||'');
+        let cleaned=abilitiesFull.replace(/^'|'$/g,'');
+        let hasAbil=cleaned.trim().length>0;
+        return '<article class="card" data-idx="'+i+'" data-element="'+(r[HERO_FIELDS.element]||'')+'"><div class="thumb">'+(img?'<img src="'+img+'" alt="'+r[HERO_FIELDS.name]+'" loading="lazy" onerror="this.style.display=\'none\'">':'<div style="padding:20px;">Нет изображения</div>')+'</div><h3>'+r[HERO_FIELDS.name]+'</h3><div class="meta"><span>'+r[HERO_FIELDS.element]+'</span> • <span>'+r[HERO_FIELDS.stars]+'★</span> • <span>'+r[HERO_FIELDS.mana]+'</span></div><div class="meta"><span>'+r[HERO_FIELDS.attackType]+'</span> • <span>'+r[HERO_FIELDS.summon]+'</span> • <span>'+r[HERO_FIELDS.clazz]+'</span></div><div class="stats"><span class="pill">С: '+r[HERO_FIELDS.power]+'</span><span class="pill">А: '+r[HERO_FIELDS.attack]+'</span><span class="pill">З: '+r[HERO_FIELDS.defense]+'</span><span class="pill">Ж: '+r[HERO_FIELDS.hp]+'</span></div>'+(hasAbil?'<button class="toggle-abilities" data-idx="'+i+'">Показать способности</button><div class="card-abilities-full" id="abilities-'+i+'">'+cleaned.replace(/\n/g,'<br>')+'</div>':'')+'</article>';
+    }).join('');
+    document.querySelectorAll('.toggle-abilities').forEach(btn=>btn.addEventListener('click',function(e){ e.stopPropagation(); let idx=this.dataset.idx; let div=document.getElementById('abilities-'+idx); if(div.style.display==='block'){ div.style.display='none'; this.textContent='Показать способности'; } else { div.style.display='block'; this.textContent='Скрыть способности'; } }));
+}
+
+function openModal(idx){
+    if(!viewHeroes.length) return;
+    currentIdx=idx;
+    const hero=viewHeroes[currentIdx];
+    currentMode='none';
+    document.getElementById('talentModeSelect').value='none';
+    currentHeroTalents={};
+    fillModal(hero);
+    document.getElementById('modal').classList.add('show');
+    document.body.style.overflow='hidden';
+}
+
+function fillModal(hero){
+    let img=fileCellToUrl(hero[HERO_FIELDS.image]);
+    document.getElementById('mImg').src=img||'';
+    document.getElementById('mOpenImg').href=img||'#';
+    document.getElementById('mName').textContent=hero[HERO_FIELDS.name]||'';
+    document.getElementById('mMeta1').innerHTML='<span>'+hero[HERO_FIELDS.element]+'</span> <span>'+hero[HERO_FIELDS.stars]+'★</span> <span>'+hero[HERO_FIELDS.mana]+'</span>';
+    document.getElementById('mMeta2').innerHTML='<span>'+hero[HERO_FIELDS.attackType]+'</span> <span>'+hero[HERO_FIELDS.summon]+'</span> <span>'+hero[HERO_FIELDS.clazz]+'</span>';
+    const container=document.getElementById('modalImageContainer');
+    container.setAttribute('data-element', hero[HERO_FIELDS.element]||'');
+    const calc=calculateStatsWithSelections(hero, currentHeroTalents, 'none');
+    document.getElementById('mStats').innerHTML='<span class="pill">С: '+hero[HERO_FIELDS.power]+'</span><span class="pill">А: '+calc.attack+'</span><span class="pill">З: '+calc.defense+'</span><span class="pill">Ж: '+calc.hp+'</span>';
+    const tagsContainer=document.getElementById('modalTags');
+    if(hero._tags && hero._tags.length>0){
+        const tagsHtml=hero._tags.map(tag=>'<span class="tag '+getTagClass(tag)+'" data-tag="'+tag+'">#'+tag+'</span>').join('');
+        tagsContainer.innerHTML='<span class="tag-label">Теги:</span> '+tagsHtml;
+        tagsContainer.querySelectorAll('.tag').forEach(el=>{
+            el.addEventListener('click',function(e){
+                e.stopPropagation();
+                const tag=this.dataset.tag;
+                if(tag){
+                    selected.element.clear();
+                    selected.stars.clear();
+                    selected.mana.clear();
+                    selected.attackType.clear();
+                    selected.summon.clear();
+                    selected.clazz.clear();
+                    selected.heroes.clear();
+                    document.getElementById('searchInput').value='';
+                    selected.tags.clear();
+                    selected.tags.add(tag);
+                    closeModal();
+                    applyFilters();
+                }
+            });
+        });
+    } else { tagsContainer.innerHTML=''; }
+    document.getElementById('mAbilities').textContent=String(hero[HERO_FIELDS.abilities]||'—').replace(/^'|'$/g,'');
+    document.getElementById('mPassive').textContent=String(hero[HERO_FIELDS.passive]||'—').replace(/^'|'$/g,'');
+    const wrapper=document.getElementById('upgradeSectionWrapper');
+    wrapper.classList.remove('show');
+    document.getElementById('upgradeToggleBtn').textContent='📈 Прокачка героя';
+    renderUpgradeSection(hero);
+}
+
 function closeModal(){ document.getElementById('modal').classList.remove('show'); document.body.style.overflow=''; currentIdx=-1; closeTreePanel(); }
 function go(delta){ if(currentIdx<0||!viewHeroes.length) return; currentIdx=(currentIdx+delta+viewHeroes.length)%viewHeroes.length; openModal(currentIdx); }
+
 function attachEvents(){
 document.getElementById('searchInput').addEventListener('input', applyFilters);
 document.getElementById('sortSelect').addEventListener('change', applyFilters);
@@ -669,6 +1397,7 @@ document.getElementById('updateDate').textContent=new Date().toLocaleDateString(
 initTooltip();
 initDragAndDrop();
 }
+
 Promise.all([
 new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]).map(row=>{ const tagsStr=row['Теги']||''; const tags=tagsStr.split(',').map(t=>t.trim()).filter(t=>t!==''); return {...row,_tags:tags}; }); console.log('✅ Герои загружены:',allHeroes.length); res(); },error:rej})),
 new Promise((res,rej)=>Papa.parse(CLASSES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ r.data.forEach(row=>{ if(!row[CLASS_TALENT_FIELDS.class_id]) return; let cn=row[CLASS_TALENT_FIELDS.class_id]; if(!classTalents[cn]) classTalents[cn]=[]; classTalents[cn].push({ rowNumber:parseInt(row[CLASS_TALENT_FIELDS.row_number])||0, isMandatory:String(row[CLASS_TALENT_FIELDS.is_mandatory]).toLowerCase()==='true', branchGroup:row[CLASS_TALENT_FIELDS.branch_group], leftTalentId:row[CLASS_TALENT_FIELDS.left_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.left_talent_id]):null, centerTalentId:row[CLASS_TALENT_FIELDS.center_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.center_talent_id]):null, rightTalentId:row[CLASS_TALENT_FIELDS.right_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.right_talent_id]):null }); }); Object.keys(classTalents).forEach(cn=>classTalents[cn].sort((a,b)=>a.rowNumber-b.rowNumber)); console.log('✅ Классы с талантами загружены:',Object.keys(classTalents).length); res(); },error:rej})),
