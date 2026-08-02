@@ -245,12 +245,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .dialog .mStats .stat-item img,
 #mStats .stat-item img,
 .mStats .stat-item img {
-    width: 20px !important;
-    height: 20px !important;
-    min-width: 20px !important;
-    min-height: 20px !important;
-    max-width: 20px !important;
-    max-height: 20px !important;
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    max-width: 18px !important;
+    max-height: 18px !important;
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
@@ -288,59 +288,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 
 .stats .pill img {
-    width: 20px !important;
-    height: 20px !important;
-    min-width: 20px !important;
-    min-height: 20px !important;
-    max-width: 20px !important;
-    max-height: 20px !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-}
-
-#leftBtnIcon, #rightBtnIcon, #closeBtnIcon {
-    width: 24px !important;
-    height: 24px !important;
-    min-width: 24px !important;
-    min-height: 24px !important;
-    max-width: 24px !important;
-    max-height: 24px !important;
-    object-fit: contain !important;
-    display: block !important;
-}
-
-#treeBtnIcon {
-    width: 24px !important;
-    height: 24px !important;
-    min-width: 24px !important;
-    min-height: 24px !important;
-    max-width: 24px !important;
-    max-height: 24px !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-}
-
-#treeIcon {
-    width: 24px !important;
-    height: 24px !important;
-    min-width: 24px !important;
-    min-height: 24px !important;
-    max-width: 24px !important;
-    max-height: 24px !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-}
-
-#upgradeIcon, #upgradeSectionIcon {
-    width: 20px !important;
-    height: 20px !important;
-    min-width: 20px !important;
-    min-height: 20px !important;
-    max-width: 20px !important;
-    max-height: 20px !important;
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    max-width: 18px !important;
+    max-height: 18px !important;
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
@@ -388,7 +341,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     max-height:calc(90vh - 60px); 
 }
 
-/* Кнопки навигации */
+/* Кнопки навигации — справа сверху, синий фон, порядок: ← → ✕ */
 .nav-btn {
     position: absolute;
     top: 12px;
@@ -408,6 +361,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 0;
     z-index: 10;
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    flex: 0 0 auto !important;
 }
 .nav-btn:hover {
     background: #1d4ed8 !important;
@@ -435,6 +389,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     object-fit: contain !important;
     filter: brightness(0) invert(1);
     display: inline-block !important;
+    flex: 0 0 auto !important;
 }
 
 .image-container { background:var(--element-unknown); border-radius:12px; padding:12px; transition:background 0.3s; }
@@ -612,6 +567,63 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 /* --- Конец стилей прокачки --- */
 
+/* Иконки в дереве талантов */
+#treeIcon {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    flex: 0 0 auto !important;
+}
+
+#treeBtnIcon {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    flex: 0 0 auto !important;
+}
+
+#upgradeIcon, #upgradeSectionIcon {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    flex: 0 0 auto !important;
+}
+
+/* Иконки навигации — белые через filter */
+.nav-icon {
+    filter: brightness(0) invert(1) !important;
+}
+
+#leftBtnIcon, #rightBtnIcon, #closeBtnIcon {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    flex: 0 0 auto !important;
+}
+
 .tree-panel { position:fixed; top:50%; right:20px; transform:translateY(-50%); width:420px; max-width:calc(100vw - 40px); background:var(--card-bg); border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.3); z-index:2100; display:none; flex-direction:column; overflow:hidden; border:1px solid var(--border-color); cursor:default; }
 .tree-panel.show { display:flex; }
 .tree-panel.dragging { opacity:0.9; cursor:grabbing; }
@@ -720,9 +732,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 <div class="dialog">
 <div class="modal-content" style="position:relative;">
     <!-- Кнопки навигации справа сверху: ← → ✕ -->
-    <button id="mPrev" class="nav-btn nav-prev"><img id="leftBtnIcon" src="" alt="Назад" width="24" height="24"></button>
-    <button id="mNext" class="nav-btn nav-next"><img id="rightBtnIcon" src="" alt="Вперёд" width="24" height="24"></button>
-    <button id="mClose" class="nav-btn nav-close"><img id="closeBtnIcon" src="" alt="Закрыть" width="24" height="24"></button>
+    <button id="mPrev" class="nav-btn nav-prev">
+        <img id="leftBtnIcon" src="" alt="Назад" width="24" height="24" class="nav-icon">
+    </button>
+    <button id="mNext" class="nav-btn nav-next">
+        <img id="rightBtnIcon" src="" alt="Вперёд" width="24" height="24" class="nav-icon">
+    </button>
+    <button id="mClose" class="nav-btn nav-close">
+        <img id="closeBtnIcon" src="" alt="Закрыть" width="24" height="24" class="nav-icon">
+    </button>
     
     <div class="image-container" id="modalImageContainer"><img id="mImg" src=""><a id="mOpenImg" class="open-img" href="#" target="_blank">Открыть изображение в новой вкладке</a></div>
     <div class="info-container">
@@ -1481,9 +1499,9 @@ function renderStatsHTML(hero, calc) {
             const img = document.createElement('img');
             img.src = iconUrl;
             img.alt = alt;
-            img.setAttribute('width', '20');
-            img.setAttribute('height', '20');
-            img.style.cssText = 'width:20px !important;height:20px !important;min-width:20px !important;min-height:20px !important;max-width:20px !important;max-height:20px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;flex:0 0 auto !important;flex-shrink:0 !important;background:transparent !important;border:none !important;padding:0 !important;margin:0 !important;';
+            img.setAttribute('width', '18');
+            img.setAttribute('height', '18');
+            img.style.cssText = 'width:18px !important;height:18px !important;min-width:18px !important;min-height:18px !important;max-width:18px !important;max-height:18px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;flex:0 0 auto !important;flex-shrink:0 !important;background:transparent !important;border:none !important;padding:0 !important;margin:0 !important;';
             span.appendChild(img);
             const textNode = document.createTextNode(' ' + value);
             span.appendChild(textNode);
@@ -1520,9 +1538,9 @@ function renderCardStats(hero) {
             const img = document.createElement('img');
             img.src = iconUrl;
             img.alt = alt;
-            img.setAttribute('width', '20');
-            img.setAttribute('height', '20');
-            img.style.cssText = 'width:20px !important;height:20px !important;min-width:20px !important;min-height:20px !important;max-width:20px !important;max-height:20px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;flex:0 0 auto !important;';
+            img.setAttribute('width', '18');
+            img.setAttribute('height', '18');
+            img.style.cssText = 'width:18px !important;height:18px !important;min-width:18px !important;min-height:18px !important;max-width:18px !important;max-height:18px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;flex:0 0 auto !important;';
             span.appendChild(img);
             const textNode = document.createTextNode(' ' + value);
             span.appendChild(textNode);
@@ -1705,7 +1723,8 @@ function fillModal(hero){
         imgEl.src = url;
         imgEl.setAttribute('width', size);
         imgEl.setAttribute('height', size);
-        imgEl.style.cssText = 'width:' + size + 'px !important;height:' + size + 'px !important;min-width:' + size + 'px !important;min-height:' + size + 'px !important;max-width:' + size + 'px !important;max-height:' + size + 'px !important;object-fit:contain !important;display:block !important;filter:brightness(0)invert(1);flex:0 0 auto !important;';
+        imgEl.style.cssText = 'width:' + size + 'px !important;height:' + size + 'px !important;min-width:' + size + 'px !important;min-height:' + size + 'px !important;max-width:' + size + 'px !important;max-height:' + size + 'px !important;object-fit:contain !important;display:inline-block !important;flex:0 0 auto !important;';
+        imgEl.classList.add('nav-icon');
     }
     
     setIcon(document.getElementById('leftBtnIcon'), getIcon('Left_button'), 24);
