@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <style>
+/* Стили остаются без изменений, такие же как в рабочей версии */
 :root { 
   color-scheme: light dark; 
   --hdrH: 70px; 
@@ -1667,20 +1668,33 @@ function getTagClass(tag) {
 }
 
 // ==================== СИСТЕМА ПРОКАЧКИ ====================
+
+function fileCellToUrl(v) {
+    let s = String(v || '');
+    let m = s.match(/\((https?:\/\/[^)]+)\)/i);
+    if (m) return m[1];
+    let m2 = s.match(/https?:\/\/\S+/i);
+    return m2 ? m2[0].replace(/[),]+$/, '') : '';
+}
+
+function getItemImage(itemName) {
+    if (!itemName) return '';
+    if (itemImages[itemName]) return itemImages[itemName];
+    for (const [key, url] of Object.entries(itemImages)) {
+        if (itemName.includes(key) || key.includes(itemName)) {
+            return url;
+        }
+    }
+    return '';
+}
+
 function normalizeStarKey(star) {
-    // Приводим к единому формату: '5' → '5', '5★' → '5'
     return String(star).replace(/★/g, '').trim();
 }
 
 function getStarTargets(heroStars) {
-    // Для любого героя показываем все цели: 2★, 3★, 4★, 5★
-    // (в зависимости от текущей звёздности)
     const starNum = parseInt(normalizeStarKey(heroStars));
     const targets = [];
-    // Всегда показываем все уровни, до которых можно прокачаться
-    // Если герой 1★ → можно прокачать до 2★, 3★, 4★, 5★
-    // Если герой 2★ → можно прокачать до 3★, 4★, 5★
-    // и т.д.
     for (let i = 2; i <= 5; i++) {
         if (i > starNum) {
             targets.push(String(i));
@@ -1690,18 +1704,13 @@ function getStarTargets(heroStars) {
 }
 
 function getMaterialsForStar(heroElement, heroStars, targetStar) {
-    // heroStars — текущая звёздность героя (например, '4')
-    // targetStar — целевая звёздность (например, '5')
-    // Ищем материалы в зависимости от ТЕКУЩЕЙ звёздности героя
     const heroStarNormalized = normalizeStarKey(heroStars);
     let allData = [];
     if (heroStarNormalized === '4') allData = materialsData['4★'] || [];
     else if (heroStarNormalized === '5') allData = materialsData['5★'] || [];
     else {
-        // Для 1★, 2★, 3★ используем материалы 4★ (или можно добавить отдельную таблицу)
         allData = materialsData['4★'] || [];
     }
-    
     const result = allData.filter(item => {
         const itemElement = String(item['Стихия'] || '').trim();
         const itemTarget = String(item['Целевая звезда'] || '').trim();
@@ -1712,11 +1721,8 @@ function getMaterialsForStar(heroElement, heroStars, targetStar) {
 
 function getBooksForStar(heroStars, level) {
     const heroStarNormalized = normalizeStarKey(heroStars);
-    // Для книг используем звёздность героя (3★, 4★, 5★)
     let starKey = heroStarNormalized;
-    // Если герой 1★ или 2★, используем книги для 3★
     if (parseInt(starKey) < 3) starKey = '3';
-    
     const result = booksData.filter(item => {
         const itemStars = normalizeStarKey(item['Звездность героев'] || '');
         return itemStars === starKey && item['Уровень навыка'] === level;
@@ -1726,11 +1732,8 @@ function getBooksForStar(heroStars, level) {
 
 function getTokensForHero(heroStars) {
     const heroStarNormalized = normalizeStarKey(heroStars);
-    // Для жетонов используем звёздность героя
     let starKey = heroStarNormalized;
-    // Если герой 1★ или 2★, используем жетоны для 3★
     if (parseInt(starKey) < 3) starKey = '3';
-    
     const result = tokensData.filter(item => {
         const itemStars = normalizeStarKey(item['Количество звезд'] || '');
         return itemStars === starKey;
@@ -2677,11 +2680,10 @@ function fillModal(hero) {
     document.getElementById('mAbilities').textContent = String(hero[HERO_FIELDS.abilities] || '—').replace(/^'|'$/g, '');
     document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive] || '—').replace(/^'|'$/g, '');
     
-    // Блок прокачки — всегда скрыт при открытии
+    // Блок прокачки
     const wrapper = document.getElementById('upgradeSectionWrapper');
     wrapper.classList.remove('show');
     document.getElementById('upgradeToggleBtn').textContent = '📈 Прокачка героя';
-    // Рендерим данные, но они будут скрыты до нажатия кнопки
     renderUpgradeSection(hero);
 }
 
@@ -2735,7 +2737,6 @@ function attachEvents() {
             wrapper.classList.remove('show');
             this.textContent = '📈 Прокачка героя';
         } else {
-            // Перед открытием обновляем данные
             const hero = viewHeroes[currentIdx];
             if (hero) renderUpgradeSection(hero);
             wrapper.classList.add('show');
@@ -2872,7 +2873,7 @@ Promise.all([
     attachEvents();
     applyFilters();
     console.log('🚀 Сайт готов к работе!');
-}).catch(e => { console.error('❌ Ошибка загрузки данных:', e); document.getElementById('count').textContent = 'Ошибка загрузки данных.'; });
+}).catch(e => { console.error('❌ Ошибка загрузки данных:', e); document.getElementById('count').textContent = 'Ошибка загрузки данных.'); });
 </script>
 </body>
 </html>
