@@ -387,8 +387,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .upgrade-item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 4px 0;
+    gap: 12px;
+    padding: 6px 0;
     font-size: 13px;
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
@@ -396,10 +396,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     border-bottom: none;
 }
 .upgrade-item img {
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
     object-fit: contain;
     border-radius: 4px;
+    flex-shrink: 0;
 }
 .upgrade-item .name {
     flex: 1;
@@ -417,17 +418,18 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .upgrade-tokens .token {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     font-size: 13px;
     background: var(--secondary-color);
     padding: 6px 14px 6px 8px;
     border-radius: 20px;
 }
 .upgrade-tokens .token img {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     object-fit: contain;
     border-radius: 4px;
+    flex-shrink: 0;
 }
 .upgrade-tokens .token .count {
     font-weight: 600;
