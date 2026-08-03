@@ -281,16 +281,17 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     max-height:calc(90vh - 60px); 
 }
 
-/* Кнопки навигации — простые, без лишней стилизации */
+/* Кнопки навигации — увеличенные, рядом */
 .nav-btn {
     position: absolute !important;
     top: 12px !important;
-    width: 40px !important;
-    height: 40px !important;
-    min-width: 40px !important;
-    min-height: 40px !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
     border: none !important;
-    background: transparent !important;
+    background: rgba(255,255,255,0.85) !important;
+    backdrop-filter: blur(4px) !important;
     cursor: pointer !important;
     display: flex !important;
     align-items: center !important;
@@ -299,29 +300,34 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     border-radius: 50% !important;
     padding: 0 !important;
     z-index: 10 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
 }
 .nav-btn:hover {
-    transform: scale(1.1) !important;
-    background: rgba(0,0,0,0.05) !important;
+    transform: scale(1.08) !important;
+    background: rgba(255,255,255,1) !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25) !important;
 }
 .nav-btn:active {
-    transform: scale(0.95) !important;
+    transform: scale(0.92) !important;
 }
 
-/* Иконки в кнопках — оригинальные цвета, без фильтров */
+/* Иконки в кнопках — большие, оригинальные цвета */
 .nav-btn img {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
     object-fit: contain !important;
     display: block !important;
-    filter: none !important; /* Убираем инвертирование цветов */
+    filter: none !important;
+    transform: scale(1.0) !important;
 }
 
-/* Порядок кнопок: ← → ✕ */
-.nav-prev { right: 108px !important; }
-.nav-next { right: 60px !important; }
+/* Кнопки в ряд: ← → ✕ с одинаковым отступом */
+.nav-prev { right: 124px !important; }  /* 12 + 48 + 12 + 48 + 4 = 124 */
+.nav-next { right: 64px !important; }   /* 12 + 48 + 4 = 64 */
 .nav-close { right: 12px !important; }
 
 .image-container { background:var(--element-unknown); border-radius:12px; padding:12px; transition:background 0.3s; }
@@ -1721,22 +1727,25 @@ function fillModal(hero){
     document.getElementById('mOpenImg').href = img || '#';
     document.getElementById('mName').textContent = hero[HERO_FIELDS.name] || '';
     
-    // ===== ИКОНКИ НАВИГАЦИИ — оригинальные цвета =====
+   // ===== ИКОНКИ НАВИГАЦИИ — увеличенные =====
 const leftIcon = getIcon('Left_button');
 const rightIcon = getIcon('Right_button');
 const closeIcon = getIcon('Close_button');
 
+// Стиль для всех иконок навигации — большой размер
+const navIconStyle = 'width:36px;height:36px;min-width:36px;min-height:36px;max-width:36px;max-height:36px;object-fit:contain;display:block;';
+
 if (leftIcon) {
     const el = document.getElementById('leftBtnIcon');
-    if (el) { el.src = leftIcon; el.style.cssText = 'width:32px;height:32px;min-width:32px;min-height:32px;object-fit:contain;display:block;'; }
+    if (el) { el.src = leftIcon; el.style.cssText = navIconStyle; }
 }
 if (rightIcon) {
     const el = document.getElementById('rightBtnIcon');
-    if (el) { el.src = rightIcon; el.style.cssText = 'width:32px;height:32px;min-width:32px;min-height:32px;object-fit:contain;display:block;'; }
+    if (el) { el.src = rightIcon; el.style.cssText = navIconStyle; }
 }
 if (closeIcon) {
     const el = document.getElementById('closeBtnIcon');
-    if (el) { el.src = closeIcon; el.style.cssText = 'width:32px;height:32px;min-width:32px;min-height:32px;object-fit:contain;display:block;'; }
+    if (el) { el.src = closeIcon; el.style.cssText = navIconStyle; }
 }
     
     // ===== ИКОНКА ДЛЯ КНОПКИ "ДЕРЕВО ТАЛАНТОВ" =====
