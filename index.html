@@ -21,7 +21,7 @@
   --checkbox-border: #ccc;
   --header-bg: #fff;
   --header-text: #111;
-  --accent-color: #2563eb;
+  --accent-color: #227BBC;
   --element-blue: #cbf0ff;
   --element-green: #d7ffd6;
   --element-red: #ffdcdc;
@@ -83,7 +83,7 @@
     --secondary-color: #3d3d3d;
     --header-bg: #2d2d2d;
     --header-text: #eee;
-    --accent-color: #3b82f6;
+    --accent-color: #227BBC;
     --element-blue: #1a4055;
     --element-green: #1a4525;
     --element-red: #5a2e2e;
@@ -180,7 +180,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .btn { padding:8px 16px; font-size:14px; border:1px solid var(--checkbox-border); border-radius:8px; background:var(--card-bg); color:var(--text-color); cursor:pointer; transition:all 0.2s; font-weight:500; white-space:nowrap; }
 .btn:hover { background:var(--secondary-color); }
 .btn.primary { background:var(--accent-color); color:#fff; border-color:var(--accent-color); }
-.btn.primary:hover { background:#1d4ed8; }
+.btn.primary:hover { background:#1a5f9a; }
 .btn.secondary { background:var(--card-bg); color:var(--text-color); border-color:var(--checkbox-border); }
 .btn.reset { background-color:#f44336; color:white; border-color:#f44336; }
 .btn.reset:hover { background-color:#d32f2f; }
@@ -307,7 +307,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     transform: scale(0.9) !important;
 }
 
-/* Иконки в кнопках */
+/* Иконки в кнопках навигации */
 .nav-btn img {
     width: 40px !important;
     height: 40px !important;
@@ -320,10 +320,22 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     filter: none !important;
 }
 
-/* ОДИНАКОВОЕ расстояние между кнопками — по 8px */
-.nav-prev { right: 108px !important; }  /* 8 + 48 + 8 + 48 = 112 */
-.nav-next { right: 54px !important; }   /* 8 + 48 = 56 */
-.nav-close { right: 6px !important; }
+/* Принудительное увеличение для SVG-иконок навигации */
+.nav-btn img[src$=".svg"] {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    transform: scale(1.0) !important;
+    object-fit: contain !important;
+}
+
+/* Одинаковое расстояние между кнопками — по 8px */
+.nav-prev { right: 112px !important; }
+.nav-next { right: 56px !important; }
+.nav-close { right: 8px !important; }
 
 .image-container { background:var(--element-unknown); border-radius:12px; padding:12px; transition:background 0.3s; }
 .image-container[data-element="Синий"] { background:var(--element-blue); }
@@ -333,8 +345,22 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .image-container[data-element="Желтый"] { background:var(--element-yellow); }
 .dialog img { width:100%; height:auto; max-height:350px; object-fit:contain; border-radius:12px; background:transparent; padding:8px; }
 .dialog h2 { margin:0 0 8px; font-size:26px; font-weight:700; }
-.dialog .meta { display:flex; gap:8px; flex-wrap:wrap; opacity:0.8; margin-bottom:8px; font-size:14px; justify-content:flex-start; }
+.dialog .meta { display:flex; gap:8px; flex-wrap:wrap; opacity:0.8; margin-bottom:8px; font-size:14px; justify-content:flex-start; align-items:center; }
 .dialog .meta .star-icon { display:inline-block; width:18px; height:18px; vertical-align:middle; }
+
+/* ЗВЕЗДА В МЕТА-СТРОКЕ — в одну строку и увеличенная */
+#mMeta1 img[src$=".svg"] {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    max-width: 28px !important;
+    max-height: 28px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin: 0 2px !important;
+}
 
 /* ===== ХАРАКТЕРИСТИКИ В МОДАЛКЕ ===== */
 .dialog .mStats {
@@ -470,17 +496,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     object-fit: contain !important;
 }
 
-/* ЗВЕЗДА В МОДАЛКЕ */
-#mMeta1 img[src$=".svg"] {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    min-height: 28px !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-}
-
 /* ===== ХАРАКТЕРИСТИКИ В КАРТОЧКАХ ===== */
 .card .stats {
     display: flex !important;
@@ -516,7 +531,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .open-img { margin-top:8px; display:inline-block; font-size:13px; color:var(--primary-color); text-decoration:none; }
 
 /* --- Стили для блока прокачки --- */
-/* Кнопка "Прокачка героя" — цвет #227BBC */
 .upgrade-toggle-btn {
     display: inline-flex !important;
     align-items: center !important;
@@ -539,6 +553,22 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     background: #1a5f9a !important;
     color: #fff !important;
 }
+
+/* Принудительное увеличение для иконки прокачки */
+#upgradeIcon[src$=".svg"],
+.upgrade-section-title img[src$=".svg"] {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    max-width: 28px !important;
+    max-height: 28px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    filter: brightness(0) invert(1) !important;
+}
+
 .upgrade-section-wrapper {
     display: none;
     margin-top: 8px;
@@ -552,15 +582,19 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     border-radius: 10px;
     border: 1px solid var(--border-color);
 }
+
+/* Скрываем заголовок "Прокачка героя" внутри блока */
 .upgrade-section-title {
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-color);
+    display: none !important;
 }
+
+/* Увеличенный шрифт для подзаголовков в прокачке */
+.upgrade-section-wrapper .upgrade-section > div > div:first-child {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    margin-bottom: 6px !important;
+}
+
 .upgrade-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -570,7 +604,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .upgrade-btn {
     padding: 4px 12px;
     font-size: 12px;
-    border: 2px solid var(--accent-color);
+    border: 2px solid #227BBC !important;
     border-radius: 6px;
     background: var(--card-bg);
     color: var(--text-color);
@@ -588,16 +622,16 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     vertical-align: middle;
 }
 .upgrade-btn:hover {
-    background: var(--accent-color);
+    background: #227BBC !important;
     color: #fff;
 }
 .upgrade-btn:hover .star {
     color: #fff;
 }
 .upgrade-btn.active {
-    background: var(--accent-color);
+    background: #227BBC !important;
     color: #fff;
-    border-color: var(--accent-color);
+    border-color: #227BBC !important;
 }
 .upgrade-btn.active .star {
     color: #fff;
@@ -698,43 +732,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-dialog .date { text-align:center; font-style:italic; color:var(--text-color); opacity:0.6; margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color); }
 .info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
 .info-close:hover { opacity:1; }
-  /* Принудительное увеличение для SVG */
-.nav-btn img[src$=".svg"] {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    min-height: 44px !important;
-    max-width: 44px !important;
-    max-height: 44px !important;
-    transform: scale(1.0) !important;
-}
- /* Принудительное увеличение для иконки дерева талантов */
-#openTreeBtn img[src$=".svg"] {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    min-height: 28px !important;
-    max-width: 28px !important;
-    max-height: 28px !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    filter: brightness(0) invert(1) !important; /* Делаем белую для синего фона */
-} 
-  /* Принудительное увеличение для иконки прокачки */
-#upgradeIcon[src$=".svg"],
-.upgrade-section-title img[src$=".svg"] {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    min-height: 28px !important;
-    max-width: 28px !important;
-    max-height: 28px !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    filter: brightness(0) invert(1) !important;
-}
 </style>
 </head>
 <body>
@@ -845,15 +842,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <h3>Пассивные способности</h3>
         <div id="mPassive" class="pre"></div>
         
-        <button id="upgradeToggleBtn" class="upgrade-toggle-btn" style="background:var(--accent-color);color:#fff;border-color:var(--accent-color);display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-weight:500;cursor:pointer;border:1px solid var(--accent-color);">
-            <img id="upgradeIcon" src="" alt="Прокачка" style="width:24px;height:24px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;"> Прокачка героя
+        <button id="upgradeToggleBtn" class="upgrade-toggle-btn">
+            <img id="upgradeIcon" src="" alt="Прокачка"> Прокачка героя
         </button>
         <div id="upgradeSectionWrapper" class="upgrade-section-wrapper">
             <div id="upgradeContainer" class="upgrade-section">
-                <div class="upgrade-section-title"><img id="upgradeSectionIcon" src="" alt="Прокачка" style="width:24px;height:24px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;"> Прокачка героя</div>
-                <div style="margin-bottom:12px;"><div style="font-size:13px; font-weight:500; margin-bottom:4px;">📦 Материалы для повышения</div><div class="upgrade-buttons" id="starButtons"></div><div class="upgrade-content" id="starContent"></div></div>
-                <div style="margin-bottom:12px;"><div style="font-size:13px; font-weight:500; margin-bottom:4px;">📚 Книги навыков</div><div class="upgrade-buttons" id="bookButtons"></div><div class="upgrade-content" id="bookContent"></div></div>
-                <div><div style="font-size:13px; font-weight:500; margin-bottom:4px;">🎯 Жетоны талантов</div><div id="talentTokensContent"></div></div>
+                <div class="upgrade-section-title"><img id="upgradeSectionIcon" src="" alt="Прокачка"> Прокачка героя</div>
+                <div style="margin-bottom:12px;"><div style="font-size:16px; font-weight:600; margin-bottom:6px;">📦 Материалы для повышения</div><div class="upgrade-buttons" id="starButtons"></div><div class="upgrade-content" id="starContent"></div></div>
+                <div style="margin-bottom:12px;"><div style="font-size:16px; font-weight:600; margin-bottom:6px;">📚 Книги навыков</div><div class="upgrade-buttons" id="bookButtons"></div><div class="upgrade-content" id="bookContent"></div></div>
+                <div><div style="font-size:16px; font-weight:600; margin-bottom:6px;">🎯 Жетоны талантов</div><div id="talentTokensContent"></div></div>
             </div>
         </div>
     </div>
@@ -1066,19 +1063,19 @@ function renderUpgradeSection(hero) {
     container.style.display = 'block';
     
     const upgradeIcon = getUpgradeIcon();
-const upgradeIconEl = document.getElementById('upgradeIcon');
-const upgradeSectionIconEl = document.querySelector('.upgrade-section-title img');
-
-if (upgradeIcon) {
-    if (upgradeIconEl) {
-        upgradeIconEl.src = upgradeIcon;
-        upgradeIconEl.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;';
+    const upgradeIconEl = document.getElementById('upgradeIcon');
+    const upgradeSectionIconEl = document.querySelector('.upgrade-section-title img');
+    
+    if (upgradeIcon) {
+        if (upgradeIconEl) {
+            upgradeIconEl.src = upgradeIcon;
+            upgradeIconEl.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;';
+        }
+        if (upgradeSectionIconEl) {
+            upgradeSectionIconEl.src = upgradeIcon;
+            upgradeSectionIconEl.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;';
+        }
     }
-    if (upgradeSectionIconEl) {
-        upgradeSectionIconEl.src = upgradeIcon;
-        upgradeSectionIconEl.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;';
-    }
-}
     
     const heroStars = String(hero['Количество звезд'] || '1').trim();
     const heroElement = String(hero['Стихия'] || '').trim();
@@ -1765,40 +1762,39 @@ function fillModal(hero){
     document.getElementById('mOpenImg').href = img || '#';
     document.getElementById('mName').textContent = hero[HERO_FIELDS.name] || '';
     
-   // ===== ИКОНКИ НАВИГАЦИИ — увеличенные =====
-const leftIcon = getIcon('Left_button');
-const rightIcon = getIcon('Right_button');
-const closeIcon = getIcon('Close_button');
+    // ===== ИКОНКИ НАВИГАЦИИ — увеличенные =====
+    const leftIcon = getIcon('Left_button');
+    const rightIcon = getIcon('Right_button');
+    const closeIcon = getIcon('Close_button');
 
-// Стиль для всех иконок навигации — большой размер
-const navIconStyle = 'width:36px;height:36px;min-width:36px;min-height:36px;max-width:36px;max-height:36px;object-fit:contain;display:block;';
+    const navIconStyle = 'width:44px;height:44px;min-width:44px;min-height:44px;max-width:44px;max-height:44px;object-fit:contain;display:block;';
 
-if (leftIcon) {
-    const el = document.getElementById('leftBtnIcon');
-    if (el) { el.src = leftIcon; el.style.cssText = navIconStyle; }
-}
-if (rightIcon) {
-    const el = document.getElementById('rightBtnIcon');
-    if (el) { el.src = rightIcon; el.style.cssText = navIconStyle; }
-}
-if (closeIcon) {
-    const el = document.getElementById('closeBtnIcon');
-    if (el) { el.src = closeIcon; el.style.cssText = navIconStyle; }
-}
+    if (leftIcon) {
+        const el = document.getElementById('leftBtnIcon');
+        if (el) { el.src = leftIcon; el.style.cssText = navIconStyle; }
+    }
+    if (rightIcon) {
+        const el = document.getElementById('rightBtnIcon');
+        if (el) { el.src = rightIcon; el.style.cssText = navIconStyle; }
+    }
+    if (closeIcon) {
+        const el = document.getElementById('closeBtnIcon');
+        if (el) { el.src = closeIcon; el.style.cssText = navIconStyle; }
+    }
     
-   // ===== ИКОНКА ДЛЯ КНОПКИ "ДЕРЕВО ТАЛАНТОВ" =====
-const treeIcon = getIcon('TalantTree_icon');
-const treeBtnIcon = document.getElementById('treeBtnIcon');
-if (treeIcon && treeBtnIcon) {
-    treeBtnIcon.src = treeIcon;
-    treeBtnIcon.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);';
-}
+    // ===== ИКОНКА ДЛЯ КНОПКИ "ДЕРЕВО ТАЛАНТОВ" =====
+    const treeIcon = getIcon('TalantTree_icon');
+    const treeBtnIcon = document.getElementById('treeBtnIcon');
+    if (treeIcon && treeBtnIcon) {
+        treeBtnIcon.src = treeIcon;
+        treeBtnIcon.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);';
+    }
     
     // ===== ЗВЁЗДЫ =====
     const starIcon = getIcon('Star_icon');
     let starsDisplay;
     if (starIcon) {
-        starsDisplay = '<img src="' + starIcon + '" alt="★" style="width:28px;height:28px;min-width:28px;min-height:28px;object-fit:contain;vertical-align:middle;display:inline-block;"> ' + hero[HERO_FIELDS.stars];
+        starsDisplay = '<img src="' + starIcon + '" alt="★" style="width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;vertical-align:middle;display:inline-block;"> ' + hero[HERO_FIELDS.stars];
     } else {
         starsDisplay = hero[HERO_FIELDS.stars] + '★';
     }
@@ -1843,15 +1839,15 @@ if (treeIcon && treeBtnIcon) {
     document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive] || '—').replace(/^'|'$/g, '');
     
     // ===== ПРОКАЧКА =====
-const upgradeIcon = getIcon('Upgrade_icon');
-const toggleBtn = document.getElementById('upgradeToggleBtn');
-if (upgradeIcon && toggleBtn) {
-    const upgradeImg = document.getElementById('upgradeIcon');
-    if (upgradeImg) {
-        upgradeImg.src = upgradeIcon;
-        upgradeImg.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;';
+    const upgradeIcon = getIcon('Upgrade_icon');
+    const toggleBtn = document.getElementById('upgradeToggleBtn');
+    if (upgradeIcon && toggleBtn) {
+        const upgradeImg = document.getElementById('upgradeIcon');
+        if (upgradeImg) {
+            upgradeImg.src = upgradeIcon;
+            upgradeImg.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;';
+        }
     }
-}
     
     const wrapper = document.getElementById('upgradeSectionWrapper');
     if (wrapper) wrapper.classList.remove('show');
@@ -1903,7 +1899,6 @@ document.getElementById('upgradeToggleBtn').addEventListener('click', function()
 const wrapper=document.getElementById('upgradeSectionWrapper');
 if (!wrapper) return;
 const isOpen=wrapper.classList.contains('show');
-const upgradeIcon = getIcon('Upgrade_icon');
 if(isOpen){
 wrapper.classList.remove('show');
 } else {
