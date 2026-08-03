@@ -290,7 +290,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     min-width: 48px !important;
     min-height: 48px !important;
     border: none !important;
-    background: transparent !important;  /* Убираем фон */
+    background: transparent !important;
     cursor: pointer !important;
     display: flex !important;
     align-items: center !important;
@@ -298,7 +298,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     transition: transform 0.2s !important;
     padding: 0 !important;
     z-index: 10 !important;
-    box-shadow: none !important;  /* Убираем тень */
+    box-shadow: none !important;
 }
 .nav-btn:hover {
     transform: scale(1.1) !important;
@@ -320,10 +320,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     filter: none !important;
 }
 
-/* Кнопки в ряд с ОДИНАКОВЫМ расстоянием */
-.nav-prev { right: 120px !important; }  /* 12 + 48 + 12 + 48 = 120 */
-.nav-next { right: 60px !important; }   /* 12 + 48 = 60 */
-.nav-close { right: 12px !important; }
+/* ОДИНАКОВОЕ расстояние между кнопками — по 8px */
+.nav-prev { right: 108px !important; }  /* 8 + 48 + 8 + 48 = 112 */
+.nav-next { right: 54px !important; }   /* 8 + 48 = 56 */
+.nav-close { right: 6px !important; }
 
 .image-container { background:var(--element-unknown); border-radius:12px; padding:12px; transition:background 0.3s; }
 .image-container[data-element="Синий"] { background:var(--element-blue); }
