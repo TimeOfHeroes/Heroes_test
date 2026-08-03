@@ -334,30 +334,51 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .dialog h2 { margin:0 0 8px; font-size:26px; font-weight:700; }
 .dialog .meta { display:flex; gap:8px; flex-wrap:wrap; opacity:0.8; margin-bottom:8px; font-size:14px; justify-content:flex-start; }
 .dialog .meta .star-icon { display:inline-block; width:18px; height:18px; vertical-align:middle; }
-.dialog .mStats { display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 16px; align-items:center; }
+/* ===== ХАРАКТЕРИСТИКИ В МОДАЛКЕ ===== */
+.dialog .mStats {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 4px !important;
+    margin: 6px 0 12px !important;
+    padding: 0 !important;
+    background: transparent !important;
+}
+
 .dialog .mStats .stat-item {
     display: flex !important;
     align-items: center !important;
-    gap: 8px !important;
-    font-size: 16px !important;
+    gap: 4px !important;
+    font-size: 15px !important;
     font-weight: 600 !important;
-    padding: 6px 14px !important;
-    border-radius: 999px !important;
-    background: transparent !important; /* Убираем серый фон */
+    padding: 4px 10px 4px 6px !important;
+    border-radius: 6px !important;
+    background: transparent !important;
+    border: none !important;
+    white-space: nowrap !important;
 }
 
+/* ВСЕ иконки характеристик — единый размер без обрезания */
 .dialog .mStats .stat-item img[src$=".svg"] {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    min-height: 36px !important;
-    max-width: none !important;     /* Убираем ограничение */
-    max-height: none !important;    /* Убираем ограничение */
-    transform: scale(1.0) !important;
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    min-height: 26px !important;
+    max-width: 26px !important;
+    max-height: 26px !important;
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
     flex-shrink: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Специально для меча — если всё ещё обрезается */
+.dialog .mStats .stat-item img[src*="Sword"] {
+    padding: 2px 0 !important;
+    object-fit: contain !important;
 }
 
 /* ===== ГЛОБАЛЬНОЕ ПРАВИЛО ДЛЯ ВСЕХ SVG-ИКОНОК В МОДАЛКЕ ===== */
@@ -436,12 +457,31 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 
 /* Иконки характеристик в карточках героев */
+.card .stats {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+    justify-content: center !important;
+    margin: 0 4px 6px !important;
+}
+
+.card .stats .pill {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    font-size: 11px !important;
+    padding: 2px 8px 2px 4px !important;
+    border-radius: 12px !important;
+    background: rgba(255,255,255,0.4) !important;
+}
+
 .card .stats .pill img[src$=".svg"] {
-    width: 20px !important;
-    height: 20px !important;
-    min-width: 20px !important;
-    min-height: 20px !important;
-    transform: scale(1.0) !important;
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    max-width: 18px !important;
+    max-height: 18px !important;
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
