@@ -335,7 +335,30 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .dialog .meta { display:flex; gap:8px; flex-wrap:wrap; opacity:0.8; margin-bottom:8px; font-size:14px; justify-content:flex-start; }
 .dialog .meta .star-icon { display:inline-block; width:18px; height:18px; vertical-align:middle; }
 .dialog .mStats { display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 16px; align-items:center; }
-.dialog .mStats .stat-item { display:flex; align-items:center; gap:6px; font-size:16px; font-weight:600; padding:6px 14px; border-radius:999px; background:var(--secondary-color); }
+.dialog .mStats .stat-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    padding: 6px 14px !important;
+    border-radius: 999px !important;
+    background: transparent !important; /* Убираем серый фон */
+}
+
+.dialog .mStats .stat-item img[src$=".svg"] {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: none !important;     /* Убираем ограничение */
+    max-height: none !important;    /* Убираем ограничение */
+    transform: scale(1.0) !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    flex-shrink: 0 !important;
+}
 
 /* ===== ГЛОБАЛЬНОЕ ПРАВИЛО ДЛЯ ВСЕХ SVG-ИКОНОК В МОДАЛКЕ ===== */
 
@@ -352,18 +375,14 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 
 /* ИКОНКИ ХАРАКТЕРИСТИК */
-.dialog .mStats .stat-item img[src$=".svg"] {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
-    max-width: 32px !important;
-    max-height: 32px !important;
-    transform: scale(1.0) !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    flex-shrink: 0 !important;
+.dialog .mStats {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 8px 0 16px;
+    align-items: center;
+    background: transparent; /* Убираем фон */
+    padding: 4px 0;
 }
 
 /* ИКОНКА ДЕРЕВА ТАЛАНТОВ (в модалке) - чёрная для белого фона */
@@ -625,6 +644,18 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-dialog .date { text-align:center; font-style:italic; color:var(--text-color); opacity:0.6; margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color); }
 .info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
 .info-close:hover { opacity:1; }
+  
+/* Специально для иконки Атаки - чтобы не обрезалась */
+.dialog .mStats .stat-item img[src$="Sword_icon.svg"] {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    padding: 2px !important;
+    object-fit: contain !important;
+    background: transparent !important;
+}
+  
 </style>
 </head>
 <body>
