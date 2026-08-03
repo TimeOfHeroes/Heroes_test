@@ -208,11 +208,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .facet .actions .btn { font-size:12px; padding:4px 8px; }
 .apply-filters-container { margin-top:auto; padding-top:12px; border-top:1px solid var(--border-color); flex-shrink:0; }
 .apply-filters-btn { width:100%; padding:10px; font-size:14px; font-weight:600; margin-bottom:6px; }
-.modal-tags { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 12px; }
+.modal-tags { display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 8px; }
 .modal-tags .tag { display:inline-block; font-size:12px; font-weight:600; padding:4px 12px; border-radius:12px; text-transform:lowercase; letter-spacing:0.3px; color:#fff; background:var(--tag-default); cursor:pointer; transition:transform 0.15s, box-shadow 0.15s; }
 .modal-tags .tag:hover { transform:scale(1.05); box-shadow:0 2px 8px rgba(0,0,0,0.2); }
 .modal-tags .tag:active { transform:scale(0.95); }
-.modal-tags .tag-label { font-weight:500; margin-right:4px; color:var(--text-color); opacity:0.7; }
 .tag-damage { background:var(--tag-damage); }
 .tag-heal { background:var(--tag-heal); }
 .tag-shield { background:var(--tag-shield); }
@@ -335,14 +334,14 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .dialog .meta { display:flex; gap:8px; flex-wrap:wrap; opacity:0.8; margin-bottom:8px; font-size:14px; justify-content:flex-start; }
 .dialog .meta .star-icon { display:inline-block; width:18px; height:18px; vertical-align:middle; }
 
-/* ===== ХАРАКТЕРИСТИКИ В МОДАЛКЕ — БЕЗ ОБРЕЗАНИЯ ===== */
+/* ===== ХАРАКТЕРИСТИКИ В МОДАЛКЕ — УМЕНЬШЕННЫЙ РАЗМЕР ===== */
 .dialog .mStats {
     overflow: visible !important;
     display: flex !important;
-    flex-wrap: nowrap !important;
-    gap: 6px !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
     padding: 4px 0 !important;
-    margin: 6px 0 12px !important;
+    margin: 6px 0 8px !important;
     background: transparent !important;
 }
 
@@ -350,9 +349,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     overflow: visible !important;
     display: flex !important;
     align-items: center !important;
-    gap: 6px !important;
-    padding: 4px 10px !important;
-    font-size: 15px !important;
+    gap: 4px !important;
+    padding: 3px 8px !important;
+    font-size: 14px !important;
     font-weight: 600 !important;
     background: transparent !important;
     border: none !important;
@@ -363,10 +362,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .dialog .mStats .stat-item img {
     display: inline-block !important;
     vertical-align: middle !important;
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    min-height: 28px !important;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
     max-width: none !important;
     max-height: none !important;
     object-fit: contain !important;
@@ -382,11 +381,81 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 
 .dialog .mStats .stat-item img[src*="Sword" i] {
-    width: 30px !important;
-    height: 30px !important;
-    min-width: 30px !important;
-    min-height: 30px !important;
-    padding: 2px 0 !important;
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
+    padding: 1px 0 !important;
+}
+
+/* ===== БЛОК ВЫБОРА ТАЛАНТОВ — В ОДНУ СТРОКУ С ХАРАКТЕРИСТИКАМИ ===== */
+.talent-controls {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 4px 0 !important;
+    margin: 2px 0 6px !important;
+}
+
+.talent-controls .select-wrapper {
+    flex: 0 1 auto !important;
+    min-width: 120px !important;
+    max-width: 180px !important;
+}
+
+.talent-controls .select-wrapper select {
+    padding: 4px 30px 4px 10px !important;
+    font-size: 13px !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    background: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    cursor: pointer !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    height: 32px !important;
+}
+
+.talent-controls .select-wrapper .arrow {
+    width: 28px !important;
+    background: #2563eb !important;
+    border-radius: 0 6px 6px 0 !important;
+}
+
+.talent-controls .select-wrapper .arrow svg {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+#openTreeBtn {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 4px 12px !important;
+    font-size: 13px !important;
+    border: none !important;
+    border-radius: 6px !important;
+    background: #2563eb !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    font-weight: 500 !important;
+    height: 32px !important;
+    white-space: nowrap !important;
+}
+#openTreeBtn:hover {
+    background: #1d4ed8 !important;
+}
+#openTreeBtn img[src$=".svg"] {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    filter: brightness(0) invert(1) !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
 }
 
 .dialog .modal-content,
@@ -407,56 +476,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
-}
-
-/* ИКОНКА ДЕРЕВА ТАЛАНТОВ */
-#treeBtnIcon[src$=".svg"] {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    min-height: 28px !important;
-    transform: scale(1.0) !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    filter: brightness(0) !important;
-}
-
-/* ИКОНКА ПРОКАЧКИ */
-#upgradeIcon[src$=".svg"],
-.upgrade-section-title img[src$=".svg"] {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    min-height: 28px !important;
-    transform: scale(1.0) !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    filter: brightness(0) invert(1) !important;
-}
-
-/* КНОПКА "ДЕРЕВО ТАЛАНТОВ" */
-#openTreeBtn {
-    display: flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    padding: 6px 14px !important;
-    font-size: 13px !important;
-    border: 1px solid var(--border-color) !important;
-    border-radius: 8px !important;
-    background: var(--card-bg) !important;
-    color: var(--text-color) !important;
-    cursor: pointer !important;
-    transition: all 0.2s !important;
-}
-#openTreeBtn:hover {
-    background: var(--accent-color) !important;
-    color: #fff !important;
-    border-color: var(--accent-color) !important;
-}
-#openTreeBtn:hover #treeBtnIcon[src$=".svg"] {
-    filter: brightness(0) invert(1) !important;
 }
 
 /* ===== ХАРАКТЕРИСТИКИ В КАРТОЧКАХ ===== */
@@ -492,14 +511,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 
 .pre { white-space:pre-line; background:var(--secondary-color); border:1px solid var(--border-color); border-radius:10px; padding:12px; font-size:14px; overflow-wrap:break-word; line-height:1.5; margin:6px 0; }
 .open-img { margin-top:8px; display:inline-block; font-size:13px; color:var(--primary-color); text-decoration:none; }
-.talent-mode-selector { margin:12px 0; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-.talent-mode-selector label { font-weight:500; font-size:14px; }
-.select-wrapper { position:relative; display:inline-block; flex:1; min-width:200px; max-width:300px; }
-.select-wrapper select { width:100%; padding:6px 12px; font-size:13px; border:1px solid var(--border-color); border-radius:8px; background:var(--card-bg); color:var(--text-color); cursor:pointer; appearance:none; -webkit-appearance:none; -moz-appearance:none; }
-.select-wrapper select:focus { outline:none; border-color:var(--accent-color); }
-.select-wrapper .arrow { position:absolute; right:0; top:0; bottom:0; width:32px; background:var(--accent-color); border-radius:0 8px 8px 0; display:flex; align-items:center; justify-content:center; pointer-events:none; }
-.select-wrapper .arrow svg { width:16px; height:16px; fill:white; }
-.talent-mode-selector .btn { padding:6px 10px; white-space:nowrap; font-size:13px; }
 
 /* --- Стили для блока прокачки --- */
 .upgrade-toggle-btn {
@@ -772,25 +783,24 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <div id="mStats" class="mStats"></div>
         <div id="modalTags" class="modal-tags"></div>
         
-        <div class="talent-mode-selector">
-            <label>Режим талантов:</label>
+        <div class="talent-controls">
             <div class="select-wrapper">
                 <select id="talentModeSelect">
                     <option value="none">Без талантов</option>
                     <option value="manual">Ручной выбор</option>
-                    <option value="attack">Таланты в атаку (макс)</option>
-                    <option value="defense">Таланты в защиту (макс)</option>
+                    <option value="attack">Таланты в атаку</option>
+                    <option value="defense">Таланты в защиту</option>
                 </select>
                 <div class="arrow">
                     <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
                 </div>
             </div>
-            <button id="openTreeBtn" class="btn secondary" style="display:flex;align-items:center;gap:6px;padding:6px 12px;">
-                <img id="treeBtnIcon" src="" alt="Дерево" style="width:24px;height:24px;object-fit:contain;display:inline-block;vertical-align:middle;"> Дерево талантов
+            <button id="openTreeBtn">
+                <img id="treeBtnIcon" src="" alt="Дерево"> Дерево талантов
             </button>
         </div>
         
-        <h3>Способности</h3>
+        <h3 style="margin-top:12px;">Способности</h3>
         <div id="mAbilities" class="pre"></div>
         <h3>Пассивные способности</h3>
         <div id="mPassive" class="pre"></div>
@@ -1511,8 +1521,8 @@ function renderStatsHTML(hero, calc) {
     const shieldUrl = getIcon('Shield_icon');
     const healthUrl = getIcon('Health_icon');
     
-    const imgStyle = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:none;max-height:none;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;background:transparent;overflow:visible;';
-    const swordStyle = 'width:30px;height:30px;min-width:30px;min-height:30px;max-width:none;max-height:none;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;background:transparent;overflow:visible;padding:2px 0;';
+    const imgStyle = 'width:20px;height:20px;min-width:20px;min-height:20px;max-width:none;max-height:none;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;background:transparent;overflow:visible;';
+    const swordStyle = 'width:22px;height:22px;min-width:22px;min-height:22px;max-width:none;max-height:none;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;background:transparent;overflow:visible;padding:1px 0;';
     
     let html = '';
     if (swordUrl) {
@@ -1732,7 +1742,7 @@ function fillModal(hero){
     const treeBtnIcon = document.getElementById('treeBtnIcon');
     if (treeIcon && treeBtnIcon) {
         treeBtnIcon.src = treeIcon;
-        treeBtnIcon.style.cssText = 'width:24px;height:24px;min-width:24px;min-height:24px;object-fit:contain;display:inline-block;vertical-align:middle;';
+        treeBtnIcon.style.cssText = 'width:20px;height:20px;min-width:20px;min-height:20px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);';
     }
     
     // ===== ЗВЁЗДЫ =====
@@ -1751,11 +1761,11 @@ function fillModal(hero){
     const calc = calculateStatsWithSelections(hero, currentHeroTalents, 'none');
     document.getElementById('mStats').innerHTML = renderStatsHTML(hero, calc);
     
-    // ===== ТЕГИ =====
+    // ===== ТЕГИ (без слова "Теги:") =====
     const tagsContainer = document.getElementById('modalTags');
     if (hero._tags && hero._tags.length > 0) {
         const tagsHtml = hero._tags.map(tag => '<span class="tag ' + getTagClass(tag) + '" data-tag="' + tag + '">#' + tag + '</span>').join('');
-        tagsContainer.innerHTML = '<span class="tag-label">Теги:</span> ' + tagsHtml;
+        tagsContainer.innerHTML = tagsHtml;
         tagsContainer.querySelectorAll('.tag').forEach(el => {
             el.addEventListener('click', function(e) {
                 e.stopPropagation();
