@@ -695,25 +695,13 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .tree-header { padding:12px 16px; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; background:var(--card-bg); cursor:grab; }
 .tree-panel.dragging .tree-header { cursor:grabbing; }
 .tree-header h3 { margin:0; font-size:16px; font-weight:600; user-select:none; display:flex; align-items:center; gap:8px; }
-.tree-header h3 img { 
-    width: 32px !important; 
-    height: 32px !important; 
-    min-width: 32px !important; 
-    min-height: 32px !important; 
-    max-width: 32px !important; 
-    max-height: 32px !important; 
-    object-fit: contain !important; 
-    display: inline-block !important; 
-    vertical-align: middle !important; 
-    transform: scale(1.0) !important;
-}
-  .tree-close { 
-    background: none !important; 
+.tree-header h3 img { width:32px !important; height:32px !important; min-width:32px !important; min-height:32px !important; max-width:32px !important; max-height:32px !important; object-fit:contain !important; display:inline-block !important; vertical-align:middle !important; }
+.tree-close { 
+    background: #e74c3c !important;
     border: none !important; 
-    font-size: 28px !important; 
+    font-size: 24px !important; 
     cursor: pointer !important; 
-    color: var(--text-color) !important; 
-    opacity: 0.7 !important; 
+    color: #ffffff !important; 
     width: 36px !important; 
     height: 36px !important; 
     display: flex !important; 
@@ -723,10 +711,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     transition: all 0.2s !important;
     padding: 0 !important;
     line-height: 1 !important;
+    font-weight: bold !important;
 }
 .tree-close:hover { 
-    opacity: 1 !important; 
-    background: var(--secondary-color) !important; 
+    background: #c0392b !important; 
+    transform: scale(1.1) !important;
 }
 .tree-content { padding:16px; overflow-y:auto; max-height:60vh; }
 .talent-table { display:flex; flex-direction:column; gap:2px; }
@@ -753,19 +742,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-dialog .date { text-align:center; font-style:italic; color:var(--text-color); opacity:0.6; margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color); }
 .info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
 .info-close:hover { opacity:1; }
-  /* Принудительное отображение иконки дерева талантов */
-#treeIcon {
-    display: inline-block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
-    max-width: 32px !important;
-    max-height: 32px !important;
-    object-fit: contain !important;
-}
 </style>
 </head>
 <body>
@@ -881,7 +857,19 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 </div>
 </div>
 
-<div id="treePanel" class="tree-panel"><div class="tree-header" id="treeHeader"><h3><img id="treeIcon" src="" alt="Дерево"> Дерево талантов — <span id="treeHeroName"></span></h3><button id="closeTreeBtn" class="tree-close">×</button></div><div class="tree-content" id="treeContent"><div class="talent-table" id="talentTable"></div></div></div>
+<div id="treePanel" class="tree-panel">
+    <div class="tree-header" id="treeHeader">
+        <h3>
+            <img id="treeIcon" src="" alt="Дерево" style="width:32px;height:32px;min-width:32px;min-height:32px;max-width:32px;max-height:32px;object-fit:contain;display:inline-block;vertical-align:middle;">
+            Дерево талантов — <span id="treeHeroName"></span>
+        </h3>
+        <button id="closeTreeBtn" class="tree-close">✕</button>
+    </div>
+    <div class="tree-content" id="treeContent">
+        <div class="talent-table" id="talentTable"></div>
+    </div>
+</div>
+
 <div id="infoModal" class="info-modal"><div class="info-dialog"><button id="infoClose" class="info-close">×</button><h2>О галерее героев</h2><p>Эта галерея содержит информацию о героях игры "Время Героев", их характеристиках и способностях.</p><div class="clan"><strong>Разработано:</strong><br>Евгений Поташко и Владимир Плотников<br><strong>Клан: "Рожденные в СССР."</strong><br>скрины героев предоставлены великим и могучим Козырем</div><div class="contact"><strong>Обратная связь:</strong><br>Нашли ошибку или есть предложения?<br>Пишите: <a href="mailto:master-Erasm@yandex.ru">master-Erasm@yandex.ru</a></div><p>База данных регулярно обновляется с учетом новых героев и изменений в балансе игры.</p><p class="date">Дата последнего обновления: <span id="updateDate"></span></p></div></div>
 
 <script>
@@ -1388,14 +1376,13 @@ function renderTalentTree(hero, selections, mode) {
         return;
     }
     
-   // Устанавливаем иконку дерева
-const treeIcon = getIcon('TalantTree_icon');
-const treeIconEl = document.getElementById('treeIcon');
-if (treeIcon && treeIconEl) {
-    treeIconEl.src = treeIcon;
-    // Принудительные размеры через inline-стили
-    treeIconEl.style.cssText = 'width:32px;height:32px;min-width:32px;min-height:32px;max-width:32px;max-height:32px;object-fit:contain;display:inline-block;vertical-align:middle;';
-}
+    // Устанавливаем иконку дерева
+    const treeIcon = getIcon('TalantTree_icon');
+    const treeIconEl = document.getElementById('treeIcon');
+    if (treeIcon && treeIconEl) {
+        treeIconEl.src = treeIcon;
+        treeIconEl.style.cssText = 'width:32px;height:32px;min-width:32px;min-height:32px;max-width:32px;max-height:32px;object-fit:contain;display:inline-block;vertical-align:middle;';
+    }
     
     const talents = classTalents[heroClass];
     const groups = [];
@@ -1773,12 +1760,9 @@ function openTreePanel(){
 }
 
 function closeTreePanel(){ 
-    console.log('🔄 closeTreePanel вызвана');
     const panel = document.getElementById('treePanel');
-    console.log('📦 panel найден:', panel);
     if (panel) {
         panel.classList.remove('show');
-        console.log('✅ класс show удален');
     }
     hideTalentTooltip(); 
 }
@@ -2013,6 +1997,20 @@ function closeModal(){ document.getElementById('modal').classList.remove('show')
 function go(delta){ if(currentIdx<0||!viewHeroes.length) return; currentIdx=(currentIdx+delta+viewHeroes.length)%viewHeroes.length; openModal(currentIdx); }
 
 function attachEvents(){
+
+// ===== ПРИНУДИТЕЛЬНАЯ ПРИВЯЗКА КНОПКИ ЗАКРЫТИЯ ДЕРЕВА ТАЛАНТОВ =====
+const closeTreeBtn = document.getElementById('closeTreeBtn');
+if (closeTreeBtn) {
+    console.log('✅ Кнопка closeTreeBtn найдена в attachEvents');
+    closeTreeBtn.addEventListener('click', function(e) {
+        console.log('🔄 Клик по closeTreeBtn');
+        e.stopPropagation();
+        closeTreePanel();
+    });
+} else {
+    console.error('❌ Кнопка closeTreeBtn НЕ найдена в attachEvents!');
+}
+
 document.getElementById('searchInput').addEventListener('input', applyFilters);
 document.getElementById('sortSelect').addEventListener('change', applyFilters);
 document.getElementById('sortBtn').addEventListener('click', ()=>{ sortDirection=sortDirection==='desc'?'asc':'desc'; document.getElementById('sortBtn').className='sort-btn '+sortDirection; applyFilters(); });
