@@ -334,56 +334,70 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .dialog h2 { margin:0 0 8px; font-size:26px; font-weight:700; }
 .dialog .meta { display:flex; gap:8px; flex-wrap:wrap; opacity:0.8; margin-bottom:8px; font-size:14px; justify-content:flex-start; }
 .dialog .meta .star-icon { display:inline-block; width:18px; height:18px; vertical-align:middle; }
-/* ===== ХАРАКТЕРИСТИКИ В МОДАЛКЕ ===== */
+
+/* ===== ХАРАКТЕРИСТИКИ В МОДАЛКЕ — БЕЗ ОБРЕЗАНИЯ ===== */
 .dialog .mStats {
+    overflow: visible !important;
     display: flex !important;
-    flex-direction: row !important;
     flex-wrap: nowrap !important;
-    gap: 4px !important;
+    gap: 6px !important;
+    padding: 4px 0 !important;
     margin: 6px 0 12px !important;
-    padding: 0 !important;
     background: transparent !important;
 }
 
 .dialog .mStats .stat-item {
+    overflow: visible !important;
     display: flex !important;
     align-items: center !important;
-    gap: 4px !important;
+    gap: 6px !important;
+    padding: 4px 10px !important;
     font-size: 15px !important;
     font-weight: 600 !important;
-    padding: 4px 10px 4px 6px !important;
-    border-radius: 6px !important;
     background: transparent !important;
     border: none !important;
     white-space: nowrap !important;
+    border-radius: 0 !important;
 }
 
-/* ВСЕ иконки характеристик — единый размер без обрезания */
-.dialog .mStats .stat-item img[src$=".svg"] {
-    width: 26px !important;
-    height: 26px !important;
-    min-width: 26px !important;
-    min-height: 26px !important;
-    max-width: 26px !important;
-    max-height: 26px !important;
-    object-fit: contain !important;
+.dialog .mStats .stat-item img {
     display: inline-block !important;
     vertical-align: middle !important;
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    max-width: none !important;
+    max-height: none !important;
+    object-fit: contain !important;
     flex-shrink: 0 !important;
     background: transparent !important;
     padding: 0 !important;
     margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    clip-path: none !important;
 }
 
-/* Специально для меча — если всё ещё обрезается */
-.dialog .mStats .stat-item img[src*="Sword"] {
+.dialog .mStats .stat-item img[src*="Sword" i] {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
     padding: 2px 0 !important;
-    object-fit: contain !important;
 }
 
-/* ===== ГЛОБАЛЬНОЕ ПРАВИЛО ДЛЯ ВСЕХ SVG-ИКОНОК В МОДАЛКЕ ===== */
+.dialog .modal-content,
+.dialog .info-container,
+.dialog .mStats,
+.dialog .mStats .stat-item {
+    clip-path: none !important;
+    overflow: visible !important;
+}
 
-/* ЗВЕЗДА */
+/* ЗВЕЗДА В МОДАЛКЕ */
 #mMeta1 img[src$=".svg"] {
     width: 28px !important;
     height: 28px !important;
@@ -395,18 +409,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     vertical-align: middle !important;
 }
 
-/* ИКОНКИ ХАРАКТЕРИСТИК */
-.dialog .mStats {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin: 8px 0 16px;
-    align-items: center;
-    background: transparent; /* Убираем фон */
-    padding: 4px 0;
-}
-
-/* ИКОНКА ДЕРЕВА ТАЛАНТОВ (в модалке) - чёрная для белого фона */
+/* ИКОНКА ДЕРЕВА ТАЛАНТОВ */
 #treeBtnIcon[src$=".svg"] {
     width: 28px !important;
     height: 28px !important;
@@ -419,7 +422,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     filter: brightness(0) !important;
 }
 
-/* ИКОНКА ПРОКАЧКИ - белая для синего фона */
+/* ИКОНКА ПРОКАЧКИ */
 #upgradeIcon[src$=".svg"],
 .upgrade-section-title img[src$=".svg"] {
     width: 28px !important;
@@ -456,7 +459,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     filter: brightness(0) invert(1) !important;
 }
 
-/* Иконки характеристик в карточках героев */
+/* ===== ХАРАКТЕРИСТИКИ В КАРТОЧКАХ ===== */
 .card .stats {
     display: flex !important;
     flex-wrap: wrap !important;
@@ -648,7 +651,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-weight: 600;
     color: var(--primary-color);
 }
-/* --- Конец стилей прокачки --- */
 
 .tree-panel { position:fixed; top:50%; right:20px; transform:translateY(-50%); width:420px; max-width:calc(100vw - 40px); background:var(--card-bg); border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.3); z-index:2100; display:none; flex-direction:column; overflow:hidden; border:1px solid var(--border-color); cursor:default; }
 .tree-panel.show { display:flex; }
@@ -684,18 +686,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-dialog .date { text-align:center; font-style:italic; color:var(--text-color); opacity:0.6; margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color); }
 .info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
 .info-close:hover { opacity:1; }
-  
-/* Специально для иконки Атаки - чтобы не обрезалась */
-.dialog .mStats .stat-item img[src$="Sword_icon.svg"] {
-    width: 40px !important;
-    height: 40px !important;
-    min-width: 40px !important;
-    min-height: 40px !important;
-    padding: 2px !important;
-    object-fit: contain !important;
-    background: transparent !important;
-}
-  
 </style>
 </head>
 <body>
@@ -1521,19 +1511,22 @@ function renderStatsHTML(hero, calc) {
     const shieldUrl = getIcon('Shield_icon');
     const healthUrl = getIcon('Health_icon');
     
+    const imgStyle = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:none;max-height:none;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;background:transparent;overflow:visible;';
+    const swordStyle = 'width:30px;height:30px;min-width:30px;min-height:30px;max-width:none;max-height:none;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;background:transparent;overflow:visible;padding:2px 0;';
+    
     let html = '';
     if (swordUrl) {
-        html += '<span class="stat-item"><img src="' + swordUrl + '" alt="Атака"> ' + calc.attack + '</span>';
+        html += '<span class="stat-item"><img src="' + swordUrl + '" alt="Атака" style="' + swordStyle + '"> ' + calc.attack + '</span>';
     } else {
         html += '<span class="stat-item">⚔️ ' + calc.attack + '</span>';
     }
     if (shieldUrl) {
-        html += '<span class="stat-item"><img src="' + shieldUrl + '" alt="Защита"> ' + calc.defense + '</span>';
+        html += '<span class="stat-item"><img src="' + shieldUrl + '" alt="Защита" style="' + imgStyle + '"> ' + calc.defense + '</span>';
     } else {
         html += '<span class="stat-item">🛡️ ' + calc.defense + '</span>';
     }
     if (healthUrl) {
-        html += '<span class="stat-item"><img src="' + healthUrl + '" alt="Жизни"> ' + calc.hp + '</span>';
+        html += '<span class="stat-item"><img src="' + healthUrl + '" alt="Жизни" style="' + imgStyle + '"> ' + calc.hp + '</span>';
     } else {
         html += '<span class="stat-item">❤️ ' + calc.hp + '</span>';
     }
@@ -1746,7 +1739,7 @@ function fillModal(hero){
     const starIcon = getIcon('Star_icon');
     let starsDisplay;
     if (starIcon) {
-        starsDisplay = '<img src="' + starIcon + '" alt="★" style="width:24px;height:24px;min-width:24px;min-height:24px;object-fit:contain;vertical-align:middle;display:inline-block;"> ' + hero[HERO_FIELDS.stars];
+        starsDisplay = '<img src="' + starIcon + '" alt="★" style="width:28px;height:28px;min-width:28px;min-height:28px;object-fit:contain;vertical-align:middle;display:inline-block;"> ' + hero[HERO_FIELDS.stars];
     } else {
         starsDisplay = hero[HERO_FIELDS.stars] + '★';
     }
