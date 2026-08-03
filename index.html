@@ -485,16 +485,17 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     background: #1a5f9a !important;
 }
 .hero-stats-row #openTreeBtn img {
-    width: 20px !important;
-    height: 20px !important;
-    min-width: 20px !important;
-    min-height: 20px !important;
-    max-width: 20px !important;
-    max-height: 20px !important;
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    max-width: 28px !important;
+    max-height: 28px !important;
     filter: brightness(0) invert(1) !important;
     display: inline-block !important;
     vertical-align: middle !important;
     object-fit: contain !important;
+    transform: scale(1.0) !important;
 }
 
 /* Строка 3: Скорость маны + Цели */
@@ -742,6 +743,20 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-dialog .date { text-align:center; font-style:italic; color:var(--text-color); opacity:0.6; margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color); }
 .info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
 .info-close:hover { opacity:1; }
+  /* ПРИНУДИТЕЛЬНОЕ УВЕЛИЧЕНИЕ ДЛЯ ИКОНКИ ДЕРЕВА ТАЛАНТОВ В КНОПКЕ */
+#treeBtnIcon[src$=".svg"] {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    max-width: 28px !important;
+    max-height: 28px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    filter: brightness(0) invert(1) !important;
+    transform: scale(1.0) !important;
+}
 </style>
 </head>
 <body>
@@ -1612,7 +1627,7 @@ function renderStatsRow(hero, calc) {
     html += '</select>';
     html += '<div class="arrow"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div>';
     html += '</div>';
-    html += '<button id="openTreeBtn"><img id="treeBtnIcon" src="" alt="Дерево" style="width:20px;height:20px;min-width:20px;min-height:20px;max-width:20px;max-height:20px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);"> Дерево талантов</button>';
+   html += '<button id="openTreeBtn"><img id="treeBtnIcon" src="" alt="Дерево" style="width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);"> Дерево талантов</button>';
     html += '</div>';
     
     statsRow.innerHTML = html;
@@ -1900,7 +1915,15 @@ function fillModal(hero){
     document.getElementById('mImg').src = img || '';
     document.getElementById('mOpenImg').href = img || '#';
     document.getElementById('mName').textContent = hero[HERO_FIELDS.name] || '';
-    
+
+// ===== ИКОНКА ДЛЯ КНОПКИ "ДЕРЕВО ТАЛАНТОВ" =====
+const treeIcon = getIcon('TalantTree_icon');
+const treeBtnIcon = document.getElementById('treeBtnIcon');
+if (treeIcon && treeBtnIcon) {
+    treeBtnIcon.src = treeIcon;
+    treeBtnIcon.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);';
+}
+  
     // ===== ИКОНКИ НАВИГАЦИИ =====
     const leftIcon = getIcon('Left_button');
     const rightIcon = getIcon('Right_button');
