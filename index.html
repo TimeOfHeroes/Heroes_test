@@ -279,6 +279,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding:20px; 
     overflow-y:auto; 
     max-height:calc(90vh - 60px); 
+    scroll-behavior: smooth;
 }
 
 /* Кнопки навигации */
@@ -334,7 +335,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .dialog .meta { display:flex; gap:8px; flex-wrap:wrap; opacity:0.8; margin-bottom:8px; font-size:14px; justify-content:flex-start; }
 .dialog .meta .star-icon { display:inline-block; width:18px; height:18px; vertical-align:middle; }
 
-/* ===== ХАРАКТЕРИСТИКИ В МОДАЛКЕ — УМЕНЬШЕННЫЙ РАЗМЕР ===== */
+/* ===== ХАРАКТЕРИСТИКИ В МОДАЛКЕ ===== */
 .dialog .mStats {
     overflow: visible !important;
     display: flex !important;
@@ -388,24 +389,27 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 1px 0 !important;
 }
 
-/* ===== БЛОК ВЫБОРА ТАЛАНТОВ — В ОДНУ СТРОКУ С ХАРАКТЕРИСТИКАМИ ===== */
+/* ===== БЛОК УПРАВЛЕНИЯ ТАЛАНТАМИ ===== */
 .talent-controls {
     display: flex !important;
     flex-wrap: wrap !important;
     align-items: center !important;
     gap: 8px !important;
     padding: 4px 0 !important;
-    margin: 2px 0 6px !important;
+    margin: 2px 0 8px !important;
 }
 
 .talent-controls .select-wrapper {
+    position: relative !important;
     flex: 0 1 auto !important;
-    min-width: 120px !important;
+    min-width: 140px !important;
     max-width: 180px !important;
+    display: inline-block !important;
 }
 
 .talent-controls .select-wrapper select {
-    padding: 4px 30px 4px 10px !important;
+    width: 100% !important;
+    padding: 5px 32px 5px 10px !important;
     font-size: 13px !important;
     border: 1px solid var(--border-color) !important;
     border-radius: 6px !important;
@@ -416,17 +420,27 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
     height: 32px !important;
+    box-sizing: border-box !important;
 }
 
 .talent-controls .select-wrapper .arrow {
+    position: absolute !important;
+    right: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
     width: 28px !important;
     background: #2563eb !important;
     border-radius: 0 6px 6px 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    pointer-events: none !important;
 }
 
 .talent-controls .select-wrapper .arrow svg {
     width: 14px !important;
     height: 14px !important;
+    fill: #ffffff !important;
 }
 
 #openTreeBtn {
@@ -448,7 +462,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 #openTreeBtn:hover {
     background: #1d4ed8 !important;
 }
-#openTreeBtn img[src$=".svg"] {
+#openTreeBtn img {
     width: 20px !important;
     height: 20px !important;
     min-width: 20px !important;
@@ -456,6 +470,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     filter: brightness(0) invert(1) !important;
     display: inline-block !important;
     vertical-align: middle !important;
+    object-fit: contain !important;
 }
 
 .dialog .modal-content,
@@ -669,7 +684,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .tree-header { padding:12px 16px; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; background:var(--card-bg); cursor:grab; }
 .tree-panel.dragging .tree-header { cursor:grabbing; }
 .tree-header h3 { margin:0; font-size:16px; font-weight:600; user-select:none; display:flex; align-items:center; gap:8px; }
-.tree-header h3 img { width:24px; height:24px; object-fit:contain; display:inline-block; vertical-align:middle; }
+.tree-header h3 img { width:28px !important; height:28px !important; min-width:28px !important; min-height:28px !important; object-fit:contain !important; display:inline-block !important; vertical-align:middle !important; }
 .tree-close { background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; width:32px; height:32px; display:flex; align-items:center; justify-content:center; border-radius:50%; }
 .tree-close:hover { opacity:1; background:var(--secondary-color); }
 .tree-content { padding:16px; overflow-y:auto; max-height:60vh; }
@@ -821,7 +836,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 </div>
 </div>
 
-<div id="treePanel" class="tree-panel"><div class="tree-header" id="treeHeader"><h3><img id="treeIcon" src="" alt="Дерево" style="width:24px;height:24px;object-fit:contain;display:inline-block;vertical-align:middle;"> Дерево талантов — <span id="treeHeroName"></span></h3><button id="closeTreeBtn" class="tree-close">×</button></div><div class="tree-content" id="treeContent"><div class="talent-table" id="talentTable"></div></div></div>
+<div id="treePanel" class="tree-panel"><div class="tree-header" id="treeHeader"><h3><img id="treeIcon" src="" alt="Дерево"> Дерево талантов — <span id="treeHeroName"></span></h3><button id="closeTreeBtn" class="tree-close">×</button></div><div class="tree-content" id="treeContent"><div class="talent-table" id="talentTable"></div></div></div>
 <div id="infoModal" class="info-modal"><div class="info-dialog"><button id="infoClose" class="info-close">×</button><h2>О галерее героев</h2><p>Эта галерея содержит информацию о героях игры "Время Героев", их характеристиках и способностях.</p><div class="clan"><strong>Разработано:</strong><br>Евгений Поташко и Владимир Плотников<br><strong>Клан: "Рожденные в СССР."</strong><br>скрины героев предоставлены великим и могучим Козырем</div><div class="contact"><strong>Обратная связь:</strong><br>Нашли ошибку или есть предложения?<br>Пишите: <a href="mailto:master-Erasm@yandex.ru">master-Erasm@yandex.ru</a></div><p>База данных регулярно обновляется с учетом новых героев и изменений в балансе игры.</p><p class="date">Дата последнего обновления: <span id="updateDate"></span></p></div></div>
 
 <script>
@@ -1327,7 +1342,7 @@ function renderTalentTree(hero, selections, mode) {
     const treeIconEl = document.getElementById('treeIcon');
     if (treeIcon && treeIconEl) {
         treeIconEl.src = treeIcon;
-        treeIconEl.style.cssText = 'width:24px;height:24px;min-width:24px;min-height:24px;object-fit:contain;display:inline-block;vertical-align:middle;';
+        treeIconEl.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;object-fit:contain;display:inline-block;vertical-align:middle;';
     }
     
     const talents = classTalents[heroClass];
