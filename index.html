@@ -267,15 +267,17 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .mStats .stat-item {
     display: inline-flex !important;
     align-items: center !important;
-    gap: 4px !important;
+    gap: 6px !important;
     background: var(--secondary-color) !important;
-    padding: 4px 10px !important;
+    padding: 4px 12px !important;
     border-radius: 999px !important;
     font-size: 14px !important;
     font-weight: 600 !important;
     flex-shrink: 0 !important;
     line-height: 1.4 !important;
     flex: 0 0 auto !important;
+    overflow: visible !important;
+    min-height: 32px !important;
 }
 
 #mStats,
@@ -297,6 +299,70 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
+}
+
+/* Иконки навигации */
+#leftBtnIcon, #rightBtnIcon, #closeBtnIcon {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    flex: 0 0 auto !important;
+    filter: brightness(0) invert(1) !important;
+}
+
+/* Иконка дерева талантов — с фоном, чтобы было видно */
+#treeBtnIcon {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    flex: 0 0 auto !important;
+    filter: none !important;
+    background: var(--accent-color) !important;
+    padding: 4px !important;
+    border-radius: 4px !important;
+}
+
+#treeIcon {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    flex: 0 0 auto !important;
+    filter: none !important;
+    background: var(--accent-color) !important;
+    padding: 4px !important;
+    border-radius: 4px !important;
+}
+
+/* Иконка прокачки */
+#upgradeIcon, #upgradeSectionIcon {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    flex: 0 0 auto !important;
+    filter: brightness(0) invert(1) !important;
 }
 
 .content { min-height:60vh; width:100%; }
@@ -579,10 +645,14 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     display: inline-block !important;
     vertical-align: middle !important;
     flex: 0 0 auto !important;
+    filter: none !important;
+    background: var(--accent-color) !important;
+    padding: 4px !important;
+    border-radius: 4px !important;
 }
 
 #treeBtnIcon {
-    width: 24px !important;
+     width: 24px !important;
     height: 24px !important;
     min-width: 24px !important;
     min-height: 24px !important;
@@ -592,19 +662,24 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     display: inline-block !important;
     vertical-align: middle !important;
     flex: 0 0 auto !important;
+    filter: none !important;
+    background: var(--accent-color) !important;
+    padding: 4px !important;
+    border-radius: 4px !important;
 }
 
 #upgradeIcon, #upgradeSectionIcon {
-    width: 20px !important;
-    height: 20px !important;
-    min-width: 20px !important;
-    min-height: 20px !important;
-    max-width: 20px !important;
-    max-height: 20px !important;
+     width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
     flex: 0 0 auto !important;
+    filter: brightness(0) invert(1) !important;
 }
 
 /* Иконки навигации — белые через filter */
