@@ -424,7 +424,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     top: 0 !important;
     bottom: 0 !important;
     width: 28px !important;
-    background: #2563eb !important;
+    background: #227BBC !important;
     border-radius: 0 6px 6px 0 !important;
     display: flex !important;
     align-items: center !important;
@@ -446,7 +446,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-size: 13px !important;
     border: none !important;
     border-radius: 6px !important;
-    background: #2563eb !important;
+    background: #227BBC !important;
     color: #fff !important;
     cursor: pointer !important;
     transition: all 0.2s !important;
@@ -455,13 +455,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     white-space: nowrap !important;
 }
 #openTreeBtn:hover {
-    background: #1d4ed8 !important;
+    background: #1a5f9a !important;
 }
 #openTreeBtn img {
-    width: 20px !important;
-    height: 20px !important;
-    min-width: 20px !important;
-    min-height: 20px !important;
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    max-width: 28px !important;
+    max-height: 28px !important;
     filter: brightness(0) invert(1) !important;
     display: inline-block !important;
     vertical-align: middle !important;
@@ -708,6 +710,19 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     max-height: 44px !important;
     transform: scale(1.0) !important;
 }
+ /* Принудительное увеличение для иконки дерева талантов */
+#openTreeBtn img[src$=".svg"] {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    max-width: 28px !important;
+    max-height: 28px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    filter: brightness(0) invert(1) !important; /* Делаем белую для синего фона */
+} 
 </style>
 </head>
 <body>
@@ -1753,13 +1768,13 @@ if (closeIcon) {
     if (el) { el.src = closeIcon; el.style.cssText = navIconStyle; }
 }
     
-    // ===== ИКОНКА ДЛЯ КНОПКИ "ДЕРЕВО ТАЛАНТОВ" =====
-    const treeIcon = getIcon('TalantTree_icon');
-    const treeBtnIcon = document.getElementById('treeBtnIcon');
-    if (treeIcon && treeBtnIcon) {
-        treeBtnIcon.src = treeIcon;
-        treeBtnIcon.style.cssText = 'width:20px;height:20px;min-width:20px;min-height:20px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);';
-    }
+   // ===== ИКОНКА ДЛЯ КНОПКИ "ДЕРЕВО ТАЛАНТОВ" =====
+const treeIcon = getIcon('TalantTree_icon');
+const treeBtnIcon = document.getElementById('treeBtnIcon');
+if (treeIcon && treeBtnIcon) {
+    treeBtnIcon.src = treeIcon;
+    treeBtnIcon.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);';
+}
     
     // ===== ЗВЁЗДЫ =====
     const starIcon = getIcon('Star_icon');
