@@ -757,6 +757,19 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     filter: brightness(0) invert(1) !important;
     transform: scale(1.0) !important;
 }
+  /* ЗВЕЗДА В МЕТА-СТРОКЕ — 32px */
+#mMeta1 img[src$=".svg"] {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    transform: scale(1.0) !important;
+}
 </style>
 </head>
 <body>
@@ -1683,7 +1696,7 @@ function renderMetaRow(hero) {
     
     let starsDisplay;
     if (starIcon) {
-        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:22px;height:22px;min-width:22px;min-height:22px;max-width:22px;max-height:22px;object-fit:contain;display:inline-block;vertical-align:middle;"></span>`;
+        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:32px;height:32px;min-width:32px;min-height:32px;max-width:32px;max-height:32px;object-fit:contain;display:inline-block;vertical-align:middle;"></span>`;
     } else {
         starsDisplay = `${stars}★`;
     }
