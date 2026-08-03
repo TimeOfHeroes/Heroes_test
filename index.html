@@ -270,16 +270,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 /* --- Модальное окно --- */
 .modal { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center; padding:20px; z-index:2000; }
 .modal.show { display:flex; }
-.dialog { position:relative; background:var(--card-bg); max-width:1200px; width:min(1200px, 95vw); max-height:90vh; border-radius:16px; display:flex; flex-direction:column; box-shadow:0 20px 40px rgba(0,0,0,0.3); overflow: visible !important; }
+.dialog { position:relative; background:var(--card-bg); max-width:1200px; width:min(1200px, 95vw); max-height:90vh; border-radius:16px; display:flex; flex-direction:column; box-shadow:0 20px 40px rgba(0,0,0,0.3); }
 .dialog .modal-content { 
     position:relative;
     display:grid; 
     grid-template-columns:320px 1fr; 
     gap:20px; 
     padding:20px; 
-    overflow-y: auto !important; 
+    overflow-y:auto; 
     max-height:calc(90vh - 60px); 
-    scroll-behavior: smooth;
 }
 
 /* Кнопки навигации */
@@ -337,7 +336,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 
 /* ===== ХАРАКТЕРИСТИКИ В МОДАЛКЕ ===== */
 .dialog .mStats {
-    overflow: visible !important;
     display: flex !important;
     flex-wrap: wrap !important;
     gap: 4px !important;
@@ -347,7 +345,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 
 .dialog .mStats .stat-item {
-    overflow: visible !important;
     display: flex !important;
     align-items: center !important;
     gap: 4px !important;
@@ -367,8 +364,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     height: 20px !important;
     min-width: 20px !important;
     min-height: 20px !important;
-    max-width: none !important;
-    max-height: none !important;
     object-fit: contain !important;
     flex-shrink: 0 !important;
     background: transparent !important;
@@ -377,8 +372,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     border: none !important;
     box-shadow: none !important;
     border-radius: 0 !important;
-    overflow: visible !important;
-    clip-path: none !important;
 }
 
 .dialog .mStats .stat-item img[src*="Sword" i] {
@@ -473,21 +466,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     object-fit: contain !important;
 }
 
-.dialog .modal-content,
-.dialog .info-container,
-.dialog .mStats,
-.dialog .mStats .stat-item {
-    clip-path: none !important;
-    overflow: visible !important;
-}
-
 /* ЗВЕЗДА В МОДАЛКЕ */
 #mMeta1 img[src$=".svg"] {
     width: 28px !important;
     height: 28px !important;
     min-width: 28px !important;
     min-height: 28px !important;
-    transform: scale(1.0) !important;
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
@@ -784,7 +768,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 <!-- ===== МОДАЛЬНОЕ ОКНО ===== -->
 <div id="modal" class="modal">
 <div class="dialog">
-<div class="modal-content" style="position:relative;">
+<div class="modal-content">
     <!-- Кнопки навигации: ← → ✕ -->
     <button id="mPrev" class="nav-btn nav-prev"><img id="leftBtnIcon" src="" alt="Назад"></button>
     <button id="mNext" class="nav-btn nav-next"><img id="rightBtnIcon" src="" alt="Вперёд"></button>
@@ -1536,8 +1520,8 @@ function renderStatsHTML(hero, calc) {
     const shieldUrl = getIcon('Shield_icon');
     const healthUrl = getIcon('Health_icon');
     
-    const imgStyle = 'width:20px;height:20px;min-width:20px;min-height:20px;max-width:none;max-height:none;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;background:transparent;overflow:visible;';
-    const swordStyle = 'width:22px;height:22px;min-width:22px;min-height:22px;max-width:none;max-height:none;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;background:transparent;overflow:visible;padding:1px 0;';
+    const imgStyle = 'width:20px;height:20px;min-width:20px;min-height:20px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;background:transparent;';
+    const swordStyle = 'width:22px;height:22px;min-width:22px;min-height:22px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;background:transparent;padding:1px 0;';
     
     let html = '';
     if (swordUrl) {
