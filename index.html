@@ -281,7 +281,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     max-height:calc(90vh - 60px); 
 }
 
-/* Кнопки навигации */
+/* Кнопки навигации — простые, без лишней стилизации */
 .nav-btn {
     position: absolute !important;
     top: 12px !important;
@@ -290,8 +290,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     min-width: 40px !important;
     min-height: 40px !important;
     border: none !important;
-    background: #1a5fb4 !important;
-    color: #fff !important;
+    background: transparent !important;
     cursor: pointer !important;
     display: flex !important;
     align-items: center !important;
@@ -300,25 +299,27 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     border-radius: 50% !important;
     padding: 0 !important;
     z-index: 10 !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
 }
 .nav-btn:hover {
-    background: #0d47a1 !important;
-    transform: scale(1.05) !important;
+    transform: scale(1.1) !important;
+    background: rgba(0,0,0,0.05) !important;
 }
 .nav-btn:active {
     transform: scale(0.95) !important;
 }
-.nav-btn img[src$=".svg"] {
-    width: 24px !important;
-    height: 24px !important;
-    min-width: 24px !important;
-    min-height: 24px !important;
-    transform: scale(1.0) !important;
-    filter: brightness(0) invert(1) !important;
+
+/* Иконки в кнопках — оригинальные цвета, без фильтров */
+.nav-btn img {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
     object-fit: contain !important;
     display: block !important;
+    filter: none !important; /* Убираем инвертирование цветов */
 }
+
+/* Порядок кнопок: ← → ✕ */
 .nav-prev { right: 108px !important; }
 .nav-next { right: 60px !important; }
 .nav-close { right: 12px !important; }
@@ -1720,23 +1721,23 @@ function fillModal(hero){
     document.getElementById('mOpenImg').href = img || '#';
     document.getElementById('mName').textContent = hero[HERO_FIELDS.name] || '';
     
-    // ===== ИКОНКИ НАВИГАЦИИ =====
-    const leftIcon = getIcon('Left_button');
-    const rightIcon = getIcon('Right_button');
-    const closeIcon = getIcon('Close_button');
-    
-    if (leftIcon) {
-        const el = document.getElementById('leftBtnIcon');
-        if (el) { el.src = leftIcon; el.style.cssText = 'width:24px;height:24px;min-width:24px;min-height:24px;object-fit:contain;filter:brightness(0)invert(1);display:block;'; }
-    }
-    if (rightIcon) {
-        const el = document.getElementById('rightBtnIcon');
-        if (el) { el.src = rightIcon; el.style.cssText = 'width:24px;height:24px;min-width:24px;min-height:24px;object-fit:contain;filter:brightness(0)invert(1);display:block;'; }
-    }
-    if (closeIcon) {
-        const el = document.getElementById('closeBtnIcon');
-        if (el) { el.src = closeIcon; el.style.cssText = 'width:24px;height:24px;min-width:24px;min-height:24px;object-fit:contain;filter:brightness(0)invert(1);display:block;'; }
-    }
+    // ===== ИКОНКИ НАВИГАЦИИ — оригинальные цвета =====
+const leftIcon = getIcon('Left_button');
+const rightIcon = getIcon('Right_button');
+const closeIcon = getIcon('Close_button');
+
+if (leftIcon) {
+    const el = document.getElementById('leftBtnIcon');
+    if (el) { el.src = leftIcon; el.style.cssText = 'width:32px;height:32px;min-width:32px;min-height:32px;object-fit:contain;display:block;'; }
+}
+if (rightIcon) {
+    const el = document.getElementById('rightBtnIcon');
+    if (el) { el.src = rightIcon; el.style.cssText = 'width:32px;height:32px;min-width:32px;min-height:32px;object-fit:contain;display:block;'; }
+}
+if (closeIcon) {
+    const el = document.getElementById('closeBtnIcon');
+    if (el) { el.src = closeIcon; el.style.cssText = 'width:32px;height:32px;min-width:32px;min-height:32px;object-fit:contain;display:block;'; }
+}
     
     // ===== ИКОНКА ДЛЯ КНОПКИ "ДЕРЕВО ТАЛАНТОВ" =====
     const treeIcon = getIcon('TalantTree_icon');
