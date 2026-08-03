@@ -770,6 +770,31 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     vertical-align: middle !important;
     transform: scale(1.0) !important;
 }
+  /* ПРИНУДИТЕЛЬНОЕ УВЕЛИЧЕНИЕ ЗВЕЗДЫ — 32px */
+.hero-meta-row .star-display img {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+}
+
+/* Дополнительно — для всех SVG в meta-строке */
+#mMeta1 img[src$=".svg"] {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+}
 </style>
 </head>
 <body>
@@ -1696,7 +1721,8 @@ function renderMetaRow(hero) {
     
     let starsDisplay;
     if (starIcon) {
-        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:32px;height:32px;min-width:32px;min-height:32px;max-width:32px;max-height:32px;object-fit:contain;display:inline-block;vertical-align:middle;"></span>`;
+        // ПРИНУДИТЕЛЬНЫЙ размер звезды — 32px через inline-стили
+        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:32px !important;height:32px !important;min-width:32px !important;min-height:32px !important;max-width:32px !important;max-height:32px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;"></span>`;
     } else {
         starsDisplay = `${stars}★`;
     }
