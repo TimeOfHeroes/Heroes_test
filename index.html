@@ -364,12 +364,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     gap: 4px;
 }
 .hero-meta-row .star-display img {
-    width: 24px !important;
-    height: 24px !important;
-    min-width: 24px !important;
-    min-height: 24px !important;
-    max-width: 24px !important;
-    max-height: 24px !important;
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
+    max-width: 22px !important;
+    max-height: 22px !important;
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
@@ -389,14 +389,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     gap: 4px;
     font-weight: 600;
     font-size: 15px;
+    overflow: visible !important;
 }
 .hero-stats-row .stat-item img {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
-    max-width: 32px !important;
-    max-height: 32px !important;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
@@ -406,12 +407,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     margin: 0 !important;
 }
 .hero-stats-row .stat-item img[src*="Sword" i] {
-    width: 34px !important;
-    height: 34px !important;
-    min-width: 34px !important;
-    min-height: 34px !important;
-    max-width: 34px !important;
-    max-height: 34px !important;
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
+    max-width: 22px !important;
+    max-height: 22px !important;
     padding: 1px 0 !important;
 }
 
@@ -484,12 +485,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     background: #1a5f9a !important;
 }
 .hero-stats-row #openTreeBtn img {
-    width: 24px !important;
-    height: 24px !important;
-    min-width: 24px !important;
-    min-height: 24px !important;
-    max-width: 24px !important;
-    max-height: 24px !important;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
     filter: brightness(0) invert(1) !important;
     display: inline-block !important;
     vertical-align: middle !important;
@@ -741,17 +742,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-dialog .date { text-align:center; font-style:italic; color:var(--text-color); opacity:0.6; margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color); }
 .info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
 .info-close:hover { opacity:1; }
-  /* Форсированное отображение иконок характеристик */
-.hero-stats-row .stat-item {
-    overflow: visible !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 4px !important;
-}
-.hero-stats-row .stat-item img {
-    overflow: visible !important;
-    clip-path: none !important;
-}
 </style>
 </head>
 <body>
@@ -1577,34 +1567,29 @@ function renderStatsRow(hero, calc) {
     const statsRow = document.getElementById('heroStatsRow');
     if (!statsRow) return;
     
-    // Увеличенные стили для иконок с overflow: visible
-    const iconStyle = 'width:32px;height:32px;min-width:32px;min-height:32px;max-width:32px;max-height:32px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:0;margin:0;';
-    const swordStyle = 'width:34px;height:34px;min-width:34px;min-height:34px;max-width:34px;max-height:34px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:1px 0;margin:0;';
+    const iconStyle = 'width:20px;height:20px;min-width:20px;min-height:20px;max-width:20px;max-height:20px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:0;margin:0;';
+    const swordStyle = 'width:22px;height:22px;min-width:22px;min-height:22px;max-width:22px;max-height:22px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:1px 0;margin:0;';
     
     let html = '';
     
-    // Атака
     if (swordUrl) {
         html += '<span class="stat-item"><img src="' + swordUrl + '" alt="Атака" style="' + swordStyle + '"> ' + calc.attack + '</span>';
     } else {
         html += '<span class="stat-item">⚔️ ' + calc.attack + '</span>';
     }
     
-    // Защита
     if (shieldUrl) {
         html += '<span class="stat-item"><img src="' + shieldUrl + '" alt="Защита" style="' + iconStyle + '"> ' + calc.defense + '</span>';
     } else {
         html += '<span class="stat-item">🛡️ ' + calc.defense + '</span>';
     }
     
-    // Жизни
     if (healthUrl) {
         html += '<span class="stat-item"><img src="' + healthUrl + '" alt="Жизни" style="' + iconStyle + '"> ' + calc.hp + '</span>';
     } else {
         html += '<span class="stat-item">❤️ ' + calc.hp + '</span>';
     }
     
-    // Таланты
     html += '<div class="talent-controls">';
     html += '<div class="select-wrapper">';
     html += '<select id="talentModeSelect">';
@@ -1615,7 +1600,7 @@ function renderStatsRow(hero, calc) {
     html += '</select>';
     html += '<div class="arrow"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div>';
     html += '</div>';
-    html += '<button id="openTreeBtn"><img id="treeBtnIcon" src="" alt="Дерево" style="width:24px;height:24px;min-width:24px;min-height:24px;max-width:24px;max-height:24px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);"> Дерево талантов</button>';
+    html += '<button id="openTreeBtn"><img id="treeBtnIcon" src="" alt="Дерево" style="width:20px;height:20px;min-width:20px;min-height:20px;max-width:20px;max-height:20px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);"> Дерево талантов</button>';
     html += '</div>';
     
     statsRow.innerHTML = html;
@@ -1671,7 +1656,7 @@ function renderMetaRow(hero) {
     
     let starsDisplay;
     if (starIcon) {
-        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:24px;height:24px;min-width:24px;min-height:24px;max-width:24px;max-height:24px;object-fit:contain;display:inline-block;vertical-align:middle;"></span>`;
+        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:22px;height:22px;min-width:22px;min-height:22px;max-width:22px;max-height:22px;object-fit:contain;display:inline-block;vertical-align:middle;"></span>`;
     } else {
         starsDisplay = `${stars}★`;
     }
@@ -1690,17 +1675,17 @@ function renderCardStats(hero) {
     
     let html = '';
     if (swordUrl) {
-        html += '<span class="pill"><img src="' + swordUrl + '" alt="Атака"> ' + hero[HERO_FIELDS.attack] + '</span>';
+        html += '<span class="pill"><img src="' + swordUrl + '" alt="Атака" style="width:18px;height:18px;min-width:18px;min-height:18px;max-width:18px;max-height:18px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.attack] + '</span>';
     } else {
         html += '<span class="pill">⚔️ ' + hero[HERO_FIELDS.attack] + '</span>';
     }
     if (shieldUrl) {
-        html += '<span class="pill"><img src="' + shieldUrl + '" alt="Защита"> ' + hero[HERO_FIELDS.defense] + '</span>';
+        html += '<span class="pill"><img src="' + shieldUrl + '" alt="Защита" style="width:18px;height:18px;min-width:18px;min-height:18px;max-width:18px;max-height:18px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.defense] + '</span>';
     } else {
         html += '<span class="pill">🛡️ ' + hero[HERO_FIELDS.defense] + '</span>';
     }
     if (healthUrl) {
-        html += '<span class="pill"><img src="' + healthUrl + '" alt="Жизни"> ' + hero[HERO_FIELDS.hp] + '</span>';
+        html += '<span class="pill"><img src="' + healthUrl + '" alt="Жизни" style="width:18px;height:18px;min-width:18px;min-height:18px;max-width:18px;max-height:18px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.hp] + '</span>';
     } else {
         html += '<span class="pill">❤️ ' + hero[HERO_FIELDS.hp] + '</span>';
     }
@@ -1747,7 +1732,21 @@ function initDragAndDrop() {
     header.addEventListener('mousedown', onMouseDown);
 }
 
-function openTreePanel(){ const hero=viewHeroes[currentIdx]; if(!hero) return; const panel=document.getElementById('treePanel'); if(!panel.style.left && !panel.style.top){ panel.style.left=''; panel.style.right='20px'; panel.style.top='50%'; panel.style.transform='translateY(-50%)'; } document.getElementById('treeHeroName').textContent=hero[HERO_FIELDS.name]; renderTalentTree(hero, currentHeroTalents, currentMode); panel.classList.add('show'); }
+function openTreePanel(){ 
+    const hero=viewHeroes[currentIdx]; 
+    if(!hero) return; 
+    const panel=document.getElementById('treePanel'); 
+    if(!panel.style.left && !panel.style.top){ 
+        panel.style.left=''; 
+        panel.style.right='20px'; 
+        panel.style.top='50%'; 
+        panel.style.transform='translateY(-50%)'; 
+    } 
+    document.getElementById('treeHeroName').textContent=hero[HERO_FIELDS.name]; 
+    renderTalentTree(hero, currentHeroTalents, currentMode); 
+    panel.classList.add('show'); 
+}
+
 function closeTreePanel(){ 
     const panel = document.getElementById('treePanel');
     if (panel) {
@@ -1755,7 +1754,33 @@ function closeTreePanel(){
     }
     hideTalentTooltip(); 
 }
-function updateMainModalStats(){ const hero=viewHeroes[currentIdx]; if(!hero) return; const select = document.getElementById('talentModeSelect'); if (select) currentMode = select.value; else currentMode = 'none'; let selections={}; if(currentMode==='none'){ selections={}; currentHeroTalents={}; } else if(currentMode==='attack'){ selections=getOptimalSelections(hero,'attack'); currentHeroTalents=selections; } else if(currentMode==='defense'){ selections=getOptimalSelections(hero,'defense'); currentHeroTalents=selections; } else if(currentMode==='manual'){ selections=currentHeroTalents; } const calc=calculateStatsWithSelections(hero, selections, currentMode); renderStatsRow(hero, calc); if(document.getElementById('treePanel').classList.contains('show')){ renderTalentTree(hero, currentHeroTalents, currentMode); } }
+
+function updateMainModalStats(){ 
+    const hero=viewHeroes[currentIdx]; 
+    if(!hero) return; 
+    const select = document.getElementById('talentModeSelect'); 
+    if (select) currentMode = select.value; 
+    else currentMode = 'none'; 
+    let selections={}; 
+    if(currentMode==='none'){ 
+        selections={}; 
+        currentHeroTalents={}; 
+    } else if(currentMode==='attack'){ 
+        selections=getOptimalSelections(hero,'attack'); 
+        currentHeroTalents=selections; 
+    } else if(currentMode==='defense'){ 
+        selections=getOptimalSelections(hero,'defense'); 
+        currentHeroTalents=selections; 
+    } else if(currentMode==='manual'){ 
+        selections=currentHeroTalents; 
+    } 
+    const calc=calculateStatsWithSelections(hero, selections, currentMode); 
+    renderStatsRow(hero, calc); 
+    if(document.getElementById('treePanel').classList.contains('show')){ 
+        renderTalentTree(hero, currentHeroTalents, currentMode); 
+    } 
+}
+
 function toNum(v){ let n=parseFloat(String(v).replace(',','.')); return isNaN(n)?null:n; }
 function uniq(arr){ return [...new Set(arr.filter(v=>v!==null&&v!==undefined&&String(v).trim()!==''))]; }
 function sortAlpha(a,b){ return String(a).localeCompare(String(b),'ru',{numeric:true}); }
@@ -1945,7 +1970,6 @@ function fillModal(hero){
     const select = document.getElementById('talentModeSelect');
     if (select) {
         select.value = 'none';
-        // Убираем старые слушатели, добавляем новый
         select.removeEventListener('change', updateMainModalStats);
         select.addEventListener('change', updateMainModalStats);
     }
