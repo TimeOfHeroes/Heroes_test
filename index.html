@@ -391,23 +391,23 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-size: 15px;
 }
 .hero-stats-row .stat-item img {
-    width: 22px !important;
-    height: 22px !important;
-    min-width: 22px !important;
-    min-height: 22px !important;
-    max-width: 22px !important;
-    max-height: 22px !important;
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    max-width: 28px !important;
+    max-height: 28px !important;
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
 }
 .hero-stats-row .stat-item img[src*="Sword" i] {
-    width: 24px !important;
-    height: 24px !important;
-    min-width: 24px !important;
-    min-height: 24px !important;
-    max-width: 24px !important;
-    max-height: 24px !important;
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
     padding: 1px 0 !important;
 }
 
@@ -480,12 +480,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     background: #1a5f9a !important;
 }
 .hero-stats-row #openTreeBtn img {
-    width: 20px !important;
-    height: 20px !important;
-    min-width: 20px !important;
-    min-height: 20px !important;
-    max-width: 20px !important;
-    max-height: 20px !important;
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
     filter: brightness(0) invert(1) !important;
     display: inline-block !important;
     vertical-align: middle !important;
@@ -809,10 +809,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <!-- Строка 3: Скорость маны + Цели -->
         <div id="heroInfoRow" class="hero-info-row"></div>
         
-        <div id="modalTags" class="modal-tags"></div>
-        
         <h3 style="margin-top:12px;">Способности</h3>
         <div id="mAbilities" class="pre"></div>
+        
+        <div id="modalTags" class="modal-tags"></div>
         
         <h3>Пассивные способности</h3>
         <div id="mPassive" class="pre"></div>
@@ -1546,23 +1546,23 @@ function renderStatsRow(hero, calc) {
     
     let html = '';
     
-    // Атака
+    // Атака — увеличенный размер иконки
     if (swordUrl) {
-        html += '<span class="stat-item"><img src="' + swordUrl + '" alt="Атака"> ' + calc.attack + '</span>';
+        html += '<span class="stat-item"><img src="' + swordUrl + '" alt="Атака" style="width:30px;height:30px;min-width:30px;min-height:30px;max-width:30px;max-height:30px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + calc.attack + '</span>';
     } else {
         html += '<span class="stat-item">⚔️ ' + calc.attack + '</span>';
     }
     
     // Защита
     if (shieldUrl) {
-        html += '<span class="stat-item"><img src="' + shieldUrl + '" alt="Защита"> ' + calc.defense + '</span>';
+        html += '<span class="stat-item"><img src="' + shieldUrl + '" alt="Защита" style="width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + calc.defense + '</span>';
     } else {
         html += '<span class="stat-item">🛡️ ' + calc.defense + '</span>';
     }
     
     // Жизни
     if (healthUrl) {
-        html += '<span class="stat-item"><img src="' + healthUrl + '" alt="Жизни"> ' + calc.hp + '</span>';
+        html += '<span class="stat-item"><img src="' + healthUrl + '" alt="Жизни" style="width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + calc.hp + '</span>';
     } else {
         html += '<span class="stat-item">❤️ ' + calc.hp + '</span>';
     }
@@ -1578,7 +1578,7 @@ function renderStatsRow(hero, calc) {
     html += '</select>';
     html += '<div class="arrow"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div>';
     html += '</div>';
-    html += '<button id="openTreeBtn"><img id="treeBtnIcon" src="" alt="Дерево"> Дерево талантов</button>';
+    html += '<button id="openTreeBtn"><img id="treeBtnIcon" src="" alt="Дерево" style="width:24px;height:24px;min-width:24px;min-height:24px;max-width:24px;max-height:24px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);"> Дерево талантов</button>';
     html += '</div>';
     
     statsRow.innerHTML = html;
@@ -1588,7 +1588,6 @@ function renderStatsRow(hero, calc) {
         const treeBtnIcon = document.getElementById('treeBtnIcon');
         if (treeBtnIcon) {
             treeBtnIcon.src = treeIcon;
-            treeBtnIcon.style.cssText = 'width:20px;height:20px;min-width:20px;min-height:20px;max-width:20px;max-height:20px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);';
         }
     }
     
@@ -1635,7 +1634,7 @@ function renderMetaRow(hero) {
     
     let starsDisplay;
     if (starIcon) {
-        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★"></span>`;
+        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:24px;height:24px;min-width:24px;min-height:24px;max-width:24px;max-height:24px;object-fit:contain;display:inline-block;vertical-align:middle;"></span>`;
     } else {
         starsDisplay = `${stars}★`;
     }
@@ -1852,7 +1851,7 @@ function fillModal(hero){
     // ===== Строка 3: Скорость маны + Цели =====
     renderInfoRow(hero);
     
-    // ===== ТЕГИ =====
+    // ===== ТЕГИ (после способностей) =====
     const tagsContainer = document.getElementById('modalTags');
     if (hero._tags && hero._tags.length > 0) {
         const tagsHtml = hero._tags.map(tag => '<span class="tag ' + getTagClass(tag) + '" data-tag="' + tag + '">#' + tag + '</span>').join('');
@@ -1903,11 +1902,14 @@ function fillModal(hero){
     const select = document.getElementById('talentModeSelect');
     if (select) {
         select.value = 'none';
+        // Убираем старые слушатели, добавляем новый
+        select.removeEventListener('change', updateMainModalStats);
         select.addEventListener('change', updateMainModalStats);
     }
     
     const treeBtn = document.getElementById('openTreeBtn');
     if (treeBtn) {
+        treeBtn.removeEventListener('click', openTreePanel);
         treeBtn.addEventListener('click', openTreePanel);
     }
 }
