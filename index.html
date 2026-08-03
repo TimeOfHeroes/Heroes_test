@@ -345,93 +345,92 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .image-container[data-element="Желтый"] { background:var(--element-yellow); }
 .dialog img { width:100%; height:auto; max-height:350px; object-fit:contain; border-radius:12px; background:transparent; padding:8px; }
 .dialog h2 { margin:0 0 8px; font-size:26px; font-weight:700; }
-.dialog .meta { display:flex; gap:8px; flex-wrap:wrap; opacity:0.8; margin-bottom:8px; font-size:14px; justify-content:flex-start; align-items:center; }
-.dialog .meta .star-icon { display:inline-block; width:18px; height:18px; vertical-align:middle; }
 
-/* ЗВЕЗДА В МЕТА-СТРОКЕ — в одну строку и увеличенная */
-#mMeta1 img[src$=".svg"] {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    min-height: 28px !important;
-    max-width: 28px !important;
-    max-height: 28px !important;
+/* ===== НОВАЯ СТРУКТУРА МОДАЛЬНОГО ОКНА ===== */
+
+/* Строка 1: Элемент, Звездность, Класс */
+.hero-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    margin: 0 0 6px 0;
+    font-weight: 600;
+    font-size: 15px;
+}
+.hero-meta-row .star-display {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.hero-meta-row .star-display img {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
-    margin: 0 2px !important;
 }
 
-/* ===== ХАРАКТЕРИСТИКИ В МОДАЛКЕ ===== */
-.dialog .mStats {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 4px !important;
-    padding: 4px 0 !important;
-    margin: 6px 0 8px !important;
-    background: transparent !important;
+/* Строка 2: Характеристики + таланты */
+.hero-stats-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    margin: 4px 0 6px 0;
 }
-
-.dialog .mStats .stat-item {
-    display: flex !important;
-    align-items: center !important;
-    gap: 4px !important;
-    padding: 3px 8px !important;
-    font-size: 14px !important;
-    font-weight: 600 !important;
-    background: transparent !important;
-    border: none !important;
-    white-space: nowrap !important;
-    border-radius: 0 !important;
+.hero-stats-row .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    font-size: 15px;
 }
-
-.dialog .mStats .stat-item img {
-    display: inline-block !important;
-    vertical-align: middle !important;
-    width: 20px !important;
-    height: 20px !important;
-    min-width: 20px !important;
-    min-height: 20px !important;
-    object-fit: contain !important;
-    flex-shrink: 0 !important;
-    background: transparent !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-}
-
-.dialog .mStats .stat-item img[src*="Sword" i] {
+.hero-stats-row .stat-item img {
     width: 22px !important;
     height: 22px !important;
     min-width: 22px !important;
     min-height: 22px !important;
+    max-width: 22px !important;
+    max-height: 22px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+}
+.hero-stats-row .stat-item img[src*="Sword" i] {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
     padding: 1px 0 !important;
 }
 
-/* ===== БЛОК УПРАВЛЕНИЯ ТАЛАНТАМИ ===== */
-.talent-controls {
+/* Контролы талантов в строке */
+.hero-stats-row .talent-controls {
     display: flex !important;
     flex-wrap: wrap !important;
     align-items: center !important;
-    gap: 8px !important;
-    padding: 4px 0 !important;
-    margin: 2px 0 8px !important;
+    gap: 6px !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
-
-.talent-controls .select-wrapper {
+.hero-stats-row .talent-controls .select-wrapper {
     position: relative !important;
     flex: 0 1 auto !important;
-    min-width: 140px !important;
-    max-width: 180px !important;
+    min-width: 130px !important;
+    max-width: 170px !important;
     display: inline-block !important;
 }
-
-.talent-controls .select-wrapper select {
+.hero-stats-row .talent-controls .select-wrapper select {
     width: 100% !important;
-    padding: 5px 32px 5px 10px !important;
-    font-size: 13px !important;
+    padding: 4px 28px 4px 8px !important;
+    font-size: 12px !important;
     border: 1px solid var(--border-color) !important;
     border-radius: 6px !important;
     background: var(--card-bg) !important;
@@ -440,16 +439,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     appearance: none !important;
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
-    height: 32px !important;
+    height: 28px !important;
     box-sizing: border-box !important;
 }
-
-.talent-controls .select-wrapper .arrow {
+.hero-stats-row .talent-controls .select-wrapper .arrow {
     position: absolute !important;
     right: 0 !important;
     top: 0 !important;
     bottom: 0 !important;
-    width: 28px !important;
+    width: 24px !important;
     background: #227BBC !important;
     border-radius: 0 6px 6px 0 !important;
     display: flex !important;
@@ -457,19 +455,17 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     justify-content: center !important;
     pointer-events: none !important;
 }
-
-.talent-controls .select-wrapper .arrow svg {
-    width: 14px !important;
-    height: 14px !important;
+.hero-stats-row .talent-controls .select-wrapper .arrow svg {
+    width: 12px !important;
+    height: 12px !important;
     fill: #ffffff !important;
 }
-
-#openTreeBtn {
+.hero-stats-row #openTreeBtn {
     display: flex !important;
     align-items: center !important;
     gap: 4px !important;
-    padding: 4px 12px !important;
-    font-size: 13px !important;
+    padding: 3px 10px !important;
+    font-size: 12px !important;
     border: none !important;
     border-radius: 6px !important;
     background: #227BBC !important;
@@ -477,55 +473,51 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     cursor: pointer !important;
     transition: all 0.2s !important;
     font-weight: 500 !important;
-    height: 32px !important;
+    height: 28px !important;
     white-space: nowrap !important;
 }
-#openTreeBtn:hover {
+.hero-stats-row #openTreeBtn:hover {
     background: #1a5f9a !important;
 }
-#openTreeBtn img {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    min-height: 28px !important;
-    max-width: 28px !important;
-    max-height: 28px !important;
+.hero-stats-row #openTreeBtn img {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
     filter: brightness(0) invert(1) !important;
     display: inline-block !important;
     vertical-align: middle !important;
     object-fit: contain !important;
 }
 
-/* ===== ХАРАКТЕРИСТИКИ В КАРТОЧКАХ ===== */
-.card .stats {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 4px !important;
-    justify-content: center !important;
-    margin: 0 4px 6px !important;
+/* Строка 3: Скорость маны + Цели */
+.hero-info-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 24px;
+    margin: 2px 0 8px 0;
+}
+.hero-info-row .info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.hero-info-row .info-item .value {
+    font-weight: 600;
+    font-size: 15px;
+}
+.hero-info-row .info-item .label {
+    font-size: 11px;
+    color: var(--text-color);
+    opacity: 0.6;
+    font-weight: 400;
+    margin-top: -2px;
 }
 
-.card .stats .pill {
-    display: flex !important;
-    align-items: center !important;
-    gap: 4px !important;
-    font-size: 11px !important;
-    padding: 2px 8px 2px 4px !important;
-    border-radius: 12px !important;
-    background: rgba(255,255,255,0.4) !important;
-}
-
-.card .stats .pill img[src$=".svg"] {
-    width: 18px !important;
-    height: 18px !important;
-    min-width: 18px !important;
-    min-height: 18px !important;
-    max-width: 18px !important;
-    max-height: 18px !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-}
+/* ===== ОСТАЛЬНЫЕ СТИЛИ ===== */
 
 .pre { white-space:pre-line; background:var(--secondary-color); border:1px solid var(--border-color); border-radius:10px; padding:12px; font-size:14px; overflow-wrap:break-word; line-height:1.5; margin:6px 0; }
 .open-img { margin-top:8px; display:inline-block; font-size:13px; color:var(--primary-color); text-decoration:none; }
@@ -554,7 +546,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     color: #fff !important;
 }
 
-/* Принудительное увеличение для иконки прокачки */
 #upgradeIcon[src$=".svg"],
 .upgrade-section-title img[src$=".svg"] {
     width: 28px !important;
@@ -582,19 +573,14 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     border-radius: 10px;
     border: 1px solid var(--border-color);
 }
-
-/* Скрываем заголовок "Прокачка героя" внутри блока */
 .upgrade-section-title {
     display: none !important;
 }
-
-/* Увеличенный шрифт для подзаголовков в прокачке */
 .upgrade-section-wrapper .upgrade-section > div > div:first-child {
     font-size: 16px !important;
     font-weight: 600 !important;
     margin-bottom: 6px !important;
 }
-
 .upgrade-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -813,31 +799,20 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     <div class="image-container" id="modalImageContainer"><img id="mImg" src=""><a id="mOpenImg" class="open-img" href="#" target="_blank">Открыть изображение в новой вкладке</a></div>
     <div class="info-container">
         <h2 id="mName"></h2>
-        <div id="mMeta1" class="meta"></div>
-        <div id="mMeta2" class="meta"></div>
-        <div id="mStats" class="mStats"></div>
         
-        <div class="talent-controls">
-            <div class="select-wrapper">
-                <select id="talentModeSelect">
-                    <option value="none">Без талантов</option>
-                    <option value="manual">Ручной выбор</option>
-                    <option value="attack">Таланты в атаку</option>
-                    <option value="defense">Таланты в защиту</option>
-                </select>
-                <div class="arrow">
-                    <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-                </div>
-            </div>
-            <button id="openTreeBtn">
-                <img id="treeBtnIcon" src="" alt="Дерево"> Дерево талантов
-            </button>
-        </div>
+        <!-- Строка 1: Элемент, Звездность, Класс -->
+        <div id="heroMetaRow" class="hero-meta-row"></div>
+        
+        <!-- Строка 2: Характеристики + таланты -->
+        <div id="heroStatsRow" class="hero-stats-row"></div>
+        
+        <!-- Строка 3: Скорость маны + Цели -->
+        <div id="heroInfoRow" class="hero-info-row"></div>
+        
+        <div id="modalTags" class="modal-tags"></div>
         
         <h3 style="margin-top:12px;">Способности</h3>
         <div id="mAbilities" class="pre"></div>
-        
-        <div id="modalTags" class="modal-tags"></div>
         
         <h3>Пассивные способности</h3>
         <div id="mPassive" class="pre"></div>
@@ -1550,7 +1525,7 @@ function renderTalentTree(hero, selections, mode) {
                 const heroData = viewHeroes[currentIdx];
                 if (heroData) {
                     const calc = calculateStatsWithSelections(heroData, currentHeroTalents, currentMode);
-                    document.getElementById('mStats').innerHTML = renderStatsHTML(heroData, calc);
+                    renderStatsRow(heroData, calc);
                 }
                 
                 renderTalentTree(heroData, currentHeroTalents, currentMode);
@@ -1559,31 +1534,117 @@ function renderTalentTree(hero, selections, mode) {
     }
 }
 
-function renderStatsHTML(hero, calc) {
+function renderStatsRow(hero, calc) {
     const swordUrl = getIcon('Sword_icon');
     const shieldUrl = getIcon('Shield_icon');
     const healthUrl = getIcon('Health_icon');
+    const treeIcon = getIcon('TalantTree_icon');
     
-    const imgStyle = 'width:20px;height:20px;min-width:20px;min-height:20px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;background:transparent;';
-    const swordStyle = 'width:22px;height:22px;min-width:22px;min-height:22px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;background:transparent;padding:1px 0;';
+    // Строка 2: Характеристики + таланты
+    const statsRow = document.getElementById('heroStatsRow');
+    if (!statsRow) return;
     
     let html = '';
+    
+    // Атака
     if (swordUrl) {
-        html += '<span class="stat-item"><img src="' + swordUrl + '" alt="Атака" style="' + swordStyle + '"> ' + calc.attack + '</span>';
+        html += '<span class="stat-item"><img src="' + swordUrl + '" alt="Атака"> ' + calc.attack + '</span>';
     } else {
         html += '<span class="stat-item">⚔️ ' + calc.attack + '</span>';
     }
+    
+    // Защита
     if (shieldUrl) {
-        html += '<span class="stat-item"><img src="' + shieldUrl + '" alt="Защита" style="' + imgStyle + '"> ' + calc.defense + '</span>';
+        html += '<span class="stat-item"><img src="' + shieldUrl + '" alt="Защита"> ' + calc.defense + '</span>';
     } else {
         html += '<span class="stat-item">🛡️ ' + calc.defense + '</span>';
     }
+    
+    // Жизни
     if (healthUrl) {
-        html += '<span class="stat-item"><img src="' + healthUrl + '" alt="Жизни" style="' + imgStyle + '"> ' + calc.hp + '</span>';
+        html += '<span class="stat-item"><img src="' + healthUrl + '" alt="Жизни"> ' + calc.hp + '</span>';
     } else {
         html += '<span class="stat-item">❤️ ' + calc.hp + '</span>';
     }
-    return html;
+    
+    // Таланты
+    html += '<div class="talent-controls">';
+    html += '<div class="select-wrapper">';
+    html += '<select id="talentModeSelect">';
+    html += '<option value="none">Без талантов</option>';
+    html += '<option value="manual">Ручной выбор</option>';
+    html += '<option value="attack">Таланты в атаку</option>';
+    html += '<option value="defense">Таланты в защиту</option>';
+    html += '</select>';
+    html += '<div class="arrow"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div>';
+    html += '</div>';
+    html += '<button id="openTreeBtn"><img id="treeBtnIcon" src="" alt="Дерево"> Дерево талантов</button>';
+    html += '</div>';
+    
+    statsRow.innerHTML = html;
+    
+    // Устанавливаем иконку дерева талантов
+    if (treeIcon) {
+        const treeBtnIcon = document.getElementById('treeBtnIcon');
+        if (treeBtnIcon) {
+            treeBtnIcon.src = treeIcon;
+            treeBtnIcon.style.cssText = 'width:20px;height:20px;min-width:20px;min-height:20px;max-width:20px;max-height:20px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);';
+        }
+    }
+    
+    // Привязываем события
+    const select = document.getElementById('talentModeSelect');
+    if (select) {
+        select.value = currentMode || 'none';
+        select.addEventListener('change', updateMainModalStats);
+    }
+    
+    const treeBtn = document.getElementById('openTreeBtn');
+    if (treeBtn) {
+        treeBtn.addEventListener('click', openTreePanel);
+    }
+}
+
+function renderInfoRow(hero) {
+    const infoRow = document.getElementById('heroInfoRow');
+    if (!infoRow) return;
+    
+    const manaValue = hero[HERO_FIELDS.mana] || '—';
+    const attackType = hero[HERO_FIELDS.attackType] || '—';
+    
+    infoRow.innerHTML = `
+        <div class="info-item">
+            <span class="value">${manaValue}</span>
+            <span class="label">скорость маны</span>
+        </div>
+        <div class="info-item">
+            <span class="value">${attackType}</span>
+            <span class="label">цели</span>
+        </div>
+    `;
+}
+
+function renderMetaRow(hero) {
+    const metaRow = document.getElementById('heroMetaRow');
+    if (!metaRow) return;
+    
+    const element = hero[HERO_FIELDS.element] || '—';
+    const stars = hero[HERO_FIELDS.stars] || '—';
+    const clazz = hero[HERO_FIELDS.clazz] || '—';
+    const starIcon = getStarIcon();
+    
+    let starsDisplay;
+    if (starIcon) {
+        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★"></span>`;
+    } else {
+        starsDisplay = `${stars}★`;
+    }
+    
+    metaRow.innerHTML = `
+        <span>${element}</span>
+        <span>${starsDisplay}</span>
+        <span>${clazz}</span>
+    `;
 }
 
 function renderCardStats(hero) {
@@ -1652,7 +1713,7 @@ function initDragAndDrop() {
 
 function openTreePanel(){ const hero=viewHeroes[currentIdx]; if(!hero) return; const panel=document.getElementById('treePanel'); if(!panel.style.left && !panel.style.top){ panel.style.left=''; panel.style.right='20px'; panel.style.top='50%'; panel.style.transform='translateY(-50%)'; } document.getElementById('treeHeroName').textContent=hero[HERO_FIELDS.name]; renderTalentTree(hero, currentHeroTalents, currentMode); panel.classList.add('show'); }
 function closeTreePanel(){ document.getElementById('treePanel').classList.remove('show'); hideTalentTooltip(); }
-function updateMainModalStats(){ const hero=viewHeroes[currentIdx]; if(!hero) return; currentMode=document.getElementById('talentModeSelect').value; let selections={}; if(currentMode==='none'){ selections={}; currentHeroTalents={}; } else if(currentMode==='attack'){ selections=getOptimalSelections(hero,'attack'); currentHeroTalents=selections; } else if(currentMode==='defense'){ selections=getOptimalSelections(hero,'defense'); currentHeroTalents=selections; } else if(currentMode==='manual'){ selections=currentHeroTalents; } const calc=calculateStatsWithSelections(hero, selections, currentMode); document.getElementById('mStats').innerHTML=renderStatsHTML(hero, calc); if(document.getElementById('treePanel').classList.contains('show')){ renderTalentTree(hero, currentHeroTalents, currentMode); } }
+function updateMainModalStats(){ const hero=viewHeroes[currentIdx]; if(!hero) return; const select = document.getElementById('talentModeSelect'); if (select) currentMode = select.value; else currentMode = 'none'; let selections={}; if(currentMode==='none'){ selections={}; currentHeroTalents={}; } else if(currentMode==='attack'){ selections=getOptimalSelections(hero,'attack'); currentHeroTalents=selections; } else if(currentMode==='defense'){ selections=getOptimalSelections(hero,'defense'); currentHeroTalents=selections; } else if(currentMode==='manual'){ selections=currentHeroTalents; } const calc=calculateStatsWithSelections(hero, selections, currentMode); renderStatsRow(hero, calc); if(document.getElementById('treePanel').classList.contains('show')){ renderTalentTree(hero, currentHeroTalents, currentMode); } }
 function toNum(v){ let n=parseFloat(String(v).replace(',','.')); return isNaN(n)?null:n; }
 function uniq(arr){ return [...new Set(arr.filter(v=>v!==null&&v!==undefined&&String(v).trim()!==''))]; }
 function sortAlpha(a,b){ return String(a).localeCompare(String(b),'ru',{numeric:true}); }
@@ -1749,7 +1810,6 @@ function openModal(idx){
     currentIdx=idx;
     const hero=viewHeroes[currentIdx];
     currentMode='none';
-    document.getElementById('talentModeSelect').value='none';
     currentHeroTalents={};
     fillModal(hero);
     document.getElementById('modal').classList.add('show');
@@ -1762,7 +1822,7 @@ function fillModal(hero){
     document.getElementById('mOpenImg').href = img || '#';
     document.getElementById('mName').textContent = hero[HERO_FIELDS.name] || '';
     
-    // ===== ИКОНКИ НАВИГАЦИИ — увеличенные =====
+    // ===== ИКОНКИ НАВИГАЦИИ =====
     const leftIcon = getIcon('Left_button');
     const rightIcon = getIcon('Right_button');
     const closeIcon = getIcon('Close_button');
@@ -1782,31 +1842,17 @@ function fillModal(hero){
         if (el) { el.src = closeIcon; el.style.cssText = navIconStyle; }
     }
     
-    // ===== ИКОНКА ДЛЯ КНОПКИ "ДЕРЕВО ТАЛАНТОВ" =====
-    const treeIcon = getIcon('TalantTree_icon');
-    const treeBtnIcon = document.getElementById('treeBtnIcon');
-    if (treeIcon && treeBtnIcon) {
-        treeBtnIcon.src = treeIcon;
-        treeBtnIcon.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);';
-    }
+    // ===== Строка 1: Мета =====
+    renderMetaRow(hero);
     
-    // ===== ЗВЁЗДЫ =====
-    const starIcon = getIcon('Star_icon');
-    let starsDisplay;
-    if (starIcon) {
-        starsDisplay = '<img src="' + starIcon + '" alt="★" style="width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;vertical-align:middle;display:inline-block;"> ' + hero[HERO_FIELDS.stars];
-    } else {
-        starsDisplay = hero[HERO_FIELDS.stars] + '★';
-    }
-    document.getElementById('mMeta1').innerHTML = '<span>' + hero[HERO_FIELDS.element] + '</span> <span>' + starsDisplay + '</span> <span>' + hero[HERO_FIELDS.mana] + '</span>';
-    document.getElementById('mMeta2').innerHTML = '<span>' + hero[HERO_FIELDS.attackType] + '</span> <span>' + hero[HERO_FIELDS.summon] + '</span> <span>' + hero[HERO_FIELDS.clazz] + '</span>';
+    // ===== Строка 2: Характеристики + таланты =====
+    const calc = calculateStatsWithSelections(hero, {}, 'none');
+    renderStatsRow(hero, calc);
     
-    const container = document.getElementById('modalImageContainer');
-    container.setAttribute('data-element', hero[HERO_FIELDS.element] || '');
-    const calc = calculateStatsWithSelections(hero, currentHeroTalents, 'none');
-    document.getElementById('mStats').innerHTML = renderStatsHTML(hero, calc);
+    // ===== Строка 3: Скорость маны + Цели =====
+    renderInfoRow(hero);
     
-    // ===== ТЕГИ (без слова "Теги:") =====
+    // ===== ТЕГИ =====
     const tagsContainer = document.getElementById('modalTags');
     if (hero._tags && hero._tags.length > 0) {
         const tagsHtml = hero._tags.map(tag => '<span class="tag ' + getTagClass(tag) + '" data-tag="' + tag + '">#' + tag + '</span>').join('');
@@ -1852,6 +1898,18 @@ function fillModal(hero){
     const wrapper = document.getElementById('upgradeSectionWrapper');
     if (wrapper) wrapper.classList.remove('show');
     renderUpgradeSection(hero);
+    
+    // ===== Привязываем события для талантов =====
+    const select = document.getElementById('talentModeSelect');
+    if (select) {
+        select.value = 'none';
+        select.addEventListener('change', updateMainModalStats);
+    }
+    
+    const treeBtn = document.getElementById('openTreeBtn');
+    if (treeBtn) {
+        treeBtn.addEventListener('click', openTreePanel);
+    }
 }
 
 function closeModal(){ document.getElementById('modal').classList.remove('show'); document.body.style.overflow=''; currentIdx=-1; closeTreePanel(); }
@@ -1925,9 +1983,6 @@ window.addEventListener('keydown', e=>{ if(!document.getElementById('modal').cla
 document.getElementById('infoBtn').addEventListener('click', ()=>{ document.getElementById('infoModal').classList.add('show'); document.body.style.overflow='hidden'; });
 document.getElementById('infoClose').addEventListener('click', ()=>{ document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow=''; });
 document.getElementById('infoModal').addEventListener('click', e=>{ if(e.target===document.getElementById('infoModal')){ document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow=''; } });
-document.getElementById('talentModeSelect').addEventListener('change', updateMainModalStats);
-document.getElementById('openTreeBtn').addEventListener('click', openTreePanel);
-document.getElementById('closeTreeBtn').addEventListener('click', closeTreePanel);
 document.getElementById('updateDate').textContent=new Date().toLocaleDateString('ru-RU',{year:'numeric',month:'long',day:'numeric'});
 initTooltip();
 initDragAndDrop();
