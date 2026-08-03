@@ -697,11 +697,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .tree-header h3 { margin:0; font-size:16px; font-weight:600; user-select:none; display:flex; align-items:center; gap:8px; }
 .tree-header h3 img { width:32px !important; height:32px !important; min-width:32px !important; min-height:32px !important; max-width:32px !important; max-height:32px !important; object-fit:contain !important; display:inline-block !important; vertical-align:middle !important; }
 .tree-close { 
-    background: #e74c3c !important;
+    background: none !important;
     border: none !important; 
-    font-size: 24px !important; 
+    font-size: 28px !important; 
     cursor: pointer !important; 
-    color: #ffffff !important; 
+    color: var(--text-color) !important; 
+    opacity: 0.7 !important; 
     width: 36px !important; 
     height: 36px !important; 
     display: flex !important; 
@@ -711,11 +712,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     transition: all 0.2s !important;
     padding: 0 !important;
     line-height: 1 !important;
-    font-weight: bold !important;
 }
 .tree-close:hover { 
-    background: #c0392b !important; 
-    transform: scale(1.1) !important;
+    opacity: 1 !important; 
+    background: var(--secondary-color) !important; 
 }
 .tree-content { padding:16px; overflow-y:auto; max-height:60vh; }
 .talent-table { display:flex; flex-direction:column; gap:2px; }
@@ -863,7 +863,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
             <img id="treeIcon" src="" alt="Дерево" style="width:32px;height:32px;min-width:32px;min-height:32px;max-width:32px;max-height:32px;object-fit:contain;display:inline-block;vertical-align:middle;">
             Дерево талантов — <span id="treeHeroName"></span>
         </h3>
-        <button id="closeTreeBtn" class="tree-close">✕</button>
+        <button id="closeTreeBtn" class="tree-close">×</button>
     </div>
     <div class="tree-content" id="treeContent">
         <div class="talent-table" id="talentTable"></div>
