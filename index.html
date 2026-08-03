@@ -516,30 +516,28 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .open-img { margin-top:8px; display:inline-block; font-size:13px; color:var(--primary-color); text-decoration:none; }
 
 /* --- Стили для блока прокачки --- */
+/* Кнопка "Прокачка героя" — цвет #227BBC */
 .upgrade-toggle-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    font-size: 13px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    background: var(--card-bg);
-    color: var(--text-color);
-    cursor: pointer;
-    transition: all 0.2s;
-    font-weight: 500;
-    margin: 6px 0 10px;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 6px 14px !important;
+    font-size: 13px !important;
+    border: none !important;
+    border-radius: 6px !important;
+    background: #227BBC !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    font-weight: 500 !important;
+    margin: 6px 0 10px !important;
 }
 .upgrade-toggle-btn:hover {
-    background: var(--accent-color);
-    color: #fff;
-    border-color: var(--accent-color);
+    background: #1a5f9a !important;
 }
 .upgrade-toggle-btn.active {
-    background: var(--accent-color);
-    color: #fff;
-    border-color: var(--accent-color);
+    background: #1a5f9a !important;
+    color: #fff !important;
 }
 .upgrade-section-wrapper {
     display: none;
@@ -723,6 +721,20 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     vertical-align: middle !important;
     filter: brightness(0) invert(1) !important; /* Делаем белую для синего фона */
 } 
+  /* Принудительное увеличение для иконки прокачки */
+#upgradeIcon[src$=".svg"],
+.upgrade-section-title img[src$=".svg"] {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    max-width: 28px !important;
+    max-height: 28px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    filter: brightness(0) invert(1) !important;
+}
 </style>
 </head>
 <body>
@@ -1054,13 +1066,19 @@ function renderUpgradeSection(hero) {
     container.style.display = 'block';
     
     const upgradeIcon = getUpgradeIcon();
-    const upgradeIconEl = document.getElementById('upgradeIcon');
-    const upgradeSectionIconEl = document.querySelector('.upgrade-section-title img');
-    
-    if (upgradeIcon) {
-        if (upgradeIconEl) upgradeIconEl.src = upgradeIcon;
-        if (upgradeSectionIconEl) upgradeSectionIconEl.src = upgradeIcon;
+const upgradeIconEl = document.getElementById('upgradeIcon');
+const upgradeSectionIconEl = document.querySelector('.upgrade-section-title img');
+
+if (upgradeIcon) {
+    if (upgradeIconEl) {
+        upgradeIconEl.src = upgradeIcon;
+        upgradeIconEl.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;';
     }
+    if (upgradeSectionIconEl) {
+        upgradeSectionIconEl.src = upgradeIcon;
+        upgradeSectionIconEl.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;';
+    }
+}
     
     const heroStars = String(hero['Количество звезд'] || '1').trim();
     const heroElement = String(hero['Стихия'] || '').trim();
@@ -1825,15 +1843,15 @@ if (treeIcon && treeBtnIcon) {
     document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive] || '—').replace(/^'|'$/g, '');
     
     // ===== ПРОКАЧКА =====
-    const upgradeIcon = getIcon('Upgrade_icon');
-    const toggleBtn = document.getElementById('upgradeToggleBtn');
-    if (upgradeIcon && toggleBtn) {
-        const upgradeImg = document.getElementById('upgradeIcon');
-        if (upgradeImg) {
-            upgradeImg.src = upgradeIcon;
-            upgradeImg.style.cssText = 'width:24px;height:24px;min-width:24px;min-height:24px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;';
-        }
+const upgradeIcon = getIcon('Upgrade_icon');
+const toggleBtn = document.getElementById('upgradeToggleBtn');
+if (upgradeIcon && toggleBtn) {
+    const upgradeImg = document.getElementById('upgradeIcon');
+    if (upgradeImg) {
+        upgradeImg.src = upgradeIcon;
+        upgradeImg.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;';
     }
+}
     
     const wrapper = document.getElementById('upgradeSectionWrapper');
     if (wrapper) wrapper.classList.remove('show');
