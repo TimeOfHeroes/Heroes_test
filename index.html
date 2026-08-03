@@ -1366,13 +1366,13 @@ function renderTalentTree(hero, selections, mode) {
     }
     
     const treeIcon = getIcon('TalantTree_icon');
-    const treeIconEl = document.getElementById('treeIcon');
-    if (treeIcon && treeIconEl) {
-        treeIconEl.src = treeIcon;
-        treeIconEl.setAttribute('width', '24');
-        treeIconEl.setAttribute('height', '24');
-        treeIconEl.style.cssText = 'width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;max-width:24px !important;max-height:24px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;flex:0 0 auto !important;';
-    }
+const treeIconEl = document.getElementById('treeIcon');
+if (treeIcon && treeIconEl) {
+    treeIconEl.src = treeIcon;
+    treeIconEl.setAttribute('width', '24');
+    treeIconEl.setAttribute('height', '24');
+    treeIconEl.style.cssText = 'width:24px !important;height:24px !important;min-width:24px !important;min-height:24px !important;max-width:24px !important;max-height:24px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;flex:0 0 auto !important;background:var(--accent-color) !important;padding:4px !important;border-radius:4px !important;';
+}
     
     const talents = classTalents[heroClass];
     const groups = [];
