@@ -270,14 +270,14 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 /* --- Модальное окно --- */
 .modal { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center; padding:20px; z-index:2000; }
 .modal.show { display:flex; }
-.dialog { position:relative; background:var(--card-bg); max-width:1200px; width:min(1200px, 95vw); max-height:90vh; overflow:hidden; border-radius:16px; display:flex; flex-direction:column; box-shadow:0 20px 40px rgba(0,0,0,0.3); }
+.dialog { position:relative; background:var(--card-bg); max-width:1200px; width:min(1200px, 95vw); max-height:90vh; border-radius:16px; display:flex; flex-direction:column; box-shadow:0 20px 40px rgba(0,0,0,0.3); overflow: visible !important; }
 .dialog .modal-content { 
     position:relative;
     display:grid; 
     grid-template-columns:320px 1fr; 
     gap:20px; 
     padding:20px; 
-    overflow-y:auto; 
+    overflow-y: auto !important; 
     max-height:calc(90vh - 60px); 
     scroll-behavior: smooth;
 }
