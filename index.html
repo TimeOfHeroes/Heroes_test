@@ -281,7 +281,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     max-height:calc(90vh - 60px); 
 }
 
-/* Кнопки навигации — увеличенные, рядом */
+/* Кнопки навигации — только картинки, без фона */
 .nav-btn {
     position: absolute !important;
     top: 12px !important;
@@ -290,44 +290,39 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     min-width: 48px !important;
     min-height: 48px !important;
     border: none !important;
-    background: rgba(255,255,255,0.85) !important;
-    backdrop-filter: blur(4px) !important;
+    background: transparent !important;  /* Убираем фон */
     cursor: pointer !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    transition: all 0.2s !important;
-    border-radius: 50% !important;
+    transition: transform 0.2s !important;
     padding: 0 !important;
     z-index: 10 !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+    box-shadow: none !important;  /* Убираем тень */
 }
 .nav-btn:hover {
-    transform: scale(1.08) !important;
-    background: rgba(255,255,255,1) !important;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.25) !important;
+    transform: scale(1.1) !important;
 }
 .nav-btn:active {
-    transform: scale(0.92) !important;
+    transform: scale(0.9) !important;
 }
 
-/* Иконки в кнопках — большие, оригинальные цвета */
+/* Иконки в кнопках */
 .nav-btn img {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    min-height: 36px !important;
-    max-width: 36px !important;
-    max-height: 36px !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
     object-fit: contain !important;
     display: block !important;
     filter: none !important;
-    transform: scale(1.0) !important;
 }
 
-/* Кнопки в ряд: ← → ✕ с одинаковым отступом */
-.nav-prev { right: 124px !important; }  /* 12 + 48 + 12 + 48 + 4 = 124 */
-.nav-next { right: 64px !important; }   /* 12 + 48 + 4 = 64 */
+/* Кнопки в ряд с ОДИНАКОВЫМ расстоянием */
+.nav-prev { right: 120px !important; }  /* 12 + 48 + 12 + 48 = 120 */
+.nav-next { right: 60px !important; }   /* 12 + 48 = 60 */
 .nav-close { right: 12px !important; }
 
 .image-container { background:var(--element-unknown); border-radius:12px; padding:12px; transition:background 0.3s; }
