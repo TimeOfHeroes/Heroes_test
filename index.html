@@ -348,20 +348,35 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 
 /* ===== НОВАЯ СТРУКТУРА МОДАЛЬНОГО ОКНА ===== */
 
+/* Группы с большими отступами */
+.modal .info-container > * {
+    margin-bottom: 20px; /* Максимальный отступ между смысловыми группами */
+}
+.modal .info-container > *:last-child {
+    margin-bottom: 0;
+}
+
+/* Заголовок (имя героя) */
+.modal .info-container h2 {
+    margin: 0 0 16px 0; /* Уменьшен отступ после имени */
+    font-size: 26px;
+    font-weight: 700;
+}
+
 /* Строка 1: Элемент, Звездность, Класс */
 .hero-meta-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 8px 16px;
-    margin: 0 0 6px 0;
+    margin: 0 0 8px 0; /* Маленький отступ */
     font-weight: 600;
     font-size: 15px;
 }
 .hero-meta-row .star-display {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 2px; /* Звезда ближе к числу */
 }
 .hero-meta-row .star-display img {
     width: 32px !important;
@@ -381,7 +396,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     flex-wrap: wrap;
     align-items: center;
     gap: 8px 12px;
-    margin: 4px 0 6px 0;
+    margin: 0 0 8px 0; /* Маленький отступ */
 }
 .hero-stats-row .stat-item {
     display: flex;
@@ -504,7 +519,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     flex-wrap: wrap;
     align-items: center;
     gap: 12px 24px;
-    margin: 2px 0 8px 0;
+    margin: 0 0 12px 0; /* Средний отступ */
 }
 .hero-info-row .info-item {
     display: flex;
@@ -523,12 +538,43 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     margin-top: -2px;
 }
 
-/* ===== ОСТАЛЬНЫЕ СТИЛИ ===== */
+/* Способности */
+.modal .info-container h3:first-of-type {
+    margin: 16px 0 6px 0; /* Отступ сверху, чтобы отделить от предыдущей группы */
+}
+.modal .info-container h3 {
+    margin: 12px 0 6px 0; /* Отступ между h3 и содержимым */
+    font-size: 16px;
+    font-weight: 600;
+}
 
-.pre { white-space:pre-line; background:var(--secondary-color); border:1px solid var(--border-color); border-radius:10px; padding:12px; font-size:14px; overflow-wrap:break-word; line-height:1.5; margin:6px 0; }
-.open-img { margin-top:8px; display:inline-block; font-size:13px; color:var(--primary-color); text-decoration:none; }
+/* Теги */
+.modal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 4px 0; /* Отступы вокруг тегов */
+}
 
-/* --- Стили для блока прокачки --- */
+/* Пассивные способности */
+#mPassive {
+    margin: 4px 0 6px 0; /* Отступ после пассивок */
+}
+
+/* Блок способностей */
+.pre {
+    white-space: pre-line;
+    background: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    margin: 4px 0 0 0; /* Убираем лишние отступы */
+}
+
+/* Кнопка прокачки */
 .upgrade-toggle-btn {
     display: inline-flex !important;
     align-items: center !important;
@@ -542,33 +588,13 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     cursor: pointer !important;
     transition: all 0.2s !important;
     font-weight: 500 !important;
-    margin: 6px 0 10px !important;
-}
-.upgrade-toggle-btn:hover {
-    background: #1a5f9a !important;
-}
-.upgrade-toggle-btn.active {
-    background: #1a5f9a !important;
-    color: #fff !important;
+    margin: 4px 0 6px 0 !important; /* Отступ после пассивок */
 }
 
-#upgradeIcon[src$=".svg"],
-.upgrade-section-title img[src$=".svg"] {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    min-height: 28px !important;
-    max-width: 28px !important;
-    max-height: 28px !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    filter: brightness(0) invert(1) !important;
-}
-
+/* Блок прокачки */
 .upgrade-section-wrapper {
     display: none;
-    margin-top: 8px;
+    margin-top: 8px; /* Отступ после кнопки */
 }
 .upgrade-section-wrapper.show {
     display: block;
@@ -1735,6 +1761,7 @@ function renderMetaRow(hero) {
     
     let starsDisplay;
     if (starIcon) {
+        // Звезда на расстоянии 2px от числа (почти неразрывный пробел)
         starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:32px !important;height:32px !important;min-width:32px !important;min-height:32px !important;max-width:32px !important;max-height:32px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;"></span>`;
     } else {
         starsDisplay = `${stars}★`;
