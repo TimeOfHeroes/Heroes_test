@@ -1721,7 +1721,6 @@ function renderMetaRow(hero) {
     
     let starsDisplay;
     if (starIcon) {
-        // ПРИНУДИТЕЛЬНЫЙ размер звезды — 32px через inline-стили
         starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:32px !important;height:32px !important;min-width:32px !important;min-height:32px !important;max-width:32px !important;max-height:32px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;"></span>`;
     } else {
         starsDisplay = `${stars}★`;
@@ -1908,7 +1907,13 @@ function applyFilters(){
         let summonMatch=selected.summon.size===0||selected.summon.has(String(r[HERO_FIELDS.summon]));
         let clazzMatch=selected.clazz.size===0||selected.clazz.has(String(r[HERO_FIELDS.clazz]));
         let heroMatch=selected.heroes.size===0||selected.heroes.has(String(r[HERO_FIELDS.name]));
-        let tagMatch=selected.tags.size===0||(r._tags && r._tags.some(t=>selected.tags.has(t)));
+        // ===== ИСПРАВЛЕНИЕ: логика "И" для тегов =====
+        let tagMatch=selected.tags.size===0;
+        if (!tagMatch) {
+            // Если выбраны теги — проверяем, что У ВСЕХ есть каждый из них
+            let heroTags = r._tags || [];
+            tagMatch = [...selected.tags].every(tag => heroTags.includes(tag));
+        }
         return nameMatch && elemMatch && starsMatch && manaMatch && atkMatch && summonMatch && clazzMatch && heroMatch && tagMatch;
     });
     let by=document.getElementById('sortSelect').value;
@@ -1955,13 +1960,13 @@ function fillModal(hero){
     document.getElementById('mOpenImg').href = img || '#';
     document.getElementById('mName').textContent = hero[HERO_FIELDS.name] || '';
 
-// ===== ИКОНКА ДЛЯ КНОПКИ "ДЕРЕВО ТАЛАНТОВ" =====
-const treeIcon = getIcon('TalantTree_icon');
-const treeBtnIcon = document.getElementById('treeBtnIcon');
-if (treeIcon && treeBtnIcon) {
-    treeBtnIcon.src = treeIcon;
-    treeBtnIcon.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);';
-}
+    // ===== ИКОНКА ДЛЯ КНОПКИ "ДЕРЕВО ТАЛАНТОВ" =====
+    const treeIcon = getIcon('TalantTree_icon');
+    const treeBtnIcon = document.getElementById('treeBtnIcon');
+    if (treeIcon && treeBtnIcon) {
+        treeBtnIcon.src = treeIcon;
+        treeBtnIcon.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);';
+    }
   
     // ===== ИКОНКИ НАВИГАЦИИ =====
     const leftIcon = getIcon('Left_button');
@@ -2003,6 +2008,7 @@ if (treeIcon && treeBtnIcon) {
                 e.stopPropagation();
                 const tag = this.dataset.tag;
                 if (tag) {
+                    // Очищаем другие фильтры, но НЕ очищаем теги — добавляем выбранный
                     selected.element.clear();
                     selected.stars.clear();
                     selected.mana.clear();
@@ -2011,8 +2017,13 @@ if (treeIcon && treeBtnIcon) {
                     selected.clazz.clear();
                     selected.heroes.clear();
                     document.getElementById('searchInput').value = '';
-                    selected.tags.clear();
+                    // Добавляем тег в выбранные (сохраняем все ранее выбранные теги)
                     selected.tags.add(tag);
+                    
+                    // Обновляем отображение чекбоксов в фильтрах
+                    // Перестраиваем фильтры, чтобы отметить выбранный тег
+                    initAllFacets(allHeroes);
+                    
                     closeModal();
                     applyFilters();
                 }
@@ -2060,106 +2071,106 @@ function go(delta){ if(currentIdx<0||!viewHeroes.length) return; currentIdx=(cur
 
 function attachEvents(){
 
-// ===== ПРИНУДИТЕЛЬНАЯ ПРИВЯЗКА КНОПКИ ЗАКРЫТИЯ ДЕРЕВА ТАЛАНТОВ =====
-const closeTreeBtn = document.getElementById('closeTreeBtn');
-if (closeTreeBtn) {
-    console.log('✅ Кнопка closeTreeBtn найдена в attachEvents');
-    closeTreeBtn.addEventListener('click', function(e) {
-        console.log('🔄 Клик по closeTreeBtn');
-        e.stopPropagation();
-        closeTreePanel();
-    });
-} else {
-    console.error('❌ Кнопка closeTreeBtn НЕ найдена в attachEvents!');
-}
+    // ===== ПРИНУДИТЕЛЬНАЯ ПРИВЯЗКА КНОПКИ ЗАКРЫТИЯ ДЕРЕВА ТАЛАНТОВ =====
+    const closeTreeBtn = document.getElementById('closeTreeBtn');
+    if (closeTreeBtn) {
+        console.log('✅ Кнопка closeTreeBtn найдена в attachEvents');
+        closeTreeBtn.addEventListener('click', function(e) {
+            console.log('🔄 Клик по closeTreeBtn');
+            e.stopPropagation();
+            closeTreePanel();
+        });
+    } else {
+        console.error('❌ Кнопка closeTreeBtn НЕ найдена в attachEvents!');
+    }
 
-document.getElementById('searchInput').addEventListener('input', applyFilters);
-document.getElementById('sortSelect').addEventListener('change', applyFilters);
-document.getElementById('sortBtn').addEventListener('click', ()=>{ sortDirection=sortDirection==='desc'?'asc':'desc'; document.getElementById('sortBtn').className='sort-btn '+sortDirection; applyFilters(); });
-document.getElementById('heroSelectToggle').addEventListener('click', e=>{ document.getElementById('heroCheckboxes').classList.toggle('show'); e.stopPropagation(); });
-document.getElementById('selectAllHeroes').addEventListener('click', ()=>{ selected.heroes=new Set(filteredHeroNames); updateHeroCheckboxes(); });
-document.getElementById('deselectAllHeroes').addEventListener('click', ()=>{ selected.heroes.clear(); updateHeroCheckboxes(); });
-document.getElementById('applyHeroSelection').addEventListener('click', ()=>{ document.getElementById('heroCheckboxes').classList.remove('show'); applyFilters(); });
-document.addEventListener('click', e=>{ if(!document.getElementById('heroSelectToggle').contains(e.target) && !document.getElementById('heroCheckboxes').contains(e.target)) document.getElementById('heroCheckboxes').classList.remove('show'); });
-document.querySelectorAll('.facet .actions button').forEach(btn=>btn.addEventListener('click', ()=>{
-let f=btn.dataset.facet;
-if(btn.dataset.action==='all'){
-let vals=uniq(allHeroes.map(r=>{
-switch(f){
-case 'element': return r[HERO_FIELDS.element];
-case 'stars': return r[HERO_FIELDS.stars];
-case 'mana': return r[HERO_FIELDS.mana];
-case 'attackType': return r[HERO_FIELDS.attackType];
-case 'summon': return r[HERO_FIELDS.summon];
-case 'clazz': return r[HERO_FIELDS.clazz];
-case 'tags': return r._tags?r._tags:[];
-default: return null;
-}
-})).flat().filter(v=>v);
-selected[f]=new Set(vals.map(String));
-} else selected[f].clear();
-initAllFacets(allHeroes);
-}));
-document.getElementById('resetAll').addEventListener('click', ()=>{
-document.getElementById('searchInput').value='';
-document.getElementById('sortSelect').value='Сила';
-sortDirection='desc';
-document.getElementById('sortBtn').className='sort-btn desc';
-Object.keys(selected).forEach(k=>selected[k].clear());
-filteredHeroNames=[...allHeroNames];
-initAllFacets(allHeroes);
-applyFilters();
-});
-document.getElementById('upgradeToggleBtn').addEventListener('click', function(){
-const wrapper=document.getElementById('upgradeSectionWrapper');
-if (!wrapper) return;
-const isOpen=wrapper.classList.contains('show');
-if(isOpen){
-wrapper.classList.remove('show');
-} else {
-const hero=viewHeroes[currentIdx];
-if(hero) renderUpgradeSection(hero);
-wrapper.classList.add('show');
-}
-});
-function openFiltersPanel(){ const headerHeight=document.querySelector('header').offsetHeight; const filterPanel=document.querySelector('.filters .panel'); if(filterPanel) filterPanel.style.paddingTop=(headerHeight)+'px'; document.getElementById('filters').classList.add('show'); document.getElementById('filterOverlay').classList.add('show'); document.body.style.overflow='hidden'; }
-function closeFiltersPanel(){ document.getElementById('filters').classList.remove('show'); document.getElementById('filterOverlay').classList.remove('show'); document.body.style.overflow=''; }
-function updateFilterPadding(){ if(document.getElementById('filters').classList.contains('show')){ const headerHeight=document.querySelector('header').offsetHeight; const filterPanel=document.querySelector('.filters .panel'); if(filterPanel) filterPanel.style.paddingTop=(headerHeight)+'px'; } }
-window.addEventListener('resize', updateFilterPadding);
-document.getElementById('openFilters').addEventListener('click', openFiltersPanel);
-document.getElementById('applyFiltersBtn').addEventListener('click', ()=>{ applyFilters(); closeFiltersPanel(); });
-document.getElementById('applyFiltersMobileBtn').addEventListener('click', ()=>{ applyFilters(); closeFiltersPanel(); });
-document.getElementById('closeFilters').addEventListener('click', closeFiltersPanel);
-document.getElementById('filterOverlay').addEventListener('click', closeFiltersPanel);
-document.getElementById('cards').addEventListener('click', e=>{ if(e.target.classList.contains('toggle-abilities')) return; let card=e.target.closest('.card'); if(card) openModal(Number(card.dataset.idx)); });
-document.getElementById('mClose').addEventListener('click', closeModal);
-document.getElementById('mPrev').addEventListener('click', ()=>go(-1));
-document.getElementById('mNext').addEventListener('click', ()=>go(1));
-document.getElementById('modal').addEventListener('click', e=>{ if(e.target===document.getElementById('modal')) closeModal(); });
-window.addEventListener('keydown', e=>{ if(!document.getElementById('modal').classList.contains('show')) return; if(e.key==='Escape') closeModal(); if(e.key==='ArrowLeft') go(-1); if(e.key==='ArrowRight') go(1); if(e.key==='Escape' && document.getElementById('treePanel').classList.contains('show')) closeTreePanel(); });
-document.getElementById('infoBtn').addEventListener('click', ()=>{ document.getElementById('infoModal').classList.add('show'); document.body.style.overflow='hidden'; });
-document.getElementById('infoClose').addEventListener('click', ()=>{ document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow=''; });
-document.getElementById('infoModal').addEventListener('click', e=>{ if(e.target===document.getElementById('infoModal')){ document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow=''; } });
-document.getElementById('updateDate').textContent=new Date().toLocaleDateString('ru-RU',{year:'numeric',month:'long',day:'numeric'});
-initTooltip();
-initDragAndDrop();
+    document.getElementById('searchInput').addEventListener('input', applyFilters);
+    document.getElementById('sortSelect').addEventListener('change', applyFilters);
+    document.getElementById('sortBtn').addEventListener('click', ()=>{ sortDirection=sortDirection==='desc'?'asc':'desc'; document.getElementById('sortBtn').className='sort-btn '+sortDirection; applyFilters(); });
+    document.getElementById('heroSelectToggle').addEventListener('click', e=>{ document.getElementById('heroCheckboxes').classList.toggle('show'); e.stopPropagation(); });
+    document.getElementById('selectAllHeroes').addEventListener('click', ()=>{ selected.heroes=new Set(filteredHeroNames); updateHeroCheckboxes(); });
+    document.getElementById('deselectAllHeroes').addEventListener('click', ()=>{ selected.heroes.clear(); updateHeroCheckboxes(); });
+    document.getElementById('applyHeroSelection').addEventListener('click', ()=>{ document.getElementById('heroCheckboxes').classList.remove('show'); applyFilters(); });
+    document.addEventListener('click', e=>{ if(!document.getElementById('heroSelectToggle').contains(e.target) && !document.getElementById('heroCheckboxes').contains(e.target)) document.getElementById('heroCheckboxes').classList.remove('show'); });
+    document.querySelectorAll('.facet .actions button').forEach(btn=>btn.addEventListener('click', ()=>{
+        let f=btn.dataset.facet;
+        if(btn.dataset.action==='all'){
+            let vals=uniq(allHeroes.map(r=>{
+                switch(f){
+                    case 'element': return r[HERO_FIELDS.element];
+                    case 'stars': return r[HERO_FIELDS.stars];
+                    case 'mana': return r[HERO_FIELDS.mana];
+                    case 'attackType': return r[HERO_FIELDS.attackType];
+                    case 'summon': return r[HERO_FIELDS.summon];
+                    case 'clazz': return r[HERO_FIELDS.clazz];
+                    case 'tags': return r._tags?r._tags:[];
+                    default: return null;
+                }
+            })).flat().filter(v=>v);
+            selected[f]=new Set(vals.map(String));
+        } else selected[f].clear();
+        initAllFacets(allHeroes);
+    }));
+    document.getElementById('resetAll').addEventListener('click', ()=>{
+        document.getElementById('searchInput').value='';
+        document.getElementById('sortSelect').value='Сила';
+        sortDirection='desc';
+        document.getElementById('sortBtn').className='sort-btn desc';
+        Object.keys(selected).forEach(k=>selected[k].clear());
+        filteredHeroNames=[...allHeroNames];
+        initAllFacets(allHeroes);
+        applyFilters();
+    });
+    document.getElementById('upgradeToggleBtn').addEventListener('click', function(){
+        const wrapper=document.getElementById('upgradeSectionWrapper');
+        if (!wrapper) return;
+        const isOpen=wrapper.classList.contains('show');
+        if(isOpen){
+            wrapper.classList.remove('show');
+        } else {
+            const hero=viewHeroes[currentIdx];
+            if(hero) renderUpgradeSection(hero);
+            wrapper.classList.add('show');
+        }
+    });
+    function openFiltersPanel(){ const headerHeight=document.querySelector('header').offsetHeight; const filterPanel=document.querySelector('.filters .panel'); if(filterPanel) filterPanel.style.paddingTop=(headerHeight)+'px'; document.getElementById('filters').classList.add('show'); document.getElementById('filterOverlay').classList.add('show'); document.body.style.overflow='hidden'; }
+    function closeFiltersPanel(){ document.getElementById('filters').classList.remove('show'); document.getElementById('filterOverlay').classList.remove('show'); document.body.style.overflow=''; }
+    function updateFilterPadding(){ if(document.getElementById('filters').classList.contains('show')){ const headerHeight=document.querySelector('header').offsetHeight; const filterPanel=document.querySelector('.filters .panel'); if(filterPanel) filterPanel.style.paddingTop=(headerHeight)+'px'; } }
+    window.addEventListener('resize', updateFilterPadding);
+    document.getElementById('openFilters').addEventListener('click', openFiltersPanel);
+    document.getElementById('applyFiltersBtn').addEventListener('click', ()=>{ applyFilters(); closeFiltersPanel(); });
+    document.getElementById('applyFiltersMobileBtn').addEventListener('click', ()=>{ applyFilters(); closeFiltersPanel(); });
+    document.getElementById('closeFilters').addEventListener('click', closeFiltersPanel);
+    document.getElementById('filterOverlay').addEventListener('click', closeFiltersPanel);
+    document.getElementById('cards').addEventListener('click', e=>{ if(e.target.classList.contains('toggle-abilities')) return; let card=e.target.closest('.card'); if(card) openModal(Number(card.dataset.idx)); });
+    document.getElementById('mClose').addEventListener('click', closeModal);
+    document.getElementById('mPrev').addEventListener('click', ()=>go(-1));
+    document.getElementById('mNext').addEventListener('click', ()=>go(1));
+    document.getElementById('modal').addEventListener('click', e=>{ if(e.target===document.getElementById('modal')) closeModal(); });
+    window.addEventListener('keydown', e=>{ if(!document.getElementById('modal').classList.contains('show')) return; if(e.key==='Escape') closeModal(); if(e.key==='ArrowLeft') go(-1); if(e.key==='ArrowRight') go(1); if(e.key==='Escape' && document.getElementById('treePanel').classList.contains('show')) closeTreePanel(); });
+    document.getElementById('infoBtn').addEventListener('click', ()=>{ document.getElementById('infoModal').classList.add('show'); document.body.style.overflow='hidden'; });
+    document.getElementById('infoClose').addEventListener('click', ()=>{ document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow=''; });
+    document.getElementById('infoModal').addEventListener('click', e=>{ if(e.target===document.getElementById('infoModal')){ document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow=''; } });
+    document.getElementById('updateDate').textContent=new Date().toLocaleDateString('ru-RU',{year:'numeric',month:'long',day:'numeric'});
+    initTooltip();
+    initDragAndDrop();
 }
 
 Promise.all([
-new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]).map(row=>{ const tagsStr=row['Теги']||''; const tags=tagsStr.split(',').map(t=>t.trim()).filter(t=>t!==''); return {...row,_tags:tags}; }); console.log('✅ Герои загружены:',allHeroes.length); res(); },error:rej})),
-new Promise((res,rej)=>Papa.parse(CLASSES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ r.data.forEach(row=>{ if(!row[CLASS_TALENT_FIELDS.class_id]) return; let cn=row[CLASS_TALENT_FIELDS.class_id]; if(!classTalents[cn]) classTalents[cn]=[]; classTalents[cn].push({ rowNumber:parseInt(row[CLASS_TALENT_FIELDS.row_number])||0, isMandatory:String(row[CLASS_TALENT_FIELDS.is_mandatory]).toLowerCase()==='true', branchGroup:row[CLASS_TALENT_FIELDS.branch_group], leftTalentId:row[CLASS_TALENT_FIELDS.left_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.left_talent_id]):null, centerTalentId:row[CLASS_TALENT_FIELDS.center_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.center_talent_id]):null, rightTalentId:row[CLASS_TALENT_FIELDS.right_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.right_talent_id]):null }); }); Object.keys(classTalents).forEach(cn=>classTalents[cn].sort((a,b)=>a.rowNumber-b.rowNumber)); console.log('✅ Классы с талантами загружены:',Object.keys(classTalents).length); res(); },error:rej})),
-new Promise((res,rej)=>Papa.parse(TALENT_DESC_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ console.log('📥 Загружено строк из Talent_description:',r.data.length); talentDescriptions=[]; r.data.forEach(row=>{ if(row[TALENT_DESC_FIELDS.talent_id]) talentDescriptions.push(row); }); console.log('✅ Описания талантов загружены:',talentDescriptions.length); res(); },error:rej})),
-new Promise((res,rej)=>Papa.parse(MATERIALS_4_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ materialsData['4★']=r.data.filter(row=>row['Стихия']&&row['Предмет']); console.log('✅ Материалы 4★ загружены:',materialsData['4★'].length); res(); },error:rej})),
-new Promise((res,rej)=>Papa.parse(MATERIALS_5_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ materialsData['5★']=r.data.filter(row=>row['Стихия']&&row['Предмет']); console.log('✅ Материалы 5★ загружены:',materialsData['5★'].length); res(); },error:rej})),
-new Promise((res,rej)=>Papa.parse(BOOKS_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ booksData=r.data.filter(row=>row['Звездность героев']&&row['Уровень навыка']); console.log('✅ Книги навыков загружены:',booksData.length); res(); },error:rej})),
-new Promise((res,rej)=>Papa.parse(TOKENS_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ tokensData=r.data.filter(row=>row['Количество звезд']&&row['Количество жетонов']); console.log('✅ Жетоны талантов загружены:',tokensData.length); res(); },error:rej})),
-new Promise((res,rej)=>Papa.parse(IMAGES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ r.data.forEach(row=>{ if(row['Название']&&row['Картинка']){ const url=fileCellToUrl(row['Картинка']); if(url) itemImages[row['Название']]=url; } }); console.log('✅ Картинки предметов загружены:',Object.keys(itemImages).length); res(); },error:rej}))
+    new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]).map(row=>{ const tagsStr=row['Теги']||''; const tags=tagsStr.split(',').map(t=>t.trim()).filter(t=>t!==''); return {...row,_tags:tags}; }); console.log('✅ Герои загружены:',allHeroes.length); res(); },error:rej})),
+    new Promise((res,rej)=>Papa.parse(CLASSES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ r.data.forEach(row=>{ if(!row[CLASS_TALENT_FIELDS.class_id]) return; let cn=row[CLASS_TALENT_FIELDS.class_id]; if(!classTalents[cn]) classTalents[cn]=[]; classTalents[cn].push({ rowNumber:parseInt(row[CLASS_TALENT_FIELDS.row_number])||0, isMandatory:String(row[CLASS_TALENT_FIELDS.is_mandatory]).toLowerCase()==='true', branchGroup:row[CLASS_TALENT_FIELDS.branch_group], leftTalentId:row[CLASS_TALENT_FIELDS.left_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.left_talent_id]):null, centerTalentId:row[CLASS_TALENT_FIELDS.center_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.center_talent_id]):null, rightTalentId:row[CLASS_TALENT_FIELDS.right_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.right_talent_id]):null }); }); Object.keys(classTalents).forEach(cn=>classTalents[cn].sort((a,b)=>a.rowNumber-b.rowNumber)); console.log('✅ Классы с талантами загружены:',Object.keys(classTalents).length); res(); },error:rej})),
+    new Promise((res,rej)=>Papa.parse(TALENT_DESC_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ console.log('📥 Загружено строк из Talent_description:',r.data.length); talentDescriptions=[]; r.data.forEach(row=>{ if(row[TALENT_DESC_FIELDS.talent_id]) talentDescriptions.push(row); }); console.log('✅ Описания талантов загружены:',talentDescriptions.length); res(); },error:rej})),
+    new Promise((res,rej)=>Papa.parse(MATERIALS_4_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ materialsData['4★']=r.data.filter(row=>row['Стихия']&&row['Предмет']); console.log('✅ Материалы 4★ загружены:',materialsData['4★'].length); res(); },error:rej})),
+    new Promise((res,rej)=>Papa.parse(MATERIALS_5_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ materialsData['5★']=r.data.filter(row=>row['Стихия']&&row['Предмет']); console.log('✅ Материалы 5★ загружены:',materialsData['5★'].length); res(); },error:rej})),
+    new Promise((res,rej)=>Papa.parse(BOOKS_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ booksData=r.data.filter(row=>row['Звездность героев']&&row['Уровень навыка']); console.log('✅ Книги навыков загружены:',booksData.length); res(); },error:rej})),
+    new Promise((res,rej)=>Papa.parse(TOKENS_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ tokensData=r.data.filter(row=>row['Количество звезд']&&row['Количество жетонов']); console.log('✅ Жетоны талантов загружены:',tokensData.length); res(); },error:rej})),
+    new Promise((res,rej)=>Papa.parse(IMAGES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ r.data.forEach(row=>{ if(row['Название']&&row['Картинка']){ const url=fileCellToUrl(row['Картинка']); if(url) itemImages[row['Название']]=url; } }); console.log('✅ Картинки предметов загружены:',Object.keys(itemImages).length); res(); },error:rej}))
 ]).then(()=>{
-if(!allHeroes.length){ document.getElementById('count').textContent='Данные не найдены'; return; }
-initAllFacets(allHeroes);
-attachEvents();
-applyFilters();
-console.log('🚀 Сайт готов к работе!');
+    if(!allHeroes.length){ document.getElementById('count').textContent='Данные не найдены'; return; }
+    initAllFacets(allHeroes);
+    attachEvents();
+    applyFilters();
+    console.log('🚀 Сайт готов к работе!');
 }).catch(e=>{ console.error('❌ Ошибка загрузки данных:',e); document.getElementById('count').textContent='Ошибка загрузки данных.'; });
 </script>
 </body>
