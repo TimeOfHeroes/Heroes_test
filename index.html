@@ -1144,8 +1144,22 @@ function renderUpgradeSection(hero) {
     const heroStars = String(hero['Количество звезд'] || '1').trim();
     const heroElement = String(hero['Стихия'] || '').trim();
     
+    // ===== ИСПРАВЛЕНИЕ: целевые звёзды зависят от текущей звёздности =====
+    const currentStarNum = parseInt(heroStars);
+    let starTargets = [];
+    if (currentStarNum < 3) {
+        starTargets = ['2', '3']; // Для 1★ и 2★ — можно повысить до 2 и 3
+    } else if (currentStarNum === 3) {
+        starTargets = ['2', '3']; // Для 3★ — только до 3 (показываем 2 и 3)
+    } else if (currentStarNum === 4) {
+        starTargets = ['2', '3', '4', '5']; // Для 4★ — все варианты
+    } else if (currentStarNum === 5) {
+        starTargets = ['2', '3', '4', '5']; // Для 5★ — все варианты (но реально только до 5)
+    } else {
+        starTargets = ['2', '3', '4', '5'];
+    }
+    
     // --- Повышение звездности ---
-    const starTargets = ['2', '3', '4', '5'];
     const starButtons = document.getElementById('starButtons');
     const starContent = document.getElementById('starContent');
     
@@ -1171,7 +1185,7 @@ function renderUpgradeSection(hero) {
         const firstBtn = starButtons.querySelector('.upgrade-btn');
         if (firstBtn) {
             firstBtn.classList.add('active');
-            showStarMaterials(heroElement, heroStars, '2', starContent);
+            showStarMaterials(heroElement, heroStars, starTargets[0], starContent);
         }
     }
     
