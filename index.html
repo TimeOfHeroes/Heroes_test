@@ -148,8 +148,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 0;
-    gap: 8px;
+    padding: 8px 0;
+    gap: 6px;
     flex-wrap: wrap;
 }
 
@@ -157,21 +157,21 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .brand {
     display: flex;
     flex-direction: column;
-    min-width: 160px;
+    min-width: 140px;
     flex-shrink: 0;
 }
 .brand h1 {
     margin: 0;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     color: var(--header-text);
     line-height: 1.2;
 }
 .copyright {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--header-text);
     opacity: 0.7;
-    margin: 2px 0 0;
+    margin: 1px 0 0;
     font-style: italic;
 }
 
@@ -181,22 +181,23 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     align-items: center;
     gap: 4px;
     flex: 1;
-    min-width: 280px;
-    max-width: 500px;
+    min-width: 260px;
+    max-width: 480px;
 }
 .search-wrapper {
     flex: 1;
-    min-width: 120px;
+    min-width: 100px;
 }
 .search-wrapper input {
     width: 100%;
-    padding: 7px 12px;
+    padding: 5px 10px;
     font-size: 13px;
     border: 1px solid var(--checkbox-border);
-    border-radius: 8px;
+    border-radius: 6px;
     background: var(--card-bg);
     color: var(--text-color);
     transition: all 0.2s;
+    height: 32px;
 }
 .search-wrapper input:focus {
     outline: none;
@@ -213,18 +214,18 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     position: relative;
 }
 .hero-select-btn {
-    padding: 7px 14px;
+    padding: 5px 12px;
     font-size: 13px;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     background: #227BBC;
     color: #fff;
     cursor: pointer;
     transition: all 0.2s;
     font-weight: 500;
     white-space: nowrap;
-    min-width: 120px;
-    height: 36px;
+    min-width: 110px;
+    height: 32px;
 }
 .hero-select-btn:hover {
     background: #1a5f9a;
@@ -245,15 +246,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     right: 0;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 6px;
     margin-top: 4px;
     padding: 0;
-    max-height: 420px;
+    max-height: 400px;
     overflow: hidden;
     display: none;
     z-index: 101;
     box-shadow: 0 4px 20px rgba(0,0,0,.15);
-    min-width: 280px;
+    min-width: 260px;
     flex-direction: column;
 }
 .hero-checkboxes.show {
@@ -264,14 +265,14 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 12px 8px 12px;
+    padding: 10px 12px 6px 12px;
     border-bottom: 1px solid var(--border-color);
     flex-shrink: 0;
     background: var(--card-bg);
 }
 .hero-checkboxes-header h3 {
     margin: 0;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
 }
 .hero-selected-count {
@@ -283,14 +284,14 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .hero-checkboxes-list {
     flex: 1;
     overflow-y: auto;
-    padding: 8px 12px;
-    max-height: 280px;
+    padding: 6px 12px;
+    max-height: 260px;
 }
 .hero-checkbox-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 8px;
+    gap: 6px;
+    padding: 4px 6px;
     cursor: pointer;
     border-radius: 4px;
     transition: background 0.2s;
@@ -299,29 +300,30 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     background: var(--secondary-color);
 }
 .hero-checkbox-item input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     cursor: pointer;
     accent-color: var(--primary-color);
 }
 .hero-checkbox-item label {
     flex: 1;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .hero-select-actions {
     display: flex;
-    gap: 8px;
-    padding: 10px 12px;
+    gap: 6px;
+    padding: 8px 12px;
     border-top: 1px solid var(--border-color);
     flex-shrink: 0;
     background: var(--card-bg);
 }
 .hero-select-actions .btn {
     flex: 1;
-    font-size: 13px;
-    padding: 8px;
+    font-size: 12px;
+    padding: 6px;
+    height: 30px;
 }
 
 /* Блок 4: Сортировка */
@@ -332,11 +334,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     flex-shrink: 0;
 }
 .sort-btn {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     padding: 0;
     border: 1px solid var(--checkbox-border);
-    border-radius: 8px;
+    border-radius: 6px;
     background: var(--card-bg);
     color: var(--text-color);
     cursor: pointer;
@@ -352,31 +354,30 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .sort-btn.asc:after {
     content: '↑';
-    font-size: 18px;
+    font-size: 16px;
 }
 .sort-btn.desc:after {
     content: '↓';
-    font-size: 18px;
+    font-size: 16px;
 }
-/* Подсказка — сверху */
+/* Подсказка — справа от кнопки */
 .sort-btn:before {
     content: attr(data-tooltip);
     position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
+    left: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
     padding: 4px 10px;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 11px;
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
     transition: all 0.2s;
     pointer-events: none;
     z-index: 10;
-    margin-bottom: 6px;
 }
 .sort-btn:hover:before {
     opacity: 1;
@@ -387,28 +388,28 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     position: relative;
 }
 .sort-select-wrapper select {
-    padding: 7px 32px 7px 12px;
+    padding: 5px 28px 5px 10px;
     font-size: 13px;
     border: 1px solid var(--checkbox-border);
-    border-radius: 8px;
+    border-radius: 6px;
     background: var(--card-bg);
     color: var(--text-color);
     cursor: pointer;
     appearance: none;
-    min-width: 100px;
-    height: 36px;
+    min-width: 90px;
+    height: 32px;
 }
 .sort-select-wrapper:after {
     content: '';
     position: absolute;
-    right: 10px;
+    right: 8px;
     top: 50%;
     transform: translateY(-50%);
     width: 0;
     height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid currentColor;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid currentColor;
     opacity: 0.6;
     pointer-events: none;
 }
@@ -421,17 +422,17 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     flex-shrink: 0;
 }
 .btn {
-    padding: 7px 14px;
+    padding: 5px 12px;
     font-size: 13px;
     border: 1px solid var(--checkbox-border);
-    border-radius: 8px;
+    border-radius: 6px;
     background: var(--card-bg);
     color: var(--text-color);
     cursor: pointer;
     transition: all 0.2s;
     font-weight: 500;
     white-space: nowrap;
-    height: 36px;
+    height: 32px;
 }
 .btn:hover {
     background: var(--secondary-color);
@@ -455,11 +456,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     flex-shrink: 0;
 }
 .info-btn {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     padding: 0;
     border: 1px solid var(--checkbox-border);
-    border-radius: 8px;
+    border-radius: 6px;
     background: var(--card-bg);
     color: var(--text-color);
     cursor: pointer;
@@ -468,7 +469,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     justify-content: center;
     transition: all 0.2s;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
 }
 .info-btn:hover {
     background: var(--secondary-color);
@@ -479,16 +480,16 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     .top-bar {
         flex-direction: row;
         flex-wrap: wrap;
-        gap: 6px 10px;
+        gap: 4px 8px;
     }
     .brand {
-        min-width: 120px;
+        min-width: 100px;
         flex: 0 0 100%;
         text-align: center;
     }
     .search-and-select {
         flex: 1;
-        min-width: 200px;
+        min-width: 180px;
         max-width: none;
     }
     .sort-group {
@@ -506,7 +507,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     .top-bar {
         flex-direction: column;
         align-items: stretch;
-        gap: 6px;
+        gap: 4px;
     }
     .brand {
         flex: 0 0 auto;
@@ -518,7 +519,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     }
     .search-wrapper {
         flex: 1;
-        min-width: 100px;
+        min-width: 80px;
     }
     .hero-select-wrapper {
         width: 100%;
