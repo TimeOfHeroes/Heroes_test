@@ -360,13 +360,13 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     content: '↓';
     font-size: 16px;
 }
-/* Подсказка — справа от кнопки */
+/* Подсказка — снизу кнопки */
 .sort-btn:before {
     content: attr(data-tooltip);
     position: absolute;
-    left: calc(100% + 8px);
-    top: 50%;
-    transform: translateY(-50%);
+    top: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
     padding: 4px 10px;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -378,10 +378,18 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     transition: all 0.2s;
     pointer-events: none;
     z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 .sort-btn:hover:before {
     opacity: 1;
     visibility: visible;
+}
+/* На маленьких экранах — сверху */
+@media (max-height: 500px) {
+    .sort-btn:before {
+        top: auto;
+        bottom: calc(100% + 6px);
+    }
 }
 
 .sort-select-wrapper {
@@ -1195,6 +1203,13 @@ let isDragging = false;
 let dragStartX = 0, dragStartY = 0;
 let tooltipElement = null;
 let iconCache = {};
+
+function initSortTooltip() {
+    const btn = document.getElementById('sortBtn');
+    if (btn) {
+        btn.dataset.tooltip = sortDirection === 'desc' ? 'Сортировка по убыванию' : 'Сортировка по возрастанию';
+    }
+}
 
 function getTagClass(tag) {
     const tagMap = { 'урон':'tag-damage', 'лечение':'tag-heal', 'щит':'tag-shield', 'ослабление':'tag-debuff', 'усиление':'tag-buff', 'доты':'tag-dot', 'хоты':'tag-hot', 'снятие':'tag-cleanse', 'призыв':'tag-summon', 'отражение':'tag-reflect', 'блокировка':'tag-block', 'кража':'tag-steal', 'одиночный':'tag-single', 'все_враги':'tag-aoe', 'цепь':'tag-chain', 'себя':'tag-self', 'союзники':'tag-allies', 'враги':'tag-enemies', 'мана':'tag-mana', 'крит':'tag-crit', 'меткость':'tag-accuracy', 'антихил':'tag-antihil', 'контратака':'tag-counter', 'провокация':'tag-provoke', 'воскрешение':'tag-resurrection', 'баф_стихии':'tag-element', 'усил. атаки':'tag-buff', 'усил. защиты':'tag-shield', 'усил. атаки_навык':'tag-buff', 'усил. защиты_навык':'tag-shield', 'ослаб. атаки':'tag-debuff', 'ослаб. защиты':'tag-debuff', 'ослаб. атаки_себе':'tag-debuff', 'ослаб. защиты_себе':'tag-debuff', 'ослаб. метк_себе':'tag-debuff', 'похищ._лечения':'tag-antihil', 'мана_ускор.':'tag-mana', 'мана_замедл.':'tag-mana', 'мана_срез':'tag-mana', 'мана_блок':'tag-block', 'деление_себе':'tag-shield', 'деление_против.':'tag-debuff', 'увеличение здоровья':'tag-heal', 'пробитие':'tag-damage', 'снятие_врагам':'tag-cleanse', 'снятие_своим':'tag-cleanse', 'блок_снятие_усил.':'tag-block', 'нельзя снять':'tag-block', 'метка':'tag-debuff', 'безумие':'tag-debuff', 'ярость':'tag-buff', 'антиприслужник':'tag-summon', 'похищ._маны':'tag-steal', 'сокращ.длит.эффект.':'tag-debuff' };
@@ -2319,7 +2334,13 @@ function attachEvents(){
 
     document.getElementById('searchInput').addEventListener('input', applyFilters);
     document.getElementById('sortSelect').addEventListener('change', applyFilters);
-    document.getElementById('sortBtn').addEventListener('click', ()=>{ sortDirection=sortDirection==='desc'?'asc':'desc'; document.getElementById('sortBtn').className='sort-btn '+sortDirection; applyFilters(); });
+    document.getElementById('sortBtn').addEventListener('click', ()=>{
+        const btn = document.getElementById('sortBtn');
+        sortDirection = sortDirection === 'desc' ? 'asc' : 'desc';
+        btn.className = 'sort-btn ' + sortDirection;
+        btn.dataset.tooltip = sortDirection === 'desc' ? 'Сортировка по убыванию' : 'Сортировка по возрастанию';
+        applyFilters();
+    });
     document.getElementById('heroSelectToggle').addEventListener('click', e=>{ document.getElementById('heroCheckboxes').classList.toggle('show'); e.stopPropagation(); });
     document.getElementById('deselectAllHeroes').addEventListener('click', ()=>{
         selected.heroes.clear();
@@ -2354,6 +2375,7 @@ function attachEvents(){
         document.getElementById('sortSelect').value='Сила';
         sortDirection='desc';
         document.getElementById('sortBtn').className='sort-btn desc';
+        document.getElementById('sortBtn').dataset.tooltip = 'Сортировка по убыванию';
         Object.keys(selected).forEach(k=>selected[k].clear());
         filteredHeroNames=[...allHeroNames];
         initAllFacets(allHeroes);
@@ -2406,6 +2428,7 @@ Promise.all([
 ]).then(()=>{
     if(!allHeroes.length){ document.getElementById('count').textContent='Данные не найдены'; return; }
     initAllFacets(allHeroes);
+    initSortTooltip();
     attachEvents();
     applyFilters();
     console.log('🚀 Сайт готов к работе!');
