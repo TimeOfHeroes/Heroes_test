@@ -142,53 +142,387 @@ body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial,
 .talent-tooltip.hidden { opacity:0; visibility:hidden; }
 header { position:sticky; top:0; z-index:100; background:var(--header-bg); color:var(--header-text); backdrop-filter:blur(8px); border-bottom:1px solid var(--border-color); box-shadow:0 2px 10px rgba(0,0,0,.05); }
 .container { max-width:1400px; margin:0 auto; padding:0 16px; }
-.top-bar { display:flex; align-items:center; justify-content:space-between; padding:12px 0; gap:16px; flex-wrap:wrap; }
-.brand { display:flex; flex-direction:column; min-width:200px; }
-.brand h1 { margin:0; font-size:20px; font-weight:600; color:var(--header-text); line-height:1.2; }
-.copyright { font-size:12px; color:var(--header-text); opacity:0.7; margin:2px 0 0; font-style:italic; }
-.center-group { display:flex; flex:1; gap:8px; min-width:0; max-width:600px; }
-.hero-select-wrapper { flex:1; min-width:200px; position:relative; }
-.hero-select-container { position:relative; width:100%; }
-.hero-select-toggle { width:100%; padding:8px 36px 8px 12px; font-size:14px; border:1px solid var(--checkbox-border); border-radius:8px; background:var(--card-bg); color:var(--text-color); cursor:pointer; text-align:left; display:flex; justify-content:space-between; align-items:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.hero-select-toggle:after { content:''; position:absolute; right:12px; top:50%; transform:translateY(-50%); width:0; height:0; border-left:5px solid transparent; border-right:5px solid transparent; border-top:5px solid currentColor; opacity:0.6; pointer-events:none; }
-.hero-checkboxes { position:absolute; top:100%; left:0; right:0; background:var(--card-bg); border:1px solid var(--border-color); border-radius:8px; margin-top:4px; padding:12px; max-height:400px; overflow-y:auto; display:none; z-index:101; box-shadow:0 4px 20px rgba(0,0,0,.15); }
-.hero-checkboxes.show { display:block; }
-.hero-checkboxes-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid var(--border-color); }
-.hero-checkboxes-header h3 { margin:0; font-size:14px; font-weight:600; }
-.hero-checkbox-item { display:flex; align-items:center; gap:8px; padding:6px 8px; cursor:pointer; border-radius:4px; transition:background 0.2s; }
-.hero-checkbox-item:hover { background:var(--secondary-color); }
-.hero-checkbox-item input[type="checkbox"] { width:18px; height:18px; cursor:pointer; accent-color:var(--primary-color); }
-.hero-checkbox-item label { flex:1; cursor:pointer; font-size:14px; }
-.hero-select-actions { display:flex; gap:8px; margin-top:12px; padding-top:12px; border-top:1px solid var(--border-color); }
-.hero-select-actions .btn { flex:1; font-size:13px; padding:8px; }
-.hero-selected-count { font-size:12px; color:var(--primary-color); font-weight:500; }
-.search-wrapper { flex:1; min-width:180px; }
-.search-wrapper input { width:100%; padding:8px 12px; font-size:14px; border:1px solid var(--checkbox-border); border-radius:8px; background:var(--card-bg); color:var(--text-color); transition:all 0.2s; }
-.search-wrapper input:focus { outline:none; border-color:var(--primary-color); box-shadow:0 0 0 2px rgba(10,119,0,0.1); }
-.right-group { display:flex; align-items:center; gap:8px; flex-shrink:0; flex-wrap:wrap; }
-.sort-group { display:flex; align-items:center; gap:8px; }
-.sort-select-wrapper { position:relative; }
-.sort-select-wrapper select { padding:8px 36px 8px 12px; font-size:14px; border:1px solid var(--checkbox-border); border-radius:8px; background:var(--card-bg); color:var(--text-color); cursor:pointer; appearance:none; min-width:120px; }
-.sort-select-wrapper:after { content:''; position:absolute; right:12px; top:50%; transform:translateY(-50%); width:0; height:0; border-left:5px solid transparent; border-right:5px solid transparent; border-top:5px solid currentColor; opacity:0.6; pointer-events:none; }
-.sort-btn { width:40px; height:40px; padding:0; border:1px solid var(--checkbox-border); border-radius:8px; background:var(--card-bg); color:var(--text-color); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; position:relative; }
-.sort-btn:hover { background:var(--secondary-color); }
-.sort-btn:before { content:attr(data-tooltip); position:absolute; bottom:100%; left:50%; transform:translateX(-50%); padding:6px 10px; background:var(--card-bg); border:1px solid var(--border-color); border-radius:4px; font-size:12px; white-space:nowrap; opacity:0; visibility:hidden; transition:all 0.2s; pointer-events:none; z-index:10; }
-.sort-btn:hover:before { opacity:1; visibility:visible; margin-bottom:8px; }
-.sort-btn.asc:after { content:'↑'; font-size:16px; }
-.sort-btn.desc:after { content:'↓'; font-size:16px; }
-.filter-buttons { display:flex; gap:8px; align-items:center; }
-.btn { padding:8px 16px; font-size:14px; border:1px solid var(--checkbox-border); border-radius:8px; background:var(--card-bg); color:var(--text-color); cursor:pointer; transition:all 0.2s; font-weight:500; white-space:nowrap; }
-.btn:hover { background:var(--secondary-color); }
-.btn.primary { background:var(--accent-color); color:#fff; border-color:var(--accent-color); }
-.btn.primary:hover { background:#1a5f9a; }
-.btn.secondary { background:var(--card-bg); color:var(--text-color); border-color:var(--checkbox-border); }
-.btn.reset { background-color:#f44336; color:white; border-color:#f44336; }
-.btn.reset:hover { background-color:#d32f2f; }
-.info-btn-wrapper { margin-left:0; }
-.info-btn { width:40px; height:40px; padding:0; border:1px solid var(--checkbox-border); border-radius:8px; background:var(--card-bg); color:var(--text-color); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; font-weight:bold; font-size:18px; }
-.info-btn:hover { background:var(--secondary-color); }
-@media (max-width:1024px) { .top-bar { flex-direction:column; align-items:stretch; } .brand { text-align:center; } .center-group { max-width:none; } .right-group { justify-content:flex-start; } .sort-group { flex:0; } .sort-select-wrapper { flex:0; } .sort-select-wrapper select { width:auto; } }
-@media (max-width:640px) { .center-group { flex-direction:column; } .right-group { flex-direction:row; flex-wrap:wrap; justify-content:flex-start; } .filter-buttons { justify-content:flex-start; } }
+
+/* ===== НОВАЯ ВЕРХНЯЯ ПАНЕЛЬ ===== */
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Блок 1: Название */
+.brand {
+    display: flex;
+    flex-direction: column;
+    min-width: 180px;
+    flex-shrink: 0;
+}
+.brand h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--header-text);
+    line-height: 1.2;
+}
+.copyright {
+    font-size: 11px;
+    color: var(--header-text);
+    opacity: 0.7;
+    margin: 2px 0 0;
+    font-style: italic;
+}
+
+/* Блок 2: Поиск */
+.search-wrapper {
+    flex: 1;
+    min-width: 180px;
+    max-width: 320px;
+}
+.search-wrapper input {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid var(--checkbox-border);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    transition: all 0.2s;
+}
+.search-wrapper input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(10,119,0,0.1);
+}
+
+/* Блок 3: Выбор героев */
+.hero-select-wrapper {
+    flex-shrink: 0;
+    position: relative;
+}
+.hero-select-container {
+    position: relative;
+}
+.hero-select-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    background: #227BBC;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+    white-space: nowrap;
+}
+.hero-select-btn:hover {
+    background: #1a5f9a;
+}
+.hero-select-btn.primary {
+    background: #227BBC;
+    color: #fff;
+    border-color: #227BBC;
+}
+.hero-select-btn.primary:hover {
+    background: #1a5f9a;
+}
+
+.hero-checkboxes {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-top: 4px;
+    padding: 12px;
+    max-height: 400px;
+    overflow-y: auto;
+    display: none;
+    z-index: 101;
+    box-shadow: 0 4px 20px rgba(0,0,0,.15);
+    min-width: 280px;
+}
+.hero-checkboxes.show {
+    display: block;
+}
+.hero-checkboxes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+.hero-checkboxes-header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+.hero-checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+.hero-checkbox-item:hover {
+    background: var(--secondary-color);
+}
+.hero-checkbox-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+.hero-checkbox-item label {
+    flex: 1;
+    cursor: pointer;
+    font-size: 14px;
+}
+.hero-select-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+}
+.hero-select-actions .btn {
+    flex: 1;
+    font-size: 13px;
+    padding: 8px;
+}
+.hero-selected-count {
+    font-size: 12px;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* Блок 4: Сортировка */
+.sort-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+.sort-select-wrapper {
+    position: relative;
+}
+.sort-select-wrapper select {
+    padding: 8px 32px 8px 12px;
+    font-size: 14px;
+    border: 1px solid var(--checkbox-border);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    appearance: none;
+    min-width: 110px;
+}
+.sort-select-wrapper:after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid currentColor;
+    opacity: 0.6;
+    pointer-events: none;
+}
+.sort-btn {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: 1px solid var(--checkbox-border);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    position: relative;
+    flex-shrink: 0;
+}
+.sort-btn:hover {
+    background: var(--secondary-color);
+}
+.sort-btn.asc:after {
+    content: '↑';
+    font-size: 18px;
+}
+.sort-btn.desc:after {
+    content: '↓';
+    font-size: 18px;
+}
+.sort-btn:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s;
+    pointer-events: none;
+    z-index: 10;
+}
+.sort-btn:hover:before {
+    opacity: 1;
+    visibility: visible;
+    margin-bottom: 6px;
+}
+
+/* Блок 5: Фильтры */
+.filter-buttons {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-shrink: 0;
+}
+.btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: 1px solid var(--checkbox-border);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+    white-space: nowrap;
+}
+.btn:hover {
+    background: var(--secondary-color);
+}
+.btn.primary {
+    background: #227BBC;
+    color: #fff;
+    border-color: #227BBC;
+}
+.btn.primary:hover {
+    background: #1a5f9a;
+}
+.btn.secondary {
+    background: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--checkbox-border);
+}
+.btn.reset {
+    background-color: #f44336;
+    color: white;
+    border-color: #f44336;
+}
+.btn.reset:hover {
+    background-color: #d32f2f;
+}
+
+/* Блок 6: Информация */
+.info-btn-wrapper {
+    flex-shrink: 0;
+}
+.info-btn {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: 1px solid var(--checkbox-border);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-weight: bold;
+    font-size: 18px;
+}
+.info-btn:hover {
+    background: var(--secondary-color);
+}
+
+/* ===== АДАПТИВНОСТЬ ===== */
+@media (max-width: 1024px) {
+    .top-bar {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px 12px;
+    }
+    .brand {
+        min-width: 140px;
+        flex: 0 0 100%;
+        text-align: center;
+    }
+    .search-wrapper {
+        flex: 1;
+        min-width: 140px;
+        max-width: none;
+    }
+    .hero-select-wrapper {
+        flex: 0 1 auto;
+    }
+    .sort-group {
+        flex: 0 1 auto;
+    }
+    .filter-buttons {
+        flex: 0 1 auto;
+    }
+    .info-btn-wrapper {
+        flex: 0 0 auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+    }
+    .brand {
+        flex: 0 0 auto;
+        text-align: center;
+    }
+    .search-wrapper {
+        max-width: none;
+    }
+    .hero-select-wrapper {
+        width: 100%;
+    }
+    .hero-select-btn {
+        width: 100%;
+        text-align: center;
+    }
+    .sort-group {
+        width: 100%;
+        justify-content: center;
+    }
+    .filter-buttons {
+        width: 100%;
+        justify-content: center;
+    }
+    .info-btn-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+}
+
 .wrap { display:block; padding:20px; min-height:calc(100vh - var(--hdrH)); max-width:1400px; margin:0 auto; }
 .filters { background:var(--filter-bg); border:1px solid var(--border-color); border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,.05); width:360px; position:fixed; top:0; left:0; bottom:0; height:100vh; overflow-y:auto; z-index:99; border-radius:0 12px 12px 0; transform:translateX(-100%); transition:transform 0.3s ease; display:none; }
 .filters.show { transform:translateX(0); display:block; }
@@ -344,13 +678,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .image-container[data-element="Фиолетовый"] { background:var(--element-purple); }
 .image-container[data-element="Желтый"] { background:var(--element-yellow); }
 .dialog img { width:100%; height:auto; max-height:350px; object-fit:contain; border-radius:12px; background:transparent; padding:8px; }
-.dialog h2 { margin:0 0 8px; font-size:26px; font-weight:700; }
 
 /* ===== НОВАЯ СТРУКТУРА МОДАЛЬНОГО ОКНА ===== */
 
 /* Группы с большими отступами */
 .modal .info-container > * {
-    margin-bottom: 20px; /* Максимальный отступ между смысловыми группами */
+    margin-bottom: 20px;
 }
 .modal .info-container > *:last-child {
     margin-bottom: 0;
@@ -358,7 +691,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 
 /* Заголовок (имя героя) */
 .modal .info-container h2 {
-    margin: 0 0 16px 0; /* Уменьшен отступ после имени */
+    margin: 0 0 16px 0;
     font-size: 26px;
     font-weight: 700;
 }
@@ -369,14 +702,14 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     flex-wrap: wrap;
     align-items: center;
     gap: 8px 16px;
-    margin: 0 0 8px 0; /* Маленький отступ */
+    margin: 0 0 8px 0;
     font-weight: 600;
     font-size: 15px;
 }
 .hero-meta-row .star-display {
     display: inline-flex;
     align-items: center;
-    gap: 2px; /* Звезда ближе к числу */
+    gap: 2px; /* Звезда на расстоянии 2px от числа */
 }
 .hero-meta-row .star-display img {
     width: 32px !important;
@@ -396,7 +729,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     flex-wrap: wrap;
     align-items: center;
     gap: 8px 12px;
-    margin: 0 0 8px 0; /* Маленький отступ */
+    margin: 0 0 8px 0;
 }
 .hero-stats-row .stat-item {
     display: flex;
@@ -519,7 +852,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     flex-wrap: wrap;
     align-items: center;
     gap: 12px 24px;
-    margin: 0 0 12px 0; /* Средний отступ */
+    margin: 0 0 12px 0;
 }
 .hero-info-row .info-item {
     display: flex;
@@ -540,10 +873,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 
 /* Способности */
 .modal .info-container h3:first-of-type {
-    margin: 16px 0 6px 0; /* Отступ сверху, чтобы отделить от предыдущей группы */
+    margin: 16px 0 6px 0;
 }
 .modal .info-container h3 {
-    margin: 12px 0 6px 0; /* Отступ между h3 и содержимым */
+    margin: 12px 0 6px 0;
     font-size: 16px;
     font-weight: 600;
 }
@@ -553,12 +886,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    margin: 8px 0 4px 0; /* Отступы вокруг тегов */
+    margin: 8px 0 4px 0;
 }
 
 /* Пассивные способности */
 #mPassive {
-    margin: 4px 0 6px 0; /* Отступ после пассивок */
+    margin: 4px 0 6px 0;
 }
 
 /* Блок способностей */
@@ -571,7 +904,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-size: 14px;
     overflow-wrap: break-word;
     line-height: 1.5;
-    margin: 4px 0 0 0; /* Убираем лишние отступы */
+    margin: 4px 0 0 0;
 }
 
 /* Кнопка прокачки */
@@ -588,13 +921,13 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     cursor: pointer !important;
     transition: all 0.2s !important;
     font-weight: 500 !important;
-    margin: 4px 0 6px 0 !important; /* Отступ после пассивок */
+    margin: 4px 0 6px 0 !important;
 }
 
 /* Блок прокачки */
 .upgrade-section-wrapper {
     display: none;
-    margin-top: 8px; /* Отступ после кнопки */
+    margin-top: 8px;
 }
 .upgrade-section-wrapper.show {
     display: block;
@@ -769,7 +1102,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-dialog .date { text-align:center; font-style:italic; color:var(--text-color); opacity:0.6; margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color); }
 .info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
 .info-close:hover { opacity:1; }
-  /* ПРИНУДИТЕЛЬНОЕ УВЕЛИЧЕНИЕ ДЛЯ ИКОНКИ ДЕРЕВА ТАЛАНТОВ В КНОПКЕ */
+
+/* ПРИНУДИТЕЛЬНОЕ УВЕЛИЧЕНИЕ ДЛЯ ИКОНКИ ДЕРЕВА ТАЛАНТОВ В КНОПКЕ */
 #treeBtnIcon[src$=".svg"] {
     width: 28px !important;
     height: 28px !important;
@@ -783,82 +1117,66 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     filter: brightness(0) invert(1) !important;
     transform: scale(1.0) !important;
 }
-  /* ЗВЕЗДА В МЕТА-СТРОКЕ — 32px */
-#mMeta1 img[src$=".svg"] {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
-    max-width: 32px !important;
-    max-height: 32px !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    transform: scale(1.0) !important;
-}
-  /* ПРИНУДИТЕЛЬНОЕ УВЕЛИЧЕНИЕ ЗВЕЗДЫ — 32px */
-.hero-meta-row .star-display img {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
-    max-width: 32px !important;
-    max-height: 32px !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-}
-
-/* Дополнительно — для всех SVG в meta-строке */
-#mMeta1 img[src$=".svg"] {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
-    max-width: 32px !important;
-    max-height: 32px !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-}
 </style>
 </head>
 <body>
 <header>
 <div class="container">
 <div class="top-bar">
-<div class="brand">
-<h1>Галерея героев</h1>
-<div class="copyright">Евгений Поташко и Владимир Плотников, клан "Рожденные в СССР."</div>
-</div>
-<div class="center-group">
-<div class="hero-select-wrapper">
-<div class="hero-select-container">
-<button id="heroSelectToggle" class="hero-select-toggle"><span id="heroSelectText">Выберите героя</span></button>
-<div id="heroCheckboxes" class="hero-checkboxes">
-<div class="hero-checkboxes-header"><h3>Выберите героев</h3><span id="heroSelectedCount">0 выбрано</span></div>
-<div id="heroCheckboxesList"></div>
-<div class="hero-select-actions">
-<button id="selectAllHeroes" class="btn">Выбрать все</button>
-<button id="deselectAllHeroes" class="btn">Снять все</button>
-<button id="applyHeroSelection" class="btn primary">Применить</button>
-</div>
-</div>
-</div>
-</div>
-<div class="search-wrapper"><input id="searchInput" type="search" placeholder="Поиск по имени/способности"></div>
-</div>
-<div class="right-group">
-<div class="sort-group">
-<div class="sort-select-wrapper"><select id="sortSelect"><option value="Сила">Сила</option><option value="Атака">Атака</option><option value="Защита">Защита</option><option value="Жизни">Жизни</option><option value="Герой">Имя</option></select></div>
-<button id="sortBtn" class="sort-btn desc" data-tooltip="Сортировка по убыванию"></button>
-</div>
-<div class="filter-buttons">
-<button id="openFilters" class="btn primary">Фильтры</button>
-<button id="resetAll" class="btn secondary">Сбросить</button>
-</div>
-<div class="info-btn-wrapper"><button id="infoBtn" class="info-btn">i</button></div>
-</div>
+    <!-- Блок 1: Название и авторы -->
+    <div class="brand">
+        <h1>Галерея героев</h1>
+        <div class="copyright">Евгений Поташко и Владимир Плотников, клан "Рожденные в СССР."</div>
+    </div>
+    
+    <!-- Блок 2: Поиск -->
+    <div class="search-wrapper">
+        <input id="searchInput" type="search" placeholder="Поиск по имени/способности">
+    </div>
+    
+    <!-- Блок 3: Выбор героев из списка -->
+    <div class="hero-select-wrapper">
+        <div class="hero-select-container">
+            <button id="heroSelectToggle" class="hero-select-btn primary">Выбрать из списка</button>
+            <div id="heroCheckboxes" class="hero-checkboxes">
+                <div class="hero-checkboxes-header">
+                    <h3>Выберите героев</h3>
+                    <span id="heroSelectedCount">0 выбрано</span>
+                </div>
+                <div id="heroCheckboxesList"></div>
+                <div class="hero-select-actions">
+                    <button id="selectAllHeroes" class="btn">Выбрать все</button>
+                    <button id="deselectAllHeroes" class="btn">Снять все</button>
+                    <button id="applyHeroSelection" class="btn primary">Применить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Блок 4: Сортировка (выпадающий список + кнопка направления) -->
+    <div class="sort-group">
+        <div class="sort-select-wrapper">
+            <select id="sortSelect">
+                <option value="Сила">Сила</option>
+                <option value="Атака">Атака</option>
+                <option value="Защита">Защита</option>
+                <option value="Жизни">Жизни</option>
+                <option value="Герой">Имя</option>
+            </select>
+        </div>
+        <button id="sortBtn" class="sort-btn desc" data-tooltip="Сортировка по убыванию"></button>
+    </div>
+    
+    <!-- Блок 5: Фильтры и Сброс -->
+    <div class="filter-buttons">
+        <button id="openFilters" class="btn primary">Фильтры</button>
+        <button id="resetAll" class="btn secondary">Сбросить</button>
+    </div>
+    
+    <!-- Блок 6: Информация -->
+    <div class="info-btn-wrapper">
+        <button id="infoBtn" class="info-btn">i</button>
+    </div>
 </div>
 </div>
 </header>
@@ -1170,17 +1488,16 @@ function renderUpgradeSection(hero) {
     const heroStars = String(hero['Количество звезд'] || '1').trim();
     const heroElement = String(hero['Стихия'] || '').trim();
     
-    // ===== ИСПРАВЛЕНИЕ: целевые звёзды зависят от текущей звёздности =====
     const currentStarNum = parseInt(heroStars);
     let starTargets = [];
     if (currentStarNum < 3) {
-        starTargets = ['2', '3']; // Для 1★ и 2★ — можно повысить до 2 и 3
+        starTargets = ['2', '3'];
     } else if (currentStarNum === 3) {
-        starTargets = ['2', '3']; // Для 3★ — только до 3 (показываем 2 и 3)
+        starTargets = ['2', '3'];
     } else if (currentStarNum === 4) {
-        starTargets = ['2', '3', '4', '5']; // Для 4★ — все варианты
+        starTargets = ['2', '3', '4', '5'];
     } else if (currentStarNum === 5) {
-        starTargets = ['2', '3', '4', '5']; // Для 5★ — все варианты (но реально только до 5)
+        starTargets = ['2', '3', '4', '5'];
     } else {
         starTargets = ['2', '3', '4', '5'];
     }
@@ -1469,7 +1786,6 @@ function renderTalentTree(hero, selections, mode) {
         return;
     }
     
-    // Устанавливаем иконку дерева
     const treeIcon = getIcon('TalantTree_icon');
     const treeIconEl = document.getElementById('treeIcon');
     if (treeIcon && treeIconEl) {
@@ -1761,7 +2077,7 @@ function renderMetaRow(hero) {
     
     let starsDisplay;
     if (starIcon) {
-        // Звезда на расстоянии 2px от числа (почти неразрывный пробел)
+        // Звезда на расстоянии 2px от числа
         starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:32px !important;height:32px !important;min-width:32px !important;min-height:32px !important;max-width:32px !important;max-height:32px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;"></span>`;
     } else {
         starsDisplay = `${stars}★`;
@@ -1948,10 +2264,8 @@ function applyFilters(){
         let summonMatch=selected.summon.size===0||selected.summon.has(String(r[HERO_FIELDS.summon]));
         let clazzMatch=selected.clazz.size===0||selected.clazz.has(String(r[HERO_FIELDS.clazz]));
         let heroMatch=selected.heroes.size===0||selected.heroes.has(String(r[HERO_FIELDS.name]));
-        // ===== ИСПРАВЛЕНИЕ: логика "И" для тегов =====
         let tagMatch=selected.tags.size===0;
         if (!tagMatch) {
-            // Если выбраны теги — проверяем, что У ВСЕХ есть каждый из них
             let heroTags = r._tags || [];
             tagMatch = [...selected.tags].every(tag => heroTags.includes(tag));
         }
@@ -2001,7 +2315,6 @@ function fillModal(hero){
     document.getElementById('mOpenImg').href = img || '#';
     document.getElementById('mName').textContent = hero[HERO_FIELDS.name] || '';
 
-    // ===== ИКОНКА ДЛЯ КНОПКИ "ДЕРЕВО ТАЛАНТОВ" =====
     const treeIcon = getIcon('TalantTree_icon');
     const treeBtnIcon = document.getElementById('treeBtnIcon');
     if (treeIcon && treeBtnIcon) {
@@ -2009,7 +2322,6 @@ function fillModal(hero){
         treeBtnIcon.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);';
     }
   
-    // ===== ИКОНКИ НАВИГАЦИИ =====
     const leftIcon = getIcon('Left_button');
     const rightIcon = getIcon('Right_button');
     const closeIcon = getIcon('Close_button');
@@ -2029,17 +2341,13 @@ function fillModal(hero){
         if (el) { el.src = closeIcon; el.style.cssText = navIconStyle; }
     }
     
-    // ===== Строка 1: Мета =====
     renderMetaRow(hero);
     
-    // ===== Строка 2: Характеристики + таланты =====
     const calc = calculateStatsWithSelections(hero, {}, 'none');
     renderStatsRow(hero, calc);
     
-    // ===== Строка 3: Скорость маны + Цели =====
     renderInfoRow(hero);
     
-    // ===== ТЕГИ (после способностей) =====
     const tagsContainer = document.getElementById('modalTags');
     if (hero._tags && hero._tags.length > 0) {
         const tagsHtml = hero._tags.map(tag => '<span class="tag ' + getTagClass(tag) + '" data-tag="' + tag + '">#' + tag + '</span>').join('');
@@ -2049,7 +2357,6 @@ function fillModal(hero){
                 e.stopPropagation();
                 const tag = this.dataset.tag;
                 if (tag) {
-                    // Очищаем другие фильтры, но НЕ очищаем теги — добавляем выбранный
                     selected.element.clear();
                     selected.stars.clear();
                     selected.mana.clear();
@@ -2058,13 +2365,8 @@ function fillModal(hero){
                     selected.clazz.clear();
                     selected.heroes.clear();
                     document.getElementById('searchInput').value = '';
-                    // Добавляем тег в выбранные (сохраняем все ранее выбранные теги)
                     selected.tags.add(tag);
-                    
-                    // Обновляем отображение чекбоксов в фильтрах
-                    // Перестраиваем фильтры, чтобы отметить выбранный тег
                     initAllFacets(allHeroes);
-                    
                     closeModal();
                     applyFilters();
                 }
@@ -2077,7 +2379,6 @@ function fillModal(hero){
     document.getElementById('mAbilities').textContent = String(hero[HERO_FIELDS.abilities] || '—').replace(/^'|'$/g, '');
     document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive] || '—').replace(/^'|'$/g, '');
     
-    // ===== ПРОКАЧКА =====
     const upgradeIcon = getIcon('Upgrade_icon');
     const toggleBtn = document.getElementById('upgradeToggleBtn');
     if (upgradeIcon && toggleBtn) {
@@ -2092,7 +2393,6 @@ function fillModal(hero){
     if (wrapper) wrapper.classList.remove('show');
     renderUpgradeSection(hero);
     
-    // ===== Привязываем события для талантов =====
     const select = document.getElementById('talentModeSelect');
     if (select) {
         select.value = 'none';
@@ -2111,18 +2411,12 @@ function closeModal(){ document.getElementById('modal').classList.remove('show')
 function go(delta){ if(currentIdx<0||!viewHeroes.length) return; currentIdx=(currentIdx+delta+viewHeroes.length)%viewHeroes.length; openModal(currentIdx); }
 
 function attachEvents(){
-
-    // ===== ПРИНУДИТЕЛЬНАЯ ПРИВЯЗКА КНОПКИ ЗАКРЫТИЯ ДЕРЕВА ТАЛАНТОВ =====
     const closeTreeBtn = document.getElementById('closeTreeBtn');
     if (closeTreeBtn) {
-        console.log('✅ Кнопка closeTreeBtn найдена в attachEvents');
         closeTreeBtn.addEventListener('click', function(e) {
-            console.log('🔄 Клик по closeTreeBtn');
             e.stopPropagation();
             closeTreePanel();
         });
-    } else {
-        console.error('❌ Кнопка closeTreeBtn НЕ найдена в attachEvents!');
     }
 
     document.getElementById('searchInput').addEventListener('input', applyFilters);
