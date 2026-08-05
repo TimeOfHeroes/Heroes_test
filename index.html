@@ -143,7 +143,7 @@ body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial,
 header { position:sticky; top:0; z-index:100; background:var(--header-bg); color:var(--header-text); backdrop-filter:blur(8px); border-bottom:1px solid var(--border-color); box-shadow:0 2px 10px rgba(0,0,0,.05); }
 .container { max-width:1400px; margin:0 auto; padding:0 16px; }
 
-/* ===== НОВАЯ ВЕРХНЯЯ ПАНЕЛЬ ===== */
+/* ===== ВЕРХНЯЯ ПАНЕЛЬ ===== */
 .top-bar {
     display: flex;
     align-items: center;
@@ -216,6 +216,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     transition: all 0.2s;
     font-weight: 500;
     white-space: nowrap;
+    min-width: 140px;
 }
 .hero-select-btn:hover {
     background: #1a5f9a;
@@ -424,14 +425,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     color: var(--text-color);
     border-color: var(--checkbox-border);
 }
-.btn.reset {
-    background-color: #f44336;
-    color: white;
-    border-color: #f44336;
-}
-.btn.reset:hover {
-    background-color: #d32f2f;
-}
 
 /* Блок 6: Информация */
 .info-btn-wrapper {
@@ -615,7 +608,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     max-height:calc(90vh - 60px); 
 }
 
-/* Кнопки навигации — только картинки, без фона */
+/* Кнопки навигации */
 .nav-btn {
     position: absolute !important;
     top: 12px !important;
@@ -634,14 +627,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     z-index: 10 !important;
     box-shadow: none !important;
 }
-.nav-btn:hover {
-    transform: scale(1.1) !important;
-}
-.nav-btn:active {
-    transform: scale(0.9) !important;
-}
-
-/* Иконки в кнопках навигации */
+.nav-btn:hover { transform: scale(1.1) !important; }
+.nav-btn:active { transform: scale(0.9) !important; }
 .nav-btn img {
     width: 44px !important;
     height: 44px !important;
@@ -653,8 +640,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     display: block !important;
     filter: none !important;
 }
-
-/* Принудительное увеличение для SVG-иконок навигации */
 .nav-btn img[src$=".svg"] {
     width: 44px !important;
     height: 44px !important;
@@ -665,8 +650,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     transform: scale(1.0) !important;
     object-fit: contain !important;
 }
-
-/* Одинаковое расстояние между кнопками — по 8px */
 .nav-prev { right: 112px !important; }
 .nav-next { right: 56px !important; }
 .nav-close { right: 8px !important; }
@@ -679,24 +662,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .image-container[data-element="Желтый"] { background:var(--element-yellow); }
 .dialog img { width:100%; height:auto; max-height:350px; object-fit:contain; border-radius:12px; background:transparent; padding:8px; }
 
-/* ===== НОВАЯ СТРУКТУРА МОДАЛЬНОГО ОКНА ===== */
+/* ===== СТРУКТУРА МОДАЛЬНОГО ОКНА ===== */
+.modal .info-container > * { margin-bottom: 20px; }
+.modal .info-container > *:last-child { margin-bottom: 0; }
+.modal .info-container h2 { margin: 0 0 16px 0; font-size: 26px; font-weight: 700; }
 
-/* Группы с большими отступами */
-.modal .info-container > * {
-    margin-bottom: 20px;
-}
-.modal .info-container > *:last-child {
-    margin-bottom: 0;
-}
-
-/* Заголовок (имя героя) */
-.modal .info-container h2 {
-    margin: 0 0 16px 0;
-    font-size: 26px;
-    font-weight: 700;
-}
-
-/* Строка 1: Элемент, Звездность, Класс */
 .hero-meta-row {
     display: flex;
     flex-wrap: wrap;
@@ -709,7 +679,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .hero-meta-row .star-display {
     display: inline-flex;
     align-items: center;
-    gap: 2px; /* Звезда на расстоянии 2px от числа */
+    gap: 2px;
 }
 .hero-meta-row .star-display img {
     width: 32px !important;
@@ -723,7 +693,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     vertical-align: middle !important;
 }
 
-/* Строка 2: Характеристики + таланты */
 .hero-stats-row {
     display: flex;
     flex-wrap: wrap;
@@ -764,7 +733,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 1px 0 !important;
 }
 
-/* Контролы талантов в строке */
 .hero-stats-row .talent-controls {
     display: flex !important;
     flex-wrap: wrap !important;
@@ -790,8 +758,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     color: var(--text-color) !important;
     cursor: pointer !important;
     appearance: none !important;
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
     height: 28px !important;
     box-sizing: border-box !important;
 }
@@ -829,9 +795,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     height: 28px !important;
     white-space: nowrap !important;
 }
-.hero-stats-row #openTreeBtn:hover {
-    background: #1a5f9a !important;
-}
+.hero-stats-row #openTreeBtn:hover { background: #1a5f9a !important; }
 .hero-stats-row #openTreeBtn img {
     width: 28px !important;
     height: 28px !important;
@@ -846,7 +810,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     transform: scale(1.0) !important;
 }
 
-/* Строка 3: Скорость маны + Цели */
 .hero-info-row {
     display: flex;
     flex-wrap: wrap;
@@ -859,42 +822,13 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     flex-direction: column;
     align-items: flex-start;
 }
-.hero-info-row .info-item .value {
-    font-weight: 600;
-    font-size: 15px;
-}
-.hero-info-row .info-item .label {
-    font-size: 11px;
-    color: var(--text-color);
-    opacity: 0.6;
-    font-weight: 400;
-    margin-top: -2px;
-}
+.hero-info-row .info-item .value { font-weight: 600; font-size: 15px; }
+.hero-info-row .info-item .label { font-size: 11px; color: var(--text-color); opacity: 0.6; font-weight: 400; margin-top: -2px; }
 
-/* Способности */
-.modal .info-container h3:first-of-type {
-    margin: 16px 0 6px 0;
-}
-.modal .info-container h3 {
-    margin: 12px 0 6px 0;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-/* Теги */
-.modal-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin: 8px 0 4px 0;
-}
-
-/* Пассивные способности */
-#mPassive {
-    margin: 4px 0 6px 0;
-}
-
-/* Блок способностей */
+.modal .info-container h3:first-of-type { margin: 16px 0 6px 0; }
+.modal .info-container h3 { margin: 12px 0 6px 0; font-size: 16px; font-weight: 600; }
+.modal-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 4px 0; }
+#mPassive { margin: 4px 0 6px 0; }
 .pre {
     white-space: pre-line;
     background: var(--secondary-color);
@@ -907,7 +841,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     margin: 4px 0 0 0;
 }
 
-/* Кнопка прокачки */
 .upgrade-toggle-btn {
     display: inline-flex !important;
     align-items: center !important;
@@ -923,24 +856,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-weight: 500 !important;
     margin: 4px 0 6px 0 !important;
 }
-
-/* Блок прокачки */
-.upgrade-section-wrapper {
-    display: none;
-    margin-top: 8px;
-}
-.upgrade-section-wrapper.show {
-    display: block;
-}
+.upgrade-section-wrapper { display: none; margin-top: 8px; }
+.upgrade-section-wrapper.show { display: block; }
 .upgrade-section {
     padding: 12px 14px;
     background: var(--secondary-color);
     border-radius: 10px;
     border: 1px solid var(--border-color);
 }
-.upgrade-section-title {
-    display: none !important;
-}
+.upgrade-section-title { display: none !important; }
 .upgrade-section-wrapper .upgrade-section > div > div:first-child {
     font-size: 16px !important;
     font-weight: 600 !important;
@@ -963,40 +887,14 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     transition: all 0.15s;
     font-weight: 600;
 }
-.upgrade-btn .star {
-    color: #ffd700;
-}
-.upgrade-btn img {
-    width: 14px;
-    height: 14px;
-    display: inline-block;
-    vertical-align: middle;
-}
-.upgrade-btn:hover {
-    background: #227BBC !important;
-    color: #fff;
-}
-.upgrade-btn:hover .star {
-    color: #fff;
-}
-.upgrade-btn.active {
-    background: #227BBC !important;
-    color: #fff;
-    border-color: #227BBC !important;
-}
-.upgrade-btn.active .star {
-    color: #fff;
-}
-.upgrade-content {
-    display: none;
-    padding: 10px 12px;
-    background: var(--card-bg);
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-}
-.upgrade-content.show {
-    display: block;
-}
+.upgrade-btn .star { color: #ffd700; }
+.upgrade-btn img { width: 14px; height: 14px; display: inline-block; vertical-align: middle; }
+.upgrade-btn:hover { background: #227BBC !important; color: #fff; }
+.upgrade-btn:hover .star { color: #fff; }
+.upgrade-btn.active { background: #227BBC !important; color: #fff; border-color: #227BBC !important; }
+.upgrade-btn.active .star { color: #fff; }
+.upgrade-content { display: none; padding: 10px 12px; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border-color); }
+.upgrade-content.show { display: block; }
 .upgrade-item {
     display: flex;
     align-items: center;
@@ -1005,23 +903,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-size: 13px;
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
-.upgrade-item:last-child {
-    border-bottom: none;
-}
-.upgrade-item img {
-    width: 36px;
-    height: 36px;
-    object-fit: contain;
-    border-radius: 4px;
-    flex-shrink: 0;
-}
-.upgrade-item .name {
-    flex: 1;
-}
-.upgrade-item .count {
-    font-weight: 600;
-    color: var(--primary-color);
-}
+.upgrade-item:last-child { border-bottom: none; }
+.upgrade-item img { width: 36px; height: 36px; object-fit: contain; border-radius: 4px; flex-shrink: 0; }
+.upgrade-item .name { flex: 1; }
+.upgrade-item .count { font-weight: 600; color: var(--primary-color); }
 .upgrade-tokens {
     display: flex;
     flex-wrap: wrap;
@@ -1037,17 +922,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 6px 14px 6px 8px;
     border-radius: 20px;
 }
-.upgrade-tokens .token img {
-    width: 36px;
-    height: 36px;
-    object-fit: contain;
-    border-radius: 4px;
-    flex-shrink: 0;
-}
-.upgrade-tokens .token .count {
-    font-weight: 600;
-    color: var(--primary-color);
-}
+.upgrade-tokens .token img { width: 36px; height: 36px; object-fit: contain; border-radius: 4px; flex-shrink: 0; }
+.upgrade-tokens .token .count { font-weight: 600; color: var(--primary-color); }
 
 .tree-panel { position:fixed; top:50%; right:20px; transform:translateY(-50%); width:420px; max-width:calc(100vw - 40px); background:var(--card-bg); border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.3); z-index:2100; display:none; flex-direction:column; overflow:hidden; border:1px solid var(--border-color); cursor:default; }
 .tree-panel.show { display:flex; }
@@ -1073,10 +949,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 0 !important;
     line-height: 1 !important;
 }
-.tree-close:hover { 
-    opacity: 1 !important; 
-    background: var(--secondary-color) !important; 
-}
+.tree-close:hover { opacity: 1 !important; background: var(--secondary-color) !important; }
 .tree-content { padding:16px; overflow-y:auto; max-height:60vh; }
 .talent-table { display:flex; flex-direction:column; gap:2px; }
 .talent-row { display:flex; gap:2px; justify-content:center; }
@@ -1103,7 +976,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
 .info-close:hover { opacity:1; }
 
-/* ПРИНУДИТЕЛЬНОЕ УВЕЛИЧЕНИЕ ДЛЯ ИКОНКИ ДЕРЕВА ТАЛАНТОВ В КНОПКЕ */
 #treeBtnIcon[src$=".svg"] {
     width: 28px !important;
     height: 28px !important;
@@ -1141,7 +1013,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
             <div id="heroCheckboxes" class="hero-checkboxes">
                 <div class="hero-checkboxes-header">
                     <h3>Выберите героев</h3>
-                    <span id="heroSelectedCount">0 выбрано</span>
+                    <span class="hero-selected-count" id="heroSelectedCount">0 выбрано</span>
                 </div>
                 <div id="heroCheckboxesList"></div>
                 <div class="hero-select-actions">
@@ -1153,7 +1025,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         </div>
     </div>
     
-    <!-- Блок 4: Сортировка (выпадающий список + кнопка направления) -->
+    <!-- Блок 4: Сортировка -->
     <div class="sort-group">
         <div class="sort-select-wrapper">
             <select id="sortSelect">
@@ -1212,7 +1084,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 <div id="modal" class="modal">
 <div class="dialog">
 <div class="modal-content">
-    <!-- Кнопки навигации: ← → ✕ -->
     <button id="mPrev" class="nav-btn nav-prev"><img id="leftBtnIcon" src="" alt="Назад"></button>
     <button id="mNext" class="nav-btn nav-next"><img id="rightBtnIcon" src="" alt="Вперёд"></button>
     <button id="mClose" class="nav-btn nav-close"><img id="closeBtnIcon" src="" alt="Закрыть"></button>
@@ -1220,19 +1091,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     <div class="image-container" id="modalImageContainer"><img id="mImg" src=""><a id="mOpenImg" class="open-img" href="#" target="_blank">Открыть изображение в новой вкладке</a></div>
     <div class="info-container">
         <h2 id="mName"></h2>
-        
-        <!-- Строка 1: Элемент, Звездность, Класс -->
         <div id="heroMetaRow" class="hero-meta-row"></div>
-        
-        <!-- Строка 2: Характеристики + таланты -->
         <div id="heroStatsRow" class="hero-stats-row"></div>
-        
-        <!-- Строка 3: Скорость маны + Цели -->
         <div id="heroInfoRow" class="hero-info-row"></div>
         
         <h3 style="margin-top:12px;">Способности</h3>
         <div id="mAbilities" class="pre"></div>
-        
         <div id="modalTags" class="modal-tags"></div>
         
         <h3>Пассивные способности</h3>
@@ -2077,7 +1941,6 @@ function renderMetaRow(hero) {
     
     let starsDisplay;
     if (starIcon) {
-        // Звезда на расстоянии 2px от числа
         starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:32px !important;height:32px !important;min-width:32px !important;min-height:32px !important;max-width:32px !important;max-height:32px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;"></span>`;
     } else {
         starsDisplay = `${stars}★`;
@@ -2245,12 +2108,21 @@ function updateHeroCheckboxes(){
 }
 
 function updateHeroSelectDisplay(){
-    let c=selected.heroes.size;
-    document.getElementById('heroSelectedCount').textContent=c+' выбрано';
-    if(c===0) document.getElementById('heroSelectText').textContent='Выберите героя';
-    else if(c===1) document.getElementById('heroSelectText').textContent=Array.from(selected.heroes)[0];
-    else if(c===allHeroNames.length) document.getElementById('heroSelectText').textContent='Все герои';
-    else document.getElementById('heroSelectText').textContent=Array.from(selected.heroes)[0]+' и еще '+(c-1);
+    let c = selected.heroes.size;
+    const toggleBtn = document.getElementById('heroSelectToggle');
+    if (!toggleBtn) return;
+    const countEl = document.getElementById('heroSelectedCount');
+    if (countEl) countEl.textContent = c + ' выбрано';
+    
+    if (c === 0) {
+        toggleBtn.textContent = 'Выбрать из списка';
+    } else if (c === 1) {
+        toggleBtn.textContent = Array.from(selected.heroes)[0];
+    } else if (c === allHeroNames.length) {
+        toggleBtn.textContent = 'Все герои (' + c + ')';
+    } else {
+        toggleBtn.textContent = Array.from(selected.heroes)[0] + ' и еще ' + (c - 1);
+    }
 }
 
 function applyFilters(){
