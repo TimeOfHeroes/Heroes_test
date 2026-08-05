@@ -224,6 +224,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-weight: 500;
     white-space: nowrap;
     min-width: 120px;
+    height: 36px;
 }
 .hero-select-btn:hover {
     background: #1a5f9a;
@@ -237,7 +238,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     background: #1a5f9a;
 }
 
-/* Выпадающий список — фиксированный заголовок и кнопки */
 .hero-checkboxes {
     position: absolute;
     top: 100%;
@@ -358,6 +358,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     content: '↓';
     font-size: 18px;
 }
+/* Подсказка — сверху */
 .sort-btn:before {
     content: attr(data-tooltip);
     position: absolute;
@@ -375,11 +376,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     transition: all 0.2s;
     pointer-events: none;
     z-index: 10;
+    margin-bottom: 6px;
 }
 .sort-btn:hover:before {
     opacity: 1;
     visibility: visible;
-    margin-bottom: 6px;
 }
 
 .sort-select-wrapper {
@@ -395,6 +396,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     cursor: pointer;
     appearance: none;
     min-width: 100px;
+    height: 36px;
 }
 .sort-select-wrapper:after {
     content: '';
@@ -429,6 +431,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     transition: all 0.2s;
     font-weight: 500;
     white-space: nowrap;
+    height: 36px;
 }
 .btn:hover {
     background: var(--secondary-color);
@@ -2317,7 +2320,6 @@ function attachEvents(){
     document.getElementById('sortSelect').addEventListener('change', applyFilters);
     document.getElementById('sortBtn').addEventListener('click', ()=>{ sortDirection=sortDirection==='desc'?'asc':'desc'; document.getElementById('sortBtn').className='sort-btn '+sortDirection; applyFilters(); });
     document.getElementById('heroSelectToggle').addEventListener('click', e=>{ document.getElementById('heroCheckboxes').classList.toggle('show'); e.stopPropagation(); });
-    // Убрали "Выбрать все", оставили только "Снять все" и "Применить"
     document.getElementById('deselectAllHeroes').addEventListener('click', ()=>{
         selected.heroes.clear();
         updateHeroCheckboxes();
