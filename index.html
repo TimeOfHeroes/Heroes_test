@@ -149,7 +149,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     align-items: center;
     justify-content: space-between;
     padding: 10px 0;
-    gap: 12px;
+    gap: 8px;
     flex-wrap: wrap;
 }
 
@@ -157,7 +157,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .brand {
     display: flex;
     flex-direction: column;
-    min-width: 180px;
+    min-width: 160px;
     flex-shrink: 0;
 }
 .brand h1 {
@@ -175,16 +175,23 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-style: italic;
 }
 
-/* Блок 2: Поиск */
+/* Блок 2: Поиск + Кнопка выбора */
+.search-and-select {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    min-width: 280px;
+    max-width: 500px;
+}
 .search-wrapper {
     flex: 1;
-    min-width: 180px;
-    max-width: 320px;
+    min-width: 120px;
 }
 .search-wrapper input {
     width: 100%;
-    padding: 8px 12px;
-    font-size: 14px;
+    padding: 7px 12px;
+    font-size: 13px;
     border: 1px solid var(--checkbox-border);
     border-radius: 8px;
     background: var(--card-bg);
@@ -206,8 +213,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     position: relative;
 }
 .hero-select-btn {
-    padding: 8px 16px;
-    font-size: 14px;
+    padding: 7px 14px;
+    font-size: 13px;
     border: none;
     border-radius: 8px;
     background: #227BBC;
@@ -216,7 +223,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     transition: all 0.2s;
     font-weight: 500;
     white-space: nowrap;
-    min-width: 140px;
+    min-width: 120px;
 }
 .hero-select-btn:hover {
     background: #1a5f9a;
@@ -308,40 +315,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .sort-group {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     flex-shrink: 0;
 }
-.sort-select-wrapper {
-    position: relative;
-}
-.sort-select-wrapper select {
-    padding: 8px 32px 8px 12px;
-    font-size: 14px;
-    border: 1px solid var(--checkbox-border);
-    border-radius: 8px;
-    background: var(--card-bg);
-    color: var(--text-color);
-    cursor: pointer;
-    appearance: none;
-    min-width: 110px;
-}
-.sort-select-wrapper:after {
-    content: '';
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid currentColor;
-    opacity: 0.6;
-    pointer-events: none;
-}
 .sort-btn {
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     padding: 0;
     border: 1px solid var(--checkbox-border);
     border-radius: 8px;
@@ -390,16 +369,45 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     margin-bottom: 6px;
 }
 
+.sort-select-wrapper {
+    position: relative;
+}
+.sort-select-wrapper select {
+    padding: 7px 32px 7px 12px;
+    font-size: 13px;
+    border: 1px solid var(--checkbox-border);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    appearance: none;
+    min-width: 100px;
+}
+.sort-select-wrapper:after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid currentColor;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
 /* Блок 5: Фильтры */
 .filter-buttons {
     display: flex;
-    gap: 6px;
+    gap: 4px;
     align-items: center;
     flex-shrink: 0;
 }
 .btn {
-    padding: 8px 16px;
-    font-size: 14px;
+    padding: 7px 14px;
+    font-size: 13px;
     border: 1px solid var(--checkbox-border);
     border-radius: 8px;
     background: var(--card-bg);
@@ -431,8 +439,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     flex-shrink: 0;
 }
 .info-btn {
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     padding: 0;
     border: 1px solid var(--checkbox-border);
     border-radius: 8px;
@@ -455,20 +463,17 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     .top-bar {
         flex-direction: row;
         flex-wrap: wrap;
-        gap: 8px 12px;
+        gap: 6px 10px;
     }
     .brand {
-        min-width: 140px;
+        min-width: 120px;
         flex: 0 0 100%;
         text-align: center;
     }
-    .search-wrapper {
+    .search-and-select {
         flex: 1;
-        min-width: 140px;
+        min-width: 200px;
         max-width: none;
-    }
-    .hero-select-wrapper {
-        flex: 0 1 auto;
     }
     .sort-group {
         flex: 0 1 auto;
@@ -491,8 +496,13 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         flex: 0 0 auto;
         text-align: center;
     }
-    .search-wrapper {
+    .search-and-select {
         max-width: none;
+        flex-wrap: wrap;
+    }
+    .search-wrapper {
+        flex: 1;
+        min-width: 100px;
     }
     .hero-select-wrapper {
         width: 100%;
@@ -679,7 +689,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .hero-meta-row .star-display {
     display: inline-flex;
     align-items: center;
-    gap: 2px;
+    gap: 0px; /* Звезда максимально близко к цифре */
 }
 .hero-meta-row .star-display img {
     width: 32px !important;
@@ -1001,32 +1011,33 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <div class="copyright">Евгений Поташко и Владимир Плотников, клан "Рожденные в СССР."</div>
     </div>
     
-    <!-- Блок 2: Поиск -->
-    <div class="search-wrapper">
-        <input id="searchInput" type="search" placeholder="Поиск по имени/способности">
-    </div>
-    
-    <!-- Блок 3: Выбор героев из списка -->
-    <div class="hero-select-wrapper">
-        <div class="hero-select-container">
-            <button id="heroSelectToggle" class="hero-select-btn primary">Выбрать из списка</button>
-            <div id="heroCheckboxes" class="hero-checkboxes">
-                <div class="hero-checkboxes-header">
-                    <h3>Выберите героев</h3>
-                    <span class="hero-selected-count" id="heroSelectedCount">0 выбрано</span>
-                </div>
-                <div id="heroCheckboxesList"></div>
-                <div class="hero-select-actions">
-                    <button id="selectAllHeroes" class="btn">Выбрать все</button>
-                    <button id="deselectAllHeroes" class="btn">Снять все</button>
-                    <button id="applyHeroSelection" class="btn primary">Применить</button>
+    <!-- Блок 2: Поиск + Кнопка выбора -->
+    <div class="search-and-select">
+        <div class="search-wrapper">
+            <input id="searchInput" type="search" placeholder="Поиск по имени/способности">
+        </div>
+        <div class="hero-select-wrapper">
+            <div class="hero-select-container">
+                <button id="heroSelectToggle" class="hero-select-btn primary">Выбрать из списка</button>
+                <div id="heroCheckboxes" class="hero-checkboxes">
+                    <div class="hero-checkboxes-header">
+                        <h3>Выберите героев</h3>
+                        <span class="hero-selected-count" id="heroSelectedCount">0 выбрано</span>
+                    </div>
+                    <div id="heroCheckboxesList"></div>
+                    <div class="hero-select-actions">
+                        <button id="selectAllHeroes" class="btn">Выбрать все</button>
+                        <button id="deselectAllHeroes" class="btn">Снять все</button>
+                        <button id="applyHeroSelection" class="btn primary">Применить</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Блок 4: Сортировка -->
+    <!-- Блок 3: Сортировка (кнопка со стрелкой + выпадающий список) -->
     <div class="sort-group">
+        <button id="sortBtn" class="sort-btn desc" data-tooltip="Сортировка по убыванию"></button>
         <div class="sort-select-wrapper">
             <select id="sortSelect">
                 <option value="Сила">Сила</option>
@@ -1036,16 +1047,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
                 <option value="Герой">Имя</option>
             </select>
         </div>
-        <button id="sortBtn" class="sort-btn desc" data-tooltip="Сортировка по убыванию"></button>
     </div>
     
-    <!-- Блок 5: Фильтры и Сброс -->
+    <!-- Блок 4: Фильтры и Сброс -->
     <div class="filter-buttons">
         <button id="openFilters" class="btn primary">Фильтры</button>
         <button id="resetAll" class="btn secondary">Сбросить</button>
     </div>
     
-    <!-- Блок 6: Информация -->
+    <!-- Блок 5: Информация -->
     <div class="info-btn-wrapper">
         <button id="infoBtn" class="info-btn">i</button>
     </div>
@@ -1941,6 +1951,7 @@ function renderMetaRow(hero) {
     
     let starsDisplay;
     if (starIcon) {
+        // Звезда на расстоянии 0px — максимально близко
         starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:32px !important;height:32px !important;min-width:32px !important;min-height:32px !important;max-width:32px !important;max-height:32px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;"></span>`;
     } else {
         starsDisplay = `${stars}★`;
