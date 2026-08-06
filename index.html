@@ -353,24 +353,39 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .btn.primary:hover {
     background: #1a5f9a;
 }
-.btn.btn-white {
-    background: #ffffff;
-    color: #111111;
-    border: 1px solid #cccccc;
+/* Белые кнопки (универсальный класс) */
+.btn-white {
+    background: #ffffff !important;
+    color: #111111 !important;
+    border: 1px solid #cccccc !important;
 }
-.btn.btn-white:hover {
-    background: #f0f0f0;
-    border-color: #aaaaaa;
+.btn-white:hover {
+    background: #f0f0f0 !important;
+    border-color: #aaaaaa !important;
 }
+
+/* Для кнопки "Выбрать из списка" — чтобы переопределить синий фон */
+.hero-select-btn.btn-white {
+    background: #ffffff !important;
+    color: #111111 !important;
+    border: 1px solid #cccccc !important;
+}
+.hero-select-btn.btn-white:hover {
+    background: #f0f0f0 !important;
+    border-color: #aaaaaa !important;
+}
+
 @media (prefers-color-scheme: dark) {
-    .btn.btn-white {
-        background: #3d3d3d;
-        color: #eeeeee;
-        border: 1px solid #555555;
+    .btn-white,
+    .hero-select-btn.btn-white {
+        background: #3d3d3d !important;
+        color: #eeeeee !important;
+        border: 1px solid #555555 !important;
     }
-    .btn.btn-white:hover {
-        background: #4d4d4d;
-        border-color: #777777;
+    .btn-white:hover,
+    .hero-select-btn.btn-white:hover {
+        background: #4d4d4d !important;
+        border-color: #777777 !important;
     }
 }
 
@@ -1086,7 +1101,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         </div>
         <div class="hero-select-wrapper">
             <div class="hero-select-container">
-                <button id="heroSelectToggle" class="hero-select-btn primary">Выбрать из списка</button>
+                <!-- Кнопка "Выбрать из списка" — теперь белая -->
+                <button id="heroSelectToggle" class="hero-select-btn btn-white">Выбрать из списка</button>
                 <div id="heroCheckboxes" class="hero-checkboxes">
                     <div class="hero-checkboxes-header">
                         <h3>Выберите героев</h3>
@@ -1102,9 +1118,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         </div>
     </div>
     
-    <!-- Блок 3: Фильтры и Сброс -->
+    <!-- Блок 3: Фильтры и Сброс (кнопка "Фильтры" — синяя) -->
     <div class="filter-buttons">
-        <button id="openFilters" class="btn btn-white">Фильтры</button>
+        <button id="openFilters" class="btn primary">Фильтры</button>
         <button id="resetAll" class="btn btn-white">Сбросить</button>
     </div>
     
