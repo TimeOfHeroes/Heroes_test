@@ -167,12 +167,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     color: var(--header-text);
     line-height: 1.2;
 }
-.copyright {
-    font-size: 10px;
-    color: var(--header-text);
-    opacity: 0.7;
-    margin: 1px 0 0;
-    font-style: italic;
+.brand .copyright {
+    display: none;
 }
 
 /* Блок 2: Поиск + Кнопка выбора */
@@ -326,7 +322,59 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     height: 30px;
 }
 
-/* Блок 4: Сортировка */
+/* Блок 4: Фильтры и Сброс */
+.filter-buttons {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    flex-shrink: 0;
+}
+.btn {
+    padding: 5px 12px;
+    font-size: 13px;
+    border: 1px solid var(--checkbox-border);
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+    white-space: nowrap;
+    height: 32px;
+}
+.btn:hover {
+    background: var(--secondary-color);
+}
+.btn.primary {
+    background: #227BBC;
+    color: #fff;
+    border-color: #227BBC;
+}
+.btn.primary:hover {
+    background: #1a5f9a;
+}
+.btn.btn-white {
+    background: #ffffff;
+    color: #111111;
+    border: 1px solid #cccccc;
+}
+.btn.btn-white:hover {
+    background: #f0f0f0;
+    border-color: #aaaaaa;
+}
+@media (prefers-color-scheme: dark) {
+    .btn.btn-white {
+        background: #3d3d3d;
+        color: #eeeeee;
+        border: 1px solid #555555;
+    }
+    .btn.btn-white:hover {
+        background: #4d4d4d;
+        border-color: #777777;
+    }
+}
+
+/* Блок 5: Сортировка */
 .sort-group {
     display: flex;
     align-items: center;
@@ -360,7 +408,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     content: '↓';
     font-size: 16px;
 }
-/* Подсказка — снизу кнопки */
 .sort-btn:before {
     content: attr(data-tooltip);
     position: absolute;
@@ -384,7 +431,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     opacity: 1;
     visibility: visible;
 }
-/* На маленьких экранах — сверху */
 @media (max-height: 500px) {
     .sort-btn:before {
         top: auto;
@@ -420,43 +466,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     border-top: 4px solid currentColor;
     opacity: 0.6;
     pointer-events: none;
-}
-
-/* Блок 5: Фильтры */
-.filter-buttons {
-    display: flex;
-    gap: 4px;
-    align-items: center;
-    flex-shrink: 0;
-}
-.btn {
-    padding: 5px 12px;
-    font-size: 13px;
-    border: 1px solid var(--checkbox-border);
-    border-radius: 6px;
-    background: var(--card-bg);
-    color: var(--text-color);
-    cursor: pointer;
-    transition: all 0.2s;
-    font-weight: 500;
-    white-space: nowrap;
-    height: 32px;
-}
-.btn:hover {
-    background: var(--secondary-color);
-}
-.btn.primary {
-    background: #227BBC;
-    color: #fff;
-    border-color: #227BBC;
-}
-.btn.primary:hover {
-    background: #1a5f9a;
-}
-.btn.secondary {
-    background: var(--card-bg);
-    color: var(--text-color);
-    border-color: var(--checkbox-border);
 }
 
 /* Блок 6: Информация */
@@ -500,14 +509,17 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         min-width: 180px;
         max-width: none;
     }
-    .sort-group {
-        flex: 0 1 auto;
-    }
     .filter-buttons {
         flex: 0 1 auto;
+        order: 3;
+    }
+    .sort-group {
+        flex: 0 1 auto;
+        order: 4;
     }
     .info-btn-wrapper {
         flex: 0 0 auto;
+        order: 5;
     }
 }
 
@@ -536,18 +548,21 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         width: 100%;
         text-align: center;
     }
-    .sort-group {
-        width: 100%;
-        justify-content: center;
-    }
     .filter-buttons {
         width: 100%;
         justify-content: center;
+        order: 3;
+    }
+    .sort-group {
+        width: 100%;
+        justify-content: center;
+        order: 4;
     }
     .info-btn-wrapper {
         width: 100%;
         display: flex;
         justify-content: center;
+        order: 5;
     }
 }
 
@@ -862,7 +877,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 
 .modal .info-container h3:first-of-type { margin: 16px 0 6px 0; }
 .modal .info-container h3 { margin: 12px 0 6px 0; font-size: 16px; font-weight: 600; }
-.modal-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 4px 0; }
+.modal-tags { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 4px 0; }
 #mPassive { margin: 4px 0 6px 0; }
 .pre {
     white-space: pre-line;
@@ -900,11 +915,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     border: 1px solid var(--border-color);
 }
 .upgrade-section-title { display: none !important; }
-.upgrade-section-wrapper .upgrade-section > div > div:first-child {
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    margin-bottom: 6px !important;
-}
 .upgrade-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -923,13 +933,34 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-weight: 600;
 }
 .upgrade-btn .star { color: #ffd700; }
-.upgrade-btn img { width: 14px; height: 14px; display: inline-block; vertical-align: middle; }
+.upgrade-btn img { 
+    width: 14px; 
+    height: 14px; 
+    display: inline-block; 
+    vertical-align: middle;
+    margin-right: 2px;
+}
 .upgrade-btn:hover { background: #227BBC !important; color: #fff; }
 .upgrade-btn:hover .star { color: #fff; }
 .upgrade-btn.active { background: #227BBC !important; color: #fff; border-color: #227BBC !important; }
 .upgrade-btn.active .star { color: #fff; }
-.upgrade-content { display: none; padding: 10px 12px; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border-color); }
+
+.upgrade-content { 
+    display: none; 
+    padding: 10px 12px; 
+    background: var(--card-bg); 
+    border-radius: 8px; 
+    border: 1px solid var(--border-color); 
+}
 .upgrade-content.show { display: block; }
+
+.upgrade-group-title {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    margin-bottom: 6px !important;
+    color: var(--text-color);
+}
+
 .upgrade-item {
     display: flex;
     align-items: center;
@@ -939,9 +970,22 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 .upgrade-item:last-child { border-bottom: none; }
-.upgrade-item img { width: 36px; height: 36px; object-fit: contain; border-radius: 4px; flex-shrink: 0; }
-.upgrade-item .name { flex: 1; }
-.upgrade-item .count { font-weight: 600; color: var(--primary-color); }
+.upgrade-item img { 
+    width: 36px; 
+    height: 36px; 
+    object-fit: contain; 
+    border-radius: 4px; 
+    flex-shrink: 0; 
+}
+.upgrade-item .name { 
+    flex: 1; 
+    color: var(--text-color);
+}
+.upgrade-item .count { 
+    font-weight: 600; 
+    color: var(--text-color);
+    padding-right: 6px;
+}
 .upgrade-tokens {
     display: flex;
     flex-wrap: wrap;
@@ -958,7 +1002,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     border-radius: 20px;
 }
 .upgrade-tokens .token img { width: 36px; height: 36px; object-fit: contain; border-radius: 4px; flex-shrink: 0; }
-.upgrade-tokens .token .count { font-weight: 600; color: var(--primary-color); }
+.upgrade-tokens .token .count { font-weight: 600; color: var(--text-color); padding-right: 0; }
 
 .tree-panel { position:fixed; top:50%; right:20px; transform:translateY(-50%); width:420px; max-width:calc(100vw - 40px); background:var(--card-bg); border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.3); z-index:2100; display:none; flex-direction:column; overflow:hidden; border:1px solid var(--border-color); cursor:default; }
 .tree-panel.show { display:flex; }
@@ -1030,10 +1074,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 <header>
 <div class="container">
 <div class="top-bar">
-    <!-- Блок 1: Название и авторы -->
+    <!-- Блок 1: Название -->
     <div class="brand">
         <h1>Галерея героев</h1>
-        <div class="copyright">Евгений Поташко и Владимир Плотников, клан "Рожденные в СССР."</div>
     </div>
     
     <!-- Блок 2: Поиск + Кнопка выбора -->
@@ -1059,7 +1102,13 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         </div>
     </div>
     
-    <!-- Блок 3: Сортировка -->
+    <!-- Блок 3: Фильтры и Сброс -->
+    <div class="filter-buttons">
+        <button id="openFilters" class="btn btn-white">Фильтры</button>
+        <button id="resetAll" class="btn btn-white">Сбросить</button>
+    </div>
+    
+    <!-- Блок 4: Сортировка -->
     <div class="sort-group">
         <button id="sortBtn" class="sort-btn desc" data-tooltip="Сортировка по убыванию"></button>
         <div class="sort-select-wrapper">
@@ -1071,12 +1120,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
                 <option value="Герой">Имя</option>
             </select>
         </div>
-    </div>
-    
-    <!-- Блок 4: Фильтры и Сброс -->
-    <div class="filter-buttons">
-        <button id="openFilters" class="btn primary">Фильтры</button>
-        <button id="resetAll" class="btn secondary">Сбросить</button>
     </div>
     
     <!-- Блок 5: Информация -->
@@ -1141,10 +1184,20 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         </button>
         <div id="upgradeSectionWrapper" class="upgrade-section-wrapper">
             <div id="upgradeContainer" class="upgrade-section">
-                <div class="upgrade-section-title"><img id="upgradeSectionIcon" src="" alt="Прокачка"> Прокачка героя</div>
-                <div style="margin-bottom:12px;"><div style="font-size:16px; font-weight:600; margin-bottom:6px;">📦 Материалы для повышения</div><div class="upgrade-buttons" id="starButtons"></div><div class="upgrade-content" id="starContent"></div></div>
-                <div style="margin-bottom:12px;"><div style="font-size:16px; font-weight:600; margin-bottom:6px;">📚 Книги навыков</div><div class="upgrade-buttons" id="bookButtons"></div><div class="upgrade-content" id="bookContent"></div></div>
-                <div><div style="font-size:16px; font-weight:600; margin-bottom:6px;">🎯 Жетоны талантов</div><div id="talentTokensContent"></div></div>
+                <div style="margin-bottom:12px;">
+                    <div class="upgrade-group-title">Материалы для повышения</div>
+                    <div class="upgrade-buttons" id="starButtons"></div>
+                    <div class="upgrade-content" id="starContent"></div>
+                </div>
+                <div style="margin-bottom:12px;">
+                    <div class="upgrade-group-title">Книги навыков</div>
+                    <div class="upgrade-buttons" id="bookButtons"></div>
+                    <div class="upgrade-content" id="bookContent"></div>
+                </div>
+                <div>
+                    <div class="upgrade-group-title">Жетоны талантов</div>
+                    <div id="talentTokensContent"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -1247,7 +1300,13 @@ function normalizeStarKey(star) { return String(star).replace(/★/g,'').trim();
 
 // ==================== СИСТЕМА ПРОКАЧКИ ====================
 
-function getStarTargets(heroStars) { return ['2', '3', '4', '5']; }
+function getStarTargets(heroStars) {
+    const starNum = parseInt(heroStars);
+    if (starNum <= 3) return ['2', '3'];
+    if (starNum === 4) return ['2', '3', '4'];
+    if (starNum === 5) return ['2', '3', '4', '5'];
+    return ['2', '3', '4', '5'];
+}
 
 function getMaterialsForStar(heroElement, heroStars, targetStar) {
     const heroStarNormalized = normalizeStarKey(heroStars);
@@ -1377,35 +1436,16 @@ function renderUpgradeSection(hero) {
     
     const upgradeIcon = getUpgradeIcon();
     const upgradeIconEl = document.getElementById('upgradeIcon');
-    const upgradeSectionIconEl = document.querySelector('.upgrade-section-title img');
     
-    if (upgradeIcon) {
-        if (upgradeIconEl) {
-            upgradeIconEl.src = upgradeIcon;
-            upgradeIconEl.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;';
-        }
-        if (upgradeSectionIconEl) {
-            upgradeSectionIconEl.src = upgradeIcon;
-            upgradeSectionIconEl.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;';
-        }
+    if (upgradeIcon && upgradeIconEl) {
+        upgradeIconEl.src = upgradeIcon;
+        upgradeIconEl.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;';
     }
     
     const heroStars = String(hero['Количество звезд'] || '1').trim();
     const heroElement = String(hero['Стихия'] || '').trim();
     
-    const currentStarNum = parseInt(heroStars);
-    let starTargets = [];
-    if (currentStarNum < 3) {
-        starTargets = ['2', '3'];
-    } else if (currentStarNum === 3) {
-        starTargets = ['2', '3'];
-    } else if (currentStarNum === 4) {
-        starTargets = ['2', '3', '4', '5'];
-    } else if (currentStarNum === 5) {
-        starTargets = ['2', '3', '4', '5'];
-    } else {
-        starTargets = ['2', '3', '4', '5'];
-    }
+    const starTargets = getStarTargets(heroStars);
     
     // --- Повышение звездности ---
     const starButtons = document.getElementById('starButtons');
@@ -1418,7 +1458,7 @@ function renderUpgradeSection(hero) {
             const btn = document.createElement('button');
             btn.className = 'upgrade-btn';
             if (starIcon) {
-                btn.innerHTML = '<img src="'+starIcon+'" alt="★" style="width:14px;height:14px;"> ' + target;
+                btn.innerHTML = '<img src="'+starIcon+'" alt="★"> ' + target;
             } else {
                 btn.innerHTML = '<span class="star">★</span> ' + target;
             }
