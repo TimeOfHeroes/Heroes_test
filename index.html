@@ -697,7 +697,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 /* ===== МОДАЛЬНОЕ ОКНО ===== */
 .modal { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center; padding:20px; z-index:2000; }
 .modal.show { display:flex; }
-.dialog { position:relative; background:var(--card-bg); max-width:1200px; width:min(1200px, 95vw); max-height:90vh; border-radius:16px; display:flex; flex-direction:column; box-shadow:0 20px 40px rgba(0,0,0,0.3); }
+.dialog { position:relative; background:var(--card-bg); max-width:1200px; width:min(1200px, 95vw); height:90vh; max-height:90vh; min-height:400px; border-radius:16px; display:flex; flex-direction:column; box-shadow:0 20px 40px rgba(0,0,0,0.3); overflow:hidden; }
 .dialog .modal-content { 
     position:relative;
     display:grid; 
@@ -705,7 +705,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     gap:20px; 
     padding:20px; 
     overflow-y:auto; 
-    max-height:calc(90vh - 60px); 
+    flex:1;
+    height:100%;
 }
 
 .image-container {
@@ -714,12 +715,16 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 12px;
     transition: background 0.3s;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .image-container[data-element="Синий"] { background: var(--element-blue); }
 .image-container[data-element="Зеленый"] { background: var(--element-green); }
 .image-container[data-element="Красный"] { background: var(--element-red); }
 .image-container[data-element="Фиолетовый"] { background: var(--element-purple); }
 .image-container[data-element="Желтый"] { background: var(--element-yellow); }
+.image-container img { width:100%; max-height:300px; object-fit:contain; border-radius:8px; background:transparent; padding:4px; }
 
 .summon-text {
     text-align: center;
@@ -743,152 +748,44 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     text-decoration: underline;
 }
 
-.hero-stats-row .talent-controls .select-wrapper select {
-    width: 100% !important;
-    padding: 4px 28px 4px 8px !important;
-    font-size: 12px !important;
-    border: 1px solid #227BBC !important;
-    border-radius: 6px !important;
-    background: var(--card-bg) !important;
-    color: var(--text-color) !important;
-    cursor: pointer !important;
-    appearance: none !important;
-    height: 28px !important;
-    box-sizing: border-box !important;
+.info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow-y: auto;
+    padding-right: 4px;
 }
-
-/* Скрываем только первый заголовок "Способности" */
-.modal .info-container > h3:first-of-type {
-    display: none !important;
+.info-container h2 {
+    margin: 0 0 4px 0;
+    font-size: 26px;
+    font-weight: 700;
 }
-
-/* Все остальные заголовки h3 видны */
-.modal .info-container h3:not(:first-of-type) {
-    margin: 16px 0 4px 0;
+.info-container h3 {
+    margin: 12px 0 4px 0;
     font-size: 16px;
     font-weight: 600;
-    display: block !important;
 }
-
-.pre {
+/* Скрываем только первый заголовок "Способности" */
+.info-container > h3:first-of-type {
+    display: none !important;
+}
+.info-container .pre {
     white-space: pre-line;
     background: transparent !important;
     border: none !important;
-    padding: 8px 0;
+    padding: 4px 0;
     font-size: 14px;
     overflow-wrap: break-word;
     line-height: 1.6;
-    margin: 4px 0 0 0;
+    margin: 0;
 }
 
-.hero-stats-row #openTreeBtn {
-    display: flex !important;
-    align-items: center !important;
-    gap: 4px !important;
-    padding: 3px 10px !important;
-    font-size: 12px !important;
-    border: none !important;
-    border-radius: 6px !important;
-    background: #227BBC !important;
-    color: #fff !important;
-    cursor: pointer !important;
-    transition: all 0.2s !important;
-    font-weight: 500 !important;
-    height: 28px !important;
-    white-space: nowrap !important;
-}
-.hero-stats-row #openTreeBtn:hover { background: #1a5f9a !important; }
-.hero-stats-row #openTreeBtn img {
-    width: 16px !important;
-    height: 16px !important;
-    min-width: 16px !important;
-    min-height: 16px !important;
-    max-width: 16px !important;
-    max-height: 16px !important;
-    filter: brightness(0) invert(1) !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    object-fit: contain !important;
-    transform: scale(1.0) !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-/* ===== КНОПКИ НАВИГАЦИИ ===== */
-.nav-btn {
-    position: absolute !important;
-    top: 12px !important;
-    width: 56px !important;
-    height: 56px !important;
-    min-width: 56px !important;
-    min-height: 56px !important;
-    border: none !important;
-    background: transparent !important;
-    cursor: pointer !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition: transform 0.2s !important;
-    padding: 0 !important;
-    z-index: 10 !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-}
-.nav-btn:hover { 
-    transform: scale(1.1) !important; 
-    background: transparent !important;
-}
-.nav-btn:active { 
-    transform: scale(0.9) !important; 
-    background: transparent !important;
-}
-.nav-btn img {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    min-height: 44px !important;
-    max-width: 44px !important;
-    max-height: 44px !important;
-    object-fit: contain !important;
-    display: block !important;
-    filter: none !important;
-    pointer-events: none !important;
-}
-
-.nav-prev { 
-    right: 88px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-.nav-next { 
-    right: 32px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-.nav-close { 
-    right: 4px !important;
-    top: 12px !important;
-    width: 48px !important;
-    height: 48px !important;
-    min-width: 48px !important;
-    min-height: 48px !important;
-}
-.nav-close img {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    min-height: 36px !important;
-    max-width: 36px !important;
-    max-height: 36px !important;
-}
-
-/* ===== ГРУППА "ЦВЕТ, ЗВЕЗДНОСТЬ, КЛАСС" ===== */
 .hero-meta-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 4px 8px;
-    margin: 0 0 6px 0;
+    margin: 0 0 4px 0;
     font-weight: 600;
     font-size: 15px;
 }
@@ -918,18 +815,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     gap: 0px;
 }
 
-.dialog img { width:100%; height:auto; max-height:350px; object-fit:contain; border-radius:12px; background:transparent; padding:8px; }
-
-.modal .info-container > * { margin-bottom: 20px; }
-.modal .info-container > *:last-child { margin-bottom: 0; }
-.modal .info-container h2 { margin: 0 0 16px 0; font-size: 26px; font-weight: 700; }
-
 .hero-stats-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 8px 12px;
-    margin: 0 0 8px 0;
+    margin: 0 0 4px 0;
 }
 .hero-stats-row .stat-item {
     display: flex;
@@ -979,6 +870,19 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     max-width: 170px !important;
     display: inline-block !important;
 }
+.hero-stats-row .talent-controls .select-wrapper select {
+    width: 100% !important;
+    padding: 4px 28px 4px 8px !important;
+    font-size: 12px !important;
+    border: 1px solid #227BBC !important;
+    border-radius: 6px !important;
+    background: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    cursor: pointer !important;
+    appearance: none !important;
+    height: 28px !important;
+    box-sizing: border-box !important;
+}
 .hero-stats-row .talent-controls .select-wrapper .arrow {
     position: absolute !important;
     right: 0 !important;
@@ -997,13 +901,45 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     height: 12px !important;
     fill: #ffffff !important;
 }
+.hero-stats-row #openTreeBtn {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 3px 10px !important;
+    font-size: 12px !important;
+    border: none !important;
+    border-radius: 6px !important;
+    background: #227BBC !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    font-weight: 500 !important;
+    height: 28px !important;
+    white-space: nowrap !important;
+}
+.hero-stats-row #openTreeBtn:hover { background: #1a5f9a !important; }
+.hero-stats-row #openTreeBtn img {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    max-width: 16px !important;
+    max-height: 16px !important;
+    filter: brightness(0) invert(1) !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    object-fit: contain !important;
+    transform: scale(1.0) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
 
 .hero-info-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 12px 24px;
-    margin: 0 0 12px 0;
+    margin: 0 0 8px 0;
 }
 .hero-info-row .info-item {
     display: flex;
@@ -1012,10 +948,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .hero-info-row .info-item .value { font-weight: 600; font-size: 15px; }
 .hero-info-row .info-item .label { font-size: 11px; color: var(--text-color); opacity: 0.6; font-weight: 400; margin-top: -2px; }
-
-.modal .info-container h3 { margin: 12px 0 6px 0; font-size: 16px; font-weight: 600; }
-.modal-tags { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 4px 0; }
-#mPassive { margin: 4px 0 6px 0; }
 
 .upgrade-toggle-btn {
     display: inline-flex !important;
@@ -1130,6 +1062,74 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .upgrade-tokens .token img { width: 36px; height: 36px; object-fit: contain; border-radius: 4px; flex-shrink: 0; }
 .upgrade-tokens .token .count { font-weight: 600; color: var(--text-color); padding-right: 0; }
 
+/* ===== КНОПКИ НАВИГАЦИИ В МОДАЛКЕ ===== */
+.nav-btn {
+    position: absolute !important;
+    top: 12px !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
+    border: none !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: transform 0.2s !important;
+    padding: 0 !important;
+    z-index: 10 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+.nav-btn:hover { 
+    transform: scale(1.1) !important; 
+    background: transparent !important;
+}
+.nav-btn:active { 
+    transform: scale(0.9) !important; 
+    background: transparent !important;
+}
+.nav-btn img {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    object-fit: contain !important;
+    display: block !important;
+    filter: none !important;
+    pointer-events: none !important;
+}
+
+.nav-prev { 
+    right: 100px !important;
+    left: auto !important;
+    top: 12px !important;
+}
+.nav-next { 
+    right: 44px !important;
+    left: auto !important;
+    top: 12px !important;
+}
+.nav-close { 
+    right: 4px !important;
+    top: 12px !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
+}
+.nav-close img {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+}
+
 .tree-panel { position:fixed; top:50%; right:20px; transform:translateY(-50%); width:420px; max-width:calc(100vw - 40px); background:var(--card-bg); border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.3); z-index:2100; display:none; flex-direction:column; overflow:hidden; border:1px solid var(--border-color); cursor:default; }
 .tree-panel.show { display:flex; }
 .tree-panel.dragging { opacity:0.9; cursor:grabbing; }
@@ -1181,54 +1181,32 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
 .info-close:hover { opacity:1; }
 
-#treeBtnIcon[src$=".svg"] {
-    width: 16px !important;
-    height: 16px !important;
-    min-width: 16px !important;
-    min-height: 16px !important;
-    max-width: 16px !important;
-    max-height: 16px !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    filter: brightness(0) invert(1) !important;
-    transform: scale(1.0) !important;
-}
-
-/* ===== АДАПТИВНОСТЬ ДЛЯ МОДАЛЬНОГО ОКНА ===== */
+/* Адаптив для модального окна */
 @media (max-width: 768px) {
-    .nav-prev { right: 76px !important; }
-    .nav-next { right: 28px !important; }
-    .nav-close { right: 2px !important; }
+    .nav-prev { right: 86px !important; }
+    .nav-next { right: 36px !important; }
+    .nav-close { right: 4px !important; }
     .nav-btn {
-        width: 44px !important;
-        height: 44px !important;
-        min-width: 44px !important;
-        min-height: 44px !important;
+        width: 48px !important;
+        height: 48px !important;
+        min-width: 48px !important;
+        min-height: 48px !important;
         top: 8px !important;
     }
     .nav-btn img {
-        width: 34px !important;
-        height: 34px !important;
-        min-width: 34px !important;
-        min-height: 34px !important;
-        max-width: 34px !important;
-        max-height: 34px !important;
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+        max-width: 36px !important;
+        max-height: 36px !important;
     }
-    .nav-close {
-        width: 38px !important;
-        height: 38px !important;
-        min-width: 38px !important;
-        min-height: 38px !important;
+    .modal .dialog .modal-content {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 12px;
     }
-    .nav-close img {
-        width: 28px !important;
-        height: 28px !important;
-        min-width: 28px !important;
-        min-height: 28px !important;
-        max-width: 28px !important;
-        max-height: 28px !important;
-    }
+    .image-container img { max-height: 200px; }
     .hero-meta-row .star-display img {
         width: 18px !important;
         height: 18px !important;
@@ -1236,9 +1214,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         min-height: 18px !important;
         max-width: 18px !important;
         max-height: 18px !important;
-    }
-    .hero-meta-row {
-        gap: 3px 6px;
     }
     .hero-stats-row .stat-item img {
         width: 16px !important;
@@ -1259,38 +1234,25 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 
 @media (max-width: 480px) {
-    .nav-prev { right: 66px !important; }
-    .nav-next { right: 24px !important; }
-    .nav-close { right: 2px !important; }
+    .nav-prev { right: 72px !important; }
+    .nav-next { right: 30px !important; }
+    .nav-close { right: 4px !important; }
     .nav-btn {
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        min-height: 36px !important;
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        min-height: 40px !important;
         top: 6px !important;
     }
     .nav-btn img {
-        width: 28px !important;
-        height: 28px !important;
-        min-width: 28px !important;
-        min-height: 28px !important;
-        max-width: 28px !important;
-        max-height: 28px !important;
-    }
-    .nav-close {
         width: 30px !important;
         height: 30px !important;
         min-width: 30px !important;
         min-height: 30px !important;
+        max-width: 30px !important;
+        max-height: 30px !important;
     }
-    .nav-close img {
-        width: 22px !important;
-        height: 22px !important;
-        min-width: 22px !important;
-        min-height: 22px !important;
-        max-width: 22px !important;
-        max-height: 22px !important;
-    }
+    .dialog { height: 95vh; max-height: 95vh; }
     .hero-meta-row .star-display img {
         width: 16px !important;
         height: 16px !important;
@@ -1298,10 +1260,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         min-height: 16px !important;
         max-width: 16px !important;
         max-height: 16px !important;
-    }
-    .hero-meta-row {
-        gap: 2px 4px;
-        font-size: 13px;
     }
     .hero-stats-row .stat-item img {
         width: 14px !important;
@@ -2283,10 +2241,9 @@ function renderMetaRow(hero) {
 }
 
 function renderCardStats(hero) {
-    // Используем те же иконки _ffffff для главной страницы
-    const swordUrl = getIcon('Sword_icon_ffffff');
-    const shieldUrl = getIcon('Shield_icon_ffffff');
-    const healthUrl = getIcon('Health_icon_ffffff');
+    const swordUrl = getIcon(ICON_NAMES.sword);
+    const shieldUrl = getIcon(ICON_NAMES.shield);
+    const healthUrl = getIcon(ICON_NAMES.health);
     
     let html = '';
     if (swordUrl) {
