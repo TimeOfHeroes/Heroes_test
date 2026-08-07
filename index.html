@@ -235,6 +235,28 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     background: #1a5f9a;
 }
 
+/* Белая кнопка "Выбрать из списка" */
+.hero-select-btn.btn-white {
+    background: #ffffff !important;
+    color: #111111 !important;
+    border: 1px solid #cccccc !important;
+}
+.hero-select-btn.btn-white:hover {
+    background: #f0f0f0 !important;
+    border-color: #aaaaaa !important;
+}
+@media (prefers-color-scheme: dark) {
+    .hero-select-btn.btn-white {
+        background: #3d3d3d !important;
+        color: #eeeeee !important;
+        border: 1px solid #555555 !important;
+    }
+    .hero-select-btn.btn-white:hover {
+        background: #4d4d4d !important;
+        border-color: #777777 !important;
+    }
+}
+
 .hero-checkboxes {
     position: absolute;
     top: 100%;
@@ -353,39 +375,24 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .btn.primary:hover {
     background: #1a5f9a;
 }
-/* Белые кнопки (универсальный класс) */
-.btn-white {
-    background: #ffffff !important;
-    color: #111111 !important;
-    border: 1px solid #cccccc !important;
+.btn.btn-white {
+    background: #ffffff;
+    color: #111111;
+    border: 1px solid #cccccc;
 }
-.btn-white:hover {
-    background: #f0f0f0 !important;
-    border-color: #aaaaaa !important;
+.btn.btn-white:hover {
+    background: #f0f0f0;
+    border-color: #aaaaaa;
 }
-
-/* Для кнопки "Выбрать из списка" — чтобы переопределить синий фон */
-.hero-select-btn.btn-white {
-    background: #ffffff !important;
-    color: #111111 !important;
-    border: 1px solid #cccccc !important;
-}
-.hero-select-btn.btn-white:hover {
-    background: #f0f0f0 !important;
-    border-color: #aaaaaa !important;
-}
-
 @media (prefers-color-scheme: dark) {
-    .btn-white,
-    .hero-select-btn.btn-white {
-        background: #3d3d3d !important;
-        color: #eeeeee !important;
-        border: 1px solid #555555 !important;
+    .btn.btn-white {
+        background: #3d3d3d;
+        color: #eeeeee;
+        border: 1px solid #555555;
     }
-    .btn-white:hover,
-    .hero-select-btn.btn-white:hover {
-        background: #4d4d4d !important;
-        border-color: #777777 !important;
+    .btn.btn-white:hover {
+        background: #4d4d4d;
+        border-color: #777777;
     }
 }
 
@@ -634,7 +641,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 
 .content { min-height:60vh; width:100%; }
 #count { margin:0 0 16px; opacity:0.7; font-size:14px; padding:6px 0; font-weight:500; }
-.cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:16px; width:100%; }
+.cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:20px; width:100%; }
 .card { border:none; border-radius:12px; overflow:hidden; background:var(--card-bg); display:flex; flex-direction:column; transition:all 0.3s ease; cursor:pointer; height:100%; box-shadow:0 2px 8px rgba(0,0,0,.08); background-color:var(--element-unknown); color:var(--card-text); }
 .card[data-element="Синий"] { background-color:var(--element-blue); }
 .card[data-element="Зеленый"] { background-color:var(--element-green); }
@@ -646,18 +653,53 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .thumb img { width:100%; height:100%; object-fit:contain; padding:8px; transition:transform 0.3s; }
 .card:hover .thumb img { transform:scale(1.05); }
 .card h3 { margin:12px 12px 4px; font-size:15px; font-weight:600; line-height:1.3; text-align:center; }
-.meta { margin:0 12px 4px; display:flex; gap:4px; flex-wrap:wrap; font-size:12px; justify-content:center; text-align:center; }
-.stats { margin:0 12px 8px; display:flex; gap:8px; flex-wrap:wrap; justify-content:center; font-weight:600; font-size:13px; }
-.stats .pill { font-size:12px; padding:3px 10px; display:flex; align-items:center; gap:4px; }
-.pill { border-radius:999px; padding:3px 8px; font-size:11px; white-space:nowrap; font-weight:500; box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+.meta { margin:0 12px 6px; display:flex; gap:4px; flex-wrap:wrap; font-size:12px; justify-content:center; text-align:center; }
+.stats { margin:8px 12px 4px; display:flex; gap:6px; flex-wrap:wrap; justify-content:center; font-weight:600; font-size:13px; }
+.stats .pill { 
+    font-size:12px; 
+    padding:4px 10px; 
+    display:flex; 
+    align-items:center; 
+    gap:4px; 
+    border-radius:999px;
+    white-space:nowrap;
+    font-weight:500;
+    box-shadow:0 1px 3px rgba(0,0,0,0.05);
+}
+.stats .pill img { 
+    width: 16px !important; 
+    height: 16px !important; 
+    min-width: 16px !important; 
+    min-height: 16px !important; 
+    max-width: 16px !important; 
+    max-height: 16px !important; 
+    object-fit: contain !important; 
+    display: inline-block !important; 
+    vertical-align: middle !important; 
+    flex-shrink: 0 !important;
+}
 .card[data-element="Синий"] .pill { background-color:var(--pill-blue); }
 .card[data-element="Зеленый"] .pill { background-color:var(--pill-green); }
 .card[data-element="Красный"] .pill { background-color:var(--pill-red); }
 .card[data-element="Фиолетовый"] .pill { background-color:var(--pill-purple); }
 .card[data-element="Желтый"] .pill { background-color:var(--pill-yellow); }
 .card:not([data-element]) .pill { background-color:var(--pill-default); }
-.toggle-abilities { background:none; border:none; font-size:10px; cursor:pointer; padding:2px 6px; margin:6px auto 4px; text-decoration:underline; display:block; color:var(--text-color); }
-.card-abilities-full { display:none; font-size:10px; padding:0 12px 6px; line-height:1.4; border-top:1px solid rgba(0,0,0,0.08); margin-top:4px; padding-top:6px; }
+.toggle-abilities { 
+    background:none; 
+    border:none; 
+    font-size:11px; 
+    font-weight:600;
+    cursor:pointer; 
+    padding:4px 6px; 
+    margin:4px auto 8px; 
+    text-decoration:underline; 
+    display:block; 
+    color:var(--text-color); 
+    opacity:0.7;
+    transition:opacity 0.2s;
+}
+.toggle-abilities:hover { opacity:1; }
+.card-abilities-full { display:none; font-size:10px; padding:0 12px 8px; line-height:1.4; border-top:1px solid rgba(0,0,0,0.08); margin-top:4px; padding-top:6px; }
 
 /* --- Модальное окно --- */
 .modal { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center; padding:20px; z-index:2000; }
@@ -1101,7 +1143,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         </div>
         <div class="hero-select-wrapper">
             <div class="hero-select-container">
-                <!-- Кнопка "Выбрать из списка" — теперь белая -->
                 <button id="heroSelectToggle" class="hero-select-btn btn-white">Выбрать из списка</button>
                 <div id="heroCheckboxes" class="hero-checkboxes">
                     <div class="hero-checkboxes-header">
@@ -1118,7 +1159,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         </div>
     </div>
     
-    <!-- Блок 3: Фильтры и Сброс (кнопка "Фильтры" — синяя) -->
+    <!-- Блок 3: Фильтры и Сброс -->
     <div class="filter-buttons">
         <button id="openFilters" class="btn primary">Фильтры</button>
         <button id="resetAll" class="btn btn-white">Сбросить</button>
@@ -1251,9 +1292,9 @@ const IMAGES_URL = 'item_images.csv?ts=' + Date.now();
 
 const ICON_NAMES = {
     star: 'Star_icon',
-    sword: 'Sword_icon',
-    shield: 'Shield_icon',
-    health: 'Health_icon',
+    sword: 'Sword_icon_ffffff',
+    shield: 'Shield_icon_ffffff',
+    health: 'Health_icon_ffffff',
     tree: 'TalantTree_icon',
     upgrade: 'Upgrade_icon'
 };
@@ -2057,17 +2098,17 @@ function renderCardStats(hero) {
     
     let html = '';
     if (swordUrl) {
-        html += '<span class="pill"><img src="' + swordUrl + '" alt="Атака" style="width:18px;height:18px;min-width:18px;min-height:18px;max-width:18px;max-height:18px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.attack] + '</span>';
+        html += '<span class="pill"><img src="' + swordUrl + '" alt="Атака"> ' + hero[HERO_FIELDS.attack] + '</span>';
     } else {
         html += '<span class="pill">⚔️ ' + hero[HERO_FIELDS.attack] + '</span>';
     }
     if (shieldUrl) {
-        html += '<span class="pill"><img src="' + shieldUrl + '" alt="Защита" style="width:18px;height:18px;min-width:18px;min-height:18px;max-width:18px;max-height:18px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.defense] + '</span>';
+        html += '<span class="pill"><img src="' + shieldUrl + '" alt="Защита"> ' + hero[HERO_FIELDS.defense] + '</span>';
     } else {
         html += '<span class="pill">🛡️ ' + hero[HERO_FIELDS.defense] + '</span>';
     }
     if (healthUrl) {
-        html += '<span class="pill"><img src="' + healthUrl + '" alt="Жизни" style="width:18px;height:18px;min-width:18px;min-height:18px;max-width:18px;max-height:18px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.hp] + '</span>';
+        html += '<span class="pill"><img src="' + healthUrl + '" alt="Жизни"> ' + hero[HERO_FIELDS.hp] + '</span>';
     } else {
         html += '<span class="pill">❤️ ' + hero[HERO_FIELDS.hp] + '</span>';
     }
@@ -2258,7 +2299,7 @@ function renderCards(heroes){
         let cleaned=abilitiesFull.replace(/^'|'$/g,'');
         let hasAbil=cleaned.trim().length>0;
         const starsDisplay = starIcon ? 
-            '<img src="'+starIcon+'" alt="★" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"> ' + r[HERO_FIELDS.stars] :
+            '<span style="display:inline-flex;align-items:center;gap:2px;">' + r[HERO_FIELDS.stars] + ' <img src="'+starIcon+'" alt="★" style="width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;display:inline-block;vertical-align:middle;"></span>' :
             r[HERO_FIELDS.stars] + '★';
         return '<article class="card" data-idx="'+i+'" data-element="'+(r[HERO_FIELDS.element]||'')+'"><div class="thumb">'+(img?'<img src="'+img+'" alt="'+r[HERO_FIELDS.name]+'" loading="lazy" onerror="this.style.display=\'none\'">':'<div style="padding:20px;">Нет изображения</div>')+'</div><h3>'+r[HERO_FIELDS.name]+'</h3><div class="meta"><span>'+r[HERO_FIELDS.element]+'</span> • <span>'+starsDisplay+'</span> • <span>'+r[HERO_FIELDS.mana]+'</span></div><div class="meta"><span>'+r[HERO_FIELDS.attackType]+'</span> • <span>'+r[HERO_FIELDS.summon]+'</span> • <span>'+r[HERO_FIELDS.clazz]+'</span></div><div class="stats">' +
             renderCardStats(r) +
