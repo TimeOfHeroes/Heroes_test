@@ -2023,7 +2023,7 @@ function renderStatsRow(hero, calc) {
     html += '</select>';
     html += '<div class="arrow"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div>';
     html += '</div>';
-   html += '<button id="openTreeBtn"><img id="treeBtnIcon" src="" alt="Дерево" style="width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);"> Дерево талантов</button>';
+    html += '<button id="openTreeBtn"><img id="treeBtnIcon" src="" alt="Дерево" style="width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);"> Дерево талантов</button>';
     html += '</div>';
     
     statsRow.innerHTML = html;
@@ -2092,23 +2092,23 @@ function renderMetaRow(hero) {
 }
 
 function renderCardStats(hero) {
-    const swordUrl = getIcon('Sword_icon');
-    const shieldUrl = getIcon('Shield_icon');
-    const healthUrl = getIcon('Health_icon');
+    const swordUrl = getIcon('Sword_icon_ffffff');
+    const shieldUrl = getIcon('Shield_icon_ffffff');
+    const healthUrl = getIcon('Health_icon_ffffff');
     
     let html = '';
     if (swordUrl) {
-        html += '<span class="pill"><img src="' + swordUrl + '" alt="Атака"> ' + hero[HERO_FIELDS.attack] + '</span>';
+        html += '<span class="pill"><img src="' + swordUrl + '" alt="Атака" style="width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.attack] + '</span>';
     } else {
         html += '<span class="pill">⚔️ ' + hero[HERO_FIELDS.attack] + '</span>';
     }
     if (shieldUrl) {
-        html += '<span class="pill"><img src="' + shieldUrl + '" alt="Защита"> ' + hero[HERO_FIELDS.defense] + '</span>';
+        html += '<span class="pill"><img src="' + shieldUrl + '" alt="Защита" style="width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.defense] + '</span>';
     } else {
         html += '<span class="pill">🛡️ ' + hero[HERO_FIELDS.defense] + '</span>';
     }
     if (healthUrl) {
-        html += '<span class="pill"><img src="' + healthUrl + '" alt="Жизни"> ' + hero[HERO_FIELDS.hp] + '</span>';
+        html += '<span class="pill"><img src="' + healthUrl + '" alt="Жизни" style="width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.hp] + '</span>';
     } else {
         html += '<span class="pill">❤️ ' + hero[HERO_FIELDS.hp] + '</span>';
     }
