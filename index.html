@@ -654,6 +654,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .card:hover .thumb img { transform:scale(1.05); }
 .card h3 { margin:12px 12px 4px; font-size:15px; font-weight:600; line-height:1.3; text-align:center; }
 .meta { margin:0 12px 6px; display:flex; gap:4px; flex-wrap:wrap; font-size:12px; justify-content:center; text-align:center; }
+.meta:last-of-type { margin-bottom: 4px; }
 .stats { margin:8px 12px 4px; display:flex; gap:6px; flex-wrap:wrap; justify-content:center; font-weight:600; font-size:13px; }
 .stats .pill { 
     font-size:12px; 
@@ -2301,7 +2302,12 @@ function renderCards(heroes){
         const starsDisplay = starIcon ? 
             '<span style="display:inline-flex;align-items:center;gap:2px;">' + r[HERO_FIELDS.stars] + ' <img src="'+starIcon+'" alt="★" style="width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;display:inline-block;vertical-align:middle;"></span>' :
             r[HERO_FIELDS.stars] + '★';
-        return '<article class="card" data-idx="'+i+'" data-element="'+(r[HERO_FIELDS.element]||'')+'"><div class="thumb">'+(img?'<img src="'+img+'" alt="'+r[HERO_FIELDS.name]+'" loading="lazy" onerror="this.style.display=\'none\'">':'<div style="padding:20px;">Нет изображения</div>')+'</div><h3>'+r[HERO_FIELDS.name]+'</h3><div class="meta"><span>'+r[HERO_FIELDS.element]+'</span> • <span>'+starsDisplay+'</span> • <span>'+r[HERO_FIELDS.mana]+'</span></div><div class="meta"><span>'+r[HERO_FIELDS.attackType]+'</span> • <span>'+r[HERO_FIELDS.summon]+'</span> • <span>'+r[HERO_FIELDS.clazz]+'</span></div><div class="stats">' +
+        return '<article class="card" data-idx="'+i+'" data-element="'+(r[HERO_FIELDS.element]||'')+'"><div class="thumb">'+(img?'<img src="'+img+'" alt="'+r[HERO_FIELDS.name]+'" loading="lazy" onerror="this.style.display=\'none\'">':'<div style="padding:20px;">Нет изображения</div>')+'</div><h3>'+r[HERO_FIELDS.name]+'</h3>' +
+            // 1 ряд: Стихия · Звёздность · Класс
+            '<div class="meta"><span>'+r[HERO_FIELDS.element]+'</span> • <span>'+starsDisplay+'</span> • <span>'+r[HERO_FIELDS.clazz]+'</span></div>' +
+            // 2 ряд: Количество целей · Скорость маны · Место призыва
+            '<div class="meta"><span>'+r[HERO_FIELDS.attackType]+'</span> • <span>'+r[HERO_FIELDS.mana]+'</span> • <span>'+r[HERO_FIELDS.summon]+'</span></div>' +
+            '<div class="stats">' +
             renderCardStats(r) +
             '</div>'+(hasAbil?'<button class="toggle-abilities" data-idx="'+i+'">Показать способности</button><div class="card-abilities-full" id="abilities-'+i+'">'+cleaned.replace(/\n/g,'<br>')+'</div>':'')+'</article>';
     }).join('');
