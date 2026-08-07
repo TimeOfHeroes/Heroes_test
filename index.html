@@ -1501,21 +1501,21 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     pointer-events: none !important;
 }
 
-/* Влево - на 92px от правого края */
+/* ← Влево */
 .modal .nav-prev {
-    right: 92px !important;
+    right: 100px !important;
     left: auto !important;
     top: 12px !important;
 }
 
-/* Вправо - на 36px от правого края (рядом с Влево) */
+/* → Вправо - рядом с Влево */
 .modal .nav-next {
-    right: 36px !important;
+    right: 44px !important;
     left: auto !important;
     top: 12px !important;
 }
 
-/* Закрыть - на 4px от правого края (отдалена от стрелок) */
+/* ✕ Закрыть - справа */
 .modal .nav-close {
     right: 4px !important;
     top: 12px !important;
@@ -1536,8 +1536,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 
 /* Адаптивность */
 @media (max-width: 768px) {
-    .modal .nav-prev { right: 76px !important; }
-    .modal .nav-next { right: 30px !important; }
+    .modal .nav-prev { right: 84px !important; }
+    .modal .nav-next { right: 38px !important; }
     .modal .nav-close { right: 2px !important; }
     .modal .nav-btn,
     .modal .nav-btn.nav-prev,
@@ -1563,8 +1563,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 
 @media (max-width: 480px) {
-    .modal .nav-prev { right: 66px !important; }
-    .modal .nav-next { right: 26px !important; }
+    .modal .nav-prev { right: 72px !important; }
+    .modal .nav-next { right: 32px !important; }
     .modal .nav-close { right: 2px !important; }
     .modal .nav-btn,
     .modal .nav-btn.nav-prev,
