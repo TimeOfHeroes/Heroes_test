@@ -1320,6 +1320,96 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-height: 16px !important;
     }
 }
+/* ===== ФИКСАЦИЯ РАЗМЕРА МОДАЛЬНОГО ОКНА ===== */
+.modal {
+    display: none !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.modal.show {
+    display: flex !important;
+}
+
+.modal .dialog {
+    max-width: 1200px !important;
+    width: min(1200px, 95vw) !important;
+    max-height: 90vh !important;
+    height: auto !important;
+    min-height: 400px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    background: var(--card-bg) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3) !important;
+}
+
+.modal .modal-content {
+    display: grid !important;
+    grid-template-columns: 320px 1fr !important;
+    gap: 20px !important;
+    padding: 20px !important;
+    overflow-y: auto !important;
+    flex: 1 !important;
+    min-height: 0 !important;
+    max-height: calc(90vh - 40px) !important;
+}
+
+.modal .image-container {
+    min-width: 280px !important;
+    max-width: 320px !important;
+}
+
+.modal .image-container img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 300px !important;
+    object-fit: contain !important;
+}
+
+.modal .info-container {
+    min-width: 0 !important;
+    overflow-y: auto !important;
+    max-height: calc(90vh - 40px) !important;
+}
+
+@media (max-width: 768px) {
+    .modal .modal-content {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+        padding: 16px !important;
+        max-height: calc(90vh - 30px) !important;
+    }
+    .modal .image-container {
+        min-width: unset !important;
+        max-width: 100% !important;
+    }
+    .modal .dialog {
+        width: 98vw !important;
+        min-height: 300px !important;
+    }
+    .modal .info-container {
+        max-height: 50vh !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal .dialog {
+        width: 100vw !important;
+        min-height: 250px !important;
+        border-radius: 12px !important;
+    }
+    .modal .modal-content {
+        padding: 12px !important;
+        max-height: calc(90vh - 20px) !important;
+    }
+    .modal .info-container {
+        max-height: 45vh !important;
+    }
+    .modal .image-container img {
+        max-height: 200px !important;
+    }
+}  
 </style>
 </head>
 <body>
