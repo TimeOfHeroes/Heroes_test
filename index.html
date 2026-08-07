@@ -856,30 +856,30 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 
 .nav-prev { 
-    right: 88px !important;
+    right: 100px !important;
     left: auto !important;
     top: 12px !important;
 }
 .nav-next { 
-    right: 32px !important;
+    right: 44px !important;
     left: auto !important;
     top: 12px !important;
 }
 .nav-close { 
     right: 4px !important;
     top: 12px !important;
-    width: 48px !important;
-    height: 48px !important;
-    min-width: 48px !important;
-    min-height: 48px !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
 }
 .nav-close img {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    min-height: 36px !important;
-    max-width: 36px !important;
-    max-height: 36px !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
 }
 
 /* ===== ГРУППА "ЦВЕТ, ЗВЕЗДНОСТЬ, КЛАСС" ===== */
@@ -1197,8 +1197,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 
 /* ===== АДАПТИВНОСТЬ ДЛЯ МОДАЛЬНОГО ОКНА ===== */
 @media (max-width: 768px) {
-    .nav-prev { right: 76px !important; }
-    .nav-next { right: 28px !important; }
+    .nav-prev { right: 84px !important; }
+    .nav-next { right: 38px !important; }
     .nav-close { right: 2px !important; }
     .nav-btn {
         width: 44px !important;
@@ -1216,18 +1216,18 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-height: 34px !important;
     }
     .nav-close {
-        width: 38px !important;
-        height: 38px !important;
-        min-width: 38px !important;
-        min-height: 38px !important;
+        width: 44px !important;
+        height: 44px !important;
+        min-width: 44px !important;
+        min-height: 44px !important;
     }
     .nav-close img {
-        width: 28px !important;
-        height: 28px !important;
-        min-width: 28px !important;
-        min-height: 28px !important;
-        max-width: 28px !important;
-        max-height: 28px !important;
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        min-height: 34px !important;
+        max-width: 34px !important;
+        max-height: 34px !important;
     }
     .hero-meta-row .star-display img {
         width: 18px !important;
@@ -1259,8 +1259,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 
 @media (max-width: 480px) {
-    .nav-prev { right: 66px !important; }
-    .nav-next { right: 24px !important; }
+    .nav-prev { right: 72px !important; }
+    .nav-next { right: 32px !important; }
     .nav-close { right: 2px !important; }
     .nav-btn {
         width: 36px !important;
@@ -1278,18 +1278,18 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-height: 28px !important;
     }
     .nav-close {
-        width: 30px !important;
-        height: 30px !important;
-        min-width: 30px !important;
-        min-height: 30px !important;
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
     }
     .nav-close img {
-        width: 22px !important;
-        height: 22px !important;
-        min-width: 22px !important;
-        min-height: 22px !important;
-        max-width: 22px !important;
-        max-height: 22px !important;
+        width: 28px !important;
+        height: 28px !important;
+        min-width: 28px !important;
+        min-height: 28px !important;
+        max-width: 28px !important;
+        max-height: 28px !important;
     }
     .hero-meta-row .star-display img {
         width: 16px !important;
@@ -1318,357 +1318,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         min-height: 16px !important;
         max-width: 16px !important;
         max-height: 16px !important;
-    }
-}
-  /* ===== ФИНАЛЬНОЕ ИСПРАВЛЕНИЕ КНОПОК НАВИГАЦИИ ===== */
-/* Переопределяем ВСЕ предыдущие стили */
-
-.modal .nav-btn {
-    position: absolute !important;
-    top: 12px !important;
-    width: 48px !important;
-    height: 48px !important;
-    min-width: 48px !important;
-    min-height: 48px !important;
-    border: none !important;
-    background: transparent !important;
-    cursor: pointer !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition: transform 0.2s !important;
-    padding: 0 !important;
-    z-index: 10 !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    transform: none !important;
-}
-
-.modal .nav-btn:hover {
-    transform: scale(1.1) !important;
-    background: transparent !important;
-}
-
-.modal .nav-btn:active {
-    transform: scale(0.9) !important;
-    background: transparent !important;
-}
-
-.modal .nav-btn img {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    min-height: 36px !important;
-    max-width: 36px !important;
-    max-height: 36px !important;
-    object-fit: contain !important;
-    display: block !important;
-    filter: none !important;
-    pointer-events: none !important;
-}
-
-/* ← Влево - ближе к центру */
-.modal .nav-prev {
-    right: 86px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-
-/* → Вправо - рядом с Влево */
-.modal .nav-next {
-    right: 38px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-
-/* ✕ Закрыть - справа, отдалена от стрелок, такого же размера как стрелки */
-.modal .nav-close {
-    right: 4px !important;
-    top: 12px !important;
-    width: 48px !important;
-    height: 48px !important;
-    min-width: 48px !important;
-    min-height: 48px !important;
-}
-
-.modal .nav-close img {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    min-height: 36px !important;
-    max-width: 36px !important;
-    max-height: 36px !important;
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-    .modal .nav-prev { right: 72px !important; }
-    .modal .nav-next { right: 32px !important; }
-    .modal .nav-close { right: 2px !important; }
-    .modal .nav-btn {
-        width: 38px !important;
-        height: 38px !important;
-        min-width: 38px !important;
-        min-height: 38px !important;
-        top: 8px !important;
-    }
-    .modal .nav-btn img {
-        width: 28px !important;
-        height: 28px !important;
-        min-width: 28px !important;
-        min-height: 28px !important;
-        max-width: 28px !important;
-        max-height: 28px !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .modal .nav-prev { right: 62px !important; }
-    .modal .nav-next { right: 28px !important; }
-    .modal .nav-close { right: 2px !important; }
-    .modal .nav-btn {
-        width: 32px !important;
-        height: 32px !important;
-        min-width: 32px !important;
-        min-height: 32px !important;
-        top: 6px !important;
-    }
-    .modal .nav-btn img {
-        width: 24px !important;
-        height: 24px !important;
-        min-width: 24px !important;
-        min-height: 24px !important;
-        max-width: 24px !important;
-        max-height: 24px !important;
-    }
-}
-  /* ===== ПОСЛЕДНЕЕ ИСПРАВЛЕНИЕ КНОПОК НАВИГАЦИИ ===== */
-/* ЖЁСТКО переопределяем ВСЁ */
-
-.modal .nav-btn,
-.modal .nav-btn.nav-prev,
-.modal .nav-btn.nav-next,
-.modal .nav-btn.nav-close {
-    position: absolute !important;
-    top: 12px !important;
-    width: 56px !important;
-    height: 56px !important;
-    min-width: 56px !important;
-    min-height: 56px !important;
-    border: none !important;
-    background: transparent !important;
-    cursor: pointer !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 0 !important;
-    z-index: 10 !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    transform: none !important;
-    transition: transform 0.2s ease !important;
-}
-
-.modal .nav-btn:hover,
-.modal .nav-btn.nav-prev:hover,
-.modal .nav-btn.nav-next:hover,
-.modal .nav-btn.nav-close:hover {
-    transform: scale(1.1) !important;
-    background: transparent !important;
-}
-
-.modal .nav-btn:active,
-.modal .nav-btn.nav-prev:active,
-.modal .nav-btn.nav-next:active,
-.modal .nav-btn.nav-close:active {
-    transform: scale(0.9) !important;
-    background: transparent !important;
-}
-
-.modal .nav-btn img,
-.modal .nav-btn.nav-prev img,
-.modal .nav-btn.nav-next img,
-.modal .nav-btn.nav-close img {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    min-height: 44px !important;
-    max-width: 44px !important;
-    max-height: 44px !important;
-    object-fit: contain !important;
-    display: block !important;
-    filter: none !important;
-    pointer-events: none !important;
-}
-
-/* ← Влево */
-.modal .nav-prev {
-    right: 100px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-
-/* → Вправо - рядом с Влево */
-.modal .nav-next {
-    right: 44px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-
-/* ✕ Закрыть - справа */
-.modal .nav-close {
-    right: 4px !important;
-    top: 12px !important;
-    width: 56px !important;
-    height: 56px !important;
-    min-width: 56px !important;
-    min-height: 56px !important;
-}
-
-.modal .nav-close img {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    min-height: 44px !important;
-    max-width: 44px !important;
-    max-height: 44px !important;
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-    .modal .nav-prev { right: 84px !important; }
-    .modal .nav-next { right: 38px !important; }
-    .modal .nav-close { right: 2px !important; }
-    .modal .nav-btn,
-    .modal .nav-btn.nav-prev,
-    .modal .nav-btn.nav-next,
-    .modal .nav-btn.nav-close {
-        width: 44px !important;
-        height: 44px !important;
-        min-width: 44px !important;
-        min-height: 44px !important;
-        top: 8px !important;
-    }
-    .modal .nav-btn img,
-    .modal .nav-btn.nav-prev img,
-    .modal .nav-btn.nav-next img,
-    .modal .nav-btn.nav-close img {
-        width: 34px !important;
-        height: 34px !important;
-        min-width: 34px !important;
-        min-height: 34px !important;
-        max-width: 34px !important;
-        max-height: 34px !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .modal .nav-prev { right: 72px !important; }
-    .modal .nav-next { right: 32px !important; }
-    .modal .nav-close { right: 2px !important; }
-    .modal .nav-btn,
-    .modal .nav-btn.nav-prev,
-    .modal .nav-btn.nav-next,
-    .modal .nav-btn.nav-close {
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        min-height: 36px !important;
-        top: 6px !important;
-    }
-    .modal .nav-btn img,
-    .modal .nav-btn.nav-prev img,
-    .modal .nav-btn.nav-next img,
-    .modal .nav-btn.nav-close img {
-        width: 28px !important;
-        height: 28px !important;
-        min-width: 28px !important;
-        min-height: 28px !important;
-        max-width: 28px !important;
-        max-height: 28px !important;
-    }
-}
-  /* ===== ФИКСАЦИЯ РАЗМЕРА МОДАЛЬНОГО ОКНА ===== */
-.modal .dialog {
-    max-width: 1200px !important;
-    width: min(1200px, 95vw) !important;
-    max-height: 90vh !important;
-    height: auto !important;
-    min-height: 400px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: hidden !important;
-}
-
-.modal .modal-content {
-    display: grid !important;
-    grid-template-columns: 320px 1fr !important;
-    gap: 20px !important;
-    padding: 20px !important;
-    overflow-y: auto !important;
-    flex: 1 !important;
-    min-height: 0 !important;
-    max-height: calc(90vh - 40px) !important; /* отступ на padding */
-}
-
-/* Левая колонка с картинкой - фиксированная ширина */
-.modal .image-container {
-    width: 100% !important;
-    min-width: 280px !important;
-    max-width: 320px !important;
-}
-
-/* Правая колонка - занимает остаток */
-.modal .info-container {
-    min-width: 0 !important;
-    overflow-y: auto !important;
-    max-height: calc(90vh - 40px) !important;
-}
-
-/* Картинка внутри - фиксированный размер */
-.modal .image-container img {
-    width: 100% !important;
-    height: auto !important;
-    max-height: 300px !important;
-    object-fit: contain !important;
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-    .modal .modal-content {
-        grid-template-columns: 1fr !important;
-        gap: 16px !important;
-        padding: 16px !important;
-        max-height: calc(90vh - 30px) !important;
-    }
-    .modal .image-container {
-        min-width: unset !important;
-        max-width: 100% !important;
-    }
-    .modal .dialog {
-        width: 98vw !important;
-        min-height: 300px !important;
-    }
-    .modal .info-container {
-        max-height: 50vh !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .modal .dialog {
-        width: 100vw !important;
-        min-height: 250px !important;
-        border-radius: 12px !important;
-    }
-    .modal .modal-content {
-        padding: 12px !important;
-        max-height: calc(90vh - 20px) !important;
-    }
-    .modal .info-container {
-        max-height: 45vh !important;
-    }
-    .modal .image-container img {
-        max-height: 200px !important;
     }
 }
 </style>
