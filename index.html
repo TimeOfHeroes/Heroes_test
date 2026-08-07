@@ -2274,9 +2274,14 @@ const selected = {
 
 function buildFacet(container, values, key, isTags) {
   let opts = uniq(values);
-  if (key === 'mana') opts.sort((a,b) => ['Очень медленно','Медленно','Средне','Быстро','Очень быстро','Легендарно быстро'].indexOf(a) - indexOf(b));
-  else if (key === 'stars') opts.sort((a,b) => toNum(a) - toNum(b));
-  else opts.sort(isTags ? (a,b) => a.localeCompare(b) : sortAlpha);
+  if (key === 'mana') {
+    const order = ['Очень медленно', 'Медленно', 'Средне', 'Быстро', 'Очень быстро', 'Легендарно быстро'];
+    opts.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+  } else if (key === 'stars') {
+    opts.sort((a, b) => toNum(a) - toNum(b));
+  } else {
+    opts.sort(isTags ? (a, b) => a.localeCompare(b) : sortAlpha);
+  }
 
   container.innerHTML = opts.map(v => {
     const tagHtml = isTags ? `<span class="tag-color" style="display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;background:var(--${getTagClass(v).replace('tag-','')});"></span>` : '';
