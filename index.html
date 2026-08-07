@@ -668,6 +668,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     gap: 4px;
     overflow-y: auto;
     padding-right: 4px;
+ <div class="upgrade-btn-wrapper">
+    <button id="upgradeToggleBtn" class="upgrade-toggle-btn">
+        <img id="upgradeIcon" src="" alt="Прокачка"> Прокачка героя
+    </button>
+</div> 
 }
 .info-container h2 {
     margin: 0 0 4px 0;
@@ -880,9 +885,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     box-sizing: border-box !important;
     line-height: 1 !important;
     flex-shrink: 0 !important;
+    flex-grow: 0 !important;
     box-shadow: none !important;
     text-shadow: none !important;
-    margin: 4px 0 6px 0 !important;
     transition: all 0.2s !important;
 }
 .upgrade-toggle-btn:hover {
@@ -903,6 +908,13 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     margin: 0 !important;
     padding: 0 !important;
     flex-shrink: 0 !important;
+}
+
+/* Обёртка для кнопки — не влияет на остальные элементы */
+.upgrade-btn-wrapper {
+    display: inline-block;
+    width: auto;
+    margin: 4px 0 6px 0;
 }
 .hero-info-row {
     display: flex;
