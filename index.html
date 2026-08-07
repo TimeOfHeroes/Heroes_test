@@ -161,7 +161,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .brand h1 {
     margin: 0;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 600;
     color: var(--header-text);
     line-height: 1.2;
@@ -660,12 +660,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     box-shadow:0 1px 3px rgba(0,0,0,0.05);
 }
 .stats .pill img { 
-    width: 16px !important; 
-    height: 16px !important; 
-    min-width: 16px !important; 
-    min-height: 16px !important; 
-    max-width: 16px !important; 
-    max-height: 16px !important; 
+    width: 14px !important; 
+    height: 14px !important; 
+    min-width: 14px !important; 
+    min-height: 14px !important; 
+    max-width: 14px !important; 
+    max-height: 14px !important; 
     object-fit: contain !important; 
     display: inline-block !important; 
     vertical-align: middle !important; 
@@ -814,7 +814,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 0 !important;
 }
 
-/* ===== КНОПКИ НАВИГАЦИИ - ИСПРАВЛЕНЫ ===== */
+/* ===== КНОПКИ НАВИГАЦИИ ===== */
 .nav-btn {
     position: absolute !important;
     top: 12px !important;
@@ -855,34 +855,31 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     pointer-events: none !important;
 }
 
-/* ← и → вплотную друг к другу */
 .nav-prev { 
-    right: 92px !important;
+    right: 88px !important;
     left: auto !important;
     top: 12px !important;
 }
 .nav-next { 
-    right: 36px !important;
+    right: 32px !important;
     left: auto !important;
     top: 12px !important;
 }
-
-/* ✕ — отдалена от группы стрелок */
 .nav-close { 
     right: 4px !important;
     top: 12px !important;
-    width: 56px !important;
-    height: 56px !important;
-    min-width: 56px !important;
-    min-height: 56px !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
 }
 .nav-close img {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    min-height: 44px !important;
-    max-width: 44px !important;
-    max-height: 44px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
 }
 
 /* ===== ГРУППА "ЦВЕТ, ЗВЕЗДНОСТЬ, КЛАСС" ===== */
@@ -903,12 +900,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 0;
 }
 .hero-meta-row .star-display img {
-    width: 16px !important;
-    height: 16px !important;
-    min-width: 16px !important;
-    min-height: 16px !important;
-    max-width: 16px !important;
-    max-height: 16px !important;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
@@ -943,12 +940,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     overflow: visible !important;
 }
 .hero-stats-row .stat-item img {
-    width: 20px !important;
-    height: 20px !important;
-    min-width: 20px !important;
-    min-height: 20px !important;
-    max-width: 20px !important;
-    max-height: 20px !important;
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    max-width: 18px !important;
+    max-height: 18px !important;
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
@@ -958,13 +955,13 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     margin: 0 !important;
 }
 .hero-stats-row .stat-item img[src*="Sword" i] {
-    width: 22px !important;
-    height: 22px !important;
-    min-width: 22px !important;
-    min-height: 22px !important;
-    max-width: 22px !important;
-    max-height: 22px !important;
-    padding: 1px 0 !important;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    padding: 0 !important;
 }
 
 .hero-stats-row .talent-controls {
@@ -1200,8 +1197,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 
 /* ===== АДАПТИВНОСТЬ ДЛЯ МОДАЛЬНОГО ОКНА ===== */
 @media (max-width: 768px) {
-    .nav-prev { right: 78px !important; }
-    .nav-next { right: 32px !important; }
+    .nav-prev { right: 76px !important; }
+    .nav-next { right: 28px !important; }
     .nav-close { right: 2px !important; }
     .nav-btn {
         width: 44px !important;
@@ -1218,7 +1215,95 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-width: 34px !important;
         max-height: 34px !important;
     }
+    .nav-close {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+    }
+    .nav-close img {
+        width: 28px !important;
+        height: 28px !important;
+        min-width: 28px !important;
+        min-height: 28px !important;
+        max-width: 28px !important;
+        max-height: 28px !important;
+    }
     .hero-meta-row .star-display img {
+        width: 18px !important;
+        height: 18px !important;
+        min-width: 18px !important;
+        min-height: 18px !important;
+        max-width: 18px !important;
+        max-height: 18px !important;
+    }
+    .hero-meta-row {
+        gap: 3px 6px;
+    }
+    .hero-stats-row .stat-item img {
+        width: 16px !important;
+        height: 16px !important;
+        min-width: 16px !important;
+        min-height: 16px !important;
+        max-width: 16px !important;
+        max-height: 16px !important;
+    }
+    .hero-stats-row .stat-item img[src*="Sword" i] {
+        width: 18px !important;
+        height: 18px !important;
+        min-width: 18px !important;
+        min-height: 18px !important;
+        max-width: 18px !important;
+        max-height: 18px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-prev { right: 66px !important; }
+    .nav-next { right: 24px !important; }
+    .nav-close { right: 2px !important; }
+    .nav-btn {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+        top: 6px !important;
+    }
+    .nav-btn img {
+        width: 28px !important;
+        height: 28px !important;
+        min-width: 28px !important;
+        min-height: 28px !important;
+        max-width: 28px !important;
+        max-height: 28px !important;
+    }
+    .nav-close {
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        min-height: 30px !important;
+    }
+    .nav-close img {
+        width: 22px !important;
+        height: 22px !important;
+        min-width: 22px !important;
+        min-height: 22px !important;
+        max-width: 22px !important;
+        max-height: 22px !important;
+    }
+    .hero-meta-row .star-display img {
+        width: 16px !important;
+        height: 16px !important;
+        min-width: 16px !important;
+        min-height: 16px !important;
+        max-width: 16px !important;
+        max-height: 16px !important;
+    }
+    .hero-meta-row {
+        gap: 2px 4px;
+        font-size: 13px;
+    }
+    .hero-stats-row .stat-item img {
         width: 14px !important;
         height: 14px !important;
         min-width: 14px !important;
@@ -1226,336 +1311,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-width: 14px !important;
         max-height: 14px !important;
     }
-    .hero-meta-row {
-        gap: 3px 6px;
+    .hero-stats-row .stat-item img[src*="Sword" i] {
+        width: 16px !important;
+        height: 16px !important;
+        min-width: 16px !important;
+        min-height: 16px !important;
+        max-width: 16px !important;
+        max-height: 16px !important;
     }
 }
-
-@media (max-width: 480px) {
-    .nav-prev { right: 68px !important; }
-    .nav-next { right: 28px !important; }
-    .nav-close { right: 2px !important; }
-    .nav-btn {
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        min-height: 36px !important;
-        top: 6px !important;
-    }
-    .nav-btn img {
-        width: 28px !important;
-        height: 28px !important;
-        min-width: 28px !important;
-        min-height: 28px !important;
-        max-width: 28px !important;
-        max-height: 28px !important;
-    }
-    .hero-meta-row .star-display img {
-        width: 12px !important;
-        height: 12px !important;
-        min-width: 12px !important;
-        min-height: 12px !important;
-        max-width: 12px !important;
-        max-height: 12px !important;
-    }
-    .hero-meta-row {
-        gap: 2px 4px;
-        font-size: 13px;
-    }
-}
-  /* ===== ИСПРАВЛЕНИЕ КНОПОК НАВИГАЦИИ ===== */
-.nav-btn {
-    position: absolute !important;
-    top: 12px !important;
-    width: 52px !important;
-    height: 52px !important;
-    min-width: 52px !important;
-    min-height: 52px !important;
-    border: none !important;
-    background: transparent !important;
-    cursor: pointer !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition: transform 0.2s !important;
-    padding: 0 !important;
-    z-index: 10 !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-}
-.nav-btn:hover { 
-    transform: scale(1.1) !important; 
-    background: transparent !important;
-}
-.nav-btn:active { 
-    transform: scale(0.9) !important; 
-    background: transparent !important;
-}
-.nav-btn img {
-    width: 40px !important;
-    height: 40px !important;
-    min-width: 40px !important;
-    min-height: 40px !important;
-    max-width: 40px !important;
-    max-height: 40px !important;
-    object-fit: contain !important;
-    display: block !important;
-    filter: none !important;
-    pointer-events: none !important;
-}
-
-/* ← и → вплотную друг к другу */
-.nav-prev { 
-    right: 88px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-.nav-next { 
-    right: 36px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-
-/* ✕ — отдалена от группы стрелок */
-.nav-close { 
-    right: 4px !important;
-    top: 12px !important;
-    width: 48px !important;
-    height: 48px !important;
-    min-width: 48px !important;
-    min-height: 48px !important;
-}
-.nav-close img {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    min-height: 36px !important;
-    max-width: 36px !important;
-    max-height: 36px !important;
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-    .nav-prev { right: 76px !important; }
-    .nav-next { right: 32px !important; }
-    .nav-close { right: 2px !important; }
-    .nav-btn {
-        width: 40px !important;
-        height: 40px !important;
-        min-width: 40px !important;
-        min-height: 40px !important;
-        top: 8px !important;
-    }
-    .nav-btn img {
-        width: 32px !important;
-        height: 32px !important;
-        min-width: 32px !important;
-        min-height: 32px !important;
-        max-width: 32px !important;
-        max-height: 32px !important;
-    }
-    .nav-close {
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        min-height: 36px !important;
-    }
-    .nav-close img {
-        width: 28px !important;
-        height: 28px !important;
-        min-width: 28px !important;
-        min-height: 28px !important;
-        max-width: 28px !important;
-        max-height: 28px !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .nav-prev { right: 66px !important; }
-    .nav-next { right: 28px !important; }
-    .nav-close { right: 2px !important; }
-    .nav-btn {
-        width: 34px !important;
-        height: 34px !important;
-        min-width: 34px !important;
-        min-height: 34px !important;
-        top: 6px !important;
-    }
-    .nav-btn img {
-        width: 26px !important;
-        height: 26px !important;
-        min-width: 26px !important;
-        min-height: 26px !important;
-        max-width: 26px !important;
-        max-height: 26px !important;
-    }
-    .nav-close {
-        width: 30px !important;
-        height: 30px !important;
-        min-width: 30px !important;
-        min-height: 30px !important;
-    }
-    .nav-close img {
-        width: 22px !important;
-        height: 22px !important;
-        min-width: 22px !important;
-        min-height: 22px !important;
-        max-width: 22px !important;
-        max-height: 22px !important;
-    }
-}
-/* ===== НАВИГАЦИЯ В МОДАЛКЕ - ФИНАЛЬНОЕ ИСПРАВЛЕНИЕ ===== */
-
-/* Переопределяем все стили кнопок навигации */
-.modal .nav-btn {
-    position: absolute !important;
-    top: 12px !important;
-    width: 48px !important;
-    height: 48px !important;
-    min-width: 48px !important;
-    min-height: 48px !important;
-    border: none !important;
-    background: transparent !important;
-    cursor: pointer !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 0 !important;
-    z-index: 10 !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    transform: none !important;
-    transition: transform 0.2s ease !important;
-}
-
-.modal .nav-btn:hover {
-    transform: scale(1.15) !important;
-    background: transparent !important;
-    box-shadow: none !important;
-}
-
-.modal .nav-btn:active {
-    transform: scale(0.9) !important;
-    background: transparent !important;
-}
-
-.modal .nav-btn img {
-    width: 38px !important;
-    height: 38px !important;
-    min-width: 38px !important;
-    min-height: 38px !important;
-    max-width: 38px !important;
-    max-height: 38px !important;
-    object-fit: contain !important;
-    display: block !important;
-    filter: none !important;
-    pointer-events: none !important;
-}
-
-/* ← Влево - ближе к центру */
-.modal .nav-prev {
-    right: 82px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-
-/* → Вправо - рядом с Влево */
-.modal .nav-next {
-    right: 34px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-
-/* ✕ Закрыть - справа, отдалена от стрелок */
-.modal .nav-close {
-    right: 4px !important;
-    top: 12px !important;
-    width: 42px !important;
-    height: 42px !important;
-    min-width: 42px !important;
-    min-height: 42px !important;
-}
-
-.modal .nav-close img {
-    width: 34px !important;
-    height: 34px !important;
-    min-width: 34px !important;
-    min-height: 34px !important;
-    max-width: 34px !important;
-    max-height: 34px !important;
-}
-
-/* Адаптивность для планшетов */
-@media (max-width: 768px) {
-    .modal .nav-prev { right: 70px !important; }
-    .modal .nav-next { right: 30px !important; }
-    .modal .nav-close { right: 2px !important; }
-    .modal .nav-btn {
-        width: 40px !important;
-        height: 40px !important;
-        min-width: 40px !important;
-        min-height: 40px !important;
-        top: 8px !important;
-    }
-    .modal .nav-btn img {
-        width: 32px !important;
-        height: 32px !important;
-        min-width: 32px !important;
-        min-height: 32px !important;
-        max-width: 32px !important;
-        max-height: 32px !important;
-    }
-    .modal .nav-close {
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        min-height: 36px !important;
-    }
-    .modal .nav-close img {
-        width: 28px !important;
-        height: 28px !important;
-        min-width: 28px !important;
-        min-height: 28px !important;
-        max-width: 28px !important;
-        max-height: 28px !important;
-    }
-}
-
-/* Адаптивность для телефонов */
-@media (max-width: 480px) {
-    .modal .nav-prev { right: 60px !important; }
-    .modal .nav-next { right: 26px !important; }
-    .modal .nav-close { right: 2px !important; }
-    .modal .nav-btn {
-        width: 34px !important;
-        height: 34px !important;
-        min-width: 34px !important;
-        min-height: 34px !important;
-        top: 6px !important;
-    }
-    .modal .nav-btn img {
-        width: 26px !important;
-        height: 26px !important;
-        min-width: 26px !important;
-        min-height: 26px !important;
-        max-width: 26px !important;
-        max-height: 26px !important;
-    }
-    .modal .nav-close {
-        width: 30px !important;
-        height: 30px !important;
-        min-width: 30px !important;
-        min-height: 30px !important;
-    }
-    .modal .nav-close img {
-        width: 22px !important;
-        height: 22px !important;
-        min-width: 22px !important;
-        min-height: 22px !important;
-        max-width: 22px !important;
-        max-height: 22px !important;
-    }
-}  
 </style>
 </head>
 <body>
@@ -1722,9 +1486,9 @@ const IMAGES_URL = 'item_images.csv?ts=' + Date.now();
 
 const ICON_NAMES = {
     star: 'Star_icon',
-    sword: 'Sword_icon',
-    shield: 'Shield_icon',
-    health: 'Health_icon',
+    sword: 'Sword_icon_ffffff',
+    shield: 'Shield_icon_ffffff',
+    health: 'Health_icon_ffffff',
     tree: 'TalantTree_icon',
     upgrade: 'Upgrade_icon'
 };
@@ -2409,16 +2173,16 @@ function renderTalentTree(hero, selections, mode) {
 }
 
 function renderStatsRow(hero, calc) {
-    const swordUrl = getIcon('Sword_icon');
-    const shieldUrl = getIcon('Shield_icon');
-    const healthUrl = getIcon('Health_icon');
-    const treeIcon = getIcon('TalantTree_icon');
+    const swordUrl = getIcon(ICON_NAMES.sword);
+    const shieldUrl = getIcon(ICON_NAMES.shield);
+    const healthUrl = getIcon(ICON_NAMES.health);
+    const treeIcon = getIcon(ICON_NAMES.tree);
     
     const statsRow = document.getElementById('heroStatsRow');
     if (!statsRow) return;
     
-    const iconStyle = 'width:20px;height:20px;min-width:20px;min-height:20px;max-width:20px;max-height:20px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:0;margin:0;';
-    const swordStyle = 'width:22px;height:22px;min-width:22px;min-height:22px;max-width:22px;max-height:22px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:1px 0;margin:0;';
+    const iconStyle = 'width:18px;height:18px;min-width:18px;min-height:18px;max-width:18px;max-height:18px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:0;margin:0;';
+    const swordStyle = 'width:20px;height:20px;min-width:20px;min-height:20px;max-width:20px;max-height:20px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:0;margin:0;';
     
     let html = '';
     
@@ -2506,7 +2270,7 @@ function renderMetaRow(hero) {
     
     let starsDisplay;
     if (starIcon) {
-        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:16px !important;height:16px !important;min-width:16px !important;min-height:16px !important;max-width:16px !important;max-height:16px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;margin:0 !important;padding:0 !important;"></span>`;
+        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:20px !important;height:20px !important;min-width:20px !important;min-height:20px !important;max-width:20px !important;max-height:20px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;margin:0 !important;padding:0 !important;"></span>`;
     } else {
         starsDisplay = `${stars}★`;
     }
@@ -2519,23 +2283,24 @@ function renderMetaRow(hero) {
 }
 
 function renderCardStats(hero) {
+    // Используем те же иконки _ffffff для главной страницы
     const swordUrl = getIcon('Sword_icon_ffffff');
     const shieldUrl = getIcon('Shield_icon_ffffff');
     const healthUrl = getIcon('Health_icon_ffffff');
     
     let html = '';
     if (swordUrl) {
-        html += '<span class="pill"><img src="' + swordUrl + '" alt="Атака" style="width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.attack] + '</span>';
+        html += '<span class="pill"><img src="' + swordUrl + '" alt="Атака" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.attack] + '</span>';
     } else {
         html += '<span class="pill">⚔️ ' + hero[HERO_FIELDS.attack] + '</span>';
     }
     if (shieldUrl) {
-        html += '<span class="pill"><img src="' + shieldUrl + '" alt="Защита" style="width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.defense] + '</span>';
+        html += '<span class="pill"><img src="' + shieldUrl + '" alt="Защита" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.defense] + '</span>';
     } else {
         html += '<span class="pill">🛡️ ' + hero[HERO_FIELDS.defense] + '</span>';
     }
     if (healthUrl) {
-        html += '<span class="pill"><img src="' + healthUrl + '" alt="Жизни" style="width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.hp] + '</span>';
+        html += '<span class="pill"><img src="' + healthUrl + '" alt="Жизни" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.hp] + '</span>';
     } else {
         html += '<span class="pill">❤️ ' + hero[HERO_FIELDS.hp] + '</span>';
     }
@@ -2726,7 +2491,7 @@ function renderCards(heroes){
         let cleaned=abilitiesFull.replace(/^'|'$/g,'');
         let hasAbil=cleaned.trim().length>0;
         const starsDisplay = starIcon ? 
-            '<span style="display:inline-flex;align-items:center;gap:2px;">' + r[HERO_FIELDS.stars] + ' <img src="'+starIcon+'" alt="★" style="width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;display:inline-block;vertical-align:middle;"></span>' :
+            '<span style="display:inline-flex;align-items:center;gap:2px;">' + r[HERO_FIELDS.stars] + ' <img src="'+starIcon+'" alt="★" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;"></span>' :
             r[HERO_FIELDS.stars] + '★';
         return '<article class="card" data-idx="'+i+'" data-element="'+(r[HERO_FIELDS.element]||'')+'"><div class="thumb">'+(img?'<img src="'+img+'" alt="'+r[HERO_FIELDS.name]+'" loading="lazy" onerror="this.style.display=\'none\'">':'<div style="padding:20px;">Нет изображения</div>')+'</div><h3>'+r[HERO_FIELDS.name]+'</h3>' +
             '<div class="meta"><span>'+r[HERO_FIELDS.element]+'</span> • <span>'+starsDisplay+'</span> • <span>'+r[HERO_FIELDS.clazz]+'</span></div>' +
@@ -2763,7 +2528,7 @@ function fillModal(hero){
     const summon = hero[HERO_FIELDS.summon] || '—';
     summonText.textContent = 'Призыв: ' + summon;
 
-    const treeIcon = getIcon('TalantTree_icon');
+    const treeIcon = getIcon(ICON_NAMES.tree);
     const treeBtnIcon = document.getElementById('treeBtnIcon');
     if (treeIcon && treeBtnIcon) {
         treeBtnIcon.src = treeIcon;
@@ -2826,7 +2591,7 @@ function fillModal(hero){
     document.getElementById('mAbilities').textContent = String(hero[HERO_FIELDS.abilities] || '—').replace(/^'|'$/g, '');
     document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive] || '—').replace(/^'|'$/g, '');
     
-    const upgradeIcon = getIcon('Upgrade_icon');
+    const upgradeIcon = getIcon(ICON_NAMES.upgrade);
     const toggleBtn = document.getElementById('upgradeToggleBtn');
     if (upgradeIcon && toggleBtn) {
         const upgradeImg = document.getElementById('upgradeIcon');
