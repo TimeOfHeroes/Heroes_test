@@ -153,7 +153,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     flex-wrap: wrap;
 }
 
-/* Блок 1: Название */
 .brand {
     display: flex;
     flex-direction: column;
@@ -171,7 +170,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     display: none;
 }
 
-/* Блок 2: Поиск + Кнопка выбора */
 .search-and-select {
     display: flex;
     align-items: center;
@@ -201,7 +199,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     box-shadow: 0 0 0 2px rgba(10,119,0,0.1);
 }
 
-/* Блок 3: Выбор героев */
 .hero-select-wrapper {
     flex-shrink: 0;
     position: relative;
@@ -235,7 +232,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     background: #1a5f9a;
 }
 
-/* Белая кнопка "Выбрать из списка" */
 .hero-select-btn.btn-white {
     background: #ffffff !important;
     color: #111111 !important;
@@ -344,7 +340,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     height: 30px;
 }
 
-/* Блок 4: Фильтры и Сброс */
 .filter-buttons {
     display: flex;
     gap: 4px;
@@ -396,7 +391,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     }
 }
 
-/* Блок 5: Сортировка */
 .sort-group {
     display: flex;
     align-items: center;
@@ -490,7 +484,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     pointer-events: none;
 }
 
-/* Блок 6: Информация */
 .info-btn-wrapper {
     flex-shrink: 0;
 }
@@ -514,7 +507,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     background: var(--secondary-color);
 }
 
-/* ===== АДАПТИВНОСТЬ ===== */
 @media (max-width: 1024px) {
     .top-bar {
         flex-direction: row;
@@ -653,8 +645,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .thumb img { width:100%; height:100%; object-fit:contain; padding:8px; transition:transform 0.3s; }
 .card:hover .thumb img { transform:scale(1.05); }
 .card h3 { margin:12px 12px 4px; font-size:15px; font-weight:600; line-height:1.3; text-align:center; }
-.meta { margin:0 12px 6px; display:flex; gap:4px; flex-wrap:wrap; font-size:12px; justify-content:center; text-align:center; }
-.meta:last-of-type { margin-bottom: 4px; }
+.meta { margin:0 12px 2px; display:flex; gap:4px; flex-wrap:wrap; font-size:12px; justify-content:center; text-align:center; }
+.meta:last-of-type { margin-bottom:4px; }
 .stats { margin:8px 12px 4px; display:flex; gap:6px; flex-wrap:wrap; justify-content:center; font-weight:600; font-size:13px; }
 .stats .pill { 
     font-size:12px; 
@@ -702,7 +694,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .toggle-abilities:hover { opacity:1; }
 .card-abilities-full { display:none; font-size:10px; padding:0 12px 8px; line-height:1.4; border-top:1px solid rgba(0,0,0,0.08); margin-top:4px; padding-top:6px; }
 
-/* --- Модальное окно --- */
+/* ===== МОДАЛЬНОЕ ОКНО ===== */
 .modal { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center; padding:20px; z-index:2000; }
 .modal.show { display:flex; }
 .dialog { position:relative; background:var(--card-bg); max-width:1200px; width:min(1200px, 95vw); max-height:90vh; border-radius:16px; display:flex; flex-direction:column; box-shadow:0 20px 40px rgba(0,0,0,0.3); }
@@ -716,14 +708,105 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     max-height:calc(90vh - 60px); 
 }
 
-/* Кнопки навигации */
+/* 1. Фон картинки - цвет стихии */
+.image-container {
+    background: var(--element-unknown);
+    border-radius: 12px;
+    padding: 12px;
+    transition: background 0.3s;
+}
+.image-container[data-element="Синий"] { background: var(--element-blue); }
+.image-container[data-element="Зеленый"] { background: var(--element-green); }
+.image-container[data-element="Красный"] { background: var(--element-red); }
+.image-container[data-element="Фиолетовый"] { background: var(--element-purple); }
+.image-container[data-element="Желтый"] { background: var(--element-yellow); }
+
+/* 2. Надпись "Призыв:" */
+.summon-text {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+/* 3. Выпадающий список с синей рамкой */
+.hero-stats-row .talent-controls .select-wrapper select {
+    width: 100% !important;
+    padding: 4px 28px 4px 8px !important;
+    font-size: 12px !important;
+    border: 2px solid #227BBC !important;
+    border-radius: 6px !important;
+    background: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    cursor: pointer !important;
+    appearance: none !important;
+    height: 28px !important;
+    box-sizing: border-box !important;
+}
+
+/* 4. Убираем надпись "Способности" */
+.modal .info-container h3:first-of-type {
+    display: none !important;
+}
+
+/* 5. Способности и пассивки без серого фона */
+.pre {
+    white-space: pre-line;
+    background: transparent !important;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    margin: 4px 0 0 0;
+}
+
+/* 6. Кнопка "Дерево талантов" - иконка слева 16px */
+.hero-stats-row #openTreeBtn {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 3px 10px !important;
+    font-size: 12px !important;
+    border: none !important;
+    border-radius: 6px !important;
+    background: #227BBC !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    font-weight: 500 !important;
+    height: 28px !important;
+    white-space: nowrap !important;
+}
+.hero-stats-row #openTreeBtn:hover { background: #1a5f9a !important; }
+.hero-stats-row #openTreeBtn img {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    max-width: 16px !important;
+    max-height: 16px !important;
+    filter: brightness(0) invert(1) !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    object-fit: contain !important;
+    transform: scale(1.0) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 7. Кнопки навигации - увеличены, расстояние минимальное */
 .nav-btn {
     position: absolute !important;
-    top: 12px !important;
-    width: 48px !important;
-    height: 48px !important;
-    min-width: 48px !important;
-    min-height: 48px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
     border: none !important;
     background: transparent !important;
     cursor: pointer !important;
@@ -734,43 +817,91 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 0 !important;
     z-index: 10 !important;
     box-shadow: none !important;
+    border-radius: 50% !important;
+    background: rgba(0,0,0,0.05) !important;
 }
-.nav-btn:hover { transform: scale(1.1) !important; }
-.nav-btn:active { transform: scale(0.9) !important; }
+.nav-btn:hover { 
+    transform: translateY(-50%) scale(1.1) !important; 
+    background: rgba(0,0,0,0.1) !important;
+}
+.nav-btn:active { 
+    transform: translateY(-50%) scale(0.9) !important; 
+}
 .nav-btn img {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    min-height: 44px !important;
-    max-width: 44px !important;
-    max-height: 44px !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
     object-fit: contain !important;
     display: block !important;
     filter: none !important;
 }
 .nav-btn img[src$=".svg"] {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    transform: scale(1.0) !important;
+    object-fit: contain !important;
+}
+.nav-prev { 
+    left: -28px !important;
+    right: auto !important;
+}
+.nav-next { 
+    right: -28px !important;
+    left: auto !important;
+}
+.nav-close { 
+    right: 8px !important;
+    top: 12px !important;
+    transform: none !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    background: transparent !important;
+}
+.nav-close:hover {
+    transform: scale(1.1) !important;
+    background: rgba(0,0,0,0.05) !important;
+}
+.nav-close img {
     width: 44px !important;
     height: 44px !important;
     min-width: 44px !important;
     min-height: 44px !important;
     max-width: 44px !important;
     max-height: 44px !important;
-    transform: scale(1.0) !important;
-    object-fit: contain !important;
 }
-.nav-prev { right: 112px !important; }
-.nav-next { right: 56px !important; }
-.nav-close { right: 8px !important; }
 
-.image-container { background:var(--element-unknown); border-radius:12px; padding:12px; transition:background 0.3s; }
-.image-container[data-element="Синий"] { background:var(--element-blue); }
-.image-container[data-element="Зеленый"] { background:var(--element-green); }
-.image-container[data-element="Красный"] { background:var(--element-red); }
-.image-container[data-element="Фиолетовый"] { background:var(--element-purple); }
-.image-container[data-element="Желтый"] { background:var(--element-yellow); }
+@media (max-width: 768px) {
+    .nav-prev { left: 4px !important; }
+    .nav-next { right: 4px !important; }
+    .nav-btn {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        min-height: 40px !important;
+        background: rgba(0,0,0,0.1) !important;
+    }
+    .nav-btn img {
+        width: 28px !important;
+        height: 28px !important;
+        min-width: 28px !important;
+        min-height: 28px !important;
+        max-width: 28px !important;
+        max-height: 28px !important;
+    }
+}
+
+/* ===== ОСТАЛЬНЫЕ СТИЛИ ===== */
 .dialog img { width:100%; height:auto; max-height:350px; object-fit:contain; border-radius:12px; background:transparent; padding:8px; }
 
-/* ===== СТРУКТУРА МОДАЛЬНОГО ОКНА ===== */
 .modal .info-container > * { margin-bottom: 20px; }
 .modal .info-container > *:last-child { margin-bottom: 0; }
 .modal .info-container h2 { margin: 0 0 16px 0; font-size: 26px; font-weight: 700; }
@@ -856,19 +987,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     max-width: 170px !important;
     display: inline-block !important;
 }
-.hero-stats-row .talent-controls .select-wrapper select {
-    width: 100% !important;
-    padding: 4px 28px 4px 8px !important;
-    font-size: 12px !important;
-    border: 1px solid var(--border-color) !important;
-    border-radius: 6px !important;
-    background: var(--card-bg) !important;
-    color: var(--text-color) !important;
-    cursor: pointer !important;
-    appearance: none !important;
-    height: 28px !important;
-    box-sizing: border-box !important;
-}
 .hero-stats-row .talent-controls .select-wrapper .arrow {
     position: absolute !important;
     right: 0 !important;
@@ -887,36 +1005,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     height: 12px !important;
     fill: #ffffff !important;
 }
-.hero-stats-row #openTreeBtn {
-    display: flex !important;
-    align-items: center !important;
-    gap: 4px !important;
-    padding: 3px 10px !important;
-    font-size: 12px !important;
-    border: none !important;
-    border-radius: 6px !important;
-    background: #227BBC !important;
-    color: #fff !important;
-    cursor: pointer !important;
-    transition: all 0.2s !important;
-    font-weight: 500 !important;
-    height: 28px !important;
-    white-space: nowrap !important;
-}
-.hero-stats-row #openTreeBtn:hover { background: #1a5f9a !important; }
-.hero-stats-row #openTreeBtn img {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    min-height: 28px !important;
-    max-width: 28px !important;
-    max-height: 28px !important;
-    filter: brightness(0) invert(1) !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    object-fit: contain !important;
-    transform: scale(1.0) !important;
-}
 
 .hero-info-row {
     display: flex;
@@ -933,21 +1021,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .hero-info-row .info-item .value { font-weight: 600; font-size: 15px; }
 .hero-info-row .info-item .label { font-size: 11px; color: var(--text-color); opacity: 0.6; font-weight: 400; margin-top: -2px; }
 
-.modal .info-container h3:first-of-type { margin: 16px 0 6px 0; }
 .modal .info-container h3 { margin: 12px 0 6px 0; font-size: 16px; font-weight: 600; }
 .modal-tags { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 4px 0; }
 #mPassive { margin: 4px 0 6px 0; }
-.pre {
-    white-space: pre-line;
-    background: var(--secondary-color);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 12px;
-    font-size: 14px;
-    overflow-wrap: break-word;
-    line-height: 1.5;
-    margin: 4px 0 0 0;
-}
 
 .upgrade-toggle-btn {
     display: inline-flex !important;
@@ -1114,12 +1190,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-close:hover { opacity:1; }
 
 #treeBtnIcon[src$=".svg"] {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    min-height: 28px !important;
-    max-width: 28px !important;
-    max-height: 28px !important;
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    max-width: 16px !important;
+    max-height: 16px !important;
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
@@ -1132,12 +1208,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 <header>
 <div class="container">
 <div class="top-bar">
-    <!-- Блок 1: Название -->
     <div class="brand">
         <h1>Галерея героев</h1>
     </div>
     
-    <!-- Блок 2: Поиск + Кнопка выбора -->
     <div class="search-and-select">
         <div class="search-wrapper">
             <input id="searchInput" type="search" placeholder="Поиск по имени/способности">
@@ -1160,13 +1234,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         </div>
     </div>
     
-    <!-- Блок 3: Фильтры и Сброс -->
     <div class="filter-buttons">
         <button id="openFilters" class="btn primary">Фильтры</button>
         <button id="resetAll" class="btn btn-white">Сбросить</button>
     </div>
     
-    <!-- Блок 4: Сортировка -->
     <div class="sort-group">
         <button id="sortBtn" class="sort-btn desc" data-tooltip="Сортировка по убыванию"></button>
         <div class="sort-select-wrapper">
@@ -1180,7 +1252,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         </div>
     </div>
     
-    <!-- Блок 5: Информация -->
     <div class="info-btn-wrapper">
         <button id="infoBtn" class="info-btn">i</button>
     </div>
@@ -1223,14 +1294,17 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     <button id="mNext" class="nav-btn nav-next"><img id="rightBtnIcon" src="" alt="Вперёд"></button>
     <button id="mClose" class="nav-btn nav-close"><img id="closeBtnIcon" src="" alt="Закрыть"></button>
     
-    <div class="image-container" id="modalImageContainer"><img id="mImg" src=""><a id="mOpenImg" class="open-img" href="#" target="_blank">Открыть изображение в новой вкладке</a></div>
+    <div class="image-container" id="modalImageContainer">
+        <img id="mImg" src="">
+        <a id="mOpenImg" class="open-img" href="#" target="_blank">Открыть изображение в новой вкладке</a>
+        <div class="summon-text" id="modalSummonText">Призыв: —</div>
+    </div>
     <div class="info-container">
         <h2 id="mName"></h2>
         <div id="heroMetaRow" class="hero-meta-row"></div>
         <div id="heroStatsRow" class="hero-stats-row"></div>
         <div id="heroInfoRow" class="hero-info-row"></div>
         
-        <h3 style="margin-top:12px;">Способности</h3>
         <div id="mAbilities" class="pre"></div>
         <div id="modalTags" class="modal-tags"></div>
         
@@ -1293,9 +1367,9 @@ const IMAGES_URL = 'item_images.csv?ts=' + Date.now();
 
 const ICON_NAMES = {
     star: 'Star_icon',
-    sword: 'Sword_icon_ffffff',
-    shield: 'Shield_icon_ffffff',
-    health: 'Health_icon_ffffff',
+    sword: 'Sword_icon',
+    shield: 'Shield_icon',
+    health: 'Health_icon',
     tree: 'TalantTree_icon',
     upgrade: 'Upgrade_icon'
 };
@@ -1505,7 +1579,6 @@ function renderUpgradeSection(hero) {
     
     const starTargets = getStarTargets(heroStars);
     
-    // --- Повышение звездности ---
     const starButtons = document.getElementById('starButtons');
     const starContent = document.getElementById('starContent');
     
@@ -1535,7 +1608,6 @@ function renderUpgradeSection(hero) {
         }
     }
     
-    // --- Книги навыков ---
     const bookLevels = ['2/8', '3/8', '4/8', '5/8', '6/8', '7/8', '8/8'];
     const bookButtons = document.getElementById('bookButtons');
     const bookContent = document.getElementById('bookContent');
@@ -1561,7 +1633,6 @@ function renderUpgradeSection(hero) {
         }
     }
     
-    // --- Жетоны талантов ---
     const tokensContent = document.getElementById('talentTokensContent');
     if (tokensContent) {
         showTalentTokens(heroStars, hero, tokensContent);
@@ -2024,7 +2095,7 @@ function renderStatsRow(hero, calc) {
     html += '</select>';
     html += '<div class="arrow"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div>';
     html += '</div>';
-    html += '<button id="openTreeBtn"><img id="treeBtnIcon" src="" alt="Дерево" style="width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);"> Дерево талантов</button>';
+    html += '<button id="openTreeBtn"><img id="treeBtnIcon" src="" alt="Дерево" style="width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);"> Дерево талантов</button>';
     html += '</div>';
     
     statsRow.innerHTML = html;
@@ -2303,9 +2374,7 @@ function renderCards(heroes){
             '<span style="display:inline-flex;align-items:center;gap:2px;">' + r[HERO_FIELDS.stars] + ' <img src="'+starIcon+'" alt="★" style="width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;display:inline-block;vertical-align:middle;"></span>' :
             r[HERO_FIELDS.stars] + '★';
         return '<article class="card" data-idx="'+i+'" data-element="'+(r[HERO_FIELDS.element]||'')+'"><div class="thumb">'+(img?'<img src="'+img+'" alt="'+r[HERO_FIELDS.name]+'" loading="lazy" onerror="this.style.display=\'none\'">':'<div style="padding:20px;">Нет изображения</div>')+'</div><h3>'+r[HERO_FIELDS.name]+'</h3>' +
-            // 1 ряд: Стихия · Звёздность · Класс
             '<div class="meta"><span>'+r[HERO_FIELDS.element]+'</span> • <span>'+starsDisplay+'</span> • <span>'+r[HERO_FIELDS.clazz]+'</span></div>' +
-            // 2 ряд: Количество целей · Скорость маны · Место призыва
             '<div class="meta"><span>'+r[HERO_FIELDS.attackType]+'</span> • <span>'+r[HERO_FIELDS.mana]+'</span> • <span>'+r[HERO_FIELDS.summon]+'</span></div>' +
             '<div class="stats">' +
             renderCardStats(r) +
@@ -2331,18 +2400,27 @@ function fillModal(hero){
     document.getElementById('mOpenImg').href = img || '#';
     document.getElementById('mName').textContent = hero[HERO_FIELDS.name] || '';
 
+    // Устанавливаем фон стихии для контейнера картинки
+    const imageContainer = document.getElementById('modalImageContainer');
+    const element = hero[HERO_FIELDS.element] || '';
+    imageContainer.setAttribute('data-element', element);
+    
+    // Устанавливаем текст места призыва
+    const summonText = document.getElementById('modalSummonText');
+    const summon = hero[HERO_FIELDS.summon] || '—';
+    summonText.textContent = 'Призыв: ' + summon;
+
     const treeIcon = getIcon('TalantTree_icon');
     const treeBtnIcon = document.getElementById('treeBtnIcon');
     if (treeIcon && treeBtnIcon) {
         treeBtnIcon.src = treeIcon;
-        treeBtnIcon.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);';
     }
   
     const leftIcon = getIcon('Left_button');
     const rightIcon = getIcon('Right_button');
     const closeIcon = getIcon('Close_button');
 
-    const navIconStyle = 'width:44px;height:44px;min-width:44px;min-height:44px;max-width:44px;max-height:44px;object-fit:contain;display:block;';
+    const navIconStyle = 'width:40px;height:40px;min-width:40px;min-height:40px;max-width:40px;max-height:40px;object-fit:contain;display:block;';
 
     if (leftIcon) {
         const el = document.getElementById('leftBtnIcon');
