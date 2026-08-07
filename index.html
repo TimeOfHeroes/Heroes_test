@@ -1404,6 +1404,158 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-height: 22px !important;
     }
 }
+/* ===== НАВИГАЦИЯ В МОДАЛКЕ - ФИНАЛЬНОЕ ИСПРАВЛЕНИЕ ===== */
+
+/* Переопределяем все стили кнопок навигации */
+.modal .nav-btn {
+    position: absolute !important;
+    top: 12px !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    border: none !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    z-index: 10 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    transform: none !important;
+    transition: transform 0.2s ease !important;
+}
+
+.modal .nav-btn:hover {
+    transform: scale(1.15) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.modal .nav-btn:active {
+    transform: scale(0.9) !important;
+    background: transparent !important;
+}
+
+.modal .nav-btn img {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    max-width: 38px !important;
+    max-height: 38px !important;
+    object-fit: contain !important;
+    display: block !important;
+    filter: none !important;
+    pointer-events: none !important;
+}
+
+/* ← Влево - ближе к центру */
+.modal .nav-prev {
+    right: 82px !important;
+    left: auto !important;
+    top: 12px !important;
+}
+
+/* → Вправо - рядом с Влево */
+.modal .nav-next {
+    right: 34px !important;
+    left: auto !important;
+    top: 12px !important;
+}
+
+/* ✕ Закрыть - справа, отдалена от стрелок */
+.modal .nav-close {
+    right: 4px !important;
+    top: 12px !important;
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+}
+
+.modal .nav-close img {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    max-width: 34px !important;
+    max-height: 34px !important;
+}
+
+/* Адаптивность для планшетов */
+@media (max-width: 768px) {
+    .modal .nav-prev { right: 70px !important; }
+    .modal .nav-next { right: 30px !important; }
+    .modal .nav-close { right: 2px !important; }
+    .modal .nav-btn {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        min-height: 40px !important;
+        top: 8px !important;
+    }
+    .modal .nav-btn img {
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
+        max-width: 32px !important;
+        max-height: 32px !important;
+    }
+    .modal .nav-close {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+    }
+    .modal .nav-close img {
+        width: 28px !important;
+        height: 28px !important;
+        min-width: 28px !important;
+        min-height: 28px !important;
+        max-width: 28px !important;
+        max-height: 28px !important;
+    }
+}
+
+/* Адаптивность для телефонов */
+@media (max-width: 480px) {
+    .modal .nav-prev { right: 60px !important; }
+    .modal .nav-next { right: 26px !important; }
+    .modal .nav-close { right: 2px !important; }
+    .modal .nav-btn {
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        min-height: 34px !important;
+        top: 6px !important;
+    }
+    .modal .nav-btn img {
+        width: 26px !important;
+        height: 26px !important;
+        min-width: 26px !important;
+        min-height: 26px !important;
+        max-width: 26px !important;
+        max-height: 26px !important;
+    }
+    .modal .nav-close {
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        min-height: 30px !important;
+    }
+    .modal .nav-close img {
+        width: 22px !important;
+        height: 22px !important;
+        min-width: 22px !important;
+        min-height: 22px !important;
+        max-width: 22px !important;
+        max-height: 22px !important;
+    }
+}  
 </style>
 </head>
 <body>
