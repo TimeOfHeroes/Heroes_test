@@ -1442,6 +1442,152 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-height: 24px !important;
     }
 }
+  /* ===== ПОСЛЕДНЕЕ ИСПРАВЛЕНИЕ КНОПОК НАВИГАЦИИ ===== */
+/* ЖЁСТКО переопределяем ВСЁ */
+
+.modal .nav-btn,
+.modal .nav-btn.nav-prev,
+.modal .nav-btn.nav-next,
+.modal .nav-btn.nav-close {
+    position: absolute !important;
+    top: 12px !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
+    border: none !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    z-index: 10 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    transform: none !important;
+    transition: transform 0.2s ease !important;
+}
+
+.modal .nav-btn:hover,
+.modal .nav-btn.nav-prev:hover,
+.modal .nav-btn.nav-next:hover,
+.modal .nav-btn.nav-close:hover {
+    transform: scale(1.1) !important;
+    background: transparent !important;
+}
+
+.modal .nav-btn:active,
+.modal .nav-btn.nav-prev:active,
+.modal .nav-btn.nav-next:active,
+.modal .nav-btn.nav-close:active {
+    transform: scale(0.9) !important;
+    background: transparent !important;
+}
+
+.modal .nav-btn img,
+.modal .nav-btn.nav-prev img,
+.modal .nav-btn.nav-next img,
+.modal .nav-btn.nav-close img {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    object-fit: contain !important;
+    display: block !important;
+    filter: none !important;
+    pointer-events: none !important;
+}
+
+/* Влево - на 92px от правого края */
+.modal .nav-prev {
+    right: 92px !important;
+    left: auto !important;
+    top: 12px !important;
+}
+
+/* Вправо - на 36px от правого края (рядом с Влево) */
+.modal .nav-next {
+    right: 36px !important;
+    left: auto !important;
+    top: 12px !important;
+}
+
+/* Закрыть - на 4px от правого края (отдалена от стрелок) */
+.modal .nav-close {
+    right: 4px !important;
+    top: 12px !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
+}
+
+.modal .nav-close img {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .modal .nav-prev { right: 76px !important; }
+    .modal .nav-next { right: 30px !important; }
+    .modal .nav-close { right: 2px !important; }
+    .modal .nav-btn,
+    .modal .nav-btn.nav-prev,
+    .modal .nav-btn.nav-next,
+    .modal .nav-btn.nav-close {
+        width: 44px !important;
+        height: 44px !important;
+        min-width: 44px !important;
+        min-height: 44px !important;
+        top: 8px !important;
+    }
+    .modal .nav-btn img,
+    .modal .nav-btn.nav-prev img,
+    .modal .nav-btn.nav-next img,
+    .modal .nav-btn.nav-close img {
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        min-height: 34px !important;
+        max-width: 34px !important;
+        max-height: 34px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal .nav-prev { right: 66px !important; }
+    .modal .nav-next { right: 26px !important; }
+    .modal .nav-close { right: 2px !important; }
+    .modal .nav-btn,
+    .modal .nav-btn.nav-prev,
+    .modal .nav-btn.nav-next,
+    .modal .nav-btn.nav-close {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+        top: 6px !important;
+    }
+    .modal .nav-btn img,
+    .modal .nav-btn.nav-prev img,
+    .modal .nav-btn.nav-next img,
+    .modal .nav-btn.nav-close img {
+        width: 28px !important;
+        height: 28px !important;
+        min-width: 28px !important;
+        min-height: 28px !important;
+        max-width: 28px !important;
+        max-height: 28px !important;
+    }
+}
 </style>
 </head>
 <body>
