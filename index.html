@@ -708,7 +708,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     max-height:calc(90vh - 60px); 
 }
 
-/* 1. Фон картинки - цвет стихии */
 .image-container {
     background: var(--element-unknown);
     border-radius: 12px;
@@ -722,7 +721,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .image-container[data-element="Фиолетовый"] { background: var(--element-purple); }
 .image-container[data-element="Желтый"] { background: var(--element-yellow); }
 
-/* 2. Надпись "Призыв:" */
 .summon-text {
     text-align: center;
     margin-top: 10px;
@@ -732,7 +730,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     opacity: 0.85;
 }
 
-/* 3. Ссылка "Открыть изображение" */
 .open-img {
     display: block;
     text-align: center;
@@ -746,7 +743,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     text-decoration: underline;
 }
 
-/* 4. Выпадающий список с тонкой синей рамкой */
 .hero-stats-row .talent-controls .select-wrapper select {
     width: 100% !important;
     padding: 4px 28px 4px 8px !important;
@@ -761,12 +757,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     box-sizing: border-box !important;
 }
 
-/* 5. Убираем только первый заголовок "Способности" */
+/* Скрываем только первый заголовок "Способности" */
 .modal .info-container > h3:first-of-type {
     display: none !important;
 }
 
-/* 6. Заголовок "Пассивные способности" - оставляем */
+/* Все остальные заголовки h3 видны */
 .modal .info-container h3:not(:first-of-type) {
     margin: 16px 0 4px 0;
     font-size: 16px;
@@ -774,7 +770,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     display: block !important;
 }
 
-/* 7. Способности и пассивки без рамки и фона */
 .pre {
     white-space: pre-line;
     background: transparent !important;
@@ -786,7 +781,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     margin: 4px 0 0 0;
 }
 
-/* 8. Кнопка "Дерево талантов" - иконка слева 16px */
 .hero-stats-row #openTreeBtn {
     display: flex !important;
     align-items: center !important;
@@ -820,14 +814,14 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 0 !important;
 }
 
-/* 9. Кнопки навигации - увеличены */
+/* ===== КНОПКИ НАВИГАЦИИ - ИСПРАВЛЕНЫ ===== */
 .nav-btn {
     position: absolute !important;
     top: 12px !important;
-    width: 64px !important;
-    height: 64px !important;
-    min-width: 64px !important;
-    min-height: 64px !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
     border: none !important;
     background: transparent !important;
     cursor: pointer !important;
@@ -849,112 +843,52 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     background: transparent !important;
 }
 .nav-btn img {
-    width: 50px !important;
-    height: 50px !important;
-    min-width: 50px !important;
-    min-height: 50px !important;
-    max-width: 50px !important;
-    max-height: 50px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
     object-fit: contain !important;
     display: block !important;
     filter: none !important;
     pointer-events: none !important;
 }
-.nav-btn img[src$=".svg"] {
-    width: 50px !important;
-    height: 50px !important;
-    min-width: 50px !important;
-    min-height: 50px !important;
-    max-width: 50px !important;
-    max-height: 50px !important;
-    transform: scale(1.0) !important;
-    object-fit: contain !important;
-}
 
-/* Кнопки: Влево, Вправо, Закрыть - справа сверху, на одном уровне */
 .nav-prev { 
-    right: 132px !important;
+    right: 84px !important;
     left: auto !important;
     top: 12px !important;
 }
 .nav-next { 
-    right: 64px !important;
+    right: 40px !important;
     left: auto !important;
     top: 12px !important;
 }
 .nav-close { 
-    right: 8px !important;
+    right: 4px !important;
     top: 12px !important;
-    width: 64px !important;
-    height: 64px !important;
-    min-width: 64px !important;
-    min-height: 64px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
 }
 .nav-close img {
-    width: 50px !important;
-    height: 50px !important;
-    min-width: 50px !important;
-    min-height: 50px !important;
-    max-width: 50px !important;
-    max-height: 50px !important;
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    max-width: 28px !important;
+    max-height: 28px !important;
 }
 
-/* Адаптивность для маленьких экранов */
-@media (max-width: 768px) {
-    .nav-prev { right: 96px !important; }
-    .nav-next { right: 48px !important; }
-    .nav-close { right: 4px !important; }
-    .nav-btn {
-        width: 44px !important;
-        height: 44px !important;
-        min-width: 44px !important;
-        min-height: 44px !important;
-        top: 8px !important;
-    }
-    .nav-btn img {
-        width: 34px !important;
-        height: 34px !important;
-        min-width: 34px !important;
-        min-height: 34px !important;
-        max-width: 34px !important;
-        max-height: 34px !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .nav-prev { right: 80px !important; }
-    .nav-next { right: 40px !important; }
-    .nav-close { right: 2px !important; }
-    .nav-btn {
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        min-height: 36px !important;
-        top: 6px !important;
-    }
-    .nav-btn img {
-        width: 28px !important;
-        height: 28px !important;
-        min-width: 28px !important;
-        min-height: 28px !important;
-        max-width: 28px !important;
-        max-height: 28px !important;
-    }
-}
-
-/* ===== ОСТАЛЬНЫЕ СТИЛИ ===== */
-.dialog img { width:100%; height:auto; max-height:350px; object-fit:contain; border-radius:12px; background:transparent; padding:8px; }
-
-.modal .info-container > * { margin-bottom: 20px; }
-.modal .info-container > *:last-child { margin-bottom: 0; }
-.modal .info-container h2 { margin: 0 0 16px 0; font-size: 26px; font-weight: 700; }
-
+/* ===== ГРУППА "ЦВЕТ, ЗВЕЗДНОСТЬ, КЛАСС" ===== */
 .hero-meta-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px 16px;
-    margin: 0 0 8px 0;
+    gap: 4px 8px;
+    margin: 0 0 6px 0;
     font-weight: 600;
     font-size: 15px;
 }
@@ -962,18 +896,33 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     display: inline-flex;
     align-items: center;
     gap: 0px;
+    margin: 0;
+    padding: 0;
 }
 .hero-meta-row .star-display img {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
-    max-width: 32px !important;
-    max-height: 32px !important;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
+.hero-meta-row > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0px;
+}
+
+.dialog img { width:100%; height:auto; max-height:350px; object-fit:contain; border-radius:12px; background:transparent; padding:8px; }
+
+.modal .info-container > * { margin-bottom: 20px; }
+.modal .info-container > *:last-child { margin-bottom: 0; }
+.modal .info-container h2 { margin: 0 0 16px 0; font-size: 26px; font-weight: 700; }
 
 .hero-stats-row {
     display: flex;
@@ -1245,290 +1194,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     filter: brightness(0) invert(1) !important;
     transform: scale(1.0) !important;
 }
-/* ===== ИСПРАВЛЕНИЯ ДЛЯ МОДАЛЬНОГО ОКНА ===== */
 
-/* Кнопки навигации - Влево и Вправо близко, Закрыть отдалена */
-.nav-btn {
-    position: absolute !important;
-    top: 12px !important;
-    width: 56px !important;
-    height: 56px !important;
-    min-width: 56px !important;
-    min-height: 56px !important;
-    border: none !important;
-    background: transparent !important;
-    cursor: pointer !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition: transform 0.2s !important;
-    padding: 0 !important;
-    z-index: 10 !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-}
-.nav-btn:hover { 
-    transform: scale(1.1) !important; 
-    background: transparent !important;
-}
-.nav-btn:active { 
-    transform: scale(0.9) !important; 
-    background: transparent !important;
-}
-.nav-btn img {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    min-height: 44px !important;
-    max-width: 44px !important;
-    max-height: 44px !important;
-    object-fit: contain !important;
-    display: block !important;
-    filter: none !important;
-    pointer-events: none !important;
-}
-
-.nav-prev { 
-    right: 104px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-.nav-next { 
-    right: 48px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-.nav-close { 
-    right: 4px !important;
-    top: 12px !important;
-    width: 48px !important;
-    height: 48px !important;
-    min-width: 48px !important;
-    min-height: 48px !important;
-}
-.nav-close img {
-    width: 38px !important;
-    height: 38px !important;
-    min-width: 38px !important;
-    min-height: 38px !important;
-    max-width: 38px !important;
-    max-height: 38px !important;
-}
-
-/* Группа "Цвет, Звездность, Класс" - компактно */
-.hero-meta-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 6px 12px;
-    margin: 0 0 8px 0;
-    font-weight: 600;
-    font-size: 15px;
-}
-.hero-meta-row .star-display {
-    display: inline-flex;
-    align-items: center;
-    gap: 0px;
-}
-.hero-meta-row .star-display img {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    min-height: 28px !important;
-    max-width: 28px !important;
-    max-height: 28px !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    margin-left: 0px;
-}
-
+/* ===== АДАПТИВНОСТЬ ДЛЯ МОДАЛЬНОГО ОКНА ===== */
 @media (max-width: 768px) {
-    .nav-prev { right: 84px !important; }
-    .nav-next { right: 40px !important; }
-    .nav-close { right: 2px !important; }
-    .nav-btn {
-        width: 40px !important;
-        height: 40px !important;
-        min-width: 40px !important;
-        min-height: 40px !important;
-        top: 8px !important;
-    }
-    .nav-btn img {
-        width: 32px !important;
-        height: 32px !important;
-        min-width: 32px !important;
-        min-height: 32px !important;
-        max-width: 32px !important;
-        max-height: 32px !important;
-    }
-    .nav-close img {
-        width: 28px !important;
-        height: 28px !important;
-        min-width: 28px !important;
-        min-height: 28px !important;
-        max-width: 28px !important;
-        max-height: 28px !important;
-    }
-    .hero-meta-row .star-display img {
-        width: 24px !important;
-        height: 24px !important;
-        min-width: 24px !important;
-        min-height: 24px !important;
-        max-width: 24px !important;
-        max-height: 24px !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .nav-prev { right: 76px !important; }
+    .nav-prev { right: 72px !important; }
     .nav-next { right: 36px !important; }
-    .nav-close { right: 2px !important; }
-    .nav-btn {
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        min-height: 36px !important;
-        top: 6px !important;
-    }
-    .nav-btn img {
-        width: 28px !important;
-        height: 28px !important;
-        min-width: 28px !important;
-        min-height: 28px !important;
-        max-width: 28px !important;
-        max-height: 28px !important;
-    }
-    .nav-close img {
-        width: 24px !important;
-        height: 24px !important;
-        min-width: 24px !important;
-        min-height: 24px !important;
-        max-width: 24px !important;
-        max-height: 24px !important;
-    }
-    .hero-meta-row .star-display img {
-        width: 20px !important;
-        height: 20px !important;
-        min-width: 20px !important;
-        min-height: 20px !important;
-        max-width: 20px !important;
-        max-height: 20px !important;
-    }
-}
-  /* ===== ИСПРАВЛЕНИЯ ДЛЯ МОДАЛЬНОГО ОКНА ===== */
-
-/* 1. Кнопки навигации - все на одной линии (top: 12px) */
-.nav-btn {
-    position: absolute !important;
-    top: 12px !important;
-    width: 48px !important;
-    height: 48px !important;
-    min-width: 48px !important;
-    min-height: 48px !important;
-    border: none !important;
-    background: transparent !important;
-    cursor: pointer !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition: transform 0.2s !important;
-    padding: 0 !important;
-    z-index: 10 !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-}
-.nav-btn:hover { 
-    transform: scale(1.1) !important; 
-    background: transparent !important;
-}
-.nav-btn:active { 
-    transform: scale(0.9) !important; 
-    background: transparent !important;
-}
-.nav-btn img {
-    width: 38px !important;
-    height: 38px !important;
-    min-width: 38px !important;
-    min-height: 38px !important;
-    max-width: 38px !important;
-    max-height: 38px !important;
-    object-fit: contain !important;
-    display: block !important;
-    filter: none !important;
-    pointer-events: none !important;
-}
-
-/* Влево и Вправо - максимально близко друг к другу */
-.nav-prev { 
-    right: 92px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-.nav-next { 
-    right: 44px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-.nav-close { 
-    right: 4px !important;
-    top: 12px !important;
-    width: 40px !important;
-    height: 40px !important;
-    min-width: 40px !important;
-    min-height: 40px !important;
-}
-.nav-close img {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
-    max-width: 32px !important;
-    max-height: 32px !important;
-}
-
-/* 2. Группа "Цвет, Звездность, Класс" - минимальные отступы, звезда вплотную */
-.hero-meta-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 4px 8px;
-    margin: 0 0 6px 0;
-    font-weight: 600;
-    font-size: 15px;
-}
-.hero-meta-row .star-display {
-    display: inline-flex;
-    align-items: center;
-    gap: 0px;
-    margin: 0;
-    padding: 0;
-}
-.hero-meta-row .star-display img {
-    width: 24px !important;
-    height: 24px !important;
-    min-width: 24px !important;
-    min-height: 24px !important;
-    max-width: 24px !important;
-    max-height: 24px !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-/* Убираем лишние отступы у spans внутри meta-row */
-.hero-meta-row > span {
-    display: inline-flex;
-    align-items: center;
-    gap: 0px;
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-    .nav-prev { right: 78px !important; }
-    .nav-next { right: 38px !important; }
     .nav-close { right: 2px !important; }
     .nav-btn {
         width: 36px !important;
@@ -1546,26 +1216,26 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-height: 28px !important;
     }
     .nav-close {
-        width: 32px !important;
-        height: 32px !important;
-        min-width: 32px !important;
-        min-height: 32px !important;
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        min-height: 30px !important;
     }
     .nav-close img {
-        width: 24px !important;
-        height: 24px !important;
-        min-width: 24px !important;
-        min-height: 24px !important;
-        max-width: 24px !important;
-        max-height: 24px !important;
+        width: 22px !important;
+        height: 22px !important;
+        min-width: 22px !important;
+        min-height: 22px !important;
+        max-width: 22px !important;
+        max-height: 22px !important;
     }
     .hero-meta-row .star-display img {
-        width: 20px !important;
-        height: 20px !important;
-        min-width: 20px !important;
-        min-height: 20px !important;
-        max-width: 20px !important;
-        max-height: 20px !important;
+        width: 18px !important;
+        height: 18px !important;
+        min-width: 18px !important;
+        min-height: 18px !important;
+        max-width: 18px !important;
+        max-height: 18px !important;
     }
     .hero-meta-row {
         gap: 3px 6px;
@@ -1573,8 +1243,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 
 @media (max-width: 480px) {
-    .nav-prev { right: 70px !important; }
-    .nav-next { right: 34px !important; }
+    .nav-prev { right: 64px !important; }
+    .nav-next { right: 32px !important; }
     .nav-close { right: 2px !important; }
     .nav-btn {
         width: 30px !important;
@@ -1592,26 +1262,26 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-height: 22px !important;
     }
     .nav-close {
-        width: 28px !important;
-        height: 28px !important;
-        min-width: 28px !important;
-        min-height: 28px !important;
+        width: 24px !important;
+        height: 24px !important;
+        min-width: 24px !important;
+        min-height: 24px !important;
     }
     .nav-close img {
-        width: 20px !important;
-        height: 20px !important;
-        min-width: 20px !important;
-        min-height: 20px !important;
-        max-width: 20px !important;
-        max-height: 20px !important;
-    }
-    .hero-meta-row .star-display img {
         width: 18px !important;
         height: 18px !important;
         min-width: 18px !important;
         min-height: 18px !important;
         max-width: 18px !important;
         max-height: 18px !important;
+    }
+    .hero-meta-row .star-display img {
+        width: 16px !important;
+        height: 16px !important;
+        min-width: 16px !important;
+        min-height: 16px !important;
+        max-width: 16px !important;
+        max-height: 16px !important;
     }
     .hero-meta-row {
         gap: 2px 4px;
@@ -2568,7 +2238,7 @@ function renderMetaRow(hero) {
     
     let starsDisplay;
     if (starIcon) {
-        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:32px !important;height:32px !important;min-width:32px !important;min-height:32px !important;max-width:32px !important;max-height:32px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;"></span>`;
+        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:20px !important;height:20px !important;min-width:20px !important;min-height:20px !important;max-width:20px !important;max-height:20px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;margin:0 !important;padding:0 !important;"></span>`;
     } else {
         starsDisplay = `${stars}★`;
     }
@@ -2817,12 +2487,10 @@ function fillModal(hero){
     document.getElementById('mOpenImg').href = img || '#';
     document.getElementById('mName').textContent = hero[HERO_FIELDS.name] || '';
 
-    // Устанавливаем фон стихии для контейнера картинки
     const imageContainer = document.getElementById('modalImageContainer');
     const element = hero[HERO_FIELDS.element] || '';
     imageContainer.setAttribute('data-element', element);
     
-    // Устанавливаем текст места призыва
     const summonText = document.getElementById('modalSummonText');
     const summon = hero[HERO_FIELDS.summon] || '—';
     summonText.textContent = 'Призыв: ' + summon;
@@ -2837,7 +2505,7 @@ function fillModal(hero){
     const rightIcon = getIcon('Right_button');
     const closeIcon = getIcon('Close_button');
 
-    const navIconStyle = 'width:50px;height:50px;min-width:50px;min-height:50px;max-width:50px;max-height:50px;object-fit:contain;display:block;';
+    const navIconStyle = 'width:36px;height:36px;min-width:36px;min-height:36px;max-width:36px;max-height:36px;object-fit:contain;display:block;';
 
     if (leftIcon) {
         const el = document.getElementById('leftBtnIcon');
