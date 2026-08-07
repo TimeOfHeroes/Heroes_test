@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <style>
+/* ===== ВСЕ СТИЛИ (полная версия) ===== */
 :root {
   color-scheme: light dark;
   --hdrH: 70px;
@@ -670,7 +671,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding-right: 4px;
 }
 .info-container h2 {
-    margin: 0 0 4px 0;
+    margin: 0 0 12px 0; /* ← ОТСТУП ПОСЛЕ ИМЕНИ */
     font-size: 26px;
     font-weight: 700;
 }
@@ -856,8 +857,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 0 !important;
     flex-shrink: 0 !important;
 }
-
-/* ===== КНОПКА "ПРОКАЧКА ГЕРОЯ" — компактная ===== */
 .upgrade-toggle-btn {
     display: inline-flex !important;
     align-items: center !important;
@@ -906,14 +905,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 0 !important;
     flex-shrink: 0 !important;
 }
-
-/* Обёртка для кнопки — не влияет на остальные элементы */
 .upgrade-btn-wrapper {
     display: inline-block;
     width: auto;
     margin: 4px 0 6px 0;
 }
-
 .hero-info-row {
     display: flex;
     flex-wrap: wrap;
@@ -1022,6 +1018,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .upgrade-tokens .token img { width: 36px; height: 36px; object-fit: contain; border-radius: 4px; flex-shrink: 0; }
 .upgrade-tokens .token .count { font-weight: 600; color: var(--text-color); padding-right: 0; }
+
+/* ===== КНОПКИ НАВИГАЦИИ — сдвинуты левее, чтобы не налезали на скролл ===== */
 .nav-btn {
     position: absolute !important;
     top: 12px !important;
@@ -1061,9 +1059,25 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     filter: none !important;
     pointer-events: none !important;
 }
-.nav-prev { right: 90px !important; left: auto !important; top: 12px !important; }
-.nav-next { right: 42px !important; left: auto !important; top: 12px !important; }
-.nav-close { right: 4px !important; top: 12px !important; width: 48px !important; height: 48px !important; min-width: 48px !important; min-height: 48px !important; }
+/* ← Сдвигаем левее, чтобы не налезали на скролл */
+.nav-prev { 
+    right: 110px !important;
+    left: auto !important;
+    top: 12px !important;
+}
+.nav-next { 
+    right: 62px !important;
+    left: auto !important;
+    top: 12px !important;
+}
+.nav-close { 
+    right: 14px !important;
+    top: 12px !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+}
 .nav-close img {
     width: 36px !important;
     height: 36px !important;
@@ -1072,6 +1086,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     max-width: 36px !important;
     max-height: 36px !important;
 }
+
 .tree-panel { position:fixed; top:50%; right:20px; transform:translateY(-50%); width:420px; max-width:calc(100vw - 40px); background:var(--card-bg); border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.3); z-index:2100; display:none; flex-direction:column; overflow:hidden; border:1px solid var(--border-color); cursor:default; }
 .tree-panel.show { display:flex; }
 .tree-panel.dragging { opacity:0.9; cursor:grabbing; }
@@ -1107,6 +1122,18 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .talent-cell.selectable:hover { transform:scale(1.02); box-shadow:0 2px 8px rgba(0,0,0,.2); background:var(--talent-hover-bg); }
 .talent-cell[data-disabled="true"] { opacity:0.5; cursor:not-allowed; }
 .talent-cell[data-disabled="true"]:hover { transform:none; box-shadow:none; }
+/* ===== ПОДСКАЗКА В ДЕРЕВЕ ТАЛАНТОВ ===== */
+.tree-hint {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-color);
+    opacity: 0.6;
+    margin-top: 12px;
+    padding: 8px 4px;
+    border-top: 1px solid var(--border-color);
+    font-style: italic;
+    line-height: 1.4;
+}
 @media (max-width:768px) { .tree-panel { width:340px; } .talent-cell { width:55px; height:55px; } }
 @media (max-width:480px) { .tree-panel { width:calc(100vw - 20px); max-width:none; top:auto; bottom:20px; left:10px; right:10px; transform:none; } .talent-cell { width:45px; height:45px; } .tree-header { cursor:default; } }
 @media (max-width:768px) { .filters { width:85%; } }
@@ -1123,9 +1150,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
 .info-close:hover { opacity:1; }
 @media (max-width: 768px) {
-    .nav-prev { right: 78px !important; }
-    .nav-next { right: 34px !important; }
-    .nav-close { right: 4px !important; }
+    .nav-prev { right: 96px !important; }
+    .nav-next { right: 54px !important; }
+    .nav-close { right: 12px !important; }
     .nav-btn { width: 40px !important; height: 40px !important; min-width: 40px !important; min-height: 40px !important; top: 8px !important; }
     .nav-btn img { width: 30px !important; height: 30px !important; min-width: 30px !important; min-height: 30px !important; max-width: 30px !important; max-height: 30px !important; }
     .modal .dialog .modal-content { grid-template-columns: 1fr; gap: 12px; padding: 12px; }
@@ -1135,9 +1162,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     .hero-stats-row .stat-item img[src*="Sword" i] { width: 18px !important; height: 18px !important; min-width: 18px !important; min-height: 18px !important; max-width: 18px !important; max-height: 18px !important; }
 }
 @media (max-width: 480px) {
-    .nav-prev { right: 66px !important; }
-    .nav-next { right: 28px !important; }
-    .nav-close { right: 4px !important; }
+    .nav-prev { right: 80px !important; }
+    .nav-next { right: 44px !important; }
+    .nav-close { right: 10px !important; }
     .nav-btn { width: 34px !important; height: 34px !important; min-width: 34px !important; min-height: 34px !important; top: 6px !important; }
     .nav-btn img { width: 26px !important; height: 26px !important; min-width: 26px !important; min-height: 26px !important; max-width: 26px !important; max-height: 26px !important; }
     .dialog { height: 95vh; max-height: 95vh; }
@@ -1148,6 +1175,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 </style>
 </head>
 <body>
+<!-- ===== HTML ===== -->
 <header>
 <div class="container">
 <div class="top-bar">
@@ -1243,9 +1271,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <h3>Способности</h3>
         <div id="mAbilities" class="pre"></div>
         <div id="modalTags" class="modal-tags"></div>
-        <h3>Пассивные способности</h3>
+        <h3>Пассивная способность</h3> <!-- ← Изменено -->
         <div id="mPassive" class="pre"></div>
-        <!-- Кнопка "Прокачка героя" с обёрткой -->
         <div class="upgrade-btn-wrapper">
             <button id="upgradeToggleBtn" class="upgrade-toggle-btn">
                 <img id="upgradeIcon" src="" alt="Прокачка"> Прокачка героя
@@ -1283,11 +1310,13 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     </div>
     <div class="tree-content" id="treeContent">
         <div class="talent-table" id="talentTable"></div>
+        <!-- ← ПОДСКАЗКА ВНИЗУ -->
+        <div class="tree-hint">Для самостоятельной настройки талантов используйте опцию «Ручной выбор»</div>
     </div>
 </div>
 <div id="infoModal" class="info-modal"><div class="info-dialog"><button id="infoClose" class="info-close">×</button><h2>О галерее героев</h2><p>Эта галерея содержит информацию о героях игры "Время Героев", их характеристиках и способностях.</p><div class="clan"><strong>Разработано:</strong><br>Евгений Поташко и Владимир Плотников<br><strong>Клан: "Рожденные в СССР."</strong><br>скрины героев предоставлены великим и могучим Козырем</div><div class="contact"><strong>Обратная связь:</strong><br>Нашли ошибку или есть предложения?<br>Пишите: <a href="mailto:master-Erasm@yandex.ru">master-Erasm@yandex.ru</a></div><p>База данных регулярно обновляется с учетом новых героев и изменений в балансе игры.</p><p class="date">Дата последнего обновления: <span id="updateDate"></span></p></div></div>
 <script>
-// ===== ВЕСЬ JS =====
+// ===== ВЕСЬ JS (полная версия) =====
 const HERO_FIELDS = { id:'id', name:'Герой', element:'Стихия', stars:'Количество звезд', mana:'Скорость маны', power:'Сила', attack:'Атака', defense:'Защита', hp:'Жизни', attackType:'Способ атаки', abilities:'Способности', passive:'Пассивные способности', summon:'Место призыва', clazz:'Класс', image:'Картинка' };
 const CLASS_TALENT_FIELDS = { class_id:'class_id', row_number:'row_number', is_mandatory:'is_mandatory', branch_group:'branch_group', left_talent_id:'left_talent_id', center_talent_id:'center_talent_id', right_talent_id:'right_talent_id' };
 const TALENT_DESC_FIELDS = { id:'id', talent_id:'talent_id', effect_type:'effect_type', value:'value', is_percent:'is_percent', image_active:'Картинка активная', image_inactive:'Картинка неактивная' };
