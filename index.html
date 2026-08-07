@@ -142,8 +142,6 @@ body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial,
 .talent-tooltip.hidden { opacity:0; visibility:hidden; }
 header { position:sticky; top:0; z-index:100; background:var(--header-bg); color:var(--header-text); backdrop-filter:blur(8px); border-bottom:1px solid var(--border-color); box-shadow:0 2px 10px rgba(0,0,0,.05); }
 .container { max-width:1400px; margin:0 auto; padding:0 16px; }
-
-/* ===== ВЕРХНЯЯ ПАНЕЛЬ ===== */
 .top-bar {
     display: flex;
     align-items: center;
@@ -152,7 +150,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     gap: 6px;
     flex-wrap: wrap;
 }
-
 .brand {
     display: flex;
     flex-direction: column;
@@ -166,10 +163,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     color: var(--header-text);
     line-height: 1.2;
 }
-.brand .copyright {
-    display: none;
-}
-
+.brand .copyright { display: none; }
 .search-and-select {
     display: flex;
     align-items: center;
@@ -198,7 +192,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     border-color: var(--primary-color);
     box-shadow: 0 0 0 2px rgba(10,119,0,0.1);
 }
-
 .hero-select-wrapper {
     flex-shrink: 0;
     position: relative;
@@ -220,18 +213,13 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     min-width: 110px;
     height: 32px;
 }
-.hero-select-btn:hover {
-    background: #1a5f9a;
-}
+.hero-select-btn:hover { background: #1a5f9a; }
 .hero-select-btn.primary {
     background: #227BBC;
     color: #fff;
     border-color: #227BBC;
 }
-.hero-select-btn.primary:hover {
-    background: #1a5f9a;
-}
-
+.hero-select-btn.primary:hover { background: #1a5f9a; }
 .hero-select-btn.btn-white {
     background: #ffffff !important;
     color: #111111 !important;
@@ -252,7 +240,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         border-color: #777777 !important;
     }
 }
-
 .hero-checkboxes {
     position: absolute;
     top: 100%;
@@ -271,10 +258,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     min-width: 260px;
     flex-direction: column;
 }
-.hero-checkboxes.show {
-    display: flex;
-}
-
+.hero-checkboxes.show { display: flex; }
 .hero-checkboxes-header {
     display: flex;
     justify-content: space-between;
@@ -294,7 +278,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     color: var(--primary-color);
     font-weight: 500;
 }
-
 .hero-checkboxes-list {
     flex: 1;
     overflow-y: auto;
@@ -310,9 +293,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     border-radius: 4px;
     transition: background 0.2s;
 }
-.hero-checkbox-item:hover {
-    background: var(--secondary-color);
-}
+.hero-checkbox-item:hover { background: var(--secondary-color); }
 .hero-checkbox-item input[type="checkbox"] {
     width: 16px;
     height: 16px;
@@ -324,7 +305,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     cursor: pointer;
     font-size: 13px;
 }
-
 .hero-select-actions {
     display: flex;
     gap: 6px;
@@ -339,7 +319,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 6px;
     height: 30px;
 }
-
 .filter-buttons {
     display: flex;
     gap: 4px;
@@ -359,17 +338,13 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     white-space: nowrap;
     height: 32px;
 }
-.btn:hover {
-    background: var(--secondary-color);
-}
+.btn:hover { background: var(--secondary-color); }
 .btn.primary {
     background: #227BBC;
     color: #fff;
     border-color: #227BBC;
 }
-.btn.primary:hover {
-    background: #1a5f9a;
-}
+.btn.primary:hover { background: #1a5f9a; }
 .btn.btn-white {
     background: #ffffff;
     color: #111111;
@@ -390,7 +365,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         border-color: #777777;
     }
 }
-
 .sort-group {
     display: flex;
     align-items: center;
@@ -413,17 +387,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     position: relative;
     flex-shrink: 0;
 }
-.sort-btn:hover {
-    background: var(--secondary-color);
-}
-.sort-btn.asc:after {
-    content: '↑';
-    font-size: 16px;
-}
-.sort-btn.desc:after {
-    content: '↓';
-    font-size: 16px;
-}
+.sort-btn:hover { background: var(--secondary-color); }
+.sort-btn.asc:after { content: '↑'; font-size: 16px; }
+.sort-btn.desc:after { content: '↓'; font-size: 16px; }
 .sort-btn:before {
     content: attr(data-tooltip);
     position: absolute;
@@ -453,7 +419,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         bottom: calc(100% + 6px);
     }
 }
-
 .sort-select-wrapper {
     position: relative;
 }
@@ -483,7 +448,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     opacity: 0.6;
     pointer-events: none;
 }
-
 .info-btn-wrapper {
     flex-shrink: 0;
 }
@@ -503,10 +467,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-weight: bold;
     font-size: 16px;
 }
-.info-btn:hover {
-    background: var(--secondary-color);
-}
-
+.info-btn:hover { background: var(--secondary-color); }
 @media (max-width: 1024px) {
     .top-bar {
         flex-direction: row;
@@ -523,63 +484,25 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         min-width: 180px;
         max-width: none;
     }
-    .filter-buttons {
-        flex: 0 1 auto;
-        order: 3;
-    }
-    .sort-group {
-        flex: 0 1 auto;
-        order: 4;
-    }
-    .info-btn-wrapper {
-        flex: 0 0 auto;
-        order: 5;
-    }
+    .filter-buttons { flex: 0 1 auto; order: 3; }
+    .sort-group { flex: 0 1 auto; order: 4; }
+    .info-btn-wrapper { flex: 0 0 auto; order: 5; }
 }
-
 @media (max-width: 640px) {
     .top-bar {
         flex-direction: column;
         align-items: stretch;
         gap: 4px;
     }
-    .brand {
-        flex: 0 0 auto;
-        text-align: center;
-    }
-    .search-and-select {
-        max-width: none;
-        flex-wrap: wrap;
-    }
-    .search-wrapper {
-        flex: 1;
-        min-width: 80px;
-    }
-    .hero-select-wrapper {
-        width: 100%;
-    }
-    .hero-select-btn {
-        width: 100%;
-        text-align: center;
-    }
-    .filter-buttons {
-        width: 100%;
-        justify-content: center;
-        order: 3;
-    }
-    .sort-group {
-        width: 100%;
-        justify-content: center;
-        order: 4;
-    }
-    .info-btn-wrapper {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        order: 5;
-    }
+    .brand { flex: 0 0 auto; text-align: center; }
+    .search-and-select { max-width: none; flex-wrap: wrap; }
+    .search-wrapper { flex: 1; min-width: 80px; }
+    .hero-select-wrapper { width: 100%; }
+    .hero-select-btn { width: 100%; text-align: center; }
+    .filter-buttons { width: 100%; justify-content: center; order: 3; }
+    .sort-group { width: 100%; justify-content: center; order: 4; }
+    .info-btn-wrapper { width: 100%; display: flex; justify-content: center; order: 5; }
 }
-
 .wrap { display:block; padding:20px; min-height:calc(100vh - var(--hdrH)); max-width:1400px; margin:0 auto; }
 .filters { background:var(--filter-bg); border:1px solid var(--border-color); border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,.05); width:360px; position:fixed; top:0; left:0; bottom:0; height:100vh; overflow-y:auto; z-index:99; border-radius:0 12px 12px 0; transform:translateX(-100%); transition:transform 0.3s ease; display:none; }
 .filters.show { transform:translateX(0); display:block; }
@@ -630,7 +553,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .tag-resurrection { background:var(--tag-resurrection); }
 .tag-element { background:var(--tag-element); }
 .tag-default { background:var(--tag-default); }
-
 .content { min-height:60vh; width:100%; }
 #count { margin:0 0 16px; opacity:0.7; font-size:14px; padding:6px 0; font-weight:500; }
 .cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:20px; width:100%; }
@@ -693,8 +615,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .toggle-abilities:hover { opacity:1; }
 .card-abilities-full { display:none; font-size:10px; padding:0 12px 8px; line-height:1.4; border-top:1px solid rgba(0,0,0,0.08); margin-top:4px; padding-top:6px; }
-
-/* ===== МОДАЛЬНОЕ ОКНО ===== */
 .modal { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center; padding:20px; z-index:2000; }
 .modal.show { display:flex; }
 .dialog { position:relative; background:var(--card-bg); max-width:1200px; width:min(1200px, 95vw); height:90vh; max-height:90vh; min-height:400px; border-radius:16px; display:flex; flex-direction:column; box-shadow:0 20px 40px rgba(0,0,0,0.3); overflow:hidden; }
@@ -708,7 +628,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     flex:1;
     height:100%;
 }
-
 .image-container {
     background: var(--element-unknown);
     border-radius: 12px;
@@ -725,7 +644,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .image-container[data-element="Фиолетовый"] { background: var(--element-purple); }
 .image-container[data-element="Желтый"] { background: var(--element-yellow); }
 .image-container img { width:100%; max-height:300px; object-fit:contain; border-radius:8px; background:transparent; padding:4px; }
-
 .summon-text {
     text-align: center;
     margin-top: 10px;
@@ -734,7 +652,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     color: var(--text-color);
     opacity: 0.85;
 }
-
 .open-img {
     display: block;
     text-align: center;
@@ -744,10 +661,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     text-decoration: none;
     font-weight: 500;
 }
-.open-img:hover {
-    text-decoration: underline;
-}
-
+.open-img:hover { text-decoration: underline; }
 .info-container {
     display: flex;
     flex-direction: column;
@@ -765,10 +679,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-size: 16px;
     font-weight: 600;
 }
-/* Скрываем только первый заголовок "Способности" */
-.info-container > h3:first-of-type {
-    display: none !important;
-}
+.info-container > h3:first-of-type { display: none !important; }
 .info-container .pre {
     white-space: pre-line;
     background: transparent !important;
@@ -779,7 +690,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     line-height: 1.6;
     margin: 0;
 }
-
 .hero-meta-row {
     display: flex;
     flex-wrap: wrap;
@@ -814,7 +724,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     align-items: center;
     gap: 0px;
 }
-
 .hero-stats-row {
     display: flex;
     flex-wrap: wrap;
@@ -854,103 +763,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     max-height: 20px !important;
     padding: 0 !important;
 }
-
-/* ===== КНОПКИ В СТРОКЕ СТАТИСТИКИ (единый стиль) ===== */
-.hero-stats-row #openTreeBtn,
-.hero-stats-row .upgrade-toggle-btn {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 4px !important;
-    padding: 3px 10px !important;
-    font-size: 12px !important;
-    border: none !important;
-    border-radius: 6px !important;
-    background: #227BBC !important;
-    background-color: #227BBC !important;
-    color: #ffffff !important;
-    cursor: pointer !important;
-    transition: all 0.2s !important;
-    font-weight: 500 !important;
-    height: 28px !important;
-    min-height: 28px !important;
-    max-height: 28px !important;
-    width: auto !important;
-    white-space: nowrap !important;
-    box-sizing: border-box !important;
-    line-height: 1 !important;
-    flex-shrink: 0 !important;
-    box-shadow: none !important;
-    text-shadow: none !important;
-}
-.hero-stats-row #openTreeBtn:hover,
-.hero-stats-row .upgrade-toggle-btn:hover {
-    background: #1a5f9a !important;
-    background-color: #1a5f9a !important;
-}
-.hero-stats-row #openTreeBtn img,
-.hero-stats-row .upgrade-toggle-btn img {
-    width: 16px !important;
-    height: 16px !important;
-    min-width: 16px !important;
-    min-height: 16px !important;
-    max-width: 16px !important;
-    max-height: 16px !important;
-    filter: brightness(0) invert(1) !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    object-fit: contain !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    flex-shrink: 0 !important;
-}
-
-/* Сброс старых стилей для upgrade-toggle-btn */
-.upgrade-toggle-btn {
-    all: unset !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 4px !important;
-    padding: 3px 10px !important;
-    font-size: 12px !important;
-    border: none !important;
-    border-radius: 6px !important;
-    background: #227BBC !important;
-    background-color: #227BBC !important;
-    color: #ffffff !important;
-    cursor: pointer !important;
-    font-weight: 500 !important;
-    height: 28px !important;
-    min-height: 28px !important;
-    max-height: 28px !important;
-    width: auto !important;
-    white-space: nowrap !important;
-    box-sizing: border-box !important;
-    line-height: 1 !important;
-    flex-shrink: 0 !important;
-    margin: 4px 0 6px 0 !important;
-}
-.upgrade-toggle-btn:hover {
-    background: #1a5f9a !important;
-    background-color: #1a5f9a !important;
-}
-.upgrade-toggle-btn img {
-    width: 16px !important;
-    height: 16px !important;
-    min-width: 16px !important;
-    min-height: 16px !important;
-    max-width: 16px !important;
-    max-height: 16px !important;
-    filter: brightness(0) invert(1) !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    object-fit: contain !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    flex-shrink: 0 !important;
-}
-
 .hero-stats-row .talent-controls {
     display: flex !important;
     flex-wrap: wrap !important;
@@ -997,7 +809,101 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     height: 12px !important;
     fill: #ffffff !important;
 }
-
+.hero-stats-row #openTreeBtn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    padding: 3px 10px !important;
+    font-size: 12px !important;
+    border: none !important;
+    border-radius: 6px !important;
+    background: #227BBC !important;
+    background-color: #227BBC !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+    font-weight: 500 !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    max-height: 28px !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+    line-height: 1 !important;
+    flex-shrink: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    transition: all 0.2s !important;
+}
+.hero-stats-row #openTreeBtn:hover {
+    background: #1a5f9a !important;
+    background-color: #1a5f9a !important;
+}
+.hero-stats-row #openTreeBtn img {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    max-width: 16px !important;
+    max-height: 16px !important;
+    filter: brightness(0) invert(1) !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    object-fit: contain !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+}
+.upgrade-toggle-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    padding: 3px 10px !important;
+    font-size: 12px !important;
+    border: none !important;
+    border-radius: 6px !important;
+    background: #227BBC !important;
+    background-color: #227BBC !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+    font-weight: 500 !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    max-height: 28px !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+    line-height: 1 !important;
+    flex-shrink: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    margin: 4px 0 6px 0 !important;
+    transition: all 0.2s !important;
+}
+.upgrade-toggle-btn:hover {
+    background: #1a5f9a !important;
+    background-color: #1a5f9a !important;
+}
+.upgrade-toggle-btn img {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    max-width: 16px !important;
+    max-height: 16px !important;
+    filter: brightness(0) invert(1) !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    object-fit: contain !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+}
 .hero-info-row {
     display: flex;
     flex-wrap: wrap;
@@ -1012,7 +918,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .hero-info-row .info-item .value { font-weight: 600; font-size: 15px; }
 .hero-info-row .info-item .label { font-size: 11px; color: var(--text-color); opacity: 0.6; font-weight: 400; margin-top: -2px; }
-
 .upgrade-section-wrapper { display: none; margin-top: 8px; }
 .upgrade-section-wrapper.show { display: block; }
 .upgrade-section {
@@ -1051,7 +956,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .upgrade-btn:hover .star { color: #fff; }
 .upgrade-btn.active { background: #227BBC !important; color: #fff; border-color: #227BBC !important; }
 .upgrade-btn.active .star { color: #fff; }
-
 .upgrade-content { 
     display: none; 
     padding: 10px 12px; 
@@ -1060,14 +964,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     border: 1px solid var(--border-color); 
 }
 .upgrade-content.show { display: block; }
-
 .upgrade-group-title {
     font-size: 16px !important;
     font-weight: 600 !important;
     margin-bottom: 6px !important;
     color: var(--text-color);
 }
-
 .upgrade-item {
     display: flex;
     align-items: center;
@@ -1110,8 +1012,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .upgrade-tokens .token img { width: 36px; height: 36px; object-fit: contain; border-radius: 4px; flex-shrink: 0; }
 .upgrade-tokens .token .count { font-weight: 600; color: var(--text-color); padding-right: 0; }
-
-/* ===== КНОПКИ НАВИГАЦИИ В МОДАЛКЕ (48px) ===== */
 .nav-btn {
     position: absolute !important;
     top: 12px !important;
@@ -1151,25 +1051,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     filter: none !important;
     pointer-events: none !important;
 }
-
-.nav-prev { 
-    right: 90px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-.nav-next { 
-    right: 42px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-.nav-close { 
-    right: 4px !important;
-    top: 12px !important;
-    width: 48px !important;
-    height: 48px !important;
-    min-width: 48px !important;
-    min-height: 48px !important;
-}
+.nav-prev { right: 90px !important; left: auto !important; top: 12px !important; }
+.nav-next { right: 42px !important; left: auto !important; top: 12px !important; }
+.nav-close { right: 4px !important; top: 12px !important; width: 48px !important; height: 48px !important; min-width: 48px !important; min-height: 48px !important; }
 .nav-close img {
     width: 36px !important;
     height: 36px !important;
@@ -1178,7 +1062,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     max-width: 36px !important;
     max-height: 36px !important;
 }
-
 .tree-panel { position:fixed; top:50%; right:20px; transform:translateY(-50%); width:420px; max-width:calc(100vw - 40px); background:var(--card-bg); border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.3); z-index:2100; display:none; flex-direction:column; overflow:hidden; border:1px solid var(--border-color); cursor:default; }
 .tree-panel.show { display:flex; }
 .tree-panel.dragging { opacity:0.9; cursor:grabbing; }
@@ -1229,103 +1112,28 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-dialog .date { text-align:center; font-style:italic; color:var(--text-color); opacity:0.6; margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color); }
 .info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
 .info-close:hover { opacity:1; }
-
-/* Адаптив для модального окна */
 @media (max-width: 768px) {
     .nav-prev { right: 78px !important; }
     .nav-next { right: 34px !important; }
     .nav-close { right: 4px !important; }
-    .nav-btn {
-        width: 40px !important;
-        height: 40px !important;
-        min-width: 40px !important;
-        min-height: 40px !important;
-        top: 8px !important;
-    }
-    .nav-btn img {
-        width: 30px !important;
-        height: 30px !important;
-        min-width: 30px !important;
-        min-height: 30px !important;
-        max-width: 30px !important;
-        max-height: 30px !important;
-    }
-    .modal .dialog .modal-content {
-        grid-template-columns: 1fr;
-        gap: 12px;
-        padding: 12px;
-    }
+    .nav-btn { width: 40px !important; height: 40px !important; min-width: 40px !important; min-height: 40px !important; top: 8px !important; }
+    .nav-btn img { width: 30px !important; height: 30px !important; min-width: 30px !important; min-height: 30px !important; max-width: 30px !important; max-height: 30px !important; }
+    .modal .dialog .modal-content { grid-template-columns: 1fr; gap: 12px; padding: 12px; }
     .image-container img { max-height: 200px; }
-    .hero-meta-row .star-display img {
-        width: 16px !important;
-        height: 16px !important;
-        min-width: 16px !important;
-        min-height: 16px !important;
-        max-width: 16px !important;
-        max-height: 16px !important;
-    }
-    .hero-stats-row .stat-item img {
-        width: 16px !important;
-        height: 16px !important;
-        min-width: 16px !important;
-        min-height: 16px !important;
-        max-width: 16px !important;
-        max-height: 16px !important;
-    }
-    .hero-stats-row .stat-item img[src*="Sword" i] {
-        width: 18px !important;
-        height: 18px !important;
-        min-width: 18px !important;
-        min-height: 18px !important;
-        max-width: 18px !important;
-        max-height: 18px !important;
-    }
+    .hero-meta-row .star-display img { width: 16px !important; height: 16px !important; min-width: 16px !important; min-height: 16px !important; max-width: 16px !important; max-height: 16px !important; }
+    .hero-stats-row .stat-item img { width: 16px !important; height: 16px !important; min-width: 16px !important; min-height: 16px !important; max-width: 16px !important; max-height: 16px !important; }
+    .hero-stats-row .stat-item img[src*="Sword" i] { width: 18px !important; height: 18px !important; min-width: 18px !important; min-height: 18px !important; max-width: 18px !important; max-height: 18px !important; }
 }
-
 @media (max-width: 480px) {
     .nav-prev { right: 66px !important; }
     .nav-next { right: 28px !important; }
     .nav-close { right: 4px !important; }
-    .nav-btn {
-        width: 34px !important;
-        height: 34px !important;
-        min-width: 34px !important;
-        min-height: 34px !important;
-        top: 6px !important;
-    }
-    .nav-btn img {
-        width: 26px !important;
-        height: 26px !important;
-        min-width: 26px !important;
-        min-height: 26px !important;
-        max-width: 26px !important;
-        max-height: 26px !important;
-    }
+    .nav-btn { width: 34px !important; height: 34px !important; min-width: 34px !important; min-height: 34px !important; top: 6px !important; }
+    .nav-btn img { width: 26px !important; height: 26px !important; min-width: 26px !important; min-height: 26px !important; max-width: 26px !important; max-height: 26px !important; }
     .dialog { height: 95vh; max-height: 95vh; }
-    .hero-meta-row .star-display img {
-        width: 14px !important;
-        height: 14px !important;
-        min-width: 14px !important;
-        min-height: 14px !important;
-        max-width: 14px !important;
-        max-height: 14px !important;
-    }
-    .hero-stats-row .stat-item img {
-        width: 14px !important;
-        height: 14px !important;
-        min-width: 14px !important;
-        min-height: 14px !important;
-        max-width: 14px !important;
-        max-height: 14px !important;
-    }
-    .hero-stats-row .stat-item img[src*="Sword" i] {
-        width: 16px !important;
-        height: 16px !important;
-        min-width: 16px !important;
-        min-height: 16px !important;
-        max-width: 16px !important;
-        max-height: 16px !important;
-    }
+    .hero-meta-row .star-display img { width: 14px !important; height: 14px !important; min-width: 14px !important; min-height: 14px !important; max-width: 14px !important; max-height: 14px !important; }
+    .hero-stats-row .stat-item img { width: 14px !important; height: 14px !important; min-width: 14px !important; min-height: 14px !important; max-width: 14px !important; max-height: 14px !important; }
+    .hero-stats-row .stat-item img[src*="Sword" i] { width: 16px !important; height: 16px !important; min-width: 16px !important; min-height: 16px !important; max-width: 16px !important; max-height: 16px !important; }
 }
 </style>
 </head>
@@ -1336,7 +1144,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     <div class="brand">
         <h1>Галерея героев</h1>
     </div>
-    
     <div class="search-and-select">
         <div class="search-wrapper">
             <input id="searchInput" type="search" placeholder="Поиск по имени/способности">
@@ -1358,12 +1165,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
             </div>
         </div>
     </div>
-    
     <div class="filter-buttons">
         <button id="openFilters" class="btn primary">Фильтры</button>
         <button id="resetAll" class="btn btn-white">Сбросить</button>
     </div>
-    
     <div class="sort-group">
         <button id="sortBtn" class="sort-btn desc" data-tooltip="Сортировка по убыванию"></button>
         <div class="sort-select-wrapper">
@@ -1376,7 +1181,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
             </select>
         </div>
     </div>
-    
     <div class="info-btn-wrapper">
         <button id="infoBtn" class="info-btn">i</button>
     </div>
@@ -1410,15 +1214,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 <div id="empty" style="display:none;">Ничего не найдено. Измените фильтры.</div>
 </section>
 </div>
-
-<!-- ===== МОДАЛЬНОЕ ОКНО ===== -->
 <div id="modal" class="modal">
 <div class="dialog">
 <div class="modal-content">
     <button id="mPrev" class="nav-btn nav-prev"><img id="leftBtnIcon" src="" alt="Назад"></button>
     <button id="mNext" class="nav-btn nav-next"><img id="rightBtnIcon" src="" alt="Вперёд"></button>
     <button id="mClose" class="nav-btn nav-close"><img id="closeBtnIcon" src="" alt="Закрыть"></button>
-    
     <div class="image-container" id="modalImageContainer">
         <img id="mImg" src="">
         <a id="mOpenImg" class="open-img" href="#" target="_blank">Открыть изображение в новой вкладке</a>
@@ -1429,14 +1230,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <div id="heroMetaRow" class="hero-meta-row"></div>
         <div id="heroStatsRow" class="hero-stats-row"></div>
         <div id="heroInfoRow" class="hero-info-row"></div>
-        
         <h3>Способности</h3>
         <div id="mAbilities" class="pre"></div>
         <div id="modalTags" class="modal-tags"></div>
-        
         <h3>Пассивные способности</h3>
         <div id="mPassive" class="pre"></div>
-        
         <button id="upgradeToggleBtn" class="upgrade-toggle-btn">
             <img id="upgradeIcon" src="" alt="Прокачка"> Прокачка героя
         </button>
@@ -1462,7 +1260,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 </div>
 </div>
 </div>
-
 <div id="treePanel" class="tree-panel">
     <div class="tree-header" id="treeHeader">
         <h3>
@@ -1475,9 +1272,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <div class="talent-table" id="talentTable"></div>
     </div>
 </div>
-
 <div id="infoModal" class="info-modal"><div class="info-dialog"><button id="infoClose" class="info-close">×</button><h2>О галерее героев</h2><p>Эта галерея содержит информацию о героях игры "Время Героев", их характеристиках и способностях.</p><div class="clan"><strong>Разработано:</strong><br>Евгений Поташко и Владимир Плотников<br><strong>Клан: "Рожденные в СССР."</strong><br>скрины героев предоставлены великим и могучим Козырем</div><div class="contact"><strong>Обратная связь:</strong><br>Нашли ошибку или есть предложения?<br>Пишите: <a href="mailto:master-Erasm@yandex.ru">master-Erasm@yandex.ru</a></div><p>База данных регулярно обновляется с учетом новых героев и изменений в балансе игры.</p><p class="date">Дата последнего обновления: <span id="updateDate"></span></p></div></div>
-
 <script>
 const HERO_FIELDS = { id:'id', name:'Герой', element:'Стихия', stars:'Количество звезд', mana:'Скорость маны', power:'Сила', attack:'Атака', defense:'Защита', hp:'Жизни', attackType:'Способ атаки', abilities:'Способности', passive:'Пассивные способности', summon:'Место призыва', clazz:'Класс', image:'Картинка' };
 const CLASS_TALENT_FIELDS = { class_id:'class_id', row_number:'row_number', is_mandatory:'is_mandatory', branch_group:'branch_group', left_talent_id:'left_talent_id', center_talent_id:'center_talent_id', right_talent_id:'right_talent_id' };
@@ -1490,7 +1285,6 @@ const MATERIALS_5_URL = 'materials_5.csv?ts=' + Date.now();
 const BOOKS_URL = 'books.csv?ts=' + Date.now();
 const TOKENS_URL = 'number_of_talents.csv?ts=' + Date.now();
 const IMAGES_URL = 'item_images.csv?ts=' + Date.now();
-
 const ICON_NAMES = {
     star: 'Star_icon',
     sword: 'Sword_icon_ffffff',
@@ -1499,7 +1293,6 @@ const ICON_NAMES = {
     tree: 'TalantTree_icon',
     upgrade: 'Upgrade_icon'
 };
-
 let allHeroes = [], viewHeroes = [], currentIdx = -1, allHeroNames = [], filteredHeroNames = [];
 let sortDirection = 'desc';
 let classTalents = {};
@@ -1514,21 +1307,17 @@ let isDragging = false;
 let dragStartX = 0, dragStartY = 0;
 let tooltipElement = null;
 let iconCache = {};
-
 function initSortTooltip() {
     const btn = document.getElementById('sortBtn');
     if (btn) {
         btn.dataset.tooltip = sortDirection === 'desc' ? 'Сортировка по убыванию' : 'Сортировка по возрастанию';
     }
 }
-
 function getTagClass(tag) {
     const tagMap = { 'урон':'tag-damage', 'лечение':'tag-heal', 'щит':'tag-shield', 'ослабление':'tag-debuff', 'усиление':'tag-buff', 'доты':'tag-dot', 'хоты':'tag-hot', 'снятие':'tag-cleanse', 'призыв':'tag-summon', 'отражение':'tag-reflect', 'блокировка':'tag-block', 'кража':'tag-steal', 'одиночный':'tag-single', 'все_враги':'tag-aoe', 'цепь':'tag-chain', 'себя':'tag-self', 'союзники':'tag-allies', 'враги':'tag-enemies', 'мана':'tag-mana', 'крит':'tag-crit', 'меткость':'tag-accuracy', 'антихил':'tag-antihil', 'контратака':'tag-counter', 'провокация':'tag-provoke', 'воскрешение':'tag-resurrection', 'баф_стихии':'tag-element', 'усил. атаки':'tag-buff', 'усил. защиты':'tag-shield', 'усил. атаки_навык':'tag-buff', 'усил. защиты_навык':'tag-shield', 'ослаб. атаки':'tag-debuff', 'ослаб. защиты':'tag-debuff', 'ослаб. атаки_себе':'tag-debuff', 'ослаб. защиты_себе':'tag-debuff', 'ослаб. метк_себе':'tag-debuff', 'похищ._лечения':'tag-antihil', 'мана_ускор.':'tag-mana', 'мана_замедл.':'tag-mana', 'мана_срез':'tag-mana', 'мана_блок':'tag-block', 'деление_себе':'tag-shield', 'деление_против.':'tag-debuff', 'увеличение здоровья':'tag-heal', 'пробитие':'tag-damage', 'снятие_врагам':'tag-cleanse', 'снятие_своим':'tag-cleanse', 'блок_снятие_усил.':'tag-block', 'нельзя снять':'tag-block', 'метка':'tag-debuff', 'безумие':'tag-debuff', 'ярость':'tag-buff', 'антиприслужник':'tag-summon', 'похищ._маны':'tag-steal', 'сокращ.длит.эффект.':'tag-debuff' };
     return tagMap[tag] || 'tag-default';
 }
-
 function fileCellToUrl(v) { let s=String(v||''); let m=s.match(/\((https?:\/\/[^)]+)\)/i); if(m) return m[1]; let m2=s.match(/https?:\/\/\S+/i); return m2 ? m2[0].replace(/[),]+$/,'') : ''; }
-
 function getItemImage(itemName) {
     if (!itemName) return '';
     if (itemImages[itemName]) return itemImages[itemName];
@@ -1539,25 +1328,19 @@ function getItemImage(itemName) {
     }
     return '';
 }
-
 function getIcon(iconName) {
     if (iconCache[iconName]) return iconCache[iconName];
     const url = getItemImage(iconName);
     if (url) iconCache[iconName] = url;
     return url || '';
 }
-
 function getStarIcon() { return getIcon(ICON_NAMES.star); }
 function getSwordIcon() { return getIcon(ICON_NAMES.sword); }
 function getShieldIcon() { return getIcon(ICON_NAMES.shield); }
 function getHealthIcon() { return getIcon(ICON_NAMES.health); }
 function getTreeIcon() { return getIcon(ICON_NAMES.tree); }
 function getUpgradeIcon() { return getIcon(ICON_NAMES.upgrade); }
-
 function normalizeStarKey(star) { return String(star).replace(/★/g,'').trim(); }
-
-// ==================== СИСТЕМА ПРОКАЧКИ ====================
-
 function getStarTargets(heroStars) {
     const starNum = parseInt(heroStars);
     if (starNum <= 3) return ['2', '3'];
@@ -1565,7 +1348,6 @@ function getStarTargets(heroStars) {
     if (starNum === 5) return ['2', '3', '4', '5'];
     return ['2', '3', '4', '5'];
 }
-
 function getMaterialsForStar(heroElement, heroStars, targetStar) {
     const heroStarNormalized = normalizeStarKey(heroStars);
     let allData = [];
@@ -1579,7 +1361,6 @@ function getMaterialsForStar(heroElement, heroStars, targetStar) {
     });
     return result;
 }
-
 function getBooksForStar(heroStars, level) {
     const heroStarNormalized = normalizeStarKey(heroStars);
     let starKey = heroStarNormalized;
@@ -1590,7 +1371,6 @@ function getBooksForStar(heroStars, level) {
     });
     return result.length > 0 ? result[0] : null;
 }
-
 function getTokensForHero(heroStars) {
     const heroStarNormalized = normalizeStarKey(heroStars);
     let starKey = heroStarNormalized;
@@ -1601,7 +1381,6 @@ function getTokensForHero(heroStars) {
     });
     return result.length > 0 ? result[0] : null;
 }
-
 function showStarMaterials(element, stars, target, container) {
     const materials = getMaterialsForStar(element, stars, target);
     container.innerHTML = '';
@@ -1623,7 +1402,6 @@ function showStarMaterials(element, stars, target, container) {
     container.innerHTML = html;
     container.classList.add('show');
 }
-
 function showBookMaterials(stars, level, container) {
     const bookData = getBooksForStar(stars, level);
     container.innerHTML = '';
@@ -1656,7 +1434,6 @@ function showBookMaterials(stars, level, container) {
     container.innerHTML = html;
     container.classList.add('show');
 }
-
 function showTalentTokens(stars, hero, container) {
     const tokenData = getTokensForHero(stars);
     container.innerHTML = '';
@@ -1667,7 +1444,6 @@ function showTalentTokens(stars, hero, container) {
     const total = tokenData['Количество жетонов'] || 0;
     const heroClass = hero ? hero['Класс'] : '';
     const classImgUrl = getItemImage(heroClass);
-    
     let html = '<div class="upgrade-tokens">';
     if (classImgUrl && heroClass) {
         html += '<div class="token">' +
@@ -1683,7 +1459,6 @@ function showTalentTokens(stars, hero, container) {
     html += '</div>';
     container.innerHTML = html;
 }
-
 function renderUpgradeSection(hero) {
     const container = document.getElementById('upgradeContainer');
     if (!hero || !container) {
@@ -1691,23 +1466,17 @@ function renderUpgradeSection(hero) {
         return;
     }
     container.style.display = 'block';
-    
     const upgradeIcon = getUpgradeIcon();
     const upgradeIconEl = document.getElementById('upgradeIcon');
-    
     if (upgradeIcon && upgradeIconEl) {
         upgradeIconEl.src = upgradeIcon;
         upgradeIconEl.style.cssText = 'width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;margin:0;padding:0;';
     }
-    
     const heroStars = String(hero['Количество звезд'] || '1').trim();
     const heroElement = String(hero['Стихия'] || '').trim();
-    
     const starTargets = getStarTargets(heroStars);
-    
     const starButtons = document.getElementById('starButtons');
     const starContent = document.getElementById('starContent');
-    
     if (starButtons && starContent) {
         starButtons.innerHTML = '';
         const starIcon = getStarIcon();
@@ -1733,11 +1502,9 @@ function renderUpgradeSection(hero) {
             showStarMaterials(heroElement, heroStars, starTargets[0], starContent);
         }
     }
-    
     const bookLevels = ['2/8', '3/8', '4/8', '5/8', '6/8', '7/8', '8/8'];
     const bookButtons = document.getElementById('bookButtons');
     const bookContent = document.getElementById('bookContent');
-    
     if (bookButtons && bookContent) {
         bookButtons.innerHTML = '';
         bookLevels.forEach(level => {
@@ -1758,19 +1525,14 @@ function renderUpgradeSection(hero) {
             showBookMaterials(heroStars, '2/8', bookContent);
         }
     }
-    
     const tokensContent = document.getElementById('talentTokensContent');
     if (tokensContent) {
         showTalentTokens(heroStars, hero, tokensContent);
     }
 }
-
-// ==================== ОСТАЛЬНОЙ КОД ====================
-
 function initTooltip() { if(!tooltipElement){ tooltipElement=document.createElement('div'); tooltipElement.className='talent-tooltip hidden'; document.body.appendChild(tooltipElement); } }
 function showTalentTooltip(talentId, x, y) { if(!tooltipElement) initTooltip(); const desc=getTalentDescriptionById(talentId); if(desc){ tooltipElement.innerHTML=desc; tooltipElement.classList.remove('hidden'); tooltipElement.style.left=(x+15)+'px'; tooltipElement.style.top=(y-10)+'px'; } }
 function hideTalentTooltip() { if(tooltipElement) tooltipElement.classList.add('hidden'); }
-
 const talentEffectsMap = {
     1:{type:'Атака',value:15,isPercent:false},
     2:{type:'Защита',value:17,isPercent:false},
@@ -1799,7 +1561,6 @@ const talentEffectsMap = {
     25:{type:'Пробитие',value:5,isPercent:true},
     26:{type:'Кровавый вихрь',value:35,isPercent:true}
 };
-
 function getTalentDescriptionById(talentId) {
     const talent=talentEffectsMap[talentId]; if(!talent) return null;
     const isPercent=talent.isPercent; const value=talent.value; const typeName=talent.type; const suffix=isPercent?'%':'';
@@ -1823,7 +1584,6 @@ function getTalentDescriptionById(talentId) {
     else { desc=typeName+' +'+value+suffix; }
     return desc;
 }
-
 function getTalentEffects(numId) {
     const talent=talentEffectsMap[numId]; if(!talent) return {attackPercent:0,attackFlat:0,defensePercent:0,defenseFlat:0,hpPercent:0,hpFlat:0};
     const value=talent.value; const isPercent=talent.isPercent; const typeLower=talent.type.toLowerCase();
@@ -1833,7 +1593,6 @@ function getTalentEffects(numId) {
     else if(typeLower.includes('жизн')||typeLower.includes('здоров')){ if(isPercent) result.hpPercent=value; else result.hpFlat=value; }
     return result;
 }
-
 function getTalentImage(numId, active) {
     const talent=talentEffectsMap[numId]; if(!talent) return '';
     const talentName=talent.type; const isPercent=talent.isPercent; const value=talent.value;
@@ -1853,7 +1612,6 @@ function getTalentImage(numId, active) {
     }
     return '';
 }
-
 function getTalentValue(talentId, statType, baseStat) {
     const talent=talentEffectsMap[talentId]; if(!talent) return 0;
     const isPercent=talent.isPercent; const value=talent.value; const typeLower=talent.type.toLowerCase();
@@ -1863,7 +1621,6 @@ function getTalentValue(talentId, statType, baseStat) {
     if(isPercent) return baseStat*value/100;
     return value;
 }
-
 function getBranchScore(branchTalents, mode, baseAttack, baseDefense, baseHp) {
     let hasDefense=false; let hasHealth=false; let hasAttack=false; let totalValue=0;
     for(const talentId of branchTalents){
@@ -1899,7 +1656,6 @@ function getBranchScore(branchTalents, mode, baseAttack, baseDefense, baseHp) {
     }
     return 0;
 }
-
 function calculateStatsWithSelections(hero, selections, mode) {
     const heroClass=hero[HERO_FIELDS.clazz];
     const baseAttack=toNum(hero[HERO_FIELDS.attack])||0;
@@ -1947,7 +1703,6 @@ function calculateStatsWithSelections(hero, selections, mode) {
     const hpBonus=(baseHp*hpPercent/100)+hpFlat;
     return { attack:Math.floor(baseAttack+attackBonus), defense:Math.floor(baseDefense+defenseBonus), hp:Math.floor(baseHp+hpBonus) };
 }
-
 function getOptimalSelections(hero, mode) {
     const heroClass=hero[HERO_FIELDS.clazz]; if(!classTalents[heroClass]) return {};
     const baseAttack=toNum(hero[HERO_FIELDS.attack])||0;
@@ -1978,21 +1733,18 @@ function getOptimalSelections(hero, mode) {
     }
     return selections;
 }
-
 function renderTalentTree(hero, selections, mode) {
     const heroClass = hero[HERO_FIELDS.clazz];
     if (!classTalents[heroClass]) {
         document.getElementById('talentTable').innerHTML = '<p>Нет данных о талантах для этого класса</p>';
         return;
     }
-    
     const treeIcon = getIcon('TalantTree_icon');
     const treeIconEl = document.getElementById('treeIcon');
     if (treeIcon && treeIconEl) {
         treeIconEl.src = treeIcon;
         treeIconEl.style.cssText = 'width:32px;height:32px;min-width:32px;min-height:32px;max-width:32px;max-height:32px;object-fit:contain;display:inline-block;vertical-align:middle;';
     }
-    
     const talents = classTalents[heroClass];
     const groups = [];
     let currentGroup = [];
@@ -2005,7 +1757,6 @@ function renderTalentTree(hero, selections, mode) {
         }
     }
     if (currentGroup.length > 0) groups.push(currentGroup);
-    
     let html = '';
     let rowCounter = 1;
     const showActive = mode !== 'none';
@@ -2021,16 +1772,13 @@ function renderTalentTree(hero, selections, mode) {
             }
         }
     }
-    
     for (let gIdx = 0; gIdx < groups.length; gIdx++) {
         const group = groups[gIdx];
         const groupId = group[0].branchGroup;
         const selectedSide = selections[groupId];
         const isGroupSelectable = isManual ? (gIdx <= maxSelectableGroup) : true;
-        
         for (const talent of group) {
             html += '<div class="talent-row">';
-            
             if (talent.leftTalentId) {
                 const isActive = showActive && selectedSide === 'left';
                 const imgUrl = getTalentImage(talent.leftTalentId, isActive);
@@ -2044,7 +1792,6 @@ function renderTalentTree(hero, selections, mode) {
             } else {
                 html += '<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>';
             }
-            
             if (talent.centerTalentId) {
                 const imgUrl = getTalentImage(talent.centerTalentId, true);
                 html += '<div class="talent-cell mandatory" data-talent-id="' + talent.centerTalentId + '" data-row="' + rowCounter + '">';
@@ -2054,7 +1801,6 @@ function renderTalentTree(hero, selections, mode) {
             } else {
                 html += '<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>';
             }
-            
             if (talent.rightTalentId) {
                 const isActive = showActive && selectedSide === 'right';
                 const imgUrl = getTalentImage(talent.rightTalentId, isActive);
@@ -2068,14 +1814,11 @@ function renderTalentTree(hero, selections, mode) {
             } else {
                 html += '<div class="talent-cell" style="background:transparent; border-color:transparent;"></div>';
             }
-            
             html += '</div>';
             rowCounter++;
         }
     }
-    
     document.getElementById('talentTable').innerHTML = html;
-    
     document.querySelectorAll('#talentTable .talent-cell').forEach(cell => {
         const talentId = parseInt(cell.dataset.talentId);
         if (talentId) {
@@ -2088,7 +1831,6 @@ function renderTalentTree(hero, selections, mode) {
             });
         }
     });
-    
     if (isManual) {
         document.querySelectorAll('#talentTable .talent-cell.selectable').forEach(cell => {
             if (cell.dataset.disabled === 'true') {
@@ -2096,16 +1838,13 @@ function renderTalentTree(hero, selections, mode) {
                 cell.style.cursor = 'not-allowed';
                 return;
             }
-            
             cell.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const groupId = cell.dataset.group;
                 const side = cell.dataset.side;
                 const talentId = parseInt(cell.dataset.talentId);
                 const groupIdx = parseInt(cell.dataset.groupIdx);
-                
                 if (!groupId || !side) return;
-                
                 let allPreviousSelected = true;
                 for (let i = 0; i < groupIdx; i++) {
                     const prevGroupId = groups[i][0].branchGroup;
@@ -2114,7 +1853,6 @@ function renderTalentTree(hero, selections, mode) {
                         break;
                     }
                 }
-                
                 if (!allPreviousSelected) {
                     const msg = document.createElement('div');
                     msg.textContent = '⚠️ Сначала выберите таланты в предыдущих строках!';
@@ -2133,7 +1871,6 @@ function renderTalentTree(hero, selections, mode) {
                     setTimeout(() => msg.remove(), 2000);
                     return;
                 }
-                
                 const groupCells = document.querySelectorAll('#talentTable .talent-cell[data-group="' + groupId + '"]');
                 groupCells.forEach(c => {
                     if (!c.classList.contains('mandatory')) {
@@ -2146,12 +1883,10 @@ function renderTalentTree(hero, selections, mode) {
                         c.classList.remove('active');
                     }
                 });
-                
                 const newImgUrl = getTalentImage(talentId, true);
                 const img = cell.querySelector('img');
                 if (img && newImgUrl) img.src = newImgUrl;
                 cell.classList.add('active');
-                
                 const sameSideCells = document.querySelectorAll('#talentTable .talent-cell[data-group="' + groupId + '"][data-side="' + side + '"]');
                 sameSideCells.forEach(c => {
                     if (!c.classList.contains('mandatory')) {
@@ -2164,53 +1899,42 @@ function renderTalentTree(hero, selections, mode) {
                         c.classList.add('active');
                     }
                 });
-                
                 currentHeroTalents[groupId] = side;
-                
                 const heroData = viewHeroes[currentIdx];
                 if (heroData) {
                     const calc = calculateStatsWithSelections(heroData, currentHeroTalents, currentMode);
                     renderStatsRow(heroData, calc);
                 }
-                
                 renderTalentTree(heroData, currentHeroTalents, currentMode);
             });
         });
     }
 }
-
 function renderStatsRow(hero, calc) {
     const swordUrl = getIcon(ICON_NAMES.sword);
     const shieldUrl = getIcon(ICON_NAMES.shield);
     const healthUrl = getIcon(ICON_NAMES.health);
     const treeIcon = getIcon(ICON_NAMES.tree);
-    
     const statsRow = document.getElementById('heroStatsRow');
     if (!statsRow) return;
-    
     const iconStyle = 'width:18px;height:18px;min-width:18px;min-height:18px;max-width:18px;max-height:18px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:0;margin:0;';
     const swordStyle = 'width:20px;height:20px;min-width:20px;min-height:20px;max-width:20px;max-height:20px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:0;margin:0;';
-    
     let html = '';
-    
     if (swordUrl) {
         html += '<span class="stat-item"><img src="' + swordUrl + '" alt="Атака" style="' + swordStyle + '"> ' + calc.attack + '</span>';
     } else {
         html += '<span class="stat-item">⚔️ ' + calc.attack + '</span>';
     }
-    
     if (shieldUrl) {
         html += '<span class="stat-item"><img src="' + shieldUrl + '" alt="Защита" style="' + iconStyle + '"> ' + calc.defense + '</span>';
     } else {
         html += '<span class="stat-item">🛡️ ' + calc.defense + '</span>';
     }
-    
     if (healthUrl) {
         html += '<span class="stat-item"><img src="' + healthUrl + '" alt="Жизни" style="' + iconStyle + '"> ' + calc.hp + '</span>';
     } else {
         html += '<span class="stat-item">❤️ ' + calc.hp + '</span>';
     }
-    
     html += '<div class="talent-controls">';
     html += '<div class="select-wrapper">';
     html += '<select id="talentModeSelect">';
@@ -2223,37 +1947,30 @@ function renderStatsRow(hero, calc) {
     html += '</div>';
     html += '<button id="openTreeBtn"><img id="treeBtnIcon" src="" alt="Дерево" style="width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);"> Дерево талантов</button>';
     html += '</div>';
-    
     statsRow.innerHTML = html;
-    
     if (treeIcon) {
         const treeBtnIcon = document.getElementById('treeBtnIcon');
         if (treeBtnIcon) {
             treeBtnIcon.src = treeIcon;
         }
     }
-    
     const select = document.getElementById('talentModeSelect');
     if (select) {
         select.value = currentMode || 'none';
         select.removeEventListener('change', updateMainModalStats);
         select.addEventListener('change', updateMainModalStats);
     }
-    
     const treeBtn = document.getElementById('openTreeBtn');
     if (treeBtn) {
         treeBtn.removeEventListener('click', openTreePanel);
         treeBtn.addEventListener('click', openTreePanel);
     }
 }
-
 function renderInfoRow(hero) {
     const infoRow = document.getElementById('heroInfoRow');
     if (!infoRow) return;
-    
     const manaValue = hero[HERO_FIELDS.mana] || '—';
     const attackType = hero[HERO_FIELDS.attackType] || '—';
-    
     infoRow.innerHTML = `
         <div class="info-item">
             <span class="value">${manaValue}</span>
@@ -2265,35 +1982,29 @@ function renderInfoRow(hero) {
         </div>
     `;
 }
-
 function renderMetaRow(hero) {
     const metaRow = document.getElementById('heroMetaRow');
     if (!metaRow) return;
-    
     const element = hero[HERO_FIELDS.element] || '—';
     const stars = hero[HERO_FIELDS.stars] || '—';
     const clazz = hero[HERO_FIELDS.clazz] || '—';
     const starIcon = getStarIcon();
-    
     let starsDisplay;
     if (starIcon) {
         starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:16px !important;height:16px !important;min-width:16px !important;min-height:16px !important;max-width:16px !important;max-height:16px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;margin:0 !important;padding:0 !important;"></span>`;
     } else {
         starsDisplay = `${stars}★`;
     }
-    
     metaRow.innerHTML = `
         <span>${element}</span>
         <span>${starsDisplay}</span>
         <span>${clazz}</span>
     `;
 }
-
 function renderCardStats(hero) {
     const swordUrl = getIcon(ICON_NAMES.sword);
     const shieldUrl = getIcon(ICON_NAMES.shield);
     const healthUrl = getIcon(ICON_NAMES.health);
-    
     let html = '';
     if (swordUrl) {
         html += '<span class="pill"><img src="' + swordUrl + '" alt="Атака" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.attack] + '</span>';
@@ -2312,7 +2023,6 @@ function renderCardStats(hero) {
     }
     return html;
 }
-
 function initDragAndDrop() {
     const panel=document.getElementById('treePanel');
     const header=document.getElementById('treeHeader');
@@ -2352,7 +2062,6 @@ function initDragAndDrop() {
     }
     header.addEventListener('mousedown', onMouseDown);
 }
-
 function openTreePanel(){ 
     const hero=viewHeroes[currentIdx]; 
     if(!hero) return; 
@@ -2367,7 +2076,6 @@ function openTreePanel(){
     renderTalentTree(hero, currentHeroTalents, currentMode); 
     panel.classList.add('show'); 
 }
-
 function closeTreePanel(){ 
     const panel = document.getElementById('treePanel');
     if (panel) {
@@ -2375,7 +2083,6 @@ function closeTreePanel(){
     }
     hideTalentTooltip(); 
 }
-
 function updateMainModalStats(){ 
     const hero=viewHeroes[currentIdx]; 
     if(!hero) return; 
@@ -2401,11 +2108,9 @@ function updateMainModalStats(){
         renderTalentTree(hero, currentHeroTalents, currentMode); 
     } 
 }
-
 function toNum(v){ let n=parseFloat(String(v).replace(',','.')); return isNaN(n)?null:n; }
 function uniq(arr){ return [...new Set(arr.filter(v=>v!==null&&v!==undefined&&String(v).trim()!==''))]; }
 function sortAlpha(a,b){ return String(a).localeCompare(String(b),'ru',{numeric:true}); }
-
 function buildFacet(container, values, facetKey, isTags) {
     let opts=uniq(values);
     if(facetKey==='mana') opts.sort((a,b)=>{let o=['Очень медленно','Медленно','Средне','Быстро','Очень быстро','Легендарно быстро']; return o.indexOf(a)-o.indexOf(b);});
@@ -2419,9 +2124,7 @@ function buildFacet(container, values, facetKey, isTags) {
     }).join('');
     container.querySelectorAll('input[type="checkbox"]').forEach(cb=>cb.addEventListener('change',()=>{ let s=selected[cb.dataset.facet]; if(cb.checked) s.add(cb.value); else s.delete(cb.value); }));
 }
-
 const selected = { element:new Set(), stars:new Set(), mana:new Set(), attackType:new Set(), summon:new Set(), clazz:new Set(), heroes:new Set(), tags:new Set() };
-
 function initAllFacets(heroes){
     buildFacet(document.getElementById('facet-element'), heroes.map(r=>r[HERO_FIELDS.element]), 'element');
     buildFacet(document.getElementById('facet-stars'), heroes.map(r=>r[HERO_FIELDS.stars]), 'stars');
@@ -2435,21 +2138,18 @@ function initAllFacets(heroes){
     filteredHeroNames=[...allHeroNames];
     updateHeroCheckboxes();
 }
-
 function updateHeroCheckboxes(){
     let names=filteredHeroNames.length?filteredHeroNames:allHeroNames;
     document.getElementById('heroCheckboxesList').innerHTML=names.map(name=>'<div class="hero-checkbox-item"><input type="checkbox" id="hero-'+name.replace(/[^a-zа-я0-9]/gi,'_')+'" data-hero="'+name+'" '+(selected.heroes.has(name)?'checked':'')+'><label>'+name+'</label></div>').join('');
     document.querySelectorAll('#heroCheckboxesList input').forEach(cb=>cb.addEventListener('change',function(){ let n=this.dataset.hero; if(this.checked) selected.heroes.add(n); else selected.heroes.delete(n); updateHeroSelectDisplay(); }));
     updateHeroSelectDisplay();
 }
-
 function updateHeroSelectDisplay(){
     let c = selected.heroes.size;
     const toggleBtn = document.getElementById('heroSelectToggle');
     if (!toggleBtn) return;
     const countEl = document.getElementById('heroSelectedCount');
     if (countEl) countEl.textContent = c + ' выбрано';
-    
     if (c === 0) {
         toggleBtn.textContent = 'Выбрать из списка';
     } else if (c === 1) {
@@ -2460,7 +2160,6 @@ function updateHeroSelectDisplay(){
         toggleBtn.textContent = Array.from(selected.heroes)[0] + ' и еще ' + (c - 1);
     }
 }
-
 function applyFilters(){
     let q=document.getElementById('searchInput').value.trim().toLowerCase();
     viewHeroes=allHeroes.filter(r=>{
@@ -2486,7 +2185,6 @@ function applyFilters(){
     filteredHeroNames=uniq(viewHeroes.map(r=>r[HERO_FIELDS.name])).sort(sortAlpha);
     updateHeroCheckboxes();
 }
-
 function renderCards(heroes){
     if(!heroes.length){ document.getElementById('cards').innerHTML=''; document.getElementById('empty').style.display='block'; return; }
     document.getElementById('empty').style.display='none';
@@ -2508,7 +2206,6 @@ function renderCards(heroes){
     }).join('');
     document.querySelectorAll('.toggle-abilities').forEach(btn=>btn.addEventListener('click',function(e){ e.stopPropagation(); let idx=this.dataset.idx; let div=document.getElementById('abilities-'+idx); if(div.style.display==='block'){ div.style.display='none'; this.textContent='Показать способности'; } else { div.style.display='block'; this.textContent='Скрыть способности'; } }));
 }
-
 function openModal(idx){
     if(!viewHeroes.length) return;
     currentIdx=idx;
@@ -2519,33 +2216,26 @@ function openModal(idx){
     document.getElementById('modal').classList.add('show');
     document.body.style.overflow='hidden';
 }
-
 function fillModal(hero){
     let img = fileCellToUrl(hero[HERO_FIELDS.image]);
     document.getElementById('mImg').src = img || '';
     document.getElementById('mOpenImg').href = img || '#';
     document.getElementById('mName').textContent = hero[HERO_FIELDS.name] || '';
-
     const imageContainer = document.getElementById('modalImageContainer');
     const element = hero[HERO_FIELDS.element] || '';
     imageContainer.setAttribute('data-element', element);
-    
     const summonText = document.getElementById('modalSummonText');
     const summon = hero[HERO_FIELDS.summon] || '—';
     summonText.textContent = 'Призыв: ' + summon;
-
     const treeIcon = getIcon(ICON_NAMES.tree);
     const treeBtnIcon = document.getElementById('treeBtnIcon');
     if (treeIcon && treeBtnIcon) {
         treeBtnIcon.src = treeIcon;
     }
-  
     const leftIcon = getIcon('Left_button');
     const rightIcon = getIcon('Right_button');
     const closeIcon = getIcon('Close_button');
-
     const navIconStyle = 'width:36px;height:36px;min-width:36px;min-height:36px;max-width:36px;max-height:36px;object-fit:contain;display:block;';
-
     if (leftIcon) {
         const el = document.getElementById('leftBtnIcon');
         if (el) { el.src = leftIcon; el.style.cssText = navIconStyle; }
@@ -2558,14 +2248,10 @@ function fillModal(hero){
         const el = document.getElementById('closeBtnIcon');
         if (el) { el.src = closeIcon; el.style.cssText = navIconStyle; }
     }
-    
     renderMetaRow(hero);
-    
     const calc = calculateStatsWithSelections(hero, {}, 'none');
     renderStatsRow(hero, calc);
-    
     renderInfoRow(hero);
-    
     const tagsContainer = document.getElementById('modalTags');
     if (hero._tags && hero._tags.length > 0) {
         const tagsHtml = hero._tags.map(tag => '<span class="tag ' + getTagClass(tag) + '" data-tag="' + tag + '">#' + tag + '</span>').join('');
@@ -2593,10 +2279,8 @@ function fillModal(hero){
     } else {
         tagsContainer.innerHTML = '';
     }
-    
     document.getElementById('mAbilities').textContent = String(hero[HERO_FIELDS.abilities] || '—').replace(/^'|'$/g, '');
     document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive] || '—').replace(/^'|'$/g, '');
-    
     const upgradeIcon = getIcon(ICON_NAMES.upgrade);
     const toggleBtn = document.getElementById('upgradeToggleBtn');
     if (upgradeIcon && toggleBtn) {
@@ -2606,28 +2290,23 @@ function fillModal(hero){
             upgradeImg.style.cssText = 'width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;margin:0;padding:0;';
         }
     }
-    
     const wrapper = document.getElementById('upgradeSectionWrapper');
     if (wrapper) wrapper.classList.remove('show');
     renderUpgradeSection(hero);
-    
     const select = document.getElementById('talentModeSelect');
     if (select) {
         select.value = 'none';
         select.removeEventListener('change', updateMainModalStats);
         select.addEventListener('change', updateMainModalStats);
     }
-    
     const treeBtn = document.getElementById('openTreeBtn');
     if (treeBtn) {
         treeBtn.removeEventListener('click', openTreePanel);
         treeBtn.addEventListener('click', openTreePanel);
     }
 }
-
 function closeModal(){ document.getElementById('modal').classList.remove('show'); document.body.style.overflow=''; currentIdx=-1; closeTreePanel(); }
 function go(delta){ if(currentIdx<0||!viewHeroes.length) return; currentIdx=(currentIdx+delta+viewHeroes.length)%viewHeroes.length; openModal(currentIdx); }
-
 function attachEvents(){
     const closeTreeBtn = document.getElementById('closeTreeBtn');
     if (closeTreeBtn) {
@@ -2636,7 +2315,6 @@ function attachEvents(){
             closeTreePanel();
         });
     }
-
     document.getElementById('searchInput').addEventListener('input', applyFilters);
     document.getElementById('sortSelect').addEventListener('change', applyFilters);
     document.getElementById('sortBtn').addEventListener('click', ()=>{
@@ -2720,7 +2398,6 @@ function attachEvents(){
     initTooltip();
     initDragAndDrop();
 }
-
 Promise.all([
     new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]).map(row=>{ const tagsStr=row['Теги']||''; const tags=tagsStr.split(',').map(t=>t.trim()).filter(t=>t!==''); return {...row,_tags:tags}; }); console.log('✅ Герои загружены:',allHeroes.length); res(); },error:rej})),
     new Promise((res,rej)=>Papa.parse(CLASSES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ r.data.forEach(row=>{ if(!row[CLASS_TALENT_FIELDS.class_id]) return; let cn=row[CLASS_TALENT_FIELDS.class_id]; if(!classTalents[cn]) classTalents[cn]=[]; classTalents[cn].push({ rowNumber:parseInt(row[CLASS_TALENT_FIELDS.row_number])||0, isMandatory:String(row[CLASS_TALENT_FIELDS.is_mandatory]).toLowerCase()==='true', branchGroup:row[CLASS_TALENT_FIELDS.branch_group], leftTalentId:row[CLASS_TALENT_FIELDS.left_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.left_talent_id]):null, centerTalentId:row[CLASS_TALENT_FIELDS.center_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.center_talent_id]):null, rightTalentId:row[CLASS_TALENT_FIELDS.right_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.right_talent_id]):null }); }); Object.keys(classTalents).forEach(cn=>classTalents[cn].sort((a,b)=>a.rowNumber-b.rowNumber)); console.log('✅ Классы с талантами загружены:',Object.keys(classTalents).length); res(); },error:rej})),
