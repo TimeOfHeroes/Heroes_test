@@ -714,6 +714,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     border-radius: 12px;
     padding: 12px;
     transition: background 0.3s;
+    position: relative;
 }
 .image-container[data-element="Синий"] { background: var(--element-blue); }
 .image-container[data-element="Зеленый"] { background: var(--element-green); }
@@ -724,19 +725,33 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 /* 2. Надпись "Призыв:" */
 .summon-text {
     text-align: center;
-    margin-top: 8px;
-    font-size: 14px;
-    font-weight: 500;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 600;
     color: var(--text-color);
-    opacity: 0.8;
+    opacity: 0.85;
 }
 
-/* 3. Выпадающий список с синей рамкой */
+/* 3. Ссылка "Открыть изображение" */
+.open-img {
+    display: block;
+    text-align: center;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #2b8a3e !important;
+    text-decoration: none;
+    font-weight: 500;
+}
+.open-img:hover {
+    text-decoration: underline;
+}
+
+/* 4. Выпадающий список с тонкой синей рамкой */
 .hero-stats-row .talent-controls .select-wrapper select {
     width: 100% !important;
     padding: 4px 28px 4px 8px !important;
     font-size: 12px !important;
-    border: 2px solid #227BBC !important;
+    border: 1px solid #227BBC !important;
     border-radius: 6px !important;
     background: var(--card-bg) !important;
     color: var(--text-color) !important;
@@ -746,25 +761,31 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     box-sizing: border-box !important;
 }
 
-/* 4. Убираем надпись "Способности" */
+/* 5. Убираем надпись "Способности" */
 .modal .info-container h3:first-of-type {
     display: none !important;
 }
 
-/* 5. Способности и пассивки без серого фона */
+/* 6. Способности и пассивки без рамки и фона */
 .pre {
     white-space: pre-line;
     background: transparent !important;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 12px;
+    border: none !important;
+    padding: 8px 0;
     font-size: 14px;
     overflow-wrap: break-word;
-    line-height: 1.5;
+    line-height: 1.6;
     margin: 4px 0 0 0;
 }
 
-/* 6. Кнопка "Дерево талантов" - иконка слева 16px */
+/* 7. Заголовок "Пассивные способности" оставляем */
+.modal .info-container h3 {
+    margin: 16px 0 4px 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* 8. Кнопка "Дерево талантов" - иконка слева 16px */
 .hero-stats-row #openTreeBtn {
     display: flex !important;
     align-items: center !important;
@@ -798,15 +819,14 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 0 !important;
 }
 
-/* 7. Кнопки навигации - увеличены, расстояние минимальное */
+/* 9. Кнопки навигации - справа сверху, одного размера */
 .nav-btn {
     position: absolute !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    width: 56px !important;
-    height: 56px !important;
-    min-width: 56px !important;
-    min-height: 56px !important;
+    top: 12px !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
     border: none !important;
     background: transparent !important;
     cursor: pointer !important;
@@ -817,86 +837,88 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 0 !important;
     z-index: 10 !important;
     box-shadow: none !important;
-    border-radius: 50% !important;
-    background: rgba(0,0,0,0.05) !important;
+    border-radius: 0 !important;
 }
 .nav-btn:hover { 
-    transform: translateY(-50%) scale(1.1) !important; 
-    background: rgba(0,0,0,0.1) !important;
+    transform: scale(1.1) !important; 
 }
 .nav-btn:active { 
-    transform: translateY(-50%) scale(0.9) !important; 
+    transform: scale(0.9) !important; 
 }
 .nav-btn img {
-    width: 40px !important;
-    height: 40px !important;
-    min-width: 40px !important;
-    min-height: 40px !important;
-    max-width: 40px !important;
-    max-height: 40px !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
     object-fit: contain !important;
     display: block !important;
     filter: none !important;
 }
 .nav-btn img[src$=".svg"] {
-    width: 40px !important;
-    height: 40px !important;
-    min-width: 40px !important;
-    min-height: 40px !important;
-    max-width: 40px !important;
-    max-height: 40px !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
     transform: scale(1.0) !important;
     object-fit: contain !important;
 }
+
+/* Кнопки: Влево, Вправо, Закрыть - справа сверху */
 .nav-prev { 
-    left: -28px !important;
-    right: auto !important;
+    right: 96px !important;
+    left: auto !important;
 }
 .nav-next { 
-    right: -28px !important;
+    right: 52px !important;
     left: auto !important;
 }
 .nav-close { 
     right: 8px !important;
     top: 12px !important;
-    transform: none !important;
-    width: 48px !important;
-    height: 48px !important;
-    min-width: 48px !important;
-    min-height: 48px !important;
-    background: transparent !important;
-}
-.nav-close:hover {
-    transform: scale(1.1) !important;
-    background: rgba(0,0,0,0.05) !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
 }
 .nav-close img {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    min-height: 44px !important;
-    max-width: 44px !important;
-    max-height: 44px !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
 }
 
+/* Адаптивность для маленьких экранов */
 @media (max-width: 768px) {
-    .nav-prev { left: 4px !important; }
-    .nav-next { right: 4px !important; }
+    .nav-prev { right: 72px !important; }
+    .nav-next { right: 36px !important; }
+    .nav-close { right: 4px !important; }
     .nav-btn {
-        width: 40px !important;
-        height: 40px !important;
-        min-width: 40px !important;
-        min-height: 40px !important;
-        background: rgba(0,0,0,0.1) !important;
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
+        top: 8px !important;
     }
     .nav-btn img {
-        width: 28px !important;
-        height: 28px !important;
-        min-width: 28px !important;
-        min-height: 28px !important;
-        max-width: 28px !important;
-        max-height: 28px !important;
+        width: 24px !important;
+        height: 24px !important;
+        min-width: 24px !important;
+        min-height: 24px !important;
+        max-width: 24px !important;
+        max-height: 24px !important;
     }
+}
+
+@media (max-width: 480px) {
+    .nav-prev { right: 64px !important; }
+    .nav-next { right: 32px !important; }
+    .nav-close { right: 2px !important; }
 }
 
 /* ===== ОСТАЛЬНЫЕ СТИЛИ ===== */
@@ -2420,7 +2442,7 @@ function fillModal(hero){
     const rightIcon = getIcon('Right_button');
     const closeIcon = getIcon('Close_button');
 
-    const navIconStyle = 'width:40px;height:40px;min-width:40px;min-height:40px;max-width:40px;max-height:40px;object-fit:contain;display:block;';
+    const navIconStyle = 'width:32px;height:32px;min-width:32px;min-height:32px;max-width:32px;max-height:32px;object-fit:contain;display:block;';
 
     if (leftIcon) {
         const el = document.getElementById('leftBtnIcon');
