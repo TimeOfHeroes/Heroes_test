@@ -668,11 +668,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     gap: 4px;
     overflow-y: auto;
     padding-right: 4px;
- <div class="upgrade-btn-wrapper">
-    <button id="upgradeToggleBtn" class="upgrade-toggle-btn">
-        <img id="upgradeIcon" src="" alt="Прокачка"> Прокачка героя
-    </button>
-</div> 
 }
 .info-container h2 {
     margin: 0 0 4px 0;
@@ -861,6 +856,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 0 !important;
     flex-shrink: 0 !important;
 }
+
+/* ===== КНОПКА "ПРОКАЧКА ГЕРОЯ" — компактная ===== */
 .upgrade-toggle-btn {
     display: inline-flex !important;
     align-items: center !important;
@@ -916,6 +913,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     width: auto;
     margin: 4px 0 6px 0;
 }
+
 .hero-info-row {
     display: flex;
     flex-wrap: wrap;
@@ -1247,9 +1245,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <div id="modalTags" class="modal-tags"></div>
         <h3>Пассивные способности</h3>
         <div id="mPassive" class="pre"></div>
-        <button id="upgradeToggleBtn" class="upgrade-toggle-btn">
-            <img id="upgradeIcon" src="" alt="Прокачка"> Прокачка героя
-        </button>
+        <!-- Кнопка "Прокачка героя" с обёрткой -->
+        <div class="upgrade-btn-wrapper">
+            <button id="upgradeToggleBtn" class="upgrade-toggle-btn">
+                <img id="upgradeIcon" src="" alt="Прокачка"> Прокачка героя
+            </button>
+        </div>
         <div id="upgradeSectionWrapper" class="upgrade-section-wrapper">
             <div id="upgradeContainer" class="upgrade-section">
                 <div style="margin-bottom:12px;">
@@ -1286,6 +1287,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 </div>
 <div id="infoModal" class="info-modal"><div class="info-dialog"><button id="infoClose" class="info-close">×</button><h2>О галерее героев</h2><p>Эта галерея содержит информацию о героях игры "Время Героев", их характеристиках и способностях.</p><div class="clan"><strong>Разработано:</strong><br>Евгений Поташко и Владимир Плотников<br><strong>Клан: "Рожденные в СССР."</strong><br>скрины героев предоставлены великим и могучим Козырем</div><div class="contact"><strong>Обратная связь:</strong><br>Нашли ошибку или есть предложения?<br>Пишите: <a href="mailto:master-Erasm@yandex.ru">master-Erasm@yandex.ru</a></div><p>База данных регулярно обновляется с учетом новых героев и изменений в балансе игры.</p><p class="date">Дата последнего обновления: <span id="updateDate"></span></p></div></div>
 <script>
+// ===== ВЕСЬ JS =====
 const HERO_FIELDS = { id:'id', name:'Герой', element:'Стихия', stars:'Количество звезд', mana:'Скорость маны', power:'Сила', attack:'Атака', defense:'Защита', hp:'Жизни', attackType:'Способ атаки', abilities:'Способности', passive:'Пассивные способности', summon:'Место призыва', clazz:'Класс', image:'Картинка' };
 const CLASS_TALENT_FIELDS = { class_id:'class_id', row_number:'row_number', is_mandatory:'is_mandatory', branch_group:'branch_group', left_talent_id:'left_talent_id', center_talent_id:'center_talent_id', right_talent_id:'right_talent_id' };
 const TALENT_DESC_FIELDS = { id:'id', talent_id:'talent_id', effect_type:'effect_type', value:'value', is_percent:'is_percent', image_active:'Картинка активная', image_inactive:'Картинка неактивная' };
