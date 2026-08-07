@@ -818,10 +818,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .nav-btn {
     position: absolute !important;
     top: 12px !important;
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    min-height: 44px !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
     border: none !important;
     background: transparent !important;
     cursor: pointer !important;
@@ -843,12 +843,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     background: transparent !important;
 }
 .nav-btn img {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    min-height: 36px !important;
-    max-width: 36px !important;
-    max-height: 36px !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
     object-fit: contain !important;
     display: block !important;
     filter: none !important;
@@ -856,30 +856,30 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 
 .nav-prev { 
-    right: 84px !important;
+    right: 100px !important;
     left: auto !important;
     top: 12px !important;
 }
 .nav-next { 
-    right: 40px !important;
+    right: 44px !important;
     left: auto !important;
     top: 12px !important;
 }
 .nav-close { 
     right: 4px !important;
     top: 12px !important;
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    min-height: 36px !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
 }
 .nav-close img {
-    width: 28px !important;
-    height: 28px !important;
-    min-width: 28px !important;
-    min-height: 28px !important;
-    max-width: 28px !important;
-    max-height: 28px !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
 }
 
 /* ===== ГРУППА "ЦВЕТ, ЗВЕЗДНОСТЬ, КЛАСС" ===== */
@@ -1196,16 +1196,36 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 
 /* ===== АДАПТИВНОСТЬ ДЛЯ МОДАЛЬНОГО ОКНА ===== */
-@media (max-width: 768px) {
+@media (max-width: 768px) {@media (max-width: 768px) {
+    .nav-prev { right: 84px !important; }
+    .nav-next { right: 38px !important; }
+    .nav-close { right: 2px !important; }
+    .nav-btn {
+        width: 44px !important;
+        height: 44px !important;
+        min-width: 44px !important;
+        min-height: 44px !important;
+        top: 8px !important;
+    }
+    .nav-btn img {
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        min-height: 34px !important;
+        max-width: 34px !important;
+        max-height: 34px !important;
+    }
+}
+@media (max-width: 480px) {
     .nav-prev { right: 72px !important; }
-    .nav-next { right: 36px !important; }
+    .nav-next { right: 34px !important; }
     .nav-close { right: 2px !important; }
     .nav-btn {
         width: 36px !important;
         height: 36px !important;
         min-width: 36px !important;
         min-height: 36px !important;
-        top: 8px !important;
+        top: 6px !important;
     }
     .nav-btn img {
         width: 28px !important;
@@ -1214,78 +1234,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         min-height: 28px !important;
         max-width: 28px !important;
         max-height: 28px !important;
-    }
-    .nav-close {
-        width: 30px !important;
-        height: 30px !important;
-        min-width: 30px !important;
-        min-height: 30px !important;
-    }
-    .nav-close img {
-        width: 22px !important;
-        height: 22px !important;
-        min-width: 22px !important;
-        min-height: 22px !important;
-        max-width: 22px !important;
-        max-height: 22px !important;
-    }
-    .hero-meta-row .star-display img {
-        width: 18px !important;
-        height: 18px !important;
-        min-width: 18px !important;
-        min-height: 18px !important;
-        max-width: 18px !important;
-        max-height: 18px !important;
-    }
-    .hero-meta-row {
-        gap: 3px 6px;
-    }
-}
-
-@media (max-width: 480px) {
-    .nav-prev { right: 64px !important; }
-    .nav-next { right: 32px !important; }
-    .nav-close { right: 2px !important; }
-    .nav-btn {
-        width: 30px !important;
-        height: 30px !important;
-        min-width: 30px !important;
-        min-height: 30px !important;
-        top: 6px !important;
-    }
-    .nav-btn img {
-        width: 22px !important;
-        height: 22px !important;
-        min-width: 22px !important;
-        min-height: 22px !important;
-        max-width: 22px !important;
-        max-height: 22px !important;
-    }
-    .nav-close {
-        width: 24px !important;
-        height: 24px !important;
-        min-width: 24px !important;
-        min-height: 24px !important;
-    }
-    .nav-close img {
-        width: 18px !important;
-        height: 18px !important;
-        min-width: 18px !important;
-        min-height: 18px !important;
-        max-width: 18px !important;
-        max-height: 18px !important;
-    }
-    .hero-meta-row .star-display img {
-        width: 16px !important;
-        height: 16px !important;
-        min-width: 16px !important;
-        min-height: 16px !important;
-        max-width: 16px !important;
-        max-height: 16px !important;
-    }
-    .hero-meta-row {
-        gap: 2px 4px;
-        font-size: 13px;
     }
 }
 </style>
