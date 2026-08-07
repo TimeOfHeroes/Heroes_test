@@ -1416,6 +1416,208 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-height: 20px !important;
     }
 }
+  /* ===== ИСПРАВЛЕНИЯ ДЛЯ МОДАЛЬНОГО ОКНА ===== */
+
+/* 1. Кнопки навигации - все на одной линии (top: 12px) */
+.nav-btn {
+    position: absolute !important;
+    top: 12px !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    border: none !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: transform 0.2s !important;
+    padding: 0 !important;
+    z-index: 10 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+.nav-btn:hover { 
+    transform: scale(1.1) !important; 
+    background: transparent !important;
+}
+.nav-btn:active { 
+    transform: scale(0.9) !important; 
+    background: transparent !important;
+}
+.nav-btn img {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    max-width: 38px !important;
+    max-height: 38px !important;
+    object-fit: contain !important;
+    display: block !important;
+    filter: none !important;
+    pointer-events: none !important;
+}
+
+/* Влево и Вправо - максимально близко друг к другу */
+.nav-prev { 
+    right: 92px !important;
+    left: auto !important;
+    top: 12px !important;
+}
+.nav-next { 
+    right: 44px !important;
+    left: auto !important;
+    top: 12px !important;
+}
+.nav-close { 
+    right: 4px !important;
+    top: 12px !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+}
+.nav-close img {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
+}
+
+/* 2. Группа "Цвет, Звездность, Класс" - минимальные отступы, звезда вплотную */
+.hero-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+    margin: 0 0 6px 0;
+    font-weight: 600;
+    font-size: 15px;
+}
+.hero-meta-row .star-display {
+    display: inline-flex;
+    align-items: center;
+    gap: 0px;
+    margin: 0;
+    padding: 0;
+}
+.hero-meta-row .star-display img {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    max-width: 24px !important;
+    max-height: 24px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Убираем лишние отступы у spans внутри meta-row */
+.hero-meta-row > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .nav-prev { right: 78px !important; }
+    .nav-next { right: 38px !important; }
+    .nav-close { right: 2px !important; }
+    .nav-btn {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+        top: 8px !important;
+    }
+    .nav-btn img {
+        width: 28px !important;
+        height: 28px !important;
+        min-width: 28px !important;
+        min-height: 28px !important;
+        max-width: 28px !important;
+        max-height: 28px !important;
+    }
+    .nav-close {
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
+    }
+    .nav-close img {
+        width: 24px !important;
+        height: 24px !important;
+        min-width: 24px !important;
+        min-height: 24px !important;
+        max-width: 24px !important;
+        max-height: 24px !important;
+    }
+    .hero-meta-row .star-display img {
+        width: 20px !important;
+        height: 20px !important;
+        min-width: 20px !important;
+        min-height: 20px !important;
+        max-width: 20px !important;
+        max-height: 20px !important;
+    }
+    .hero-meta-row {
+        gap: 3px 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-prev { right: 70px !important; }
+    .nav-next { right: 34px !important; }
+    .nav-close { right: 2px !important; }
+    .nav-btn {
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        min-height: 30px !important;
+        top: 6px !important;
+    }
+    .nav-btn img {
+        width: 22px !important;
+        height: 22px !important;
+        min-width: 22px !important;
+        min-height: 22px !important;
+        max-width: 22px !important;
+        max-height: 22px !important;
+    }
+    .nav-close {
+        width: 28px !important;
+        height: 28px !important;
+        min-width: 28px !important;
+        min-height: 28px !important;
+    }
+    .nav-close img {
+        width: 20px !important;
+        height: 20px !important;
+        min-width: 20px !important;
+        min-height: 20px !important;
+        max-width: 20px !important;
+        max-height: 20px !important;
+    }
+    .hero-meta-row .star-display img {
+        width: 18px !important;
+        height: 18px !important;
+        min-width: 18px !important;
+        min-height: 18px !important;
+        max-width: 18px !important;
+        max-height: 18px !important;
+    }
+    .hero-meta-row {
+        gap: 2px 4px;
+        font-size: 13px;
+    }
+}
 </style>
 </head>
 <body>
