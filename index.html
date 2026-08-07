@@ -761,12 +761,20 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     box-sizing: border-box !important;
 }
 
-/* 5. Убираем надпись "Способности" */
-.modal .info-container h3:first-of-type {
+/* 5. Убираем только первый заголовок "Способности" */
+.modal .info-container > h3:first-of-type {
     display: none !important;
 }
 
-/* 6. Способности и пассивки без рамки и фона */
+/* 6. Заголовок "Пассивные способности" - оставляем */
+.modal .info-container h3:not(:first-of-type) {
+    margin: 16px 0 4px 0;
+    font-size: 16px;
+    font-weight: 600;
+    display: block !important;
+}
+
+/* 7. Способности и пассивки без рамки и фона */
 .pre {
     white-space: pre-line;
     background: transparent !important;
@@ -776,13 +784,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     overflow-wrap: break-word;
     line-height: 1.6;
     margin: 4px 0 0 0;
-}
-
-/* 7. Заголовок "Пассивные способности" */
-.modal .info-container h3 {
-    margin: 16px 0 4px 0;
-    font-size: 16px;
-    font-weight: 600;
 }
 
 /* 8. Кнопка "Дерево талантов" - иконка слева 16px */
@@ -819,14 +820,14 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 0 !important;
 }
 
-/* 9. Кнопки навигации - без фона при наведении */
+/* 9. Кнопки навигации - увеличены */
 .nav-btn {
     position: absolute !important;
     top: 12px !important;
-    width: 56px !important;
-    height: 56px !important;
-    min-width: 56px !important;
-    min-height: 56px !important;
+    width: 64px !important;
+    height: 64px !important;
+    min-width: 64px !important;
+    min-height: 64px !important;
     border: none !important;
     background: transparent !important;
     cursor: pointer !important;
@@ -848,96 +849,96 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     background: transparent !important;
 }
 .nav-btn img {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    min-height: 44px !important;
-    max-width: 44px !important;
-    max-height: 44px !important;
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px !important;
+    min-height: 50px !important;
+    max-width: 50px !important;
+    max-height: 50px !important;
     object-fit: contain !important;
     display: block !important;
     filter: none !important;
     pointer-events: none !important;
 }
 .nav-btn img[src$=".svg"] {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    min-height: 44px !important;
-    max-width: 44px !important;
-    max-height: 44px !important;
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px !important;
+    min-height: 50px !important;
+    max-width: 50px !important;
+    max-height: 50px !important;
     transform: scale(1.0) !important;
     object-fit: contain !important;
 }
 
 /* Кнопки: Влево, Вправо, Закрыть - справа сверху, на одном уровне */
 .nav-prev { 
-    right: 120px !important;
+    right: 132px !important;
     left: auto !important;
     top: 12px !important;
 }
 .nav-next { 
-    right: 60px !important;
+    right: 64px !important;
     left: auto !important;
     top: 12px !important;
 }
 .nav-close { 
     right: 8px !important;
     top: 12px !important;
-    width: 56px !important;
-    height: 56px !important;
-    min-width: 56px !important;
-    min-height: 56px !important;
+    width: 64px !important;
+    height: 64px !important;
+    min-width: 64px !important;
+    min-height: 64px !important;
 }
 .nav-close img {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    min-height: 44px !important;
-    max-width: 44px !important;
-    max-height: 44px !important;
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px !important;
+    min-height: 50px !important;
+    max-width: 50px !important;
+    max-height: 50px !important;
 }
 
 /* Адаптивность для маленьких экранов */
 @media (max-width: 768px) {
-    .nav-prev { right: 88px !important; }
-    .nav-next { right: 44px !important; }
+    .nav-prev { right: 96px !important; }
+    .nav-next { right: 48px !important; }
     .nav-close { right: 4px !important; }
     .nav-btn {
-        width: 40px !important;
-        height: 40px !important;
-        min-width: 40px !important;
-        min-height: 40px !important;
+        width: 44px !important;
+        height: 44px !important;
+        min-width: 44px !important;
+        min-height: 44px !important;
         top: 8px !important;
     }
     .nav-btn img {
-        width: 32px !important;
-        height: 32px !important;
-        min-width: 32px !important;
-        min-height: 32px !important;
-        max-width: 32px !important;
-        max-height: 32px !important;
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        min-height: 34px !important;
+        max-width: 34px !important;
+        max-height: 34px !important;
     }
 }
 
 @media (max-width: 480px) {
-    .nav-prev { right: 76px !important; }
-    .nav-next { right: 38px !important; }
+    .nav-prev { right: 80px !important; }
+    .nav-next { right: 40px !important; }
     .nav-close { right: 2px !important; }
     .nav-btn {
-        width: 32px !important;
-        height: 32px !important;
-        min-width: 32px !important;
-        min-height: 32px !important;
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
         top: 6px !important;
     }
     .nav-btn img {
-        width: 24px !important;
-        height: 24px !important;
-        min-width: 24px !important;
-        min-height: 24px !important;
-        max-width: 24px !important;
-        max-height: 24px !important;
+        width: 28px !important;
+        height: 28px !important;
+        min-width: 28px !important;
+        min-height: 28px !important;
+        max-width: 28px !important;
+        max-height: 28px !important;
     }
 }
 
@@ -1347,6 +1348,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <div id="heroStatsRow" class="hero-stats-row"></div>
         <div id="heroInfoRow" class="hero-info-row"></div>
         
+        <h3>Способности</h3>
         <div id="mAbilities" class="pre"></div>
         <div id="modalTags" class="modal-tags"></div>
         
@@ -2462,7 +2464,7 @@ function fillModal(hero){
     const rightIcon = getIcon('Right_button');
     const closeIcon = getIcon('Close_button');
 
-    const navIconStyle = 'width:44px;height:44px;min-width:44px;min-height:44px;max-width:44px;max-height:44px;object-fit:contain;display:block;';
+    const navIconStyle = 'width:50px;height:50px;min-width:50px;min-height:50px;max-width:50px;max-height:50px;object-fit:contain;display:block;';
 
     if (leftIcon) {
         const el = document.getElementById('leftBtnIcon');
