@@ -855,16 +855,19 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     pointer-events: none !important;
 }
 
+/* ← и → вплотную друг к другу */
 .nav-prev { 
-    right: 100px !important;
+    right: 92px !important;
     left: auto !important;
     top: 12px !important;
 }
 .nav-next { 
-    right: 44px !important;
+    right: 36px !important;
     left: auto !important;
     top: 12px !important;
 }
+
+/* ✕ — отдалена от группы стрелок */
 .nav-close { 
     right: 4px !important;
     top: 12px !important;
@@ -900,12 +903,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 0;
 }
 .hero-meta-row .star-display img {
-    width: 20px !important;
-    height: 20px !important;
-    min-width: 20px !important;
-    min-height: 20px !important;
-    max-width: 20px !important;
-    max-height: 20px !important;
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    max-width: 16px !important;
+    max-height: 16px !important;
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
@@ -1196,9 +1199,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 
 /* ===== АДАПТИВНОСТЬ ДЛЯ МОДАЛЬНОГО ОКНА ===== */
-@media (max-width: 768px) {@media (max-width: 768px) {
-    .nav-prev { right: 84px !important; }
-    .nav-next { right: 38px !important; }
+@media (max-width: 768px) {
+    .nav-prev { right: 78px !important; }
+    .nav-next { right: 32px !important; }
     .nav-close { right: 2px !important; }
     .nav-btn {
         width: 44px !important;
@@ -1215,10 +1218,22 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-width: 34px !important;
         max-height: 34px !important;
     }
+    .hero-meta-row .star-display img {
+        width: 14px !important;
+        height: 14px !important;
+        min-width: 14px !important;
+        min-height: 14px !important;
+        max-width: 14px !important;
+        max-height: 14px !important;
+    }
+    .hero-meta-row {
+        gap: 3px 6px;
+    }
 }
+
 @media (max-width: 480px) {
-    .nav-prev { right: 72px !important; }
-    .nav-next { right: 34px !important; }
+    .nav-prev { right: 68px !important; }
+    .nav-next { right: 28px !important; }
     .nav-close { right: 2px !important; }
     .nav-btn {
         width: 36px !important;
@@ -1234,6 +1249,18 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         min-height: 28px !important;
         max-width: 28px !important;
         max-height: 28px !important;
+    }
+    .hero-meta-row .star-display img {
+        width: 12px !important;
+        height: 12px !important;
+        min-width: 12px !important;
+        min-height: 12px !important;
+        max-width: 12px !important;
+        max-height: 12px !important;
+    }
+    .hero-meta-row {
+        gap: 2px 4px;
+        font-size: 13px;
     }
 }
 </style>
@@ -2186,7 +2213,7 @@ function renderMetaRow(hero) {
     
     let starsDisplay;
     if (starIcon) {
-        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:20px !important;height:20px !important;min-width:20px !important;min-height:20px !important;max-width:20px !important;max-height:20px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;margin:0 !important;padding:0 !important;"></span>`;
+        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:16px !important;height:16px !important;min-width:16px !important;min-height:16px !important;max-width:16px !important;max-height:16px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;margin:0 !important;padding:0 !important;"></span>`;
     } else {
         starsDisplay = `${stars}★`;
     }
@@ -2453,7 +2480,7 @@ function fillModal(hero){
     const rightIcon = getIcon('Right_button');
     const closeIcon = getIcon('Close_button');
 
-    const navIconStyle = 'width:36px;height:36px;min-width:36px;min-height:36px;max-width:36px;max-height:36px;object-fit:contain;display:block;';
+    const navIconStyle = 'width:44px;height:44px;min-width:44px;min-height:44px;max-width:44px;max-height:44px;object-fit:contain;display:block;';
 
     if (leftIcon) {
         const el = document.getElementById('leftBtnIcon');
