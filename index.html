@@ -797,12 +797,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 0;
 }
 .hero-meta-row .star-display img {
-    width: 20px !important;
-    height: 20px !important;
-    min-width: 20px !important;
-    min-height: 20px !important;
-    max-width: 20px !important;
-    max-height: 20px !important;
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    max-width: 16px !important;
+    max-height: 16px !important;
     object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
@@ -934,6 +934,41 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 0 !important;
 }
 
+/* Кнопка "Прокачка героя" — такого же размера, как "Дерево талантов" */
+.upgrade-toggle-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 3px 10px !important;
+    font-size: 12px !important;
+    border: none !important;
+    border-radius: 6px !important;
+    background: #227BBC !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    font-weight: 500 !important;
+    height: 28px !important;
+    white-space: nowrap !important;
+    width: auto !important;
+    margin: 4px 0 6px 0 !important;
+}
+.upgrade-toggle-btn:hover { background: #1a5f9a !important; }
+.upgrade-toggle-btn img {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    max-width: 16px !important;
+    max-height: 16px !important;
+    filter: brightness(0) invert(1) !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    object-fit: contain !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 .hero-info-row {
     display: flex;
     flex-wrap: wrap;
@@ -949,21 +984,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .hero-info-row .info-item .value { font-weight: 600; font-size: 15px; }
 .hero-info-row .info-item .label { font-size: 11px; color: var(--text-color); opacity: 0.6; font-weight: 400; margin-top: -2px; }
 
-.upgrade-toggle-btn {
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    padding: 6px 14px !important;
-    font-size: 13px !important;
-    border: none !important;
-    border-radius: 6px !important;
-    background: #227BBC !important;
-    color: #fff !important;
-    cursor: pointer !important;
-    transition: all 0.2s !important;
-    font-weight: 500 !important;
-    margin: 4px 0 6px 0 !important;
-}
 .upgrade-section-wrapper { display: none; margin-top: 8px; }
 .upgrade-section-wrapper.show { display: block; }
 .upgrade-section {
@@ -1062,14 +1082,14 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .upgrade-tokens .token img { width: 36px; height: 36px; object-fit: contain; border-radius: 4px; flex-shrink: 0; }
 .upgrade-tokens .token .count { font-weight: 600; color: var(--text-color); padding-right: 0; }
 
-/* ===== КНОПКИ НАВИГАЦИИ В МОДАЛКЕ ===== */
+/* ===== КНОПКИ НАВИГАЦИИ В МОДАЛКЕ (48px) ===== */
 .nav-btn {
     position: absolute !important;
     top: 12px !important;
-    width: 56px !important;
-    height: 56px !important;
-    min-width: 56px !important;
-    min-height: 56px !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
     border: none !important;
     background: transparent !important;
     cursor: pointer !important;
@@ -1091,12 +1111,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     background: transparent !important;
 }
 .nav-btn img {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    min-height: 44px !important;
-    max-width: 44px !important;
-    max-height: 44px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
     object-fit: contain !important;
     display: block !important;
     filter: none !important;
@@ -1104,30 +1124,30 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 
 .nav-prev { 
-    right: 100px !important;
+    right: 90px !important;
     left: auto !important;
     top: 12px !important;
 }
 .nav-next { 
-    right: 44px !important;
+    right: 42px !important;
     left: auto !important;
     top: 12px !important;
 }
 .nav-close { 
     right: 4px !important;
     top: 12px !important;
-    width: 56px !important;
-    height: 56px !important;
-    min-width: 56px !important;
-    min-height: 56px !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
 }
 .nav-close img {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    min-height: 44px !important;
-    max-width: 44px !important;
-    max-height: 44px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
 }
 
 .tree-panel { position:fixed; top:50%; right:20px; transform:translateY(-50%); width:420px; max-width:calc(100vw - 40px); background:var(--card-bg); border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.3); z-index:2100; display:none; flex-direction:column; overflow:hidden; border:1px solid var(--border-color); cursor:default; }
@@ -1183,23 +1203,23 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 
 /* Адаптив для модального окна */
 @media (max-width: 768px) {
-    .nav-prev { right: 86px !important; }
-    .nav-next { right: 36px !important; }
+    .nav-prev { right: 78px !important; }
+    .nav-next { right: 34px !important; }
     .nav-close { right: 4px !important; }
     .nav-btn {
-        width: 48px !important;
-        height: 48px !important;
-        min-width: 48px !important;
-        min-height: 48px !important;
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        min-height: 40px !important;
         top: 8px !important;
     }
     .nav-btn img {
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        min-height: 36px !important;
-        max-width: 36px !important;
-        max-height: 36px !important;
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        min-height: 30px !important;
+        max-width: 30px !important;
+        max-height: 30px !important;
     }
     .modal .dialog .modal-content {
         grid-template-columns: 1fr;
@@ -1208,12 +1228,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     }
     .image-container img { max-height: 200px; }
     .hero-meta-row .star-display img {
-        width: 18px !important;
-        height: 18px !important;
-        min-width: 18px !important;
-        min-height: 18px !important;
-        max-width: 18px !important;
-        max-height: 18px !important;
+        width: 16px !important;
+        height: 16px !important;
+        min-width: 16px !important;
+        min-height: 16px !important;
+        max-width: 16px !important;
+        max-height: 16px !important;
     }
     .hero-stats-row .stat-item img {
         width: 16px !important;
@@ -1234,32 +1254,32 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 
 @media (max-width: 480px) {
-    .nav-prev { right: 72px !important; }
-    .nav-next { right: 30px !important; }
+    .nav-prev { right: 66px !important; }
+    .nav-next { right: 28px !important; }
     .nav-close { right: 4px !important; }
     .nav-btn {
-        width: 40px !important;
-        height: 40px !important;
-        min-width: 40px !important;
-        min-height: 40px !important;
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        min-height: 34px !important;
         top: 6px !important;
     }
     .nav-btn img {
-        width: 30px !important;
-        height: 30px !important;
-        min-width: 30px !important;
-        min-height: 30px !important;
-        max-width: 30px !important;
-        max-height: 30px !important;
+        width: 26px !important;
+        height: 26px !important;
+        min-width: 26px !important;
+        min-height: 26px !important;
+        max-width: 26px !important;
+        max-height: 26px !important;
     }
     .dialog { height: 95vh; max-height: 95vh; }
     .hero-meta-row .star-display img {
-        width: 16px !important;
-        height: 16px !important;
-        min-width: 16px !important;
-        min-height: 16px !important;
-        max-width: 16px !important;
-        max-height: 16px !important;
+        width: 14px !important;
+        height: 14px !important;
+        min-width: 14px !important;
+        min-height: 14px !important;
+        max-width: 14px !important;
+        max-height: 14px !important;
     }
     .hero-stats-row .stat-item img {
         width: 14px !important;
@@ -1648,7 +1668,7 @@ function renderUpgradeSection(hero) {
     
     if (upgradeIcon && upgradeIconEl) {
         upgradeIconEl.src = upgradeIcon;
-        upgradeIconEl.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;';
+        upgradeIconEl.style.cssText = 'width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;margin:0;padding:0;';
     }
     
     const heroStars = String(hero['Количество звезд'] || '1').trim();
@@ -2228,7 +2248,7 @@ function renderMetaRow(hero) {
     
     let starsDisplay;
     if (starIcon) {
-        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:20px !important;height:20px !important;min-width:20px !important;min-height:20px !important;max-width:20px !important;max-height:20px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;margin:0 !important;padding:0 !important;"></span>`;
+        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:16px !important;height:16px !important;min-width:16px !important;min-height:16px !important;max-width:16px !important;max-height:16px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;margin:0 !important;padding:0 !important;"></span>`;
     } else {
         starsDisplay = `${stars}★`;
     }
@@ -2495,7 +2515,7 @@ function fillModal(hero){
     const rightIcon = getIcon('Right_button');
     const closeIcon = getIcon('Close_button');
 
-    const navIconStyle = 'width:44px;height:44px;min-width:44px;min-height:44px;max-width:44px;max-height:44px;object-fit:contain;display:block;';
+    const navIconStyle = 'width:36px;height:36px;min-width:36px;min-height:36px;max-width:36px;max-height:36px;object-fit:contain;display:block;';
 
     if (leftIcon) {
         const el = document.getElementById('leftBtnIcon');
@@ -2554,7 +2574,7 @@ function fillModal(hero){
         const upgradeImg = document.getElementById('upgradeIcon');
         if (upgradeImg) {
             upgradeImg.src = upgradeIcon;
-            upgradeImg.style.cssText = 'width:28px;height:28px;min-width:28px;min-height:28px;max-width:28px;max-height:28px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;';
+            upgradeImg.style.cssText = 'width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;margin:0;padding:0;';
         }
     }
     
