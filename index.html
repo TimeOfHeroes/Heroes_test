@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <style>
-/* ===== ВСЕ СТИЛИ (полная версия) ===== */
+/* ===== ВСЕ СТИЛИ ===== */
 :root {
   color-scheme: light dark;
   --hdrH: 70px;
@@ -616,6 +616,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .toggle-abilities:hover { opacity:1; }
 .card-abilities-full { display:none; font-size:10px; padding:0 12px 8px; line-height:1.4; border-top:1px solid rgba(0,0,0,0.08); margin-top:4px; padding-top:6px; }
+
+/* ===== МОДАЛЬНОЕ ОКНО ===== */
 .modal { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center; padding:20px; z-index:2000; }
 .modal.show { display:flex; }
 .dialog { position:relative; background:var(--card-bg); max-width:1200px; width:min(1200px, 95vw); height:90vh; max-height:90vh; min-height:400px; border-radius:16px; display:flex; flex-direction:column; box-shadow:0 20px 40px rgba(0,0,0,0.3); overflow:hidden; }
@@ -629,10 +631,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     flex:1;
     height:100%;
 }
+
+/* ===== УВЕЛИЧЕННАЯ КАРТИНКА В МОДАЛКЕ ===== */
 .image-container {
     background: var(--element-unknown);
     border-radius: 12px;
-    padding: 12px;
+    padding: 16px;
     transition: background 0.3s;
     position: relative;
     display: flex;
@@ -644,7 +648,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .image-container[data-element="Красный"] { background: var(--element-red); }
 .image-container[data-element="Фиолетовый"] { background: var(--element-purple); }
 .image-container[data-element="Желтый"] { background: var(--element-yellow); }
-.image-container img { width:100%; max-height:300px; object-fit:contain; border-radius:8px; background:transparent; padding:4px; }
+.image-container img {
+    width: 100%;
+    max-height: 500px !important;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    background: transparent;
+    padding: 4px;
+}
 .summon-text {
     text-align: center;
     margin-top: 10px;
@@ -1019,7 +1031,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .upgrade-tokens .token img { width: 36px; height: 36px; object-fit: contain; border-radius: 4px; flex-shrink: 0; }
 .upgrade-tokens .token .count { font-weight: 600; color: var(--text-color); padding-right: 0; }
 
-/* ===== КНОПКИ НАВИГАЦИИ — СДВИНУТЫ ЛЕВЕЕ (160px, 112px, 64px) ===== */
+/* ===== КНОПКИ НАВИГАЦИИ ===== */
 .nav-btn {
     position: absolute !important;
     top: 12px !important;
@@ -1148,20 +1160,23 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
 .info-close:hover { opacity:1; }
 
-/* Адаптив для модального окна */
+/* Адаптив */
 @media (max-width: 768px) {
+    .image-container img { max-height: 200px !important; }
+    .image-container { padding: 12px; }
     .nav-prev { right: 140px !important; }
     .nav-next { right: 98px !important; }
     .nav-close { right: 56px !important; }
     .nav-btn { width: 40px !important; height: 40px !important; min-width: 40px !important; min-height: 40px !important; top: 8px !important; }
     .nav-btn img { width: 30px !important; height: 30px !important; min-width: 30px !important; min-height: 30px !important; max-width: 30px !important; max-height: 30px !important; }
     .modal .dialog .modal-content { grid-template-columns: 1fr; gap: 12px; padding: 12px; }
-    .image-container img { max-height: 200px; }
     .hero-meta-row .star-display img { width: 16px !important; height: 16px !important; min-width: 16px !important; min-height: 16px !important; max-width: 16px !important; max-height: 16px !important; }
     .hero-stats-row .stat-item img { width: 16px !important; height: 16px !important; min-width: 16px !important; min-height: 16px !important; max-width: 16px !important; max-height: 16px !important; }
     .hero-stats-row .stat-item img[src*="Sword" i] { width: 18px !important; height: 18px !important; min-width: 18px !important; min-height: 18px !important; max-width: 18px !important; max-height: 18px !important; }
 }
 @media (max-width: 480px) {
+    .image-container img { max-height: 150px !important; }
+    .image-container { padding: 8px; }
     .nav-prev { right: 120px !important; }
     .nav-next { right: 84px !important; }
     .nav-close { right: 48px !important; }
