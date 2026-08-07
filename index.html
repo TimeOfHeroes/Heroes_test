@@ -1320,6 +1320,128 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-height: 16px !important;
     }
 }
+  /* ===== ФИНАЛЬНОЕ ИСПРАВЛЕНИЕ КНОПОК НАВИГАЦИИ ===== */
+/* Переопределяем ВСЕ предыдущие стили */
+
+.modal .nav-btn {
+    position: absolute !important;
+    top: 12px !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    border: none !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: transform 0.2s !important;
+    padding: 0 !important;
+    z-index: 10 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    transform: none !important;
+}
+
+.modal .nav-btn:hover {
+    transform: scale(1.1) !important;
+    background: transparent !important;
+}
+
+.modal .nav-btn:active {
+    transform: scale(0.9) !important;
+    background: transparent !important;
+}
+
+.modal .nav-btn img {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
+    object-fit: contain !important;
+    display: block !important;
+    filter: none !important;
+    pointer-events: none !important;
+}
+
+/* ← Влево - ближе к центру */
+.modal .nav-prev {
+    right: 86px !important;
+    left: auto !important;
+    top: 12px !important;
+}
+
+/* → Вправо - рядом с Влево */
+.modal .nav-next {
+    right: 38px !important;
+    left: auto !important;
+    top: 12px !important;
+}
+
+/* ✕ Закрыть - справа, отдалена от стрелок, такого же размера как стрелки */
+.modal .nav-close {
+    right: 4px !important;
+    top: 12px !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+}
+
+.modal .nav-close img {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .modal .nav-prev { right: 72px !important; }
+    .modal .nav-next { right: 32px !important; }
+    .modal .nav-close { right: 2px !important; }
+    .modal .nav-btn {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+        top: 8px !important;
+    }
+    .modal .nav-btn img {
+        width: 28px !important;
+        height: 28px !important;
+        min-width: 28px !important;
+        min-height: 28px !important;
+        max-width: 28px !important;
+        max-height: 28px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal .nav-prev { right: 62px !important; }
+    .modal .nav-next { right: 28px !important; }
+    .modal .nav-close { right: 2px !important; }
+    .modal .nav-btn {
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
+        top: 6px !important;
+    }
+    .modal .nav-btn img {
+        width: 24px !important;
+        height: 24px !important;
+        min-width: 24px !important;
+        min-height: 24px !important;
+        max-width: 24px !important;
+        max-height: 24px !important;
+    }
+}
 </style>
 </head>
 <body>
