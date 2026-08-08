@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <style>
-/* ===== ВСЕ СТИЛИ (полная версия с исправлениями) ===== */
+/* ===== ВСЕ СТИЛИ (полная версия) ===== */
 :root {
   color-scheme: light dark;
   --hdrH: 70px;
@@ -472,7 +472,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .info-btn:hover { background: var(--secondary-color); }
 
-/* ===== МОБИЛЬНАЯ/ПЛАНШЕТНАЯ ВЁРСТКА (при ширине < 1024px) ===== */
+/* ===== МОБИЛЬНАЯ/ПЛАНШЕТНАЯ ВЁРСТКА ===== */
 @media (max-width: 1024px) {
     .top-bar {
         display: grid;
@@ -613,119 +613,159 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     }
 }
 
-/* ===== ОСТАЛЬНЫЕ СТИЛИ (без изменений) ===== */
+/* ===== ОСТАЛЬНЫЕ СТИЛИ ===== */
 .wrap { display:block; padding:20px; min-height:calc(100vh - var(--hdrH)); max-width:1400px; margin:0 auto; }
-.filters { background:var(--filter-bg); border:1px solid var(--border-color); border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,.05); width:360px; position:fixed; top:0; left:0; bottom:0; height:100vh; overflow-y:auto; z-index:99; border-radius:0 12px 12px 0; transform:translateX(-100%); transition:transform 0.3s ease; display:none; }
-.filters.show { transform:translateX(0); display:block; }
-.filters .panel { padding:0 16px 16px 16px; background:var(--filter-bg); display:flex; flex-direction:column; height:100%; overflow-y:auto; }
-.filters .head { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px 16px; border-bottom:1px solid var(--border-color); flex-shrink:0; position:sticky; top:0; background:var(--filter-bg); z-index:10; margin:0; gap:8px; }
-.filters .head h2 { margin:0; font-size:16px; font-weight:600; text-align:center; }
-.filters .head-buttons { display:flex; gap:8px; width:100%; justify-content:center; }
-.filters .head-buttons .btn { flex:1; padding:6px 12px; font-size:13px; }
-.facet { margin-bottom:16px; flex-shrink:0; }
-.facet h3 { margin:0 0 6px; font-size:14px; font-weight:500; }
-.opts { max-height:150px; overflow-y:auto; border:1px solid var(--border-color); border-radius:6px; padding:6px; background:var(--secondary-color); }
-.opt { display:flex; align-items:center; gap:6px; margin-bottom:4px; font-size:13px; cursor:pointer; padding:3px 6px; border-radius:4px; transition:background 0.2s; }
-.opt:hover { background:rgba(0,0,0,.1); }
-.opt input[type="checkbox"] { width:16px; height:16px; cursor:pointer; flex-shrink:0; accent-color:var(--primary-color); }
-.opt .tag-color { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:4px; flex-shrink:0; }
-.facet .actions { display:flex; gap:6px; margin-top:6px; }
-.facet .actions .btn { font-size:12px; padding:4px 8px; }
-.apply-filters-container { margin-top:auto; padding-top:12px; border-top:1px solid var(--border-color); flex-shrink:0; }
-.apply-filters-btn { width:100%; padding:10px; font-size:14px; font-weight:600; margin-bottom:6px; }
-.modal-tags { display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 8px; }
-.modal-tags .tag { display:inline-block; font-size:12px; font-weight:600; padding:4px 12px; border-radius:12px; text-transform:lowercase; letter-spacing:0.3px; color:#fff; background:var(--tag-default); cursor:pointer; transition:transform 0.15s, box-shadow 0.15s; }
-.modal-tags .tag:hover { transform:scale(1.05); box-shadow:0 2px 8px rgba(0,0,0,0.2); }
-.modal-tags .tag:active { transform:scale(0.95); }
-.tag-damage { background:var(--tag-damage); }
-.tag-heal { background:var(--tag-heal); }
-.tag-shield { background:var(--tag-shield); }
-.tag-debuff { background:var(--tag-debuff); }
-.tag-buff { background:var(--tag-buff); }
-.tag-dot { background:var(--tag-dot); }
-.tag-hot { background:var(--tag-hot); }
-.tag-cleanse { background:var(--tag-cleanse); }
-.tag-summon { background:var(--tag-summon); }
-.tag-reflect { background:var(--tag-reflect); }
-.tag-block { background:var(--tag-block); }
-.tag-steal { background:var(--tag-steal); }
-.tag-single { background:var(--tag-single); }
-.tag-aoe { background:var(--tag-aoe); }
-.tag-chain { background:var(--tag-chain); }
-.tag-self { background:var(--tag-self); }
-.tag-allies { background:var(--tag-allies); }
-.tag-enemies { background:var(--tag-enemies); }
-.tag-mana { background:var(--tag-mana); }
-.tag-crit { background:var(--tag-crit); }
-.tag-accuracy { background:var(--tag-accuracy); }
-.tag-antihil { background:var(--tag-antihil); }
-.tag-counter { background:var(--tag-counter); }
-.tag-provoke { background:var(--tag-provoke); }
-.tag-resurrection { background:var(--tag-resurrection); }
-.tag-element { background:var(--tag-element); }
-.tag-default { background:var(--tag-default); }
-.content { min-height:60vh; width:100%; }
-#count { margin:0 0 16px; opacity:0.7; font-size:14px; padding:6px 0; font-weight:500; }
-.cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:20px; width:100%; }
-.card { border:none; border-radius:12px; overflow:hidden; background:var(--card-bg); display:flex; flex-direction:column; transition:all 0.3s ease; cursor:pointer; height:100%; box-shadow:0 2px 8px rgba(0,0,0,.08); background-color:var(--element-unknown); color:var(--card-text); }
-.card[data-element="Синий"] { background-color:var(--element-blue); }
-.card[data-element="Зеленый"] { background-color:var(--element-green); }
-.card[data-element="Красный"] { background-color:var(--element-red); }
-.card[data-element="Фиолетовый"] { background-color:var(--element-purple); }
-.card[data-element="Желтый"] { background-color:var(--element-yellow); }
-.card:hover { box-shadow:0 8px 25px rgba(0,0,0,.12); transform:translateY(-4px); }
-.thumb { width:100%; height:170px; display:flex; align-items:center; justify-content:center; overflow:hidden; margin-top:8px; }
-.thumb img { width:100%; height:100%; object-fit:contain; padding:8px; transition:transform 0.3s; }
-.card:hover .thumb img { transform:scale(1.05); }
-.card h3 { margin:12px 12px 4px; font-size:15px; font-weight:600; line-height:1.3; text-align:center; }
-.meta { margin:0 12px 2px; display:flex; gap:4px; flex-wrap:wrap; font-size:12px; justify-content:center; text-align:center; }
-.meta:last-of-type { margin-bottom:4px; }
-.stats { margin:8px 12px 4px; display:flex; gap:6px; flex-wrap:wrap; justify-content:center; font-weight:600; font-size:13px; }
-.stats .pill { 
-    font-size:12px; 
-    padding:4px 10px; 
-    display:flex; 
-    align-items:center; 
-    gap:4px; 
-    border-radius:999px;
-    white-space:nowrap;
-    font-weight:500;
-    box-shadow:0 1px 3px rgba(0,0,0,0.05);
+
+/* ===== ПАНЕЛЬ ФИЛЬТРОВ ===== */
+.filters {
+    background: var(--filter-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.05);
+    width: 360px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100vh;
+    z-index: 99;
+    border-radius: 0 12px 12px 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    display: none;
 }
-.stats .pill img { 
-    width: 14px !important; 
-    height: 14px !important; 
-    min-width: 14px !important; 
-    min-height: 14px !important; 
-    max-width: 14px !important; 
-    max-height: 14px !important; 
-    object-fit: contain !important; 
-    display: inline-block !important; 
-    vertical-align: middle !important; 
-    flex-shrink: 0 !important;
+.filters.show {
+    transform: translateX(0);
+    display: block;
 }
-.card[data-element="Синий"] .pill { background-color:var(--pill-blue); }
-.card[data-element="Зеленый"] .pill { background-color:var(--pill-green); }
-.card[data-element="Красный"] .pill { background-color:var(--pill-red); }
-.card[data-element="Фиолетовый"] .pill { background-color:var(--pill-purple); }
-.card[data-element="Желтый"] .pill { background-color:var(--pill-yellow); }
-.card:not([data-element]) .pill { background-color:var(--pill-default); }
-.toggle-abilities { 
-    background:none; 
-    border:none; 
-    font-size:11px; 
-    font-weight:600;
-    cursor:pointer; 
-    padding:4px 6px; 
-    margin:4px auto 8px; 
-    text-decoration:underline; 
-    display:block; 
-    color:var(--text-color); 
-    opacity:0.7;
-    transition:opacity 0.2s;
+.filters .panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: hidden;
+    padding-bottom: 0;
 }
-.toggle-abilities:hover { opacity:1; }
-.card-abilities-full { display:none; font-size:10px; padding:0 12px 8px; line-height:1.4; border-top:1px solid rgba(0,0,0,0.08); margin-top:4px; padding-top:6px; }
+.filters .head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+    background: var(--filter-bg);
+    z-index: 10;
+    gap: 8px;
+}
+.filters .head h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+}
+.filters .head-buttons {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    justify-content: center;
+}
+.filters .head-buttons .btn {
+    flex: 1;
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+/* Прокручиваемая область */
+.filters .filters-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 16px 16px 16px;
+}
+
+/* Закреплённая нижняя панель */
+.filters-actions {
+    flex-shrink: 0;
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border-color);
+    background: var(--filter-bg);
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+}
+.filters-actions .btn {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+.filters-actions .btn.primary {
+    background: #227BBC;
+    color: #fff;
+    border-color: #227BBC;
+}
+.filters-actions .btn.primary:hover {
+    background: #1a5f9a;
+}
+
+/* Фасеты фильтров */
+.facet {
+    margin-bottom: 16px;
+    flex-shrink: 0;
+}
+.facet h3 {
+    margin: 0 0 6px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.opts {
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 6px;
+    background: var(--secondary-color);
+}
+.opt {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 3px 6px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+.opt:hover {
+    background: rgba(0,0,0,.1);
+}
+.opt input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+    accent-color: var(--primary-color);
+}
+.opt .tag-color {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 4px;
+    flex-shrink: 0;
+}
+.facet .actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+}
+.facet .actions .btn {
+    font-size: 12px;
+    padding: 4px 8px;
+}
 
 /* ===== МОДАЛЬНОЕ ОКНО ===== */
 .modal { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center; padding:20px; z-index:2000; }
@@ -1159,14 +1199,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     box-shadow: none !important;
     border-radius: 0 !important;
 }
-.nav-btn:hover { 
-    transform: scale(1.1) !important; 
-    background: transparent !important;
-}
-.nav-btn:active { 
-    transform: scale(0.9) !important; 
-    background: transparent !important;
-}
+.nav-btn:hover { transform: scale(1.1) !important; background: transparent !important; }
+.nav-btn:active { transform: scale(0.9) !important; background: transparent !important; }
 .nav-btn img {
     width: 36px !important;
     height: 36px !important;
@@ -1179,199 +1213,20 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     filter: none !important;
     pointer-events: none !important;
 }
-.nav-prev { 
-    right: 160px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-.nav-next { 
-    right: 112px !important;
-    left: auto !important;
-    top: 12px !important;
-}
-.nav-close { 
-    right: 64px !important;
-    top: 12px !important;
-    width: 48px !important;
-    height: 48px !important;
-    min-width: 48px !important;
-    min-height: 48px !important;
-}
-.nav-close img {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    min-height: 36px !important;
-    max-width: 36px !important;
-    max-height: 36px !important;
-}
+.nav-prev { right: 160px !important; left: auto !important; top: 12px !important; }
+.nav-next { right: 112px !important; left: auto !important; top: 12px !important; }
+.nav-close { right: 64px !important; top: 12px !important; width: 48px !important; height: 48px !important; min-width: 48px !important; min-height: 48px !important; }
+.nav-close img { width: 36px !important; height: 36px !important; min-width: 36px !important; min-height: 36px !important; max-width: 36px !important; max-height: 36px !important; }
 
-.tree-panel { position:fixed; top:50%; right:20px; transform:translateY(-50%); width:420px; max-width:calc(100vw - 40px); background:var(--card-bg); border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.3); z-index:2100; display:none; flex-direction:column; overflow:hidden; border:1px solid var(--border-color); cursor:default; }
-.tree-panel.show { display:flex; }
-.tree-panel.dragging { opacity:0.9; cursor:grabbing; }
-.tree-header { padding:12px 16px; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; background:var(--card-bg); cursor:grab; }
-.tree-panel.dragging .tree-header { cursor:grabbing; }
-.tree-header h3 { margin:0; font-size:16px; font-weight:600; user-select:none; display:flex; align-items:center; gap:8px; }
-.tree-header h3 img { width:32px !important; height:32px !important; min-width:32px !important; min-height:32px !important; max-width:32px !important; max-height:32px !important; object-fit:contain !important; display:inline-block !important; vertical-align:middle !important; }
-.tree-close { 
-    background: none !important;
-    border: none !important; 
-    font-size: 28px !important; 
-    cursor: pointer !important; 
-    color: var(--text-color) !important; 
-    opacity: 0.7 !important; 
-    width: 36px !important; 
-    height: 36px !important; 
-    display: flex !important; 
-    align-items: center !important; 
-    justify-content: center !important; 
-    border-radius: 50% !important; 
-    transition: all 0.2s !important;
-    padding: 0 !important;
-    line-height: 1 !important;
-}
-.tree-close:hover { opacity: 1 !important; background: var(--secondary-color) !important; }
-.tree-content { padding:16px; overflow-y:auto; max-height:60vh; }
-.tree-hint {
-    text-align: center;
-    font-size: 11px;
-    color: var(--text-color);
-    opacity: 0.6;
-    margin-top: 12px;
-    padding: 8px 4px;
-    border-top: 1px solid var(--border-color);
-    font-style: italic;
-    line-height: 1.4;
-}
-.talent-table { display:flex; flex-direction:column; gap:2px; }
-.talent-row { display:flex; gap:2px; justify-content:center; }
-.talent-cell { width:70px; height:70px; background:var(--secondary-color); border:2px solid var(--border-color); border-radius:8px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; overflow:hidden; cursor:pointer; position:relative; }
-.talent-cell img { max-width:85%; max-height:85%; object-fit:contain; }
-.talent-cell.active { background:var(--talent-active-bg); border-color:var(--talent-active-border); }
-.talent-cell.mandatory { background:var(--talent-mandatory-bg); cursor:default; }
-.talent-cell.selectable:hover { transform:scale(1.02); box-shadow:0 2px 8px rgba(0,0,0,.2); background:var(--talent-hover-bg); }
-.talent-cell[data-disabled="true"] { opacity:0.5; cursor:not-allowed; }
-.talent-cell[data-disabled="true"]:hover { transform:none; box-shadow:none; }
-@media (max-width:768px) { .tree-panel { width:340px; } .talent-cell { width:55px; height:55px; } }
-@media (max-width:480px) { .tree-panel { width:calc(100vw - 20px); max-width:none; top:auto; bottom:20px; left:10px; right:10px; transform:none; } .talent-cell { width:45px; height:45px; } .tree-header { cursor:default; } }
-@media (max-width:768px) { .filters { width:85%; } }
-.info-modal { position:fixed; inset:0; background:rgba(0,0,0,.7); display:none; align-items:center; justify-content:center; padding:20px; z-index:2001; }
-.info-modal.show { display:flex; }
-.info-dialog { background:var(--card-bg); border-radius:16px; padding:30px; max-width:500px; width:90%; position:relative; }
-.info-dialog h2 { margin:0 0 20px; text-align:center; }
-.info-dialog .clan { background:rgba(10,119,0,0.1); padding:15px; border-radius:10px; margin:20px 0; text-align:center; }
-.info-dialog .clan strong { color:var(--primary-color); font-size:18px; }
-.info-dialog .contact { background:rgba(0,0,0,0.05); padding:15px; border-radius:10px; margin:20px 0; text-align:center; border:1px solid var(--border-color); }
-.info-dialog .contact a { color:var(--primary-color); text-decoration:none; font-weight:500; }
-.info-dialog .contact a:hover { text-decoration:underline; }
-.info-dialog .date { text-align:center; font-style:italic; color:var(--text-color); opacity:0.6; margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color); }
-.info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
-.info-close:hover { opacity:1; }
-
-/* ===== АДАПТИВ МОДАЛЬНОГО ОКНА (МОБИЛЬНЫЙ) ===== */
+/* ===== АДАПТИВ МОДАЛЬНОГО ОКНА ===== */
 @media (max-width: 768px) {
-    .image-container img { max-height: 200px !important; }
-    .image-container { padding: 12px; }
-    /* Кнопки навигации — всегда видны и доступны */
-    .nav-btn {
-        width: 40px !important;
-        height: 40px !important;
-        min-width: 40px !important;
-        min-height: 40px !important;
-        top: 8px !important;
-    }
-    .nav-btn img {
-        width: 32px !important;
-        height: 32px !important;
-        min-width: 32px !important;
-        min-height: 32px !important;
-        max-width: 32px !important;
-        max-height: 32px !important;
-    }
-    .nav-prev { right: 80px !important; top: 8px !important; }
-    .nav-next { right: 40px !important; top: 8px !important; }
-    .nav-close { 
-        right: 8px !important; 
-        top: 8px !important;
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        min-height: 36px !important;
-    }
-    .nav-close img {
-        width: 28px !important;
-        height: 28px !important;
-        min-width: 28px !important;
-        min-height: 28px !important;
-        max-width: 28px !important;
-        max-height: 28px !important;
-    }
-    .modal .dialog .modal-content {
-        grid-template-columns: 1fr;
-        gap: 12px;
-        padding: 12px;
-        padding-top: 56px;
-    }
-    .hero-meta-row .star-display img { width: 16px !important; height: 16px !important; min-width: 16px !important; min-height: 16px !important; max-width: 16px !important; max-height: 16px !important; }
-    .hero-stats-row .stat-item img { width: 16px !important; height: 16px !important; min-width: 16px !important; min-height: 16px !important; max-width: 16px !important; max-height: 16px !important; }
-    .hero-stats-row .stat-item img[src*="Sword" i] { width: 18px !important; height: 18px !important; min-width: 18px !important; min-height: 18px !important; max-width: 18px !important; max-height: 18px !important; }
-}
-
-@media (max-width: 480px) {
-    .image-container img { max-height: 150px !important; }
-    .image-container { padding: 8px; }
-    .nav-btn {
-        width: 34px !important;
-        height: 34px !important;
-        min-width: 34px !important;
-        min-height: 34px !important;
-        top: 6px !important;
-    }
-    .nav-btn img {
-        width: 26px !important;
-        height: 26px !important;
-        min-width: 26px !important;
-        min-height: 26px !important;
-        max-width: 26px !important;
-        max-height: 26px !important;
-    }
-    .nav-prev { right: 68px !important; top: 6px !important; }
-    .nav-next { right: 34px !important; top: 6px !important; }
-    .nav-close { 
-        right: 6px !important; 
-        top: 6px !important;
-        width: 30px !important;
-        height: 30px !important;
-        min-width: 30px !important;
-        min-height: 30px !important;
-    }
-    .nav-close img {
-        width: 22px !important;
-        height: 22px !important;
-        min-width: 22px !important;
-        min-height: 22px !important;
-        max-width: 22px !important;
-        max-height: 22px !important;
-    }
-    .modal .dialog .modal-content {
-        padding: 8px;
-        padding-top: 48px;
-    }
-    .dialog { height: 95vh; max-height: 95vh; }
-    .hero-meta-row .star-display img { width: 14px !important; height: 14px !important; min-width: 14px !important; min-height: 14px !important; max-width: 14px !important; max-height: 14px !important; }
-    .hero-stats-row .stat-item img { width: 14px !important; height: 14px !important; min-width: 14px !important; min-height: 14px !important; max-width: 14px !important; max-height: 14px !important; }
-    .hero-stats-row .stat-item img[src*="Sword" i] { width: 16px !important; height: 16px !important; min-width: 16px !important; min-height: 16px !important; max-width: 16px !important; max-height: 16px !important; }
-}
-/* ===== ИСПРАВЛЕНИЕ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ МОДАЛЬНОГО ОКНА ===== */
-/* Эти стили применяются ТОЛЬКО на экранах меньше 768px */
-
-@media (max-width: 768px) {
-    /* Контент модалки — добавляем отступ сверху, чтобы кнопки не перекрывали */
     .dialog .modal-content {
         padding-top: 64px !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
     }
-    
-    /* Все кнопки навигации — одинаковый размер на мобилках */
+    .image-container img { max-height: 200px !important; }
+    .image-container { padding: 12px; }
     .nav-btn {
         width: 38px !important;
         height: 38px !important;
@@ -1387,42 +1242,21 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-width: 30px !important;
         max-height: 30px !important;
     }
-    
-    /* Позиционирование кнопок на мобилках */
-    .nav-prev { 
-        right: 80px !important;
-        top: 12px !important;
-    }
-    .nav-next { 
-        right: 40px !important;
-        top: 12px !important;
-    }
-    .nav-close { 
-        right: 8px !important;
-        top: 12px !important;
-        width: 38px !important;
-        height: 38px !important;
-        min-width: 38px !important;
-        min-height: 38px !important;
-    }
-    .nav-close img {
-        width: 30px !important;
-        height: 30px !important;
-        min-width: 30px !important;
-        min-height: 30px !important;
-        max-width: 30px !important;
-        max-height: 30px !important;
-    }
+    .nav-prev { right: 80px !important; top: 12px !important; }
+    .nav-next { right: 40px !important; top: 12px !important; }
+    .nav-close { right: 8px !important; top: 12px !important; width: 38px !important; height: 38px !important; min-width: 38px !important; min-height: 38px !important; }
+    .nav-close img { width: 30px !important; height: 30px !important; min-width: 30px !important; min-height: 30px !important; max-width: 30px !important; max-height: 30px !important; }
+    .modal .dialog .modal-content { grid-template-columns: 1fr; gap: 12px; padding: 12px; padding-top: 64px; }
 }
 
-/* Для очень маленьких экранов (≤ 480px) */
 @media (max-width: 480px) {
     .dialog .modal-content {
         padding-top: 56px !important;
         padding-left: 8px !important;
         padding-right: 8px !important;
     }
-    
+    .image-container img { max-height: 150px !important; }
+    .image-container { padding: 8px; }
     .nav-btn {
         width: 32px !important;
         height: 32px !important;
@@ -1440,23 +1274,111 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     }
     .nav-prev { right: 68px !important; top: 10px !important; }
     .nav-next { right: 34px !important; top: 10px !important; }
-    .nav-close { 
-        right: 6px !important; 
-        top: 10px !important;
-        width: 32px !important;
-        height: 32px !important;
-        min-width: 32px !important;
-        min-height: 32px !important;
-    }
-    .nav-close img {
-        width: 24px !important;
-        height: 24px !important;
-        min-width: 24px !important;
-        min-height: 24px !important;
-        max-width: 24px !important;
-        max-height: 24px !important;
-    }
-}  
+    .nav-close { right: 6px !important; top: 10px !important; width: 32px !important; height: 32px !important; min-width: 32px !important; min-height: 32px !important; }
+    .nav-close img { width: 24px !important; height: 24px !important; min-width: 24px !important; min-height: 24px !important; max-width: 24px !important; max-height: 24px !important; }
+    .dialog { height: 95vh; max-height: 95vh; }
+    .modal .dialog .modal-content { padding: 8px; padding-top: 56px; }
+}
+
+/* ===== ДЕРЕВО ТАЛАНТОВ ===== */
+.tree-panel { position:fixed; top:50%; right:20px; transform:translateY(-50%); width:420px; max-width:calc(100vw - 40px); background:var(--card-bg); border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.3); z-index:2100; display:none; flex-direction:column; overflow:hidden; border:1px solid var(--border-color); cursor:default; }
+.tree-panel.show { display:flex; }
+.tree-panel.dragging { opacity:0.9; cursor:grabbing; }
+.tree-header { padding:12px 16px; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; background:var(--card-bg); cursor:grab; }
+.tree-panel.dragging .tree-header { cursor:grabbing; }
+.tree-header h3 { margin:0; font-size:16px; font-weight:600; user-select:none; display:flex; align-items:center; gap:8px; }
+.tree-header h3 img { width:32px !important; height:32px !important; min-width:32px !important; min-height:32px !important; max-width:32px !important; max-height:32px !important; object-fit:contain !important; display:inline-block !important; vertical-align:middle !important; }
+.tree-close { background: none !important; border: none !important; font-size: 28px !important; cursor: pointer !important; color: var(--text-color) !important; opacity: 0.7 !important; width: 36px !important; height: 36px !important; display: flex !important; align-items: center !important; justify-content: center !important; border-radius: 50% !important; transition: all 0.2s !important; padding: 0 !important; line-height: 1 !important; }
+.tree-close:hover { opacity: 1 !important; background: var(--secondary-color) !important; }
+.tree-content { padding:16px; overflow-y:auto; max-height:60vh; }
+.tree-hint { text-align: center; font-size: 11px; color: var(--text-color); opacity: 0.6; margin-top: 12px; padding: 8px 4px; border-top: 1px solid var(--border-color); font-style: italic; line-height: 1.4; }
+.talent-table { display:flex; flex-direction:column; gap:2px; }
+.talent-row { display:flex; gap:2px; justify-content:center; }
+.talent-cell { width:70px; height:70px; background:var(--secondary-color); border:2px solid var(--border-color); border-radius:8px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; overflow:hidden; cursor:pointer; position:relative; }
+.talent-cell img { max-width:85%; max-height:85%; object-fit:contain; }
+.talent-cell.active { background:var(--talent-active-bg); border-color:var(--talent-active-border); }
+.talent-cell.mandatory { background:var(--talent-mandatory-bg); cursor:default; }
+.talent-cell.selectable:hover { transform:scale(1.02); box-shadow:0 2px 8px rgba(0,0,0,.2); background:var(--talent-hover-bg); }
+.talent-cell[data-disabled="true"] { opacity:0.5; cursor:not-allowed; }
+.talent-cell[data-disabled="true"]:hover { transform:none; box-shadow:none; }
+@media (max-width:768px) { .tree-panel { width:340px; } .talent-cell { width:55px; height:55px; } }
+@media (max-width:480px) { .tree-panel { width:calc(100vw - 20px); max-width:none; top:auto; bottom:20px; left:10px; right:10px; transform:none; } .talent-cell { width:45px; height:45px; } .tree-header { cursor:default; } }
+@media (max-width:768px) { .filters { width:85%; } }
+
+/* ===== ИНФО МОДАЛ ===== */
+.info-modal { position:fixed; inset:0; background:rgba(0,0,0,.7); display:none; align-items:center; justify-content:center; padding:20px; z-index:2001; }
+.info-modal.show { display:flex; }
+.info-dialog { background:var(--card-bg); border-radius:16px; padding:30px; max-width:500px; width:90%; position:relative; }
+.info-dialog h2 { margin:0 0 20px; text-align:center; }
+.info-dialog .clan { background:rgba(10,119,0,0.1); padding:15px; border-radius:10px; margin:20px 0; text-align:center; }
+.info-dialog .clan strong { color:var(--primary-color); font-size:18px; }
+.info-dialog .contact { background:rgba(0,0,0,0.05); padding:15px; border-radius:10px; margin:20px 0; text-align:center; border:1px solid var(--border-color); }
+.info-dialog .contact a { color:var(--primary-color); text-decoration:none; font-weight:500; }
+.info-dialog .contact a:hover { text-decoration:underline; }
+.info-dialog .date { text-align:center; font-style:italic; color:var(--text-color); opacity:0.6; margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color); }
+.info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
+.info-close:hover { opacity:1; }
+
+/* ===== КАРТОЧКИ ===== */
+.content { min-height:60vh; width:100%; }
+#count { margin:0 0 16px; opacity:0.7; font-size:14px; padding:6px 0; font-weight:500; }
+.cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:20px; width:100%; }
+.card { border:none; border-radius:12px; overflow:hidden; background:var(--card-bg); display:flex; flex-direction:column; transition:all 0.3s ease; cursor:pointer; height:100%; box-shadow:0 2px 8px rgba(0,0,0,.08); background-color:var(--element-unknown); color:var(--card-text); }
+.card[data-element="Синий"] { background-color:var(--element-blue); }
+.card[data-element="Зеленый"] { background-color:var(--element-green); }
+.card[data-element="Красный"] { background-color:var(--element-red); }
+.card[data-element="Фиолетовый"] { background-color:var(--element-purple); }
+.card[data-element="Желтый"] { background-color:var(--element-yellow); }
+.card:hover { box-shadow:0 8px 25px rgba(0,0,0,.12); transform:translateY(-4px); }
+.thumb { width:100%; height:170px; display:flex; align-items:center; justify-content:center; overflow:hidden; margin-top:8px; }
+.thumb img { width:100%; height:100%; object-fit:contain; padding:8px; transition:transform 0.3s; }
+.card:hover .thumb img { transform:scale(1.05); }
+.card h3 { margin:12px 12px 4px; font-size:15px; font-weight:600; line-height:1.3; text-align:center; }
+.meta { margin:0 12px 2px; display:flex; gap:4px; flex-wrap:wrap; font-size:12px; justify-content:center; text-align:center; }
+.meta:last-of-type { margin-bottom:4px; }
+.stats { margin:8px 12px 4px; display:flex; gap:6px; flex-wrap:wrap; justify-content:center; font-weight:600; font-size:13px; }
+.stats .pill { font-size:12px; padding:4px 10px; display:flex; align-items:center; gap:4px; border-radius:999px; white-space:nowrap; font-weight:500; box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+.stats .pill img { width: 14px !important; height: 14px !important; min-width: 14px !important; min-height: 14px !important; max-width: 14px !important; max-height: 14px !important; object-fit: contain !important; display: inline-block !important; vertical-align: middle !important; flex-shrink: 0 !important; }
+.card[data-element="Синий"] .pill { background-color:var(--pill-blue); }
+.card[data-element="Зеленый"] .pill { background-color:var(--pill-green); }
+.card[data-element="Красный"] .pill { background-color:var(--pill-red); }
+.card[data-element="Фиолетовый"] .pill { background-color:var(--pill-purple); }
+.card[data-element="Желтый"] .pill { background-color:var(--pill-yellow); }
+.card:not([data-element]) .pill { background-color:var(--pill-default); }
+.toggle-abilities { background:none; border:none; font-size:11px; font-weight:600; cursor:pointer; padding:4px 6px; margin:4px auto 8px; text-decoration:underline; display:block; color:var(--text-color); opacity:0.7; transition:opacity 0.2s; }
+.toggle-abilities:hover { opacity:1; }
+.card-abilities-full { display:none; font-size:10px; padding:0 12px 8px; line-height:1.4; border-top:1px solid rgba(0,0,0,0.08); margin-top:4px; padding-top:6px; }
+.modal-tags { display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 8px; }
+.modal-tags .tag { display:inline-block; font-size:12px; font-weight:600; padding:4px 12px; border-radius:12px; text-transform:lowercase; letter-spacing:0.3px; color:#fff; background:var(--tag-default); cursor:pointer; transition:transform 0.15s, box-shadow 0.15s; }
+.modal-tags .tag:hover { transform:scale(1.05); box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+.modal-tags .tag:active { transform:scale(0.95); }
+.tag-damage { background:var(--tag-damage); }
+.tag-heal { background:var(--tag-heal); }
+.tag-shield { background:var(--tag-shield); }
+.tag-debuff { background:var(--tag-debuff); }
+.tag-buff { background:var(--tag-buff); }
+.tag-dot { background:var(--tag-dot); }
+.tag-hot { background:var(--tag-hot); }
+.tag-cleanse { background:var(--tag-cleanse); }
+.tag-summon { background:var(--tag-summon); }
+.tag-reflect { background:var(--tag-reflect); }
+.tag-block { background:var(--tag-block); }
+.tag-steal { background:var(--tag-steal); }
+.tag-single { background:var(--tag-single); }
+.tag-aoe { background:var(--tag-aoe); }
+.tag-chain { background:var(--tag-chain); }
+.tag-self { background:var(--tag-self); }
+.tag-allies { background:var(--tag-allies); }
+.tag-enemies { background:var(--tag-enemies); }
+.tag-mana { background:var(--tag-mana); }
+.tag-crit { background:var(--tag-crit); }
+.tag-accuracy { background:var(--tag-accuracy); }
+.tag-antihil { background:var(--tag-antihil); }
+.tag-counter { background:var(--tag-counter); }
+.tag-provoke { background:var(--tag-provoke); }
+.tag-resurrection { background:var(--tag-resurrection); }
+.tag-element { background:var(--tag-element); }
+.tag-default { background:var(--tag-default); }
 </style>
 </head>
 <body>
@@ -1511,25 +1433,82 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 </div>
 </header>
 <div id="filterOverlay" class="filter-overlay"></div>
+
+<!-- ===== ФИЛЬТРЫ ===== -->
 <aside id="filters" class="filters">
-<div class="panel">
-<div class="head">
-<h2>Фильтры</h2>
-<div class="head-buttons">
-<button id="applyFiltersBtn" class="btn primary">Применить</button>
-<button id="closeFilters" class="btn">Закрыть</button>
-</div>
-</div>
-<div class="facet" data-facet="element"><h3>Стихия</h3><div class="opts" id="facet-element"></div><div class="actions"><button class="btn" data-action="all" data-facet="element">Все</button><button class="btn" data-action="none" data-facet="element">Снять</button></div></div>
-<div class="facet" data-facet="stars"><h3>Количество звезд</h3><div class="opts" id="facet-stars"></div><div class="actions"><button class="btn" data-action="all" data-facet="stars">Все</button><button class="btn" data-action="none" data-facet="stars">Снять</button></div></div>
-<div class="facet" data-facet="mana"><h3>Скорость маны</h3><div class="opts" id="facet-mana"></div><div class="actions"><button class="btn" data-action="all" data-facet="mana">Все</button><button class="btn" data-action="none" data-facet="mana">Снять</button></div></div>
-<div class="facet" data-facet="attackType"><h3>Способ атаки</h3><div class="opts" id="facet-attackType"></div><div class="actions"><button class="btn" data-action="all" data-facet="attackType">Все</button><button class="btn" data-action="none" data-facet="attackType">Снять</button></div></div>
-<div class="facet" data-facet="summon"><h3>Место призыва</h3><div class="opts" id="facet-summon"></div><div class="actions"><button class="btn" data-action="all" data-facet="summon">Все</button><button class="btn" data-action="none" data-facet="summon">Снять</button></div></div>
-<div class="facet" data-facet="clazz"><h3>Класс</h3><div class="opts" id="facet-clazz"></div><div class="actions"><button class="btn" data-action="all" data-facet="clazz">Все</button><button class="btn" data-action="none" data-facet="clazz">Снять</button></div></div>
-<div class="facet" data-facet="tags"><h3>Теги способностей</h3><div class="opts" id="facet-tags"></div><div class="actions"><button class="btn" data-action="all" data-facet="tags">Все</button><button class="btn" data-action="none" data-facet="tags">Снять</button></div></div>
-<div class="apply-filters-container"><button id="applyFiltersMobileBtn" class="btn primary apply-filters-btn">Применить фильтры</button></div>
-</div>
+    <div class="panel">
+        <div class="head">
+            <h2>Фильтры</h2>
+            <div class="head-buttons">
+                <button id="applyFiltersBtn" class="btn primary">Применить</button>
+                <button id="closeFilters" class="btn">Закрыть</button>
+            </div>
+        </div>
+        <div class="filters-scroll">
+            <div class="facet" data-facet="element">
+                <h3>Стихия</h3>
+                <div class="opts" id="facet-element"></div>
+                <div class="actions">
+                    <button class="btn" data-action="all" data-facet="element">Все</button>
+                    <button class="btn" data-action="none" data-facet="element">Снять</button>
+                </div>
+            </div>
+            <div class="facet" data-facet="stars">
+                <h3>Количество звезд</h3>
+                <div class="opts" id="facet-stars"></div>
+                <div class="actions">
+                    <button class="btn" data-action="all" data-facet="stars">Все</button>
+                    <button class="btn" data-action="none" data-facet="stars">Снять</button>
+                </div>
+            </div>
+            <div class="facet" data-facet="mana">
+                <h3>Скорость маны</h3>
+                <div class="opts" id="facet-mana"></div>
+                <div class="actions">
+                    <button class="btn" data-action="all" data-facet="mana">Все</button>
+                    <button class="btn" data-action="none" data-facet="mana">Снять</button>
+                </div>
+            </div>
+            <div class="facet" data-facet="attackType">
+                <h3>Способ атаки</h3>
+                <div class="opts" id="facet-attackType"></div>
+                <div class="actions">
+                    <button class="btn" data-action="all" data-facet="attackType">Все</button>
+                    <button class="btn" data-action="none" data-facet="attackType">Снять</button>
+                </div>
+            </div>
+            <div class="facet" data-facet="summon">
+                <h3>Место призыва</h3>
+                <div class="opts" id="facet-summon"></div>
+                <div class="actions">
+                    <button class="btn" data-action="all" data-facet="summon">Все</button>
+                    <button class="btn" data-action="none" data-facet="summon">Снять</button>
+                </div>
+            </div>
+            <div class="facet" data-facet="clazz">
+                <h3>Класс</h3>
+                <div class="opts" id="facet-clazz"></div>
+                <div class="actions">
+                    <button class="btn" data-action="all" data-facet="clazz">Все</button>
+                    <button class="btn" data-action="none" data-facet="clazz">Снять</button>
+                </div>
+            </div>
+            <div class="facet" data-facet="tags">
+                <h3>Теги способностей</h3>
+                <div class="opts" id="facet-tags"></div>
+                <div class="actions">
+                    <!-- Кнопка "Все" убрана -->
+                    <button class="btn" data-action="none" data-facet="tags">Снять</button>
+                </div>
+            </div>
+        </div>
+        <div class="filters-actions">
+            <button id="applyFiltersBtnBottom" class="btn primary">Применить</button>
+            <button id="closeFiltersBottom" class="btn">Закрыть</button>
+        </div>
+    </div>
 </aside>
+
 <div class="wrap">
 <section class="content">
 <div id="count">Загрузка...</div>
@@ -1537,6 +1516,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 <div id="empty" style="display:none;">Ничего не найдено. Измените фильтры.</div>
 </section>
 </div>
+
+<!-- ===== МОДАЛЬНОЕ ОКНО ===== -->
 <div id="modal" class="modal">
 <div class="dialog">
 <div class="modal-content">
@@ -1585,6 +1566,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 </div>
 </div>
 </div>
+
+<!-- ===== ДЕРЕВО ТАЛАНТОВ ===== -->
 <div id="treePanel" class="tree-panel">
     <div class="tree-header" id="treeHeader">
         <h3>
@@ -1598,6 +1581,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <div class="tree-hint">Для самостоятельной настройки талантов используйте опцию «Ручной выбор»</div>
     </div>
 </div>
+
+<!-- ===== ИНФО ===== -->
 <div id="infoModal" class="info-modal">
     <div class="info-dialog">
         <button id="infoClose" class="info-close">×</button>
@@ -1618,8 +1603,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <p class="date">Дата последнего обновления базы: <span id="updateDate"></span></p>
     </div>
 </div>
+
 <script>
-// ===== ВЕСЬ JS =====
+// ===== ВЕСЬ JS (полная версия) =====
 const HERO_FIELDS = { 
     id:'id', 
     name:'Герой', 
@@ -1636,7 +1622,7 @@ const HERO_FIELDS = {
     summon:'Место призыва', 
     clazz:'Класс', 
     image:'Картинка',
-    updateDate:'Дата обновления'  // ← НОВОЕ ПОЛЕ
+    updateDate:'Дата обновления'
 };
 const CLASS_TALENT_FIELDS = { class_id:'class_id', row_number:'row_number', is_mandatory:'is_mandatory', branch_group:'branch_group', left_talent_id:'left_talent_id', center_talent_id:'center_talent_id', right_talent_id:'right_talent_id' };
 const TALENT_DESC_FIELDS = { id:'id', talent_id:'talent_id', effect_type:'effect_type', value:'value', is_percent:'is_percent', image_active:'Картинка активная', image_inactive:'Картинка неактивная' };
@@ -1670,7 +1656,7 @@ let isDragging = false;
 let dragStartX = 0, dragStartY = 0;
 let tooltipElement = null;
 let iconCache = {};
-let dbUpdateDate = ''; // ← Переменная для даты обновления из БД
+let dbUpdateDate = '';
 
 function initSortTooltip() {
     const btn = document.getElementById('sortBtn');
@@ -2741,14 +2727,34 @@ function attachEvents(){
             wrapper.classList.add('show');
         }
     });
-    function openFiltersPanel(){ const headerHeight=document.querySelector('header').offsetHeight; const filterPanel=document.querySelector('.filters .panel'); if(filterPanel) filterPanel.style.paddingTop=(headerHeight)+'px'; document.getElementById('filters').classList.add('show'); document.getElementById('filterOverlay').classList.add('show'); document.body.style.overflow='hidden'; }
-    function closeFiltersPanel(){ document.getElementById('filters').classList.remove('show'); document.getElementById('filterOverlay').classList.remove('show'); document.body.style.overflow=''; }
-    function updateFilterPadding(){ if(document.getElementById('filters').classList.contains('show')){ const headerHeight=document.querySelector('header').offsetHeight; const filterPanel=document.querySelector('.filters .panel'); if(filterPanel) filterPanel.style.paddingTop=(headerHeight)+'px'; } }
+    function openFiltersPanel(){ 
+        const headerHeight=document.querySelector('header').offsetHeight; 
+        const filterPanel=document.querySelector('.filters .panel'); 
+        if(filterPanel) filterPanel.style.paddingTop=(headerHeight)+'px'; 
+        document.getElementById('filters').classList.add('show'); 
+        document.getElementById('filterOverlay').classList.add('show'); 
+        document.body.style.overflow='hidden'; 
+    }
+    function closeFiltersPanel(){ 
+        document.getElementById('filters').classList.remove('show'); 
+        document.getElementById('filterOverlay').classList.remove('show'); 
+        document.body.style.overflow=''; 
+    }
+    function updateFilterPadding(){ 
+        if(document.getElementById('filters').classList.contains('show')){ 
+            const headerHeight=document.querySelector('header').offsetHeight; 
+            const filterPanel=document.querySelector('.filters .panel'); 
+            if(filterPanel) filterPanel.style.paddingTop=(headerHeight)+'px'; 
+        } 
+    }
     window.addEventListener('resize', updateFilterPadding);
     document.getElementById('openFilters').addEventListener('click', openFiltersPanel);
+    // Кнопки "Применить" в фильтрах
     document.getElementById('applyFiltersBtn').addEventListener('click', ()=>{ applyFilters(); closeFiltersPanel(); });
-    document.getElementById('applyFiltersMobileBtn').addEventListener('click', ()=>{ applyFilters(); closeFiltersPanel(); });
+    document.getElementById('applyFiltersBtnBottom').addEventListener('click', ()=>{ applyFilters(); closeFiltersPanel(); });
+    // Кнопки "Закрыть" в фильтрах
     document.getElementById('closeFilters').addEventListener('click', closeFiltersPanel);
+    document.getElementById('closeFiltersBottom').addEventListener('click', closeFiltersPanel);
     document.getElementById('filterOverlay').addEventListener('click', closeFiltersPanel);
     document.getElementById('cards').addEventListener('click', e=>{ if(e.target.classList.contains('toggle-abilities')) return; let card=e.target.closest('.card'); if(card) openModal(Number(card.dataset.idx)); });
     document.getElementById('mClose').addEventListener('click', closeModal);
@@ -2759,7 +2765,6 @@ function attachEvents(){
     document.getElementById('infoBtn').addEventListener('click', ()=>{ document.getElementById('infoModal').classList.add('show'); document.body.style.overflow='hidden'; });
     document.getElementById('infoClose').addEventListener('click', ()=>{ document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow=''; });
     document.getElementById('infoModal').addEventListener('click', e=>{ if(e.target===document.getElementById('infoModal')){ document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow=''; } });
-    // Дата обновления — из БД или сегодняшняя
     const dateEl = document.getElementById('updateDate');
     if (dateEl) {
         if (dbUpdateDate) {
@@ -2776,7 +2781,6 @@ Promise.all([
         allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]).map(row=>{ 
             const tagsStr=row['Теги']||''; 
             const tags=tagsStr.split(',').map(t=>t.trim()).filter(t=>t!==''); 
-            // Сохраняем дату обновления из БД
             if (row['Дата обновления'] && row['Дата обновления'].trim()) {
                 dbUpdateDate = row['Дата обновления'].trim();
             }
