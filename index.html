@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <style>
-/* ===== КОРНЕВЫЕ ПЕРЕМЕННЫЕ ===== */
+/* ===== ВСЕ СТИЛИ (полная версия с исправлениями) ===== */
 :root {
   color-scheme: light dark;
   --hdrH: 70px;
@@ -472,8 +472,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .info-btn:hover { background: var(--secondary-color); }
 
-/* ===== МОБИЛЬНАЯ ВЁРСТКА (перекомпоновка) ===== */
-@media (max-width: 640px) {
+/* ===== МОБИЛЬНАЯ/ПЛАНШЕТНАЯ ВЁРСТКА (при ширине < 1024px) ===== */
+@media (max-width: 1024px) {
     .top-bar {
         display: grid;
         grid-template-columns: 1fr auto;
@@ -572,13 +572,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     }
     .sort-btn:before {
         display: none;
-    }
-    /* Скрываем кнопку "Сбросить" на мобилках, т.к. она дублируется? Нет, оставляем */
-    /* Делаем фильтры компактнее */
-    .filter-buttons .btn.btn-white {
-        font-size: 12px;
-        padding: 4px 10px;
-        height: 28px;
     }
 }
 
@@ -1279,15 +1272,33 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 @media (max-width: 768px) {
     .image-container img { max-height: 200px !important; }
     .image-container { padding: 12px; }
-    /* Кнопки навигации на мобилках — компактнее и не вылезают */
+    /* Кнопки навигации — всегда видны и доступны */
     .nav-btn {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        min-height: 40px !important;
+        top: 8px !important;
+    }
+    .nav-btn img {
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
+        max-width: 32px !important;
+        max-height: 32px !important;
+    }
+    .nav-prev { right: 80px !important; top: 8px !important; }
+    .nav-next { right: 40px !important; top: 8px !important; }
+    .nav-close { 
+        right: 8px !important; 
+        top: 8px !important;
         width: 36px !important;
         height: 36px !important;
         min-width: 36px !important;
         min-height: 36px !important;
-        top: 8px !important;
     }
-    .nav-btn img {
+    .nav-close img {
         width: 28px !important;
         height: 28px !important;
         min-width: 28px !important;
@@ -1295,29 +1306,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-width: 28px !important;
         max-height: 28px !important;
     }
-    .nav-prev { right: 60px !important; top: 8px !important; }
-    .nav-next { right: 24px !important; top: 8px !important; }
-    .nav-close { 
-        right: 4px !important; 
-        top: 4px !important;
-        width: 32px !important;
-        height: 32px !important;
-        min-width: 32px !important;
-        min-height: 32px !important;
-    }
-    .nav-close img {
-        width: 24px !important;
-        height: 24px !important;
-        min-width: 24px !important;
-        min-height: 24px !important;
-        max-width: 24px !important;
-        max-height: 24px !important;
-    }
     .modal .dialog .modal-content {
         grid-template-columns: 1fr;
         gap: 12px;
         padding: 12px;
-        padding-top: 48px;
+        padding-top: 56px;
     }
     .hero-meta-row .star-display img { width: 16px !important; height: 16px !important; min-width: 16px !important; min-height: 16px !important; max-width: 16px !important; max-height: 16px !important; }
     .hero-stats-row .stat-item img { width: 16px !important; height: 16px !important; min-width: 16px !important; min-height: 16px !important; max-width: 16px !important; max-height: 16px !important; }
@@ -1328,13 +1321,31 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     .image-container img { max-height: 150px !important; }
     .image-container { padding: 8px; }
     .nav-btn {
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        min-height: 34px !important;
+        top: 6px !important;
+    }
+    .nav-btn img {
+        width: 26px !important;
+        height: 26px !important;
+        min-width: 26px !important;
+        min-height: 26px !important;
+        max-width: 26px !important;
+        max-height: 26px !important;
+    }
+    .nav-prev { right: 68px !important; top: 6px !important; }
+    .nav-next { right: 34px !important; top: 6px !important; }
+    .nav-close { 
+        right: 6px !important; 
+        top: 6px !important;
         width: 30px !important;
         height: 30px !important;
         min-width: 30px !important;
         min-height: 30px !important;
-        top: 6px !important;
     }
-    .nav-btn img {
+    .nav-close img {
         width: 22px !important;
         height: 22px !important;
         min-width: 22px !important;
@@ -1342,27 +1353,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-width: 22px !important;
         max-height: 22px !important;
     }
-    .nav-prev { right: 50px !important; top: 6px !important; }
-    .nav-next { right: 20px !important; top: 6px !important; }
-    .nav-close { 
-        right: 2px !important; 
-        top: 2px !important;
-        width: 26px !important;
-        height: 26px !important;
-        min-width: 26px !important;
-        min-height: 26px !important;
-    }
-    .nav-close img {
-        width: 20px !important;
-        height: 20px !important;
-        min-width: 20px !important;
-        min-height: 20px !important;
-        max-width: 20px !important;
-        max-height: 20px !important;
-    }
     .modal .dialog .modal-content {
         padding: 8px;
-        padding-top: 40px;
+        padding-top: 48px;
     }
     .dialog { height: 95vh; max-height: 95vh; }
     .hero-meta-row .star-display img { width: 14px !important; height: 14px !important; min-width: 14px !important; min-height: 14px !important; max-width: 14px !important; max-height: 14px !important; }
@@ -1372,6 +1365,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 </style>
 </head>
 <body>
+<!-- ===== HTML ===== -->
 <header>
 <div class="container">
 <div class="top-bar">
