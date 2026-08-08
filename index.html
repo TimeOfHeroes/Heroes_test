@@ -746,6 +746,85 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 4px 8px;
 }
 
+/* ===== СЕКЦИЯ ПРОКАЧКИ ===== */
+.upgrade-section {
+    padding: 12px 14px;
+    background: var(--secondary-color);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+.upgrade-section-title { display: none !important; }
+.upgrade-group-title {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    margin-bottom: 6px !important;
+    color: var(--text-color);
+}
+.upgrade-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+.upgrade-btn {
+    padding: 4px 12px;
+    font-size: 12px;
+    border: 1px solid #227BBC !important;
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-weight: 600;
+}
+.upgrade-btn .star { color: #ffd700; }
+.upgrade-btn img { 
+    width: 14px; 
+    height: 14px; 
+    display: inline-block; 
+    vertical-align: middle;
+    margin-right: 2px;
+}
+.upgrade-btn:hover { background: #227BBC !important; color: #fff; }
+.upgrade-btn:hover .star { color: #fff; }
+.upgrade-btn.active { background: #227BBC !important; color: #fff; border-color: #227BBC !important; }
+.upgrade-btn.active .star { color: #fff; }
+.upgrade-content { 
+    display: none; 
+    padding: 10px 12px; 
+    background: var(--card-bg); 
+    border-radius: 8px; 
+    border: 1px solid var(--border-color); 
+}
+.upgrade-content.show { display: block; }
+
+/* ===== ЭЛЕМЕНТЫ СПИСКА В ПРОКАЧКЕ ===== */
+.upgrade-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 0;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.upgrade-item:last-child { border-bottom: none; }
+.upgrade-item img { 
+    width: 36px; 
+    height: 36px; 
+    object-fit: contain; 
+    border-radius: 4px; 
+    flex-shrink: 0; 
+}
+.upgrade-item .name { 
+    flex: 1; 
+    color: var(--text-color);
+}
+.upgrade-item .count { 
+    font-weight: 600; 
+    color: var(--text-color);
+    padding-right: 6px;
+}
+
 /* ===== МОДАЛЬНОЕ ОКНО ===== */
 .modal { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center; padding:20px; z-index:2000; }
 .modal.show { display:flex; }
@@ -1065,98 +1144,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .hero-info-row .info-item .label { font-size: 11px; color: var(--text-color); opacity: 0.6; font-weight: 400; margin-top: -2px; }
 .upgrade-section-wrapper { display: none; margin-top: 8px; }
 .upgrade-section-wrapper.show { display: block; }
-.upgrade-section {
-    padding: 12px 14px;
-    background: var(--secondary-color);
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
-}
-.upgrade-section-title { display: none !important; }
-.upgrade-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 10px;
-}
-.upgrade-btn {
-    padding: 4px 12px;
-    font-size: 12px;
-    border: 1px solid #227BBC !important;
-    border-radius: 6px;
-    background: var(--card-bg);
-    color: var(--text-color);
-    cursor: pointer;
-    transition: all 0.15s;
-    font-weight: 600;
-}
-.upgrade-btn .star { color: #ffd700; }
-.upgrade-btn img { 
-    width: 14px; 
-    height: 14px; 
-    display: inline-block; 
-    vertical-align: middle;
-    margin-right: 2px;
-}
-.upgrade-btn:hover { background: #227BBC !important; color: #fff; }
-.upgrade-btn:hover .star { color: #fff; }
-.upgrade-btn.active { background: #227BBC !important; color: #fff; border-color: #227BBC !important; }
-.upgrade-btn.active .star { color: #fff; }
-.upgrade-content { 
-    display: none; 
-    padding: 10px 12px; 
-    background: var(--card-bg); 
-    border-radius: 8px; 
-    border: 1px solid var(--border-color); 
-}
-.upgrade-content.show { display: block; }
-.upgrade-group-title {
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    margin-bottom: 6px !important;
-    color: var(--text-color);
-}
-.upgrade-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 6px 0;
-    font-size: 13px;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-}
-.upgrade-item:last-child { border-bottom: none; }
-.upgrade-item img { 
-    width: 36px; 
-    height: 36px; 
-    object-fit: contain; 
-    border-radius: 4px; 
-    flex-shrink: 0; 
-}
-.upgrade-item .name { 
-    flex: 1; 
-    color: var(--text-color);
-}
-.upgrade-item .count { 
-    font-weight: 600; 
-    color: var(--text-color);
-    padding-right: 6px;
-}
-.upgrade-tokens {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 6px 0;
-}
-.upgrade-tokens .token {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    background: var(--secondary-color);
-    padding: 6px 14px 6px 8px;
-    border-radius: 20px;
-}
-.upgrade-tokens .token img { width: 36px; height: 36px; object-fit: contain; border-radius: 4px; flex-shrink: 0; }
-.upgrade-tokens .token .count { font-weight: 600; color: var(--text-color); padding-right: 0; }
 
 /* ===== КНОПКИ НАВИГАЦИИ ===== */
 .nav-btn {
@@ -1531,7 +1518,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
                 </div>
                 <div>
                     <div class="upgrade-group-title">Жетоны талантов</div>
-                    <div id="talentTokensContent"></div>
+                    <div class="upgrade-content show" id="talentTokensContent"></div>
                 </div>
             </div>
         </div>
@@ -1761,26 +1748,29 @@ function showTalentTokens(stars, hero, container) {
     const tokenData = getTokensForHero(stars);
     container.innerHTML = '';
     if (!tokenData) {
-        container.innerHTML = '<div style="font-size:12px; opacity:0.6;">Нет данных о жетонах для этой звёздности</div>';
+        container.innerHTML = '<div style="font-size:12px; opacity:0.6; padding:8px 0;">Нет данных о жетонах для этой звёздности</div>';
         return;
     }
     const total = tokenData['Количество жетонов'] || 0;
     const heroClass = hero ? hero['Класс'] : '';
     const classImgUrl = getItemImage(heroClass);
-    let html = '<div class="upgrade-tokens">';
+    
+    let html = '';
     if (classImgUrl && heroClass) {
-        html += '<div class="token">' +
+        html += '<div class="upgrade-item">' +
             '<img src="'+classImgUrl+'" alt="'+heroClass+'" loading="lazy">' +
-            '<span>'+heroClass+': <span class="count">'+total+'</span></span>' +
+            '<span class="name">'+heroClass+'</span>' +
+            '<span class="count">×'+total+'</span>' +
         '</div>';
     } else {
-        html += '<div class="token">' +
-            '<span style="font-size:13px;">🎯</span>' +
-            '<span>Всего: <span class="count">'+total+'</span></span>' +
+        html += '<div class="upgrade-item">' +
+            '<div style="width:36px;height:36px;border-radius:4px;background:var(--secondary-color);display:flex;align-items:center;justify-content:center;font-size:14px;">🎯</div>' +
+            '<span class="name">Всего жетонов</span>' +
+            '<span class="count">×'+total+'</span>' +
         '</div>';
     }
-    html += '</div>';
     container.innerHTML = html;
+    container.classList.add('show');
 }
 function renderUpgradeSection(hero) {
     const container = document.getElementById('upgradeContainer');
