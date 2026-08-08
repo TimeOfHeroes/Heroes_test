@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <style>
-/* ===== ВСЕ СТИЛИ (полная версия) ===== */
 :root {
   color-scheme: light dark;
   --hdrH: 70px;
@@ -655,6 +654,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     flex-shrink: 0;
     background: var(--filter-bg);
     z-index: 10;
+    gap: 8px;
 }
 .filters .head h2 {
     margin: 0;
@@ -662,40 +662,23 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-weight: 600;
     text-align: center;
 }
+.filters .head-buttons {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    justify-content: center;
+}
+.filters .head-buttons .btn {
+    flex: 1;
+    padding: 6px 12px;
+    font-size: 13px;
+}
 
 /* Прокручиваемая область */
 .filters .filters-scroll {
     flex: 1;
     overflow-y: auto;
     padding: 0 16px 16px 16px;
-}
-
-/* Закреплённая нижняя панель */
-.filters-actions {
-    flex-shrink: 0;
-    display: flex;
-    gap: 8px;
-    padding: 12px 16px;
-    border-top: 1px solid var(--border-color);
-    background: var(--filter-bg);
-    position: sticky;
-    bottom: 0;
-    z-index: 10;
-}
-.filters-actions .btn {
-    flex: 1;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    text-align: center;
-}
-.filters-actions .btn.primary {
-    background: #227BBC;
-    color: #fff;
-    border-color: #227BBC;
-}
-.filters-actions .btn.primary:hover {
-    background: #1a5f9a;
 }
 
 /* ===== ФАСЕТЫ ФИЛЬТРОВ ===== */
@@ -761,14 +744,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .facet .actions .btn {
     font-size: 12px;
     padding: 4px 8px;
-}
-
-/* ===== МОБИЛЬНЫЙ ОТСТУП ДЛЯ КНОПОК В ФИЛЬТРАХ ===== */
-@media (max-width: 768px) {
-    .filters .filters-actions {
-        padding-bottom: calc(20px + env(safe-area-inset-bottom, 12px)) !important;
-        padding-bottom: calc(20px + constant(safe-area-inset-bottom, 12px)) !important;
-    }
 }
 
 /* ===== МОДАЛЬНОЕ ОКНО ===== */
@@ -1386,7 +1361,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 </style>
 </head>
 <body>
-<!-- ===== HTML ===== -->
 <header>
 <div class="container">
 <div class="top-bar">
@@ -1443,7 +1417,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     <div class="panel">
         <div class="head">
             <h2>Фильтры</h2>
-            <!-- ← Верхние кнопки УБРАНЫ -->
+            <div class="head-buttons">
+                <button id="applyFiltersBtn" class="btn primary">Применить</button>
+                <button id="closeFilters" class="btn">Закрыть</button>
+            </div>
         </div>
         <div class="filters-scroll">
             <div class="facet" data-facet="element">
@@ -1498,14 +1475,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
                 <h3>Теги способностей</h3>
                 <div class="opts" id="facet-tags"></div>
                 <div class="actions">
-                    <!-- Кнопка "Все" убрана -->
                     <button class="btn" data-action="none" data-facet="tags">Снять</button>
                 </div>
             </div>
-        </div>
-        <div class="filters-actions">
-            <button id="applyFiltersBtnBottom" class="btn primary">Применить</button>
-            <button id="closeFiltersBottom" class="btn">Закрыть</button>
         </div>
     </div>
 </aside>
@@ -1606,7 +1578,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 </div>
 
 <script>
-// ===== ВЕСЬ JS (полная версия) =====
 const HERO_FIELDS = { 
     id:'id', 
     name:'Герой', 
@@ -2659,7 +2630,7 @@ function fillModal(hero){
 }
 function closeModal(){ document.getElementById('modal').classList.remove('show'); document.body.style.overflow=''; currentIdx=-1; closeTreePanel(); }
 function go(delta){ if(currentIdx<0||!viewHeroes.length) return; currentIdx=(currentIdx+delta+viewHeroes.length)%viewHeroes.length; openModal(currentIdx); }
-function attachEvents() {
+function attachEvents(){
     const closeTreeBtn = document.getElementById('closeTreeBtn');
     if (closeTreeBtn) {
         closeTreeBtn.addEventListener('click', function(e) {
@@ -2667,7 +2638,6 @@ function attachEvents() {
             closeTreePanel();
         });
     }
-
     document.getElementById('searchInput').addEventListener('input', applyFilters);
     document.getElementById('sortSelect').addEventListener('change', applyFilters);
     document.getElementById('sortBtn').addEventListener('click', ()=>{
@@ -2729,7 +2699,6 @@ function attachEvents() {
             wrapper.classList.add('show');
         }
     });
-    
     function openFiltersPanel(){ 
         const headerHeight=document.querySelector('header').offsetHeight; 
         const filterPanel=document.querySelector('.filters .panel'); 
@@ -2753,26 +2722,9 @@ function attachEvents() {
     window.addEventListener('resize', updateFilterPadding);
     document.getElementById('openFilters').addEventListener('click', openFiltersPanel);
     
-    // ===== ИСПРАВЛЕНИЕ: проверяем наличие кнопок перед добавлением обработчиков =====
-    // Верхние кнопки (могут отсутствовать)
-    const applyBtn = document.getElementById('applyFiltersBtn');
-    if (applyBtn) {
-        applyBtn.addEventListener('click', ()=>{ applyFilters(); closeFiltersPanel(); });
-    }
-    const closeBtn = document.getElementById('closeFilters');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', closeFiltersPanel);
-    }
-    
-    // Нижние кнопки (всегда есть)
-    const bottomApply = document.getElementById('applyFiltersBtnBottom');
-    if (bottomApply) {
-        bottomApply.addEventListener('click', ()=>{ applyFilters(); closeFiltersPanel(); });
-    }
-    const bottomClose = document.getElementById('closeFiltersBottom');
-    if (bottomClose) {
-        bottomClose.addEventListener('click', closeFiltersPanel);
-    }
+    // Кнопки в фильтрах (только верхние)
+    document.getElementById('applyFiltersBtn').addEventListener('click', ()=>{ applyFilters(); closeFiltersPanel(); });
+    document.getElementById('closeFilters').addEventListener('click', closeFiltersPanel);
     
     document.getElementById('filterOverlay').addEventListener('click', closeFiltersPanel);
     document.getElementById('cards').addEventListener('click', e=>{ if(e.target.classList.contains('toggle-abilities')) return; let card=e.target.closest('.card'); if(card) openModal(Number(card.dataset.idx)); });
@@ -2784,7 +2736,6 @@ function attachEvents() {
     document.getElementById('infoBtn').addEventListener('click', ()=>{ document.getElementById('infoModal').classList.add('show'); document.body.style.overflow='hidden'; });
     document.getElementById('infoClose').addEventListener('click', ()=>{ document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow=''; });
     document.getElementById('infoModal').addEventListener('click', e=>{ if(e.target===document.getElementById('infoModal')){ document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow=''; } });
-    
     const dateEl = document.getElementById('updateDate');
     if (dateEl) {
         if (dbUpdateDate) {
@@ -2796,7 +2747,7 @@ function attachEvents() {
     initTooltip();
     initDragAndDrop();
 }
-  Promise.all([
+Promise.all([
     new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
         allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]).map(row=>{ 
             const tagsStr=row['Теги']||''; 
