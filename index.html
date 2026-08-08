@@ -662,7 +662,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-weight: 600;
     text-align: center;
 }
-/* ← Верхние кнопки УБРАНЫ */
 
 /* Прокручиваемая область */
 .filters .filters-scroll {
@@ -699,7 +698,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     background: #1a5f9a;
 }
 
-/* Фасеты фильтров */
+/* ===== ФАСЕТЫ ФИЛЬТРОВ ===== */
 .facet {
     margin-bottom: 16px;
     flex-shrink: 0;
@@ -710,12 +709,20 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-weight: 500;
 }
 .opts {
-    max-height: 150px;
-    overflow-y: auto;
     border: 1px solid var(--border-color);
     border-radius: 6px;
     padding: 6px;
     background: var(--secondary-color);
+}
+/* Стихия — без скролла, все цвета видны */
+.facet[data-facet="element"] .opts {
+    max-height: none !important;
+    overflow-y: visible !important;
+}
+/* Остальные фильтры — со скроллом */
+.facet:not([data-facet="element"]) .opts {
+    max-height: 150px;
+    overflow-y: auto;
 }
 .opt {
     display: flex;
@@ -754,6 +761,14 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .facet .actions .btn {
     font-size: 12px;
     padding: 4px 8px;
+}
+
+/* ===== МОБИЛЬНЫЙ ОТСТУП ДЛЯ КНОПОК В ФИЛЬТРАХ ===== */
+@media (max-width: 768px) {
+    .filters .filters-actions {
+        padding-bottom: calc(20px + env(safe-area-inset-bottom, 12px)) !important;
+        padding-bottom: calc(20px + constant(safe-area-inset-bottom, 12px)) !important;
+    }
 }
 
 /* ===== МОДАЛЬНОЕ ОКНО ===== */
