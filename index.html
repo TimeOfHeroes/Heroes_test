@@ -655,7 +655,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     flex-shrink: 0;
     background: var(--filter-bg);
     z-index: 10;
-    gap: 8px;
 }
 .filters .head h2 {
     margin: 0;
@@ -663,17 +662,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-weight: 600;
     text-align: center;
 }
-.filters .head-buttons {
-    display: flex;
-    gap: 8px;
-    width: 100%;
-    justify-content: center;
-}
-.filters .head-buttons .btn {
-    flex: 1;
-    padding: 6px 12px;
-    font-size: 13px;
-}
+/* ← Верхние кнопки УБРАНЫ */
 
 /* Прокручиваемая область */
 .filters .filters-scroll {
@@ -1438,8 +1427,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 <aside id="filters" class="filters">
     <div class="panel">
         <div class="head">
-    <h2>Фильтры</h2>
-</div>
+            <h2>Фильтры</h2>
+            <!-- ← Верхние кнопки УБРАНЫ -->
+        </div>
         <div class="filters-scroll">
             <div class="facet" data-facet="element">
                 <h3>Стихия</h3>
