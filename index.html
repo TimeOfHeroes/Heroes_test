@@ -2644,7 +2644,7 @@ function fillModal(hero){
 }
 function closeModal(){ document.getElementById('modal').classList.remove('show'); document.body.style.overflow=''; currentIdx=-1; closeTreePanel(); }
 function go(delta){ if(currentIdx<0||!viewHeroes.length) return; currentIdx=(currentIdx+delta+viewHeroes.length)%viewHeroes.length; openModal(currentIdx); }
-function attachEvents(){
+function attachEvents() {
     const closeTreeBtn = document.getElementById('closeTreeBtn');
     if (closeTreeBtn) {
         closeTreeBtn.addEventListener('click', function(e) {
@@ -2652,6 +2652,7 @@ function attachEvents(){
             closeTreePanel();
         });
     }
+
     document.getElementById('searchInput').addEventListener('input', applyFilters);
     document.getElementById('sortSelect').addEventListener('change', applyFilters);
     document.getElementById('sortBtn').addEventListener('click', ()=>{
@@ -2713,6 +2714,7 @@ function attachEvents(){
             wrapper.classList.add('show');
         }
     });
+    
     function openFiltersPanel(){ 
         const headerHeight=document.querySelector('header').offsetHeight; 
         const filterPanel=document.querySelector('.filters .panel'); 
@@ -2735,12 +2737,28 @@ function attachEvents(){
     }
     window.addEventListener('resize', updateFilterPadding);
     document.getElementById('openFilters').addEventListener('click', openFiltersPanel);
-    // Кнопки "Применить" в фильтрах
-    document.getElementById('applyFiltersBtn').addEventListener('click', ()=>{ applyFilters(); closeFiltersPanel(); });
-    document.getElementById('applyFiltersBtnBottom').addEventListener('click', ()=>{ applyFilters(); closeFiltersPanel(); });
-    // Кнопки "Закрыть" в фильтрах
-    document.getElementById('closeFilters').addEventListener('click', closeFiltersPanel);
-    document.getElementById('closeFiltersBottom').addEventListener('click', closeFiltersPanel);
+    
+    // ===== ИСПРАВЛЕНИЕ: проверяем наличие кнопок перед добавлением обработчиков =====
+    // Верхние кнопки (могут отсутствовать)
+    const applyBtn = document.getElementById('applyFiltersBtn');
+    if (applyBtn) {
+        applyBtn.addEventListener('click', ()=>{ applyFilters(); closeFiltersPanel(); });
+    }
+    const closeBtn = document.getElementById('closeFilters');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeFiltersPanel);
+    }
+    
+    // Нижние кнопки (всегда есть)
+    const bottomApply = document.getElementById('applyFiltersBtnBottom');
+    if (bottomApply) {
+        bottomApply.addEventListener('click', ()=>{ applyFilters(); closeFiltersPanel(); });
+    }
+    const bottomClose = document.getElementById('closeFiltersBottom');
+    if (bottomClose) {
+        bottomClose.addEventListener('click', closeFiltersPanel);
+    }
+    
     document.getElementById('filterOverlay').addEventListener('click', closeFiltersPanel);
     document.getElementById('cards').addEventListener('click', e=>{ if(e.target.classList.contains('toggle-abilities')) return; let card=e.target.closest('.card'); if(card) openModal(Number(card.dataset.idx)); });
     document.getElementById('mClose').addEventListener('click', closeModal);
@@ -2751,6 +2769,7 @@ function attachEvents(){
     document.getElementById('infoBtn').addEventListener('click', ()=>{ document.getElementById('infoModal').classList.add('show'); document.body.style.overflow='hidden'; });
     document.getElementById('infoClose').addEventListener('click', ()=>{ document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow=''; });
     document.getElementById('infoModal').addEventListener('click', e=>{ if(e.target===document.getElementById('infoModal')){ document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow=''; } });
+    
     const dateEl = document.getElementById('updateDate');
     if (dateEl) {
         if (dbUpdateDate) {
@@ -2762,7 +2781,7 @@ function attachEvents(){
     initTooltip();
     initDragAndDrop();
 }
-Promise.all([
+  Promise.all([
     new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
         allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]).map(row=>{ 
             const tagsStr=row['Теги']||''; 
