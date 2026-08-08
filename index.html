@@ -1362,6 +1362,101 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     .hero-stats-row .stat-item img { width: 14px !important; height: 14px !important; min-width: 14px !important; min-height: 14px !important; max-width: 14px !important; max-height: 14px !important; }
     .hero-stats-row .stat-item img[src*="Sword" i] { width: 16px !important; height: 16px !important; min-width: 16px !important; min-height: 16px !important; max-width: 16px !important; max-height: 16px !important; }
 }
+/* ===== ИСПРАВЛЕНИЕ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ МОДАЛЬНОГО ОКНА ===== */
+/* Эти стили применяются ТОЛЬКО на экранах меньше 768px */
+
+@media (max-width: 768px) {
+    /* Контент модалки — добавляем отступ сверху, чтобы кнопки не перекрывали */
+    .dialog .modal-content {
+        padding-top: 64px !important;
+    }
+    
+    /* Все кнопки навигации — одинаковый размер на мобилках */
+    .nav-btn {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+        top: 12px !important;
+    }
+    .nav-btn img {
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        min-height: 30px !important;
+        max-width: 30px !important;
+        max-height: 30px !important;
+    }
+    
+    /* Позиционирование кнопок на мобилках */
+    .nav-prev { 
+        right: 80px !important;
+        top: 12px !important;
+    }
+    .nav-next { 
+        right: 40px !important;
+        top: 12px !important;
+    }
+    .nav-close { 
+        right: 8px !important;
+        top: 12px !important;
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+    }
+    .nav-close img {
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        min-height: 30px !important;
+        max-width: 30px !important;
+        max-height: 30px !important;
+    }
+}
+
+/* Для очень маленьких экранов (≤ 480px) */
+@media (max-width: 480px) {
+    .dialog .modal-content {
+        padding-top: 56px !important;
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+    
+    .nav-btn {
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
+        top: 10px !important;
+    }
+    .nav-btn img {
+        width: 24px !important;
+        height: 24px !important;
+        min-width: 24px !important;
+        min-height: 24px !important;
+        max-width: 24px !important;
+        max-height: 24px !important;
+    }
+    .nav-prev { right: 68px !important; top: 10px !important; }
+    .nav-next { right: 34px !important; top: 10px !important; }
+    .nav-close { 
+        right: 6px !important; 
+        top: 10px !important;
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
+    }
+    .nav-close img {
+        width: 24px !important;
+        height: 24px !important;
+        min-width: 24px !important;
+        min-height: 24px !important;
+        max-width: 24px !important;
+        max-height: 24px !important;
+    }
+}  
 </style>
 </head>
 <body>
