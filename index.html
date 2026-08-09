@@ -1384,11 +1384,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <button id="sortBtn" class="sort-btn desc" data-tooltip="Сортировка по убыванию"></button>
         <div class="sort-select-wrapper">
             <select id="sortSelect">
-                <option value="Сила">Сила</option>
+                <option value="Герой">Имя</option>
                 <option value="Атака">Атака</option>
                 <option value="Защита">Защита</option>
                 <option value="Здоровье">Здоровье</option>
-                <option value="Герой">Имя</option>
             </select>
         </div>
     </div>
@@ -2669,7 +2668,7 @@ function attachEvents(){
     }));
     document.getElementById('resetAll').addEventListener('click', ()=>{
         document.getElementById('searchInput').value='';
-        document.getElementById('sortSelect').value='Сила';
+        document.getElementById('sortSelect').value='Герой';  // ← изменено с 'Сила'
         sortDirection='desc';
         document.getElementById('sortBtn').className='sort-btn desc';
         document.getElementById('sortBtn').dataset.tooltip = 'Сортировка по убыванию';
@@ -2735,9 +2734,10 @@ function attachEvents(){
             dateEl.textContent = new Date().toLocaleDateString('ru-RU', {year:'numeric', month:'long', day:'numeric'});
         }
     }
+ document.getElementById('sortSelect').value = 'Герой';
     initTooltip();
     initDragAndDrop();
-}
+  }
 Promise.all([
     new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
         allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]).map(row=>{ 
