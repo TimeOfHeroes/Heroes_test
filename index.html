@@ -2452,12 +2452,21 @@ function openTreePanel(){
     const hero=viewHeroes[currentIdx]; 
     if(!hero) return; 
     const panel=document.getElementById('treePanel'); 
-    if(!panel.style.left && !panel.style.top){ 
-        panel.style.left=''; 
-        panel.style.right='20px'; 
-        panel.style.top='50%'; 
-        panel.style.transform='translateY(-50%)'; 
-    } 
+    
+    // Проверяем, видимо ли дерево на экране
+    const rect = panel.getBoundingClientRect();
+    const isVisible = rect.width > 0 && rect.height > 0 && 
+                     rect.right > 0 && rect.left < window.innerWidth &&
+                     rect.bottom > 0 && rect.top < window.innerHeight;
+    
+    // Если дерево не видно или его позиция сбита — сбрасываем в центр
+    if (!isVisible || !panel.style.left || !panel.style.top) {
+        panel.style.left = '';
+        panel.style.right = '20px';
+        panel.style.top = '50%';
+        panel.style.transform = 'translateY(-50%)';
+    }
+    
     document.getElementById('treeHeroName').textContent=hero[HERO_FIELDS.name]; 
     renderTalentTree(hero, currentHeroTalents, currentMode); 
     panel.classList.add('show'); 
@@ -2620,6 +2629,7 @@ function openModal(idx){
     fillModal(hero);
     document.getElementById('modal').classList.add('show');
     document.body.style.overflow='hidden';
+    closeTreePanel(); // Закрываем дерево при открытии модалки
 }
 function fillModal(hero){
     let img = fileCellToUrl(hero[HERO_FIELDS.image]);
