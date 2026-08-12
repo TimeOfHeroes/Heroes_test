@@ -979,8 +979,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     vertical-align: middle !important;
     flex-shrink: 0 !important;
     overflow: visible !important;
-    padding: 0 !important;
+    padding: 2px !important;
     margin: 0 !important;
+    border-radius: 3px !important;
+    background: var(--icon-bg-light) !important;
+    border: 1px solid var(--icon-border-light) !important;
+    filter: var(--icon-filter) !important;
 }
 .hero-stats-row .stat-item img[src*="Sword" i] {
     width: 20px !important;
@@ -989,7 +993,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     min-height: 20px !important;
     max-width: 20px !important;
     max-height: 20px !important;
-    padding: 0 !important;
+    padding: 2px !important;
+    border-radius: 3px !important;
+    background: var(--icon-bg-light) !important;
+    border: 1px solid var(--icon-border-light) !important;
+    filter: var(--icon-filter) !important;
 }
 .hero-stats-row .talent-controls {
     display: flex !important;
@@ -2493,26 +2501,27 @@ function updateHeroCheckboxes(){
     document.getElementById('heroCheckboxesList').innerHTML=names.map(name => {
         const id = 'hero-'+name.replace(/[^a-zа-я0-9]/gi,'_');
         const checked = selected.heroes.has(name) ? 'checked' : '';
-        return `<div class="hero-checkbox-item" data-hero="${name}">
+        return `<div class="hero-checkbox-item">
             <input type="checkbox" id="${id}" data-hero="${name}" ${checked}>
             <label for="${id}">${name}</label>
         </div>`;
     }).join('');
     
-    // Обработчик на весь блок (клик по имени или чекбоксу)
-    document.querySelectorAll('#heroCheckboxesList .hero-checkbox-item').forEach(item => {
-        item.addEventListener('click', function(e) {
-            // Если клик был не по чекбоксу (по имени или фону)
-            if (e.target.tagName !== 'INPUT') {
-                const checkbox = this.querySelector('input[type="checkbox"]');
-                if (checkbox) {
-                    checkbox.checked = !checkbox.checked;
-                    const event = new Event('change', { bubbles: true });
-                    checkbox.dispatchEvent(event);
-                }
+    // Обработчик изменения чекбоксов
+    document.querySelectorAll('#heroCheckboxesList input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', function() {
+            const name = this.dataset.hero;
+            if (this.checked) {
+                selected.heroes.add(name);
+            } else {
+                selected.heroes.delete(name);
             }
+            updateHeroSelectDisplay();
         });
     });
+    
+    updateHeroSelectDisplay();
+}
     
     // Обработчик изменения чекбоксов
     document.querySelectorAll('#heroCheckboxesList input[type="checkbox"]').forEach(cb => {
