@@ -135,6 +135,32 @@
     --tag-default: #868e96;
   }
 }
+/* ===== ТУЛТИПЫ ТЕГОВ ===== */
+.tag-tooltip {
+    position: fixed;
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: normal;
+    max-width: 280px;
+    word-wrap: break-word;
+    white-space: normal;
+    z-index: 10001;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color);
+    transition: opacity 0.15s;
+    line-height: 1.4;
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    visibility: hidden;
+}
+.tag-tooltip.show {
+    opacity: 1;
+    visibility: visible;
+}
 * { box-sizing: border-box; }
 body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg-color); color: var(--text-color); line-height:1.4; overflow-x:hidden; }
 .filter-overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:var(--overlay-bg); z-index:98; display:none; opacity:0; transition:opacity 0.3s ease; }
@@ -1687,8 +1713,63 @@ let itemImages = {};
 let isDragging = false;
 let dragStartX = 0, dragStartY = 0;
 let tooltipElement = null;
+let tagTooltipElement = null;
 let iconCache = {};
 let dbUpdateDate = '';
+
+// ===== ОПИСАНИЯ ТЕГОВ =====
+const TAG_DESCRIPTIONS = {
+    'урон_навыка': 'мгновенный урон навыком',
+    'лечение': 'мгновенное лечение',
+    'усил_защита': 'увеличение защиты союзников',
+    'усил_атака': 'увеличение атаки союзников',
+    'ослаб_атака': 'снижение атаки врагов',
+    'ослаб_защита': 'снижение защиты врагов',
+    'снятие_врагам': 'снятие положительных эффектов с врагов',
+    'снятие_своим': 'снятие отрицательных эффектов с союзников',
+    'блок ослаблений': 'невосприимчивость к ослаблениям',
+    'блок_снятие_усил': 'невосприимчивость к снятию усилений',
+    'нельзя снять': 'эффект нельзя снять',
+    'меткость': 'снижение меткости врагу',
+    'штраф_меткость': 'снижение меткости союзникам',
+    'криты': 'увеличение шанса критического удара',
+    'контратака': 'контратака при получении урона',
+    'провокация': 'принуждение врагов атаковать этого героя',
+    'воскрешение': 'воскрешение павших союзников',
+    'ярость': 'входит в состояние ярости',
+    'безумие': 'входит в состояние безумия',
+    'метка_тишины': 'накладывание метки тишины',
+    'пробитие': 'пробитие защитных усилений и атак',
+    'увеличение здоровья': 'увеличение максимального здоровья',
+    'DoT': 'урон с течением времени (Damage over Time)',
+    'HoT': 'лечение с течением времени (Heal over Time)',
+    'похищ_лечение': 'кража лечения у врагов',
+    'похищ_маны': 'кража получаемой маны у врагов',
+    'мана_ускор': 'ускорение восстановления маны',
+    'мана_замедл': 'замедление восстановления маны',
+    'мана_срез': 'уменьшение текущего количества маны',
+    'мана_блок': 'блокировка получения маны',
+    'бронерез': 'снижение защиты врагов',
+    'деление_своим': 'распределение урона между союзниками',
+    'усил_защиты_навык': 'увеличение защиты от навыков',
+    'усил_атаки_навык': 'увеличение урона от навыков',
+    'прислужники': 'призыв прислужников',
+    'антиприслужник': 'уничтожение прислужников врагов',
+    'ослаб_атаки_себе': 'снижение атаки себе',
+    'ослаб_защиты_себе': 'снижение защиты себе',
+    'ослаб_метк_себе': 'снижение меткости себе',
+    'стихия_HoT': 'лечение с течением времени для определённой стихии',
+    'стихия_DoT': 'урон с течением времени определённой стихии',
+    'стихия_усил_атака': 'увеличение атаки для определённой стихии',
+    'стихия_усил_защита': 'увеличение защиты для определённой стихии',
+    'стихия_усил_защиты_навык': 'увеличение защиты от навыков для определённой стихии',
+    'стихия_бронерез': 'снижение защиты против определённой стихии',
+    'стихия_отражение': 'отражение ослаблений или урона от навыков определённой стихии',
+    'стихия_мана_ускор': 'ускорение восстановления маны для определённой стихии',
+    'стихия_прислужники': 'призыв прислужников для определённой стихии',
+    'стихия_криты': 'увеличение шанса крита для определённой стихии',
+    'сокращ_длит_эффект': 'сокращение длительности положительных эффектов врагов'
+};
 
 function initSortTooltip() {
     const btn = document.getElementById('sortBtn');
@@ -1697,7 +1778,58 @@ function initSortTooltip() {
     }
 }
 function getTagClass(tag) {
-    const tagMap = { 'урон':'tag-damage', 'лечение':'tag-heal', 'щит':'tag-shield', 'ослабление':'tag-debuff', 'усиление':'tag-buff', 'доты':'tag-dot', 'хоты':'tag-hot', 'снятие':'tag-cleanse', 'призыв':'tag-summon', 'отражение':'tag-reflect', 'блокировка':'tag-block', 'кража':'tag-steal', 'одиночный':'tag-single', 'все_враги':'tag-aoe', 'цепь':'tag-chain', 'себя':'tag-self', 'союзники':'tag-allies', 'враги':'tag-enemies', 'мана':'tag-mana', 'крит':'tag-crit', 'меткость':'tag-accuracy', 'антихил':'tag-antihil', 'контратака':'tag-counter', 'провокация':'tag-provoke', 'воскрешение':'tag-resurrection', 'баф_стихии':'tag-element', 'усил. атаки':'tag-buff', 'усил. защиты':'tag-shield', 'усил. атаки_навык':'tag-buff', 'усил. защиты_навык':'tag-shield', 'ослаб. атаки':'tag-debuff', 'ослаб. защиты':'tag-debuff', 'ослаб. атаки_себе':'tag-debuff', 'ослаб. защиты_себе':'tag-debuff', 'ослаб. метк_себе':'tag-debuff', 'похищ._лечения':'tag-antihil', 'мана_ускор.':'tag-mana', 'мана_замедл.':'tag-mana', 'мана_срез':'tag-mana', 'мана_блок':'tag-block', 'деление_себе':'tag-shield', 'деление_против.':'tag-debuff', 'увеличение здоровья':'tag-heal', 'пробитие':'tag-damage', 'снятие_врагам':'tag-cleanse', 'снятие_своим':'tag-cleanse', 'блок_снятие_усил.':'tag-block', 'нельзя снять':'tag-block', 'метка':'tag-debuff', 'безумие':'tag-debuff', 'ярость':'tag-buff', 'антиприслужник':'tag-summon', 'похищ._маны':'tag-steal', 'сокращ.длит.эффект.':'tag-debuff' };
+    const tagMap = {
+        'урон_навыка': 'tag-damage',
+        'лечение': 'tag-heal',
+        'усил_защита': 'tag-shield',
+        'усил_атака': 'tag-buff',
+        'ослаб_атака': 'tag-debuff',
+        'ослаб_защита': 'tag-debuff',
+        'снятие_врагам': 'tag-cleanse',
+        'снятие_своим': 'tag-cleanse',
+        'блок ослаблений': 'tag-block',
+        'блок_снятие_усил': 'tag-block',
+        'нельзя снять': 'tag-block',
+        'меткость': 'tag-accuracy',
+        'штраф_меткость': 'tag-accuracy',
+        'криты': 'tag-crit',
+        'контратака': 'tag-counter',
+        'провокация': 'tag-provoke',
+        'воскрешение': 'tag-resurrection',
+        'ярость': 'tag-buff',
+        'безумие': 'tag-debuff',
+        'метка_тишины': 'tag-debuff',
+        'пробитие': 'tag-damage',
+        'увеличение здоровья': 'tag-heal',
+        'DoT': 'tag-dot',
+        'HoT': 'tag-hot',
+        'похищ_лечение': 'tag-antihil',
+        'похищ_маны': 'tag-steal',
+        'мана_ускор': 'tag-mana',
+        'мана_замедл': 'tag-mana',
+        'мана_срез': 'tag-mana',
+        'мана_блок': 'tag-block',
+        'бронерез': 'tag-debuff',
+        'деление_своим': 'tag-shield',
+        'усил_защиты_навык': 'tag-shield',
+        'усил_атаки_навык': 'tag-buff',
+        'прислужники': 'tag-summon',
+        'антиприслужник': 'tag-summon',
+        'ослаб_атаки_себе': 'tag-debuff',
+        'ослаб_защиты_себе': 'tag-debuff',
+        'ослаб_метк_себе': 'tag-debuff',
+        'стихия_HoT': 'tag-hot',
+        'стихия_DoT': 'tag-dot',
+        'стихия_усил_атака': 'tag-buff',
+        'стихия_усил_защита': 'tag-shield',
+        'стихия_усил_защиты_навык': 'tag-shield',
+        'стихия_бронерез': 'tag-debuff',
+        'стихия_отражение': 'tag-reflect',
+        'стихия_мана_ускор': 'tag-mana',
+        'стихия_прислужники': 'tag-summon',
+        'стихия_криты': 'tag-crit',
+        'сокращ_длит_эффект': 'tag-debuff'
+    };
     return tagMap[tag] || 'tag-default';
 }
 function fileCellToUrl(v) { let s=String(v||''); let m=s.match(/\((https?:\/\/[^)]+)\)/i); if(m) return m[1]; let m2=s.match(/https?:\/\/\S+/i); return m2 ? m2[0].replace(/[),]+$/,'') : ''; }
@@ -1723,6 +1855,51 @@ function getShieldIcon() { return getIcon(ICON_NAMES.shield); }
 function getHealthIcon() { return getIcon(ICON_NAMES.health); }
 function getTreeIcon() { return getIcon(ICON_NAMES.tree); }
 function getUpgradeIcon() { return getIcon(ICON_NAMES.upgrade); }
+
+// ===== ТУЛТИПЫ ДЛЯ ТЕГОВ =====
+function initTagTooltip() {
+    if (!tagTooltipElement) {
+        tagTooltipElement = document.createElement('div');
+        tagTooltipElement.className = 'tag-tooltip';
+        document.body.appendChild(tagTooltipElement);
+    }
+}
+
+function showTagTooltip(text, x, y) {
+    if (!tagTooltipElement) initTagTooltip();
+    tagTooltipElement.textContent = text;
+    tagTooltipElement.classList.add('show');
+    
+    let left = x + 15;
+    let top = y - 10;
+    
+    const rect = tagTooltipElement.getBoundingClientRect();
+    const tooltipWidth = rect.width || 200;
+    const tooltipHeight = rect.height || 40;
+    
+    if (left + tooltipWidth > window.innerWidth - 10) {
+        left = x - tooltipWidth - 15;
+    }
+    if (top + tooltipHeight > window.innerHeight - 10) {
+        top = window.innerHeight - tooltipHeight - 10;
+    }
+    if (top < 10) {
+        top = 10;
+    }
+    if (left < 10) {
+        left = 10;
+    }
+    
+    tagTooltipElement.style.left = left + 'px';
+    tagTooltipElement.style.top = top + 'px';
+}
+
+function hideTagTooltip() {
+    if (tagTooltipElement) {
+        tagTooltipElement.classList.remove('show');
+    }
+}
+
 function normalizeStarKey(star) { return String(star).replace(/★/g,'').trim(); }
 function getStarTargets(heroStars) {
     const starNum = parseInt(heroStars);
@@ -2453,13 +2630,11 @@ function openTreePanel(){
     if(!hero) return; 
     const panel=document.getElementById('treePanel'); 
     
-    // Проверяем, видимо ли дерево на экране
     const rect = panel.getBoundingClientRect();
     const isVisible = rect.width > 0 && rect.height > 0 && 
                      rect.right > 0 && rect.left < window.innerWidth &&
                      rect.bottom > 0 && rect.top < window.innerHeight;
     
-    // Если дерево не видно или его позиция сбита — сбрасываем в центр
     if (!isVisible || !panel.style.left || !panel.style.top) {
         panel.style.left = '';
         panel.style.right = '20px';
@@ -2514,10 +2689,30 @@ function buildFacet(container, values, facetKey, isTags) {
     else opts.sort(sortAlpha);
     container.innerHTML=opts.map(v=>{
         let tagHtml='';
-        if(isTags){ const tagClass=getTagClass(v); tagHtml='<span class="tag-color" style="background:var(--'+tagClass.replace('tag-','')+')"></span>'; }
-        return '<label class="opt"><input type="checkbox" data-facet="'+facetKey+'" value="'+String(v).replace(/"/g,'&quot;')+'" '+(selected[facetKey].has(String(v))?'checked':'')+'>'+tagHtml+'<span>'+v+'</span></label>';
+        if(isTags){ 
+            const tagClass=getTagClass(v); 
+            tagHtml='<span class="tag-color" style="background:var(--'+tagClass.replace('tag-','')+')"></span>'; 
+        }
+        return '<label class="opt" data-tag="'+v+'"><input type="checkbox" data-facet="'+facetKey+'" value="'+String(v).replace(/"/g,'&quot;')+'" '+(selected[facetKey].has(String(v))?'checked':'')+'>'+tagHtml+'<span>'+v+'</span></label>';
     }).join('');
     container.querySelectorAll('input[type="checkbox"]').forEach(cb=>cb.addEventListener('change',()=>{ let s=selected[cb.dataset.facet]; if(cb.checked) s.add(cb.value); else s.delete(cb.value); }));
+    
+    if (isTags) {
+        container.querySelectorAll('.opt[data-tag]').forEach(el => {
+            const tagName = el.dataset.tag;
+            const description = TAG_DESCRIPTIONS[tagName];
+            if (description) {
+                el.addEventListener('mouseenter', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    showTagTooltip(description, rect.right, rect.top);
+                });
+                el.addEventListener('mouseleave', hideTagTooltip);
+                el.addEventListener('mousemove', function(e) {
+                    showTagTooltip(description, e.clientX, e.clientY);
+                });
+            }
+        });
+    }
 }
 const selected = { element:new Set(), stars:new Set(), mana:new Set(), attackType:new Set(), summon:new Set(), clazz:new Set(), heroes:new Set(), tags:new Set() };
 function initAllFacets(heroes){
@@ -2629,7 +2824,7 @@ function openModal(idx){
     fillModal(hero);
     document.getElementById('modal').classList.add('show');
     document.body.style.overflow='hidden';
-    closeTreePanel(); // Закрываем дерево при открытии модалки
+    closeTreePanel();
 }
 function fillModal(hero){
     let img = fileCellToUrl(hero[HERO_FIELDS.image]);
@@ -2667,11 +2862,30 @@ function fillModal(hero){
     const calc = calculateStatsWithSelections(hero, {}, 'none');
     renderStatsRow(hero, calc);
     renderInfoRow(hero);
+    
+    // Теги с тултипами
     const tagsContainer = document.getElementById('modalTags');
     if (hero._tags && hero._tags.length > 0) {
-        const tagsHtml = hero._tags.map(tag => '<span class="tag ' + getTagClass(tag) + '" data-tag="' + tag + '">#' + tag + '</span>').join('');
+        const tagsHtml = hero._tags.map(tag => {
+            const tagClass = getTagClass(tag);
+            return '<span class="tag ' + tagClass + '" data-tag="' + tag + '">#' + tag + '</span>';
+        }).join('');
         tagsContainer.innerHTML = tagsHtml;
+        
         tagsContainer.querySelectorAll('.tag').forEach(el => {
+            const tag = el.dataset.tag;
+            const description = TAG_DESCRIPTIONS[tag];
+            if (description) {
+                el.addEventListener('mouseenter', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    showTagTooltip(description, rect.right, rect.top);
+                });
+                el.addEventListener('mouseleave', hideTagTooltip);
+                el.addEventListener('mousemove', function(e) {
+                    showTagTooltip(description, e.clientX, e.clientY);
+                });
+            }
+            
             el.addEventListener('click', function(e) {
                 e.stopPropagation();
                 const tag = this.dataset.tag;
@@ -2694,6 +2908,7 @@ function fillModal(hero){
     } else {
         tagsContainer.innerHTML = '';
     }
+    
     document.getElementById('mAbilities').textContent = String(hero[HERO_FIELDS.abilities] || '—').replace(/^'|'$/g, '');
     document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive] || '—').replace(/^'|'$/g, '');
     const upgradeIcon = getIcon(ICON_NAMES.upgrade);
@@ -2825,7 +3040,6 @@ function attachEvents(){
     }
     window.addEventListener('resize', updateFilterPadding);
     
-    // Обновление высоты панели фильтров при изменении размера окна
     window.addEventListener('resize', function() {
         if (document.getElementById('filters').classList.contains('show')) {
             const windowHeight = window.innerHeight;
