@@ -161,58 +161,47 @@
     opacity: 1;
     visibility: visible;
 }
-/* ===== ПЕРЕКЛЮЧАТЕЛЬ РЕЖИМА ТЕГОВ ===== */
-.tag-mode-selector {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-    padding: 4px 0;
-    flex-wrap: wrap;
-}
-.tag-mode-selector .mode-label {
-    font-size: 12px;
-    color: var(--text-color);
-    opacity: 0.7;
-    margin-right: 2px;
-}
-.tag-mode-selector .mode-buttons {
-    display: flex;
-    gap: 4px;
-    background: var(--secondary-color);
+/* ===== КНОПКИ РЕЖИМА ТЕГОВ ===== */
+.mode-btn {
+    padding: 5px 12px;
+    font-size: 13px;
+    border: 1px solid var(--checkbox-border);
     border-radius: 6px;
-    padding: 3px;
-    border: 1px solid var(--border-color);
-}
-.tag-mode-selector .mode-btn {
-    padding: 4px 12px;
-    font-size: 11px;
-    font-weight: 600;
-    border: none;
-    border-radius: 4px;
-    background: transparent;
+    background: var(--card-bg);
     color: var(--text-color);
     cursor: pointer;
     transition: all 0.2s;
-    opacity: 0.6;
+    font-weight: 500;
     white-space: nowrap;
+    height: 32px;
 }
-.tag-mode-selector .mode-btn:hover {
-    opacity: 1;
-    background: rgba(0,0,0,0.05);
+.mode-btn:hover {
+    background: var(--secondary-color);
 }
-.tag-mode-selector .mode-btn.active {
+.mode-btn.active {
     background: #227BBC;
     color: #fff;
-    opacity: 1;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    border-color: #227BBC;
 }
-.tag-mode-selector .mode-btn.active:hover {
+.mode-btn.active:hover {
     background: #1a5f9a;
 }
 @media (prefers-color-scheme: dark) {
-    .tag-mode-selector .mode-btn:hover {
-        background: rgba(255,255,255,0.08);
+    .mode-btn {
+        background: #3d3d3d;
+        color: #eeeeee;
+        border: 1px solid #555555;
+    }
+    .mode-btn:hover {
+        background: #4d4d4d;
+    }
+    .mode-btn.active {
+        background: #227BBC;
+        color: #fff;
+        border-color: #227BBC;
+    }
+    .mode-btn.active:hover {
+        background: #1a5f9a;
     }
 }
 * { box-sizing: border-box; }
@@ -1499,49 +1488,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .tag-resurrection { background:var(--tag-resurrection); }
 .tag-element { background:var(--tag-element); }
 .tag-default { background:var(--tag-default); }
-/* ===== КНОПКИ РЕЖИМА ТЕГОВ ===== */
-.mode-btn {
-    padding: 5px 12px;
-    font-size: 13px;
-    border: 1px solid var(--checkbox-border);
-    border-radius: 6px;
-    background: var(--card-bg);
-    color: var(--text-color);
-    cursor: pointer;
-    transition: all 0.2s;
-    font-weight: 500;
-    white-space: nowrap;
-    height: 32px;
-}
-.mode-btn:hover {
-    background: var(--secondary-color);
-}
-.mode-btn.active {
-    background: #227BBC;
-    color: #fff;
-    border-color: #227BBC;
-}
-.mode-btn.active:hover {
-    background: #1a5f9a;
-}
-@media (prefers-color-scheme: dark) {
-    .mode-btn {
-        background: #3d3d3d;
-        color: #eeeeee;
-        border: 1px solid #555555;
-    }
-    .mode-btn:hover {
-        background: #4d4d4d;
-    }
-    .mode-btn.active {
-        background: #227BBC;
-        color: #fff;
-        border-color: #227BBC;
-    }
-    .mode-btn.active:hover {
-        background: #1a5f9a;
-    }
-}
 </style>
 </head>
 <body>
@@ -1659,13 +1605,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
                 <div class="opts" id="facet-tags"></div>
                 <div class="actions">
                     <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
-                        <div class="tag-mode-selector">
-                            <span class="mode-label">Логика:</span>
-                            <div class="mode-buttons">
-                                <button class="mode-btn active" data-mode="and" title="Герой должен иметь ВСЕ выбранные теги">И (все)</button>
-                                <button class="mode-btn" data-mode="or" title="Герой должен иметь ХОТЯ БЫ ОДИН из выбранных тегов">ИЛИ (любой)</button>
-                            </div>
-                        </div>
+                        <button class="mode-btn active" data-mode="and" title="Герой должен иметь ВСЕ выбранные теги">И (все)</button>
+                        <button class="mode-btn" data-mode="or" title="Герой должен иметь ХОТЯ БЫ ОДИН из выбранных тегов">ИЛИ (любой)</button>
                         <button class="btn" data-action="none" data-facet="tags">Снять</button>
                     </div>
                 </div>
@@ -1822,7 +1763,7 @@ let tooltipElement = null;
 let tagTooltipElement = null;
 let iconCache = {};
 let dbUpdateDate = '';
-let tagFilterMode = 'and'; // 'and' или 'or'
+let tagFilterMode = 'and';
 
 // ===== ОПИСАНИЯ ТЕГОВ =====
 const TAG_DESCRIPTIONS = {
@@ -2856,7 +2797,7 @@ function initAllFacets(heroes){
             document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
             tagFilterMode = this.dataset.mode;
-            applyFilters();
+            // Не вызываем applyFilters() — только при нажатии "Применить"
         });
     });
 }
@@ -3102,7 +3043,7 @@ function attachEvents(){
     document.addEventListener('click', e=>{ if(!document.getElementById('heroSelectToggle').contains(e.target) && !document.getElementById('heroCheckboxes').contains(e.target)) document.getElementById('heroCheckboxes').classList.remove('show'); });
     document.querySelectorAll('.facet .actions button').forEach(btn=>btn.addEventListener('click', ()=>{
         let f=btn.dataset.facet;
-        if(btn.dataset.action==='all'){
+        if (btn.dataset.action === 'all') {
             let vals=uniq(allHeroes.map(r=>{
                 switch(f){
                     case 'element': return r[HERO_FIELDS.element];
@@ -3111,13 +3052,34 @@ function attachEvents(){
                     case 'attackType': return r[HERO_FIELDS.attackType];
                     case 'summon': return r[HERO_FIELDS.summon];
                     case 'clazz': return r[HERO_FIELDS.clazz];
-                    case 'tags': return r._tags?r._tags:[];
+                    case 'tags': return r._tags ? r._tags : [];
                     default: return null;
                 }
             })).flat().filter(v=>v);
-            selected[f]=new Set(vals.map(String));
-        } else selected[f].clear();
-        initAllFacets(allHeroes);
+            if (selected[f]) {
+                selected[f] = new Set(vals.map(String));
+            }
+        } else if (btn.dataset.action === 'none') {
+            if (selected[f]) {
+                selected[f].clear();
+            }
+        }
+        // Обновляем чекбоксы в интерфейсе
+        const facetMap = {
+            'element': 'facet-element',
+            'stars': 'facet-stars',
+            'mana': 'facet-mana',
+            'attackType': 'facet-attackType',
+            'summon': 'facet-summon',
+            'clazz': 'facet-clazz',
+            'tags': 'facet-tags'
+        };
+        const container = document.getElementById(facetMap[f]);
+        if (container) {
+            container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.checked = selected[f].has(cb.value);
+            });
+        }
     }));
     document.getElementById('resetAll').addEventListener('click', ()=>{
         document.getElementById('searchInput').value='';
