@@ -1191,8 +1191,20 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         padding-left: 12px !important;
         padding-right: 12px !important;
     }
-    .image-container img { max-height: 200px !important; }
-    .image-container { padding: 12px; }
+    .image-container {
+        height: 220px !important;
+        min-height: 220px !important;
+        max-height: 220px !important;
+        padding: 8px !important;
+        flex-shrink: 0 !important;
+    }
+    .image-container img {
+        height: 100% !important;
+        max-height: 100% !important;
+        width: auto !important;
+        max-width: 100% !important;
+        object-fit: contain !important;
+    }
     .nav-btn {
         width: 38px !important;
         height: 38px !important;
@@ -1222,6 +1234,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     .modal { padding: 0 !important; align-items: stretch !important; }
     .dialog { height: 100vh !important; max-height: 100vh !important; width: 100% !important; max-width: 100% !important; border-radius: 0 !important; }
     .info-container { padding-bottom: 20px !important; }
+    .summon-text { font-size: 14px !important; margin-top: 6px !important; }
+    .open-img { font-size: 11px !important; margin-top: 4px !important; }
 }
 
 @media (max-width: 480px) {
@@ -1231,8 +1245,20 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         padding-left: 8px !important;
         padding-right: 8px !important;
     }
-    .image-container img { max-height: 150px !important; }
-    .image-container { padding: 8px; }
+    .image-container {
+        height: 160px !important;
+        min-height: 160px !important;
+        max-height: 160px !important;
+        padding: 6px !important;
+        flex-shrink: 0 !important;
+    }
+    .image-container img {
+        height: 100% !important;
+        max-height: 100% !important;
+        width: auto !important;
+        max-width: 100% !important;
+        object-fit: contain !important;
+    }
     .nav-btn {
         width: 32px !important;
         height: 32px !important;
@@ -1261,6 +1287,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     .modal { padding: 0 !important; align-items: stretch !important; }
     .dialog { width: 100% !important; max-width: 100% !important; }
     .info-container { padding-bottom: 20px !important; }
+    .summon-text { font-size: 12px !important; margin-top: 4px !important; }
+    .open-img { font-size: 10px !important; margin-top: 3px !important; }
 }
 
 /* ===== ДЕРЕВО ТАЛАНТОВ ===== */
