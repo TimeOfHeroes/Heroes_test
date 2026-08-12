@@ -1499,6 +1499,49 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .tag-resurrection { background:var(--tag-resurrection); }
 .tag-element { background:var(--tag-element); }
 .tag-default { background:var(--tag-default); }
+/* ===== КНОПКИ РЕЖИМА ТЕГОВ ===== */
+.mode-btn {
+    padding: 5px 12px;
+    font-size: 13px;
+    border: 1px solid var(--checkbox-border);
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+    white-space: nowrap;
+    height: 32px;
+}
+.mode-btn:hover {
+    background: var(--secondary-color);
+}
+.mode-btn.active {
+    background: #227BBC;
+    color: #fff;
+    border-color: #227BBC;
+}
+.mode-btn.active:hover {
+    background: #1a5f9a;
+}
+@media (prefers-color-scheme: dark) {
+    .mode-btn {
+        background: #3d3d3d;
+        color: #eeeeee;
+        border: 1px solid #555555;
+    }
+    .mode-btn:hover {
+        background: #4d4d4d;
+    }
+    .mode-btn.active {
+        background: #227BBC;
+        color: #fff;
+        border-color: #227BBC;
+    }
+    .mode-btn.active:hover {
+        background: #1a5f9a;
+    }
+}
 </style>
 </head>
 <body>
@@ -2806,33 +2849,16 @@ function initAllFacets(heroes){
     filteredHeroNames=[...allHeroNames];
     updateHeroCheckboxes();
     
-    // Создаём переключатель для тегов, если его ещё нет
-    const facetTags = document.querySelector('.facet[data-facet="tags"]');
-    if (facetTags && !facetTags.querySelector('.tag-mode-selector')) {
-        const actions = facetTags.querySelector('.actions');
-        if (actions) {
-            const selector = document.createElement('div');
-            selector.className = 'tag-mode-selector';
-            selector.innerHTML = `
-                <span class="mode-label">Логика:</span>
-                <div class="mode-buttons">
-                    <button class="mode-btn active" data-mode="and" title="Герой должен иметь ВСЕ выбранные теги">И (все)</button>
-                    <button class="mode-btn" data-mode="or" title="Герой должен иметь ХОТЯ БЫ ОДИН из выбранных тегов">ИЛИ (любой)</button>
-                </div>
-            `;
-            // Вставляем переключатель перед кнопкой "Снять"
-            actions.insertBefore(selector, actions.querySelector('.btn'));
-            
-            selector.querySelectorAll('.mode-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    tagFilterMode = this.dataset.mode;
-                    applyFilters();
-                });
-            });
-        }
-    }
+    // Инициализация кнопок режима тегов
+    const modeButtons = document.querySelectorAll('.mode-btn');
+    modeButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            tagFilterMode = this.dataset.mode;
+            applyFilters();
+        });
+    });
 }
 function updateHeroCheckboxes(){
     let names=filteredHeroNames.length?filteredHeroNames:allHeroNames;
