@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <style>
-/* ===== ВСЕ СТИЛИ (полная версия) ===== */
+/* ===== ВСЕ СТИЛИ ===== */
 :root {
   color-scheme: light dark;
   --hdrH: 70px;
@@ -71,7 +71,6 @@
   --tag-resurrection: #94d82d;
   --tag-element: #a9e34b;
   --tag-default: #adb5bd;
-  /* ДОБАВЛЕНО: заливка иконок характеристик (светлая тема) */
   --icon-bg-light: rgba(0,0,0,0.08);
   --icon-border-light: rgba(0,0,0,0.15);
   --icon-filter: none;
@@ -137,7 +136,6 @@
     --tag-resurrection: #5c940d;
     --tag-element: #74b816;
     --tag-default: #868e96;
-    /* ДОБАВЛЕНО: заливка иконок характеристик (тёмная тема) */
     --icon-bg-light: rgba(255,255,255,0.15);
     --icon-border-light: rgba(255,255,255,0.25);
     --icon-filter: brightness(0) invert(1);
@@ -706,12 +704,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 6px;
     background: var(--secondary-color);
 }
-/* Стихия — без скролла, все цвета видны */
 .facet[data-facet="element"] .opts {
     max-height: none !important;
     overflow-y: visible !important;
 }
-/* Остальные фильтры — со скроллом */
 .facet:not([data-facet="element"]) .opts {
     max-height: 150px;
     overflow-y: auto;
@@ -1331,7 +1327,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-weight: 500;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
-/* ДОБАВЛЕНО: заливка иконок внутри pill */
 .stats .pill img {
     width: 14px !important;
     height: 14px !important;
@@ -2273,8 +2268,8 @@ function renderStatsRow(hero, calc) {
     const treeIcon = getIcon(ICON_NAMES.tree);
     const statsRow = document.getElementById('heroStatsRow');
     if (!statsRow) return;
-    const iconStyle = 'width:18px;height:18px;min-width:18px;min-height:18px;max-width:18px;max-height:18px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:0;margin:0;';
-    const swordStyle = 'width:20px;height:20px;min-width:20px;min-height:20px;max-width:20px;max-height:20px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:0;margin:0;';
+    const iconStyle = 'width:18px;height:18px;min-width:18px;min-height:18px;max-width:18px;max-height:18px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:2px;margin:0;border-radius:3px;background:var(--icon-bg-light);border:1px solid var(--icon-border-light);filter:var(--icon-filter);';
+    const swordStyle = 'width:20px;height:20px;min-width:20px;min-height:20px;max-width:20px;max-height:20px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:2px;margin:0;border-radius:3px;background:var(--icon-bg-light);border:1px solid var(--icon-border-light);filter:var(--icon-filter);';
     let html = '';
     if (swordUrl) {
         html += '<span class="stat-item"><img src="' + swordUrl + '" alt="Атака" style="' + swordStyle + '"> ' + calc.attack + '</span>';
@@ -2494,8 +2489,6 @@ function initAllFacets(heroes){
     filteredHeroNames=[...allHeroNames];
     updateHeroCheckboxes();
 }
-
-/* ИСПРАВЛЕННАЯ ФУНКЦИЯ: клик по имени активирует чекбокс */
 function updateHeroCheckboxes(){
     let names=filteredHeroNames.length?filteredHeroNames:allHeroNames;
     document.getElementById('heroCheckboxesList').innerHTML=names.map(name => {
@@ -2507,23 +2500,6 @@ function updateHeroCheckboxes(){
         </div>`;
     }).join('');
     
-    // Обработчик изменения чекбоксов
-    document.querySelectorAll('#heroCheckboxesList input[type="checkbox"]').forEach(cb => {
-        cb.addEventListener('change', function() {
-            const name = this.dataset.hero;
-            if (this.checked) {
-                selected.heroes.add(name);
-            } else {
-                selected.heroes.delete(name);
-            }
-            updateHeroSelectDisplay();
-        });
-    });
-    
-    updateHeroSelectDisplay();
-}
-    
-    // Обработчик изменения чекбоксов
     document.querySelectorAll('#heroCheckboxesList input[type="checkbox"]').forEach(cb => {
         cb.addEventListener('change', function() {
             const name = this.dataset.hero;
