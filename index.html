@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Галерея героев</title>
 <link rel="icon" href="https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/a4KNHkQNDQ9VgyegesASivpbsju5FvmF_06263f1e0f8bdd9909bace7b430279093a31987790adc9b0db15146a47296c58.svg">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <style>
 /* ===== ВСЕ СТИЛИ ===== */
@@ -1160,7 +1160,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     justify-content: center !important;
     transition: transform 0.2s !important;
     padding: 0 !important;
-    z-index: 10 !important;
+    z-index: 20 !important;
     box-shadow: none !important;
     border-radius: 0 !important;
 }
@@ -1187,6 +1187,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 @media (max-width: 768px) {
     .dialog .modal-content {
         padding-top: 64px !important;
+        padding-bottom: env(safe-area-inset-bottom, 20px) !important;
         padding-left: 12px !important;
         padding-right: 12px !important;
     }
@@ -1211,12 +1212,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     .nav-next { right: 40px !important; top: 12px !important; }
     .nav-close { right: 8px !important; top: 12px !important; width: 38px !important; height: 38px !important; min-width: 38px !important; min-height: 38px !important; }
     .nav-close img { width: 30px !important; height: 30px !important; min-width: 30px !important; min-height: 30px !important; max-width: 30px !important; max-height: 30px !important; }
-    .modal .dialog .modal-content { grid-template-columns: 1fr; gap: 12px; padding: 12px; padding-top: 64px; }
+    .modal .dialog .modal-content { grid-template-columns: 1fr; gap: 12px; padding: 12px; padding-top: 64px; padding-bottom: env(safe-area-inset-bottom, 20px); }
+    .modal { padding: 0 !important; align-items: stretch !important; }
+    .dialog { height: 100vh !important; max-height: 100vh !important; width: 100% !important; max-width: 100% !important; border-radius: 0 !important; }
 }
 
 @media (max-width: 480px) {
     .dialog .modal-content {
         padding-top: 56px !important;
+        padding-bottom: env(safe-area-inset-bottom, 16px) !important;
         padding-left: 8px !important;
         padding-right: 8px !important;
     }
@@ -1241,8 +1245,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     .nav-next { right: 34px !important; top: 10px !important; }
     .nav-close { right: 6px !important; top: 10px !important; width: 32px !important; height: 32px !important; min-width: 32px !important; min-height: 32px !important; }
     .nav-close img { width: 24px !important; height: 24px !important; min-width: 24px !important; min-height: 24px !important; max-width: 24px !important; max-height: 24px !important; }
-    .dialog { height: 95vh; max-height: 95vh; }
-    .modal .dialog .modal-content { padding: 8px; padding-top: 56px; }
+    .dialog { height: 100vh !important; max-height: 100vh !important; border-radius: 0 !important; }
+    .modal .dialog .modal-content { padding: 8px; padding-top: 56px; padding-bottom: env(safe-area-inset-bottom, 16px); }
+    .modal { padding: 0 !important; align-items: stretch !important; }
+    .dialog { width: 100% !important; max-width: 100% !important; }
 }
 
 /* ===== ДЕРЕВО ТАЛАНТОВ ===== */
