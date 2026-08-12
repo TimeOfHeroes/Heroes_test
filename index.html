@@ -71,6 +71,10 @@
   --tag-resurrection: #94d82d;
   --tag-element: #a9e34b;
   --tag-default: #adb5bd;
+  /* ДОБАВЛЕНО: заливка иконок характеристик (светлая тема) */
+  --icon-bg-light: rgba(0,0,0,0.08);
+  --icon-border-light: rgba(0,0,0,0.15);
+  --icon-filter: none;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -133,6 +137,10 @@
     --tag-resurrection: #5c940d;
     --tag-element: #74b816;
     --tag-default: #868e96;
+    /* ДОБАВЛЕНО: заливка иконок характеристик (тёмная тема) */
+    --icon-bg-light: rgba(255,255,255,0.15);
+    --icon-border-light: rgba(255,255,255,0.25);
+    --icon-filter: brightness(0) invert(1);
   }
 }
 * { box-sizing: border-box; }
@@ -1304,8 +1312,35 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .meta { margin:0 12px 2px; display:flex; gap:4px; flex-wrap:wrap; font-size:12px; justify-content:center; text-align:center; }
 .meta:last-of-type { margin-bottom:4px; }
 .stats { margin:8px 12px 4px; display:flex; gap:6px; flex-wrap:wrap; justify-content:center; font-weight:600; font-size:13px; }
-.stats .pill { font-size:12px; padding:4px 10px; display:flex; align-items:center; gap:4px; border-radius:999px; white-space:nowrap; font-weight:500; box-shadow:0 1px 3px rgba(0,0,0,0.05); }
-.stats .pill img { width: 14px !important; height: 14px !important; min-width: 14px !important; min-height: 14px !important; max-width: 14px !important; max-height: 14px !important; object-fit: contain !important; display: inline-block !important; vertical-align: middle !important; flex-shrink: 0 !important; }
+.stats .pill {
+    font-size: 12px;
+    padding: 4px 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 999px;
+    white-space: nowrap;
+    font-weight: 500;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+/* ДОБАВЛЕНО: заливка иконок внутри pill */
+.stats .pill img {
+    width: 14px !important;
+    height: 14px !important;
+    min-width: 14px !important;
+    min-height: 14px !important;
+    max-width: 14px !important;
+    max-height: 14px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    flex-shrink: 0 !important;
+    border-radius: 3px;
+    padding: 2px;
+    background: var(--icon-bg-light);
+    border: 1px solid var(--icon-border-light);
+    filter: var(--icon-filter);
+}
 .card[data-element="Синий"] .pill { background-color:var(--pill-blue); }
 .card[data-element="Зеленый"] .pill { background-color:var(--pill-green); }
 .card[data-element="Красный"] .pill { background-color:var(--pill-red); }
@@ -1387,7 +1422,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
                 <option value="Герой">Имя</option>
                 <option value="Атака">Атака</option>
                 <option value="Защита">Защита</option>
-                <option value="Здоровье">Здоровье</option>
+                <option value="Жизни">Здоровье</option>
             </select>
         </div>
     </div>
@@ -2320,17 +2355,17 @@ function renderCardStats(hero) {
     const healthUrl = getIcon(ICON_NAMES.health);
     let html = '';
     if (swordUrl) {
-        html += '<span class="pill"><img src="' + swordUrl + '" alt="Атака" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.attack] + '</span>';
+        html += '<span class="pill"><img src="' + swordUrl + '" alt="Атака" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;border-radius:3px;padding:2px;background:var(--icon-bg-light);border:1px solid var(--icon-border-light);filter:var(--icon-filter);"> ' + hero[HERO_FIELDS.attack] + '</span>';
     } else {
         html += '<span class="pill">⚔️ ' + hero[HERO_FIELDS.attack] + '</span>';
     }
     if (shieldUrl) {
-        html += '<span class="pill"><img src="' + shieldUrl + '" alt="Защита" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.defense] + '</span>';
+        html += '<span class="pill"><img src="' + shieldUrl + '" alt="Защита" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;border-radius:3px;padding:2px;background:var(--icon-bg-light);border:1px solid var(--icon-border-light);filter:var(--icon-filter);"> ' + hero[HERO_FIELDS.defense] + '</span>';
     } else {
         html += '<span class="pill">🛡️ ' + hero[HERO_FIELDS.defense] + '</span>';
     }
     if (healthUrl) {
-        html += '<span class="pill"><img src="' + healthUrl + '" alt="Жизни" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.hp] + '</span>';
+        html += '<span class="pill"><img src="' + healthUrl + '" alt="Жизни" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;border-radius:3px;padding:2px;background:var(--icon-bg-light);border:1px solid var(--icon-border-light);filter:var(--icon-filter);"> ' + hero[HERO_FIELDS.hp] + '</span>';
     } else {
         html += '<span class="pill">❤️ ' + hero[HERO_FIELDS.hp] + '</span>';
     }
@@ -2451,10 +2486,47 @@ function initAllFacets(heroes){
     filteredHeroNames=[...allHeroNames];
     updateHeroCheckboxes();
 }
+
+/* ИСПРАВЛЕННАЯ ФУНКЦИЯ: клик по имени активирует чекбокс */
 function updateHeroCheckboxes(){
     let names=filteredHeroNames.length?filteredHeroNames:allHeroNames;
-    document.getElementById('heroCheckboxesList').innerHTML=names.map(name=>'<div class="hero-checkbox-item"><input type="checkbox" id="hero-'+name.replace(/[^a-zа-я0-9]/gi,'_')+'" data-hero="'+name+'" '+(selected.heroes.has(name)?'checked':'')+'><label>'+name+'</label></div>').join('');
-    document.querySelectorAll('#heroCheckboxesList input').forEach(cb=>cb.addEventListener('change',function(){ let n=this.dataset.hero; if(this.checked) selected.heroes.add(n); else selected.heroes.delete(n); updateHeroSelectDisplay(); }));
+    document.getElementById('heroCheckboxesList').innerHTML=names.map(name => {
+        const id = 'hero-'+name.replace(/[^a-zа-я0-9]/gi,'_');
+        const checked = selected.heroes.has(name) ? 'checked' : '';
+        return `<div class="hero-checkbox-item" data-hero="${name}">
+            <input type="checkbox" id="${id}" data-hero="${name}" ${checked}>
+            <label for="${id}">${name}</label>
+        </div>`;
+    }).join('');
+    
+    // Обработчик на весь блок (клик по имени или чекбоксу)
+    document.querySelectorAll('#heroCheckboxesList .hero-checkbox-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+            // Если клик был не по чекбоксу (по имени или фону)
+            if (e.target.tagName !== 'INPUT') {
+                const checkbox = this.querySelector('input[type="checkbox"]');
+                if (checkbox) {
+                    checkbox.checked = !checkbox.checked;
+                    const event = new Event('change', { bubbles: true });
+                    checkbox.dispatchEvent(event);
+                }
+            }
+        });
+    });
+    
+    // Обработчик изменения чекбоксов
+    document.querySelectorAll('#heroCheckboxesList input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', function() {
+            const name = this.dataset.hero;
+            if (this.checked) {
+                selected.heroes.add(name);
+            } else {
+                selected.heroes.delete(name);
+            }
+            updateHeroSelectDisplay();
+        });
+    });
+    
     updateHeroSelectDisplay();
 }
 function updateHeroSelectDisplay(){
@@ -2668,7 +2740,7 @@ function attachEvents(){
     }));
     document.getElementById('resetAll').addEventListener('click', ()=>{
         document.getElementById('searchInput').value='';
-        document.getElementById('sortSelect').value='Герой';  // ← изменено с 'Сила'
+        document.getElementById('sortSelect').value='Герой';
         sortDirection='desc';
         document.getElementById('sortBtn').className='sort-btn desc';
         document.getElementById('sortBtn').dataset.tooltip = 'Сортировка по убыванию';
@@ -2711,11 +2783,8 @@ function attachEvents(){
     }
     window.addEventListener('resize', updateFilterPadding);
     document.getElementById('openFilters').addEventListener('click', openFiltersPanel);
-    
-    // Кнопки в фильтрах (только верхние)
     document.getElementById('applyFiltersBtn').addEventListener('click', ()=>{ applyFilters(); closeFiltersPanel(); });
     document.getElementById('closeFilters').addEventListener('click', closeFiltersPanel);
-    
     document.getElementById('filterOverlay').addEventListener('click', closeFiltersPanel);
     document.getElementById('cards').addEventListener('click', e=>{ if(e.target.classList.contains('toggle-abilities')) return; let card=e.target.closest('.card'); if(card) openModal(Number(card.dataset.idx)); });
     document.getElementById('mClose').addEventListener('click', closeModal);
@@ -2734,10 +2803,10 @@ function attachEvents(){
             dateEl.textContent = new Date().toLocaleDateString('ru-RU', {year:'numeric', month:'long', day:'numeric'});
         }
     }
- document.getElementById('sortSelect').value = 'Герой';
+    document.getElementById('sortSelect').value = 'Герой';
     initTooltip();
     initDragAndDrop();
-  }
+}
 Promise.all([
     new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
         allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]).map(row=>{ 
