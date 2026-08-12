@@ -1719,6 +1719,7 @@ let dbUpdateDate = '';
 
 // ===== ОПИСАНИЯ ТЕГОВ =====
 const TAG_DESCRIPTIONS = {
+    'антихил': 'снижение лечения врагам',
     'урон_навыка': 'мгновенный урон навыком',
     'лечение': 'мгновенное лечение',
     'усил_защита': 'увеличение защиты союзников',
@@ -1779,6 +1780,7 @@ function initSortTooltip() {
 }
 function getTagClass(tag) {
     const tagMap = {
+        'антихил': 'tag-antihil',
         'урон_навыка': 'tag-damage',
         'лечение': 'tag-heal',
         'усил_защита': 'tag-shield',
