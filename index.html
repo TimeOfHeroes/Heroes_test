@@ -71,9 +71,7 @@
   --tag-resurrection: #94d82d;
   --tag-element: #a9e34b;
   --tag-default: #adb5bd;
-  --icon-bg-light: rgba(0,0,0,0.08);
-  --icon-border-light: rgba(0,0,0,0.15);
-  --icon-filter: none;
+  --icon-bg-dark: transparent;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -136,9 +134,7 @@
     --tag-resurrection: #5c940d;
     --tag-element: #74b816;
     --tag-default: #868e96;
-    --icon-bg-light: rgba(255,255,255,0.15);
-    --icon-border-light: rgba(255,255,255,0.25);
-    --icon-filter: brightness(0) invert(1);
+    --icon-bg-dark: rgba(255,255,255,0.12);
   }
 }
 * { box-sizing: border-box; }
@@ -975,12 +971,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     vertical-align: middle !important;
     flex-shrink: 0 !important;
     overflow: visible !important;
-    padding: 2px !important;
+    padding: 0 !important;
     margin: 0 !important;
-    border-radius: 3px !important;
-    background: var(--icon-bg-light) !important;
-    border: 1px solid var(--icon-border-light) !important;
-    filter: var(--icon-filter) !important;
+    background: var(--icon-bg-dark) !important;
+    border-radius: 4px !important;
 }
 .hero-stats-row .stat-item img[src*="Sword" i] {
     width: 20px !important;
@@ -989,11 +983,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     min-height: 20px !important;
     max-width: 20px !important;
     max-height: 20px !important;
-    padding: 2px !important;
-    border-radius: 3px !important;
-    background: var(--icon-bg-light) !important;
-    border: 1px solid var(--icon-border-light) !important;
-    filter: var(--icon-filter) !important;
+    padding: 0 !important;
+    background: var(--icon-bg-dark) !important;
+    border-radius: 4px !important;
 }
 .hero-stats-row .talent-controls {
     display: flex !important;
@@ -1338,11 +1330,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     display: inline-block !important;
     vertical-align: middle !important;
     flex-shrink: 0 !important;
-    border-radius: 3px;
-    padding: 2px;
-    background: var(--icon-bg-light);
-    border: 1px solid var(--icon-border-light);
-    filter: var(--icon-filter);
+    background: var(--icon-bg-dark) !important;
+    border-radius: 3px !important;
 }
 .card[data-element="Синий"] .pill { background-color:var(--pill-blue); }
 .card[data-element="Зеленый"] .pill { background-color:var(--pill-green); }
@@ -2268,8 +2257,8 @@ function renderStatsRow(hero, calc) {
     const treeIcon = getIcon(ICON_NAMES.tree);
     const statsRow = document.getElementById('heroStatsRow');
     if (!statsRow) return;
-    const iconStyle = 'width:18px;height:18px;min-width:18px;min-height:18px;max-width:18px;max-height:18px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:2px;margin:0;border-radius:3px;background:var(--icon-bg-light);border:1px solid var(--icon-border-light);filter:var(--icon-filter);';
-    const swordStyle = 'width:20px;height:20px;min-width:20px;min-height:20px;max-width:20px;max-height:20px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:2px;margin:0;border-radius:3px;background:var(--icon-bg-light);border:1px solid var(--icon-border-light);filter:var(--icon-filter);';
+    const iconStyle = 'width:18px;height:18px;min-width:18px;min-height:18px;max-width:18px;max-height:18px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:0;margin:0;background:var(--icon-bg-dark);border-radius:4px;';
+    const swordStyle = 'width:20px;height:20px;min-width:20px;min-height:20px;max-width:20px;max-height:20px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:0;margin:0;background:var(--icon-bg-dark);border-radius:4px;';
     let html = '';
     if (swordUrl) {
         html += '<span class="stat-item"><img src="' + swordUrl + '" alt="Атака" style="' + swordStyle + '"> ' + calc.attack + '</span>';
@@ -2358,17 +2347,17 @@ function renderCardStats(hero) {
     const healthUrl = getIcon(ICON_NAMES.health);
     let html = '';
     if (swordUrl) {
-        html += '<span class="pill"><img src="' + swordUrl + '" alt="Атака" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;border-radius:3px;padding:2px;background:var(--icon-bg-light);border:1px solid var(--icon-border-light);filter:var(--icon-filter);"> ' + hero[HERO_FIELDS.attack] + '</span>';
+        html += '<span class="pill"><img src="' + swordUrl + '" alt="Атака" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;background:var(--icon-bg-dark);border-radius:3px;"> ' + hero[HERO_FIELDS.attack] + '</span>';
     } else {
         html += '<span class="pill">⚔️ ' + hero[HERO_FIELDS.attack] + '</span>';
     }
     if (shieldUrl) {
-        html += '<span class="pill"><img src="' + shieldUrl + '" alt="Защита" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;border-radius:3px;padding:2px;background:var(--icon-bg-light);border:1px solid var(--icon-border-light);filter:var(--icon-filter);"> ' + hero[HERO_FIELDS.defense] + '</span>';
+        html += '<span class="pill"><img src="' + shieldUrl + '" alt="Защита" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;background:var(--icon-bg-dark);border-radius:3px;"> ' + hero[HERO_FIELDS.defense] + '</span>';
     } else {
         html += '<span class="pill">🛡️ ' + hero[HERO_FIELDS.defense] + '</span>';
     }
     if (healthUrl) {
-        html += '<span class="pill"><img src="' + healthUrl + '" alt="Жизни" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;border-radius:3px;padding:2px;background:var(--icon-bg-light);border:1px solid var(--icon-border-light);filter:var(--icon-filter);"> ' + hero[HERO_FIELDS.hp] + '</span>';
+        html += '<span class="pill"><img src="' + healthUrl + '" alt="Жизни" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;background:var(--icon-bg-dark);border-radius:3px;"> ' + hero[HERO_FIELDS.hp] + '</span>';
     } else {
         html += '<span class="pill">❤️ ' + hero[HERO_FIELDS.hp] + '</span>';
     }
