@@ -161,6 +161,60 @@
     opacity: 1;
     visibility: visible;
 }
+/* ===== ПЕРЕКЛЮЧАТЕЛЬ РЕЖИМА ТЕГОВ ===== */
+.tag-mode-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 4px 0;
+    flex-wrap: wrap;
+}
+.tag-mode-selector .mode-label {
+    font-size: 12px;
+    color: var(--text-color);
+    opacity: 0.7;
+    margin-right: 2px;
+}
+.tag-mode-selector .mode-buttons {
+    display: flex;
+    gap: 4px;
+    background: var(--secondary-color);
+    border-radius: 6px;
+    padding: 3px;
+    border: 1px solid var(--border-color);
+}
+.tag-mode-selector .mode-btn {
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.6;
+    white-space: nowrap;
+}
+.tag-mode-selector .mode-btn:hover {
+    opacity: 1;
+    background: rgba(0,0,0,0.05);
+}
+.tag-mode-selector .mode-btn.active {
+    background: #227BBC;
+    color: #fff;
+    opacity: 1;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+.tag-mode-selector .mode-btn.active:hover {
+    background: #1a5f9a;
+}
+@media (prefers-color-scheme: dark) {
+    .tag-mode-selector .mode-btn:hover {
+        background: rgba(255,255,255,0.08);
+    }
+}
 * { box-sizing: border-box; }
 body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg-color); color: var(--text-color); line-height:1.4; overflow-x:hidden; }
 .filter-overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:var(--overlay-bg); z-index:98; display:none; opacity:0; transition:opacity 0.3s ease; }
@@ -1561,7 +1615,16 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
                 <h3>Теги способностей</h3>
                 <div class="opts" id="facet-tags"></div>
                 <div class="actions">
-                    <button class="btn" data-action="none" data-facet="tags">Снять</button>
+                    <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                        <div class="tag-mode-selector">
+                            <span class="mode-label">Логика:</span>
+                            <div class="mode-buttons">
+                                <button class="mode-btn active" data-mode="and" title="Герой должен иметь ВСЕ выбранные теги">И (все)</button>
+                                <button class="mode-btn" data-mode="or" title="Герой должен иметь ХОТЯ БЫ ОДИН из выбранных тегов">ИЛИ (любой)</button>
+                            </div>
+                        </div>
+                        <button class="btn" data-action="none" data-facet="tags">Снять</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1716,10 +1779,10 @@ let tooltipElement = null;
 let tagTooltipElement = null;
 let iconCache = {};
 let dbUpdateDate = '';
+let tagFilterMode = 'and'; // 'and' или 'or'
 
 // ===== ОПИСАНИЯ ТЕГОВ =====
 const TAG_DESCRIPTIONS = {
-    // Основные эффекты
     'урон_навыка': 'мгновенный урон навыком',
     'лечение': 'мгновенное лечение',
     'усил_защита': 'увеличение защиты союзников',
@@ -1746,37 +1809,25 @@ const TAG_DESCRIPTIONS = {
     'пробитие': 'пробитие защитных усилений и атак',
     'увеличение здоровья': 'увеличение максимального здоровья',
     'увелич_здоровье': 'увеличение максимального здоровья',
-
-    // Эффекты с течением времени
     'DoT': 'урон с течением времени (Damage over Time)',
     'HoT': 'лечение с течением времени (Heal over Time)',
     'похищ_лечение': 'кража лечения у врагов',
     'похищ_маны': 'кража получаемой маны у врагов',
     'кража': 'кража снимаемых усилений',
-
-    // Мана
     'мана_ускор': 'ускорение восстановления маны',
     'мана_замедл': 'замедление восстановления маны',
     'мана_срез': 'уменьшение текущего количества маны',
     'мана_блок': 'блокировка получения маны',
-
-    // Защита и броня
     'бронерез': 'снижение защиты врагов',
     'деление_своим': 'деление урона между союзниками',
     'деление_противники': 'деление урона между противниками',
     'усил_защиты_навык': 'увеличение защиты от навыков',
     'усил_атаки_навык': 'увеличение урона от навыков',
-
-    // Призыв
     'прислужники': 'призыв прислужников',
     'антиприслужник': 'уничтожение прислужников врагов',
-
-    // Ослабления на себя
     'ослаб_атаки_себе': 'снижение атаки себе',
     'ослаб_защиты_себе': 'снижение защиты себе',
     'ослаб_метк_себе': 'снижение меткости себе',
-
-    // Стихийные эффекты
     'стихия_HoT': 'лечение с течением времени для определённой стихии',
     'стихия_DoT': 'урон с течением времени определённой стихии',
     'стихия_усил_атака': 'увеличение атаки для определённой стихии',
@@ -1787,11 +1838,7 @@ const TAG_DESCRIPTIONS = {
     'стихия_мана_ускор': 'ускорение восстановления маны для определённой стихии',
     'стихия_прислужники': 'призыв прислужников для определённой стихии',
     'стихия_криты': 'увеличение шанса крита для определённой стихии',
-
-    // Сокращение длительности
     'сокращ_длит_эффект': 'сокращение длительности положительных эффектов врагов',
-
-    // Антихил
     'антихил': 'снижение лечения врагам'
 };
 
@@ -2758,6 +2805,34 @@ function initAllFacets(heroes){
     allHeroNames=uniq(heroes.map(r=>r[HERO_FIELDS.name])).sort(sortAlpha);
     filteredHeroNames=[...allHeroNames];
     updateHeroCheckboxes();
+    
+    // Создаём переключатель для тегов, если его ещё нет
+    const facetTags = document.querySelector('.facet[data-facet="tags"]');
+    if (facetTags && !facetTags.querySelector('.tag-mode-selector')) {
+        const actions = facetTags.querySelector('.actions');
+        if (actions) {
+            const selector = document.createElement('div');
+            selector.className = 'tag-mode-selector';
+            selector.innerHTML = `
+                <span class="mode-label">Логика:</span>
+                <div class="mode-buttons">
+                    <button class="mode-btn active" data-mode="and" title="Герой должен иметь ВСЕ выбранные теги">И (все)</button>
+                    <button class="mode-btn" data-mode="or" title="Герой должен иметь ХОТЯ БЫ ОДИН из выбранных тегов">ИЛИ (любой)</button>
+                </div>
+            `;
+            // Вставляем переключатель перед кнопкой "Снять"
+            actions.insertBefore(selector, actions.querySelector('.btn'));
+            
+            selector.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    tagFilterMode = this.dataset.mode;
+                    applyFilters();
+                });
+            });
+        }
+    }
 }
 function updateHeroCheckboxes(){
     let names=filteredHeroNames.length?filteredHeroNames:allHeroNames;
@@ -2814,7 +2889,11 @@ function applyFilters(){
         let tagMatch=selected.tags.size===0;
         if (!tagMatch) {
             let heroTags = r._tags || [];
-            tagMatch = [...selected.tags].every(tag => heroTags.includes(tag));
+            if (tagFilterMode === 'and') {
+                tagMatch = [...selected.tags].every(tag => heroTags.includes(tag));
+            } else {
+                tagMatch = [...selected.tags].some(tag => heroTags.includes(tag));
+            }
         }
         return nameMatch && elemMatch && starsMatch && manaMatch && atkMatch && summonMatch && clazzMatch && heroMatch && tagMatch;
     });
