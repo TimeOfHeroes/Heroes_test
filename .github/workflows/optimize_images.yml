@@ -87,7 +87,7 @@ jobs:
       - name: Commit optimized images
         run: |
           git config user.name "GitHub Actions Bot"
-          git config.user.email "actions@github.com"
+          git config user.email "actions@github.com"
           git add images_cache/
           if git diff --staged --quiet; then
             echo "📭 Нет изменений для коммита"
