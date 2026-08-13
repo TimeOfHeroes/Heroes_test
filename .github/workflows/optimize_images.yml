@@ -39,7 +39,19 @@ jobs:
       - name: Create cache directory
         run: |
           mkdir -p images_cache
-
+- name: Check files structure
+  run: |
+    echo "📁 Текущая структура папок:"
+    ls -la
+    echo ""
+    echo "📁 Проверяем папку scripts:"
+    ls -la scripts/ || echo "Папка scripts не найдена!"
+    echo ""
+    echo "📁 Проверяем все папки с именем scripts:"
+    find . -name "scripts" -type d
+    echo ""
+    echo "📁 Ищем файл download_images.py:"
+    find . -name "download_images.py"
       - name: Download and optimize images
         run: |
           python scripts/download_images.py
