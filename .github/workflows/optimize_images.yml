@@ -45,15 +45,6 @@ jobs:
         run: |
           echo "📁 Проверяем наличие CSV файлов:"
           ls -la *.csv || echo "❌ Нет CSV файлов!"
-          echo ""
-          echo "📁 Проверяем heroes.csv:"
-          head -2 heroes.csv || echo "❌ heroes.csv не найден!"
-          echo ""
-          echo "📁 Проверяем item_images.csv:"
-          head -2 item_images.csv || echo "❌ item_images.csv не найден!"
-          echo ""
-          echo "📁 Проверяем Talent_description.csv:"
-          head -2 "Talent_description.csv" || echo "❌ Talent_description.csv не найден!"
 
       - name: Check script exists
         run: |
@@ -64,35 +55,16 @@ jobs:
         run: |
           echo "🚀 Запускаем скрипт..."
           python scripts/download_images.py
-          echo "📁 Проверяем результат:"
-          ls -la images_cache/ || echo "❌ Папка images_cache пуста или не создана!"
 
-      - name: Check for changes
-        id: check_changes
+      - name: Commit optimized images
         run: |
-          git add -f images_cache/
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          git add images_cache/ --force
+          git status
           if git diff --staged --quiet; then
-            echo "changes=false" >> $GITHUB_OUTPUT
+            echo "📭 Нет изменений для коммита"
           else
-            echo "changes=true" >> $GITHUB_OUTPUT
+            git commit -m "🖼️ Добавлены оптимизированные изображения"
+            git push
           fi
-
-      - name: Ensure cache directory exists
-        if: steps.check_changes.outputs.changes == 'false'
-        run: |
-          mkdir -p images_cache
-          touch images_cache/.gitkeep
-          git add images_cache/.gitkeep
-
-- name: Commit optimized images
-  run: |
-    git config user.name "GitHub Actions Bot"
-    git config user.email "actions@github.com"
-    git add images_cache/ --force
-    git status
-    if git diff --staged --quiet; then
-      echo "📭 Нет изменений для коммита"
-    else
-      git commit -m "🖼️ Добавлены оптимизированные изображения"
-      git push
-    fi
