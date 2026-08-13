@@ -6,6 +6,7 @@
 <link rel="icon" href="https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/a4KNHkQNDQ9VgyegesASivpbsju5FvmF_06263f1e0f8bdd9909bace7b430279093a31987790adc9b0db15146a47296c58.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <style>
 /* ===== ВСЕ СТИЛИ ===== */
 :root {
@@ -1918,6 +1919,20 @@ function getHealthIcon() { return getIcon(ICON_NAMES.health); }
 function getTreeIcon() { return getIcon(ICON_NAMES.tree); }
 function getUpgradeIcon() { return getIcon(ICON_NAMES.upgrade); }
 
+// ===== ОПТИМИЗАЦИЯ ИЗОБРАЖЕНИЙ =====
+function getOptimizedImageUrl(originalUrl) {
+    if (!originalUrl) return '';
+    try {
+        const hash = CryptoJS.MD5(originalUrl).toString().substring(0, 16);
+        let ext = '.jpg';
+        if (originalUrl.toLowerCase().includes('.png')) ext = '.png';
+        else if (originalUrl.toLowerCase().includes('.svg')) ext = '.svg';
+        return `images_cache/${hash}${ext}`;
+    } catch(e) {
+        return '';
+    }
+}
+
 // ===== ТУЛТИПЫ ДЛЯ ТЕГОВ =====
 function initTagTooltip() {
     if (!tagTooltipElement) {
@@ -2797,7 +2812,6 @@ function initAllFacets(heroes){
             document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
             tagFilterMode = this.dataset.mode;
-            // Не вызываем applyFilters() — только при нажатии "Применить"
         });
     });
 }
@@ -2876,14 +2890,16 @@ function renderCards(heroes){
     document.getElementById('empty').style.display='none';
     const starIcon = getStarIcon();
     document.getElementById('cards').innerHTML=heroes.map((r,i)=>{
-        let img=fileCellToUrl(r[HERO_FIELDS.image]);
+        let img = fileCellToUrl(r[HERO_FIELDS.image]);
+        let optimizedImg = img ? getOptimizedImageUrl(img) : '';
+        let imgSrc = optimizedImg || img;
         let abilitiesFull=String(r[HERO_FIELDS.abilities]||'');
         let cleaned=abilitiesFull.replace(/^'|'$/g,'');
         let hasAbil=cleaned.trim().length>0;
         const starsDisplay = starIcon ? 
             '<span style="display:inline-flex;align-items:center;gap:2px;">' + r[HERO_FIELDS.stars] + ' <img src="'+starIcon+'" alt="★" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;"></span>' :
             r[HERO_FIELDS.stars] + '★';
-        return '<article class="card" data-idx="'+i+'" data-element="'+(r[HERO_FIELDS.element]||'')+'"><div class="thumb">'+(img?'<img src="'+img+'" alt="'+r[HERO_FIELDS.name]+'" loading="lazy" onerror="this.style.display=\'none\'">':'<div style="padding:20px;">Нет изображения</div>')+'</div><h3>'+r[HERO_FIELDS.name]+'</h3>' +
+        return '<article class="card" data-idx="'+i+'" data-element="'+(r[HERO_FIELDS.element]||'')+'"><div class="thumb">'+(imgSrc?'<img src="'+imgSrc+'" alt="'+r[HERO_FIELDS.name]+'" loading="lazy" onerror="this.onerror=null; this.src=\''+img+'\'">':'<div style="padding:20px;">Нет изображения</div>')+'</div><h3>'+r[HERO_FIELDS.name]+'</h3>' +
             '<div class="meta"><span>'+r[HERO_FIELDS.element]+'</span> • <span>'+starsDisplay+'</span> • <span>'+r[HERO_FIELDS.clazz]+'</span></div>' +
             '<div class="meta"><span>'+r[HERO_FIELDS.attackType]+'</span> • <span>'+r[HERO_FIELDS.mana]+'</span> • <span>'+r[HERO_FIELDS.summon]+'</span></div>' +
             '<div class="stats">' +
@@ -2905,8 +2921,10 @@ function openModal(idx){
 }
 function fillModal(hero){
     let img = fileCellToUrl(hero[HERO_FIELDS.image]);
-    document.getElementById('mImg').src = img || '';
-    document.getElementById('mOpenImg').href = img || '#';
+    let optimizedImg = img ? getOptimizedImageUrl(img) : '';
+    let imgSrc = optimizedImg || img;
+    document.getElementById('mImg').src = imgSrc || '';
+    document.getElementById('mOpenImg').href = imgSrc || '#';
     document.getElementById('mName').textContent = hero[HERO_FIELDS.name] || '';
     const imageContainer = document.getElementById('modalImageContainer');
     const element = hero[HERO_FIELDS.element] || '';
