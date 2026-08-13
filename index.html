@@ -230,6 +230,34 @@
   filter: brightness(0) invert(1);
 }
 
+/* ===== КЛИКАБЕЛЬНЫЙ ПРИЗЫВ ===== */
+.summon-text {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-color);
+    opacity: 0.85;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 4px 12px;
+    border-radius: 6px;
+    display: inline-block;
+    background: var(--secondary-color);
+    border: 1px solid var(--border-color);
+}
+.summon-text:hover {
+    opacity: 1;
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+    transform: scale(1.02);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.summon-text:active {
+    transform: scale(0.98);
+}
+
 /* ===== ТУЛТИПЫ ТЕГОВ ===== */
 .tag-tooltip {
     position: fixed;
@@ -260,7 +288,7 @@
 /* ===== КНОПКИ РЕЖИМА ТЕГОВ ===== */
 .mode-btn {
     padding: 5px 12px;
-    font-size: 13px;
+    font-size: 12px;        /* уменьшено с 13px */
     border: 1px solid var(--checkbox-border);
     border-radius: 6px;
     background: var(--card-bg);
@@ -1034,6 +1062,24 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-weight: 600;
     color: var(--text-color);
     opacity: 0.85;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 4px 12px;
+    border-radius: 6px;
+    display: inline-block;
+    background: var(--secondary-color);
+    border: 1px solid var(--border-color);
+}
+.summon-text:hover {
+    opacity: 1;
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+    transform: scale(1.02);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.summon-text:active {
+    transform: scale(0.98);
 }
 .open-img {
     display: block;
@@ -1351,9 +1397,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         padding-right: 12px !important;
     }
     .image-container {
-        height: 220px !important;
-        min-height: 220px !important;
-        max-height: 220px !important;
+        height: 260px !important;
+        min-height: 260px !important;
+        max-height: 260px !important;
         padding: 8px !important;
         flex-shrink: 0 !important;
     }
@@ -1413,9 +1459,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         padding-right: 8px !important;
     }
     .image-container {
-        height: 160px !important;
-        min-height: 160px !important;
-        max-height: 160px !important;
+        height: 200px !important;
+        min-height: 200px !important;
+        max-height: 200px !important;
         padding: 6px !important;
         flex-shrink: 0 !important;
     }
@@ -1733,7 +1779,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     <div class="image-container" id="modalImageContainer">
         <img id="mImg" src="">
         <a id="mOpenImg" class="open-img" href="#" target="_blank">Открыть изображение в новой вкладке</a>
-        <div class="summon-text" id="modalSummonText">Призыв: —</div>
+        <div id="modalSummonText" class="summon-text">Призыв: —</div>
     </div>
     <div class="info-container">
         <h2 id="mName"></h2>
@@ -3020,9 +3066,48 @@ function fillModal(hero){
     const imageContainer = document.getElementById('modalImageContainer');
     const element = hero[HERO_FIELDS.element] || '';
     imageContainer.setAttribute('data-element', element);
+    
     const summonText = document.getElementById('modalSummonText');
     const summon = hero[HERO_FIELDS.summon] || '—';
     summonText.textContent = 'Призыв: ' + summon;
+    
+    // Делаем "Призыв" кликабельным фильтром
+    summonText.onclick = function(e) {
+        e.stopPropagation();
+        const summonValue = this.textContent.replace('Призыв: ', '').trim();
+        if (summonValue && summonValue !== '—') {
+            // Очищаем все остальные фильтры
+            selected.element.clear();
+            selected.stars.clear();
+            selected.mana.clear();
+            selected.attackType.clear();
+            selected.summon.clear();
+            selected.clazz.clear();
+            selected.heroes.clear();
+            selected.tags.clear();
+            document.getElementById('searchInput').value = '';
+            
+            // Добавляем выбранное место призыва
+            selected.summon.add(summonValue);
+            
+            // Обновляем чекбоксы в интерфейсе
+            const container = document.getElementById('facet-summon');
+            if (container) {
+                container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                    cb.checked = selected.summon.has(cb.value);
+                });
+            }
+            
+            // Закрываем модалку и применяем фильтры
+            closeModal();
+            applyFilters();
+            
+            // Открываем панель фильтров, чтобы пользователь видел, что выбрано
+            setTimeout(() => {
+                document.getElementById('openFilters').click();
+            }, 300);
+        }
+    };
     
     const leftIcon = getIcon('Left_button');
     const rightIcon = getIcon('Right_button');
