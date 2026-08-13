@@ -4,8 +4,8 @@ on:
   push:
     paths:
       - 'heroes.csv'
-      - 'export - Герои - View.csv'
       - 'item_images.csv'
+      - 'Talent_description.csv'
   schedule:
     - cron: '0 3 * * *'
   workflow_dispatch:
@@ -39,18 +39,33 @@ jobs:
       - name: Create cache directory
         run: |
           mkdir -p images_cache
+          echo "📁 Папка images_cache создана"
 
-      - name: Check files structure
+      - name: Check CSV files exist
         run: |
-          echo "📁 Текущая структура:"
-          ls -la
+          echo "📁 Проверяем наличие CSV файлов:"
+          ls -la *.csv || echo "❌ Нет CSV файлов!"
           echo ""
-          echo "📁 Проверяем папку scripts:"
-          ls -la scripts/ || echo "Папка scripts не найдена!"
+          echo "📁 Проверяем heroes.csv:"
+          head -2 heroes.csv || echo "❌ heroes.csv не найден!"
+          echo ""
+          echo "📁 Проверяем item_images.csv:"
+          head -2 item_images.csv || echo "❌ item_images.csv не найден!"
+          echo ""
+          echo "📁 Проверяем Talent_description.csv:"
+          head -2 "Talent_description.csv" || echo "❌ Talent_description.csv не найден!"
+
+      - name: Check script exists
+        run: |
+          echo "📁 Проверяем скрипт:"
+          ls -la scripts/download_images.py || echo "❌ Скрипт не найден!"
 
       - name: Download and optimize images
         run: |
+          echo "🚀 Запускаем скрипт..."
           python scripts/download_images.py
+          echo "📁 Проверяем результат:"
+          ls -la images_cache/ || echo "❌ Папка images_cache пуста или не создана!"
 
       - name: Check for changes
         id: check_changes
@@ -72,7 +87,7 @@ jobs:
       - name: Commit optimized images
         run: |
           git config user.name "GitHub Actions Bot"
-          git config user.email "actions@github.com"
+          git config.user.email "actions@github.com"
           git add images_cache/
           if git diff --staged --quiet; then
             echo "📭 Нет изменений для коммита"
