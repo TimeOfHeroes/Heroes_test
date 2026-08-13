@@ -288,7 +288,7 @@
 /* ===== КНОПКИ РЕЖИМА ТЕГОВ ===== */
 .mode-btn {
     padding: 5px 12px;
-    font-size: 12px;        /* уменьшено с 13px */
+    font-size: 12px;
     border: 1px solid var(--checkbox-border);
     border-radius: 6px;
     background: var(--card-bg);
@@ -1397,9 +1397,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         padding-right: 12px !important;
     }
     .image-container {
-        height: 260px !important;
-        min-height: 260px !important;
-        max-height: 260px !important;
+        height: 320px !important;
+        min-height: 320px !important;
+        max-height: 320px !important;
         padding: 8px !important;
         flex-shrink: 0 !important;
     }
@@ -1459,9 +1459,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         padding-right: 8px !important;
     }
     .image-container {
-        height: 200px !important;
-        min-height: 200px !important;
-        max-height: 200px !important;
+        height: 260px !important;
+        min-height: 260px !important;
+        max-height: 260px !important;
         padding: 6px !important;
         flex-shrink: 0 !important;
     }
@@ -3101,11 +3101,6 @@ function fillModal(hero){
             // Закрываем модалку и применяем фильтры
             closeModal();
             applyFilters();
-            
-            // Открываем панель фильтров, чтобы пользователь видел, что выбрано
-            setTimeout(() => {
-                document.getElementById('openFilters').click();
-            }, 300);
         }
     };
     
