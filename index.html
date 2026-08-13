@@ -72,7 +72,17 @@
   --tag-resurrection: #94d82d;
   --tag-element: #a9e34b;
   --tag-default: #adb5bd;
+
+  /* ===== ИКОНКИ ХАРАКТЕРИСТИК (СВЕТЛАЯ ТЕМА) ===== */
+  --icon-sword: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/YeSyw0QuIvRgpOrMU4uNGFLq6uV4YCFP_668ad0468f4d19bd1b8bbed7cd12d8c1cbcda5726c5f26f073af9e9eabca7894.svg');
+  --icon-shield: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/xlNfrEBrB3pYmfkczHLpRCy8HqXGqhDm_e00cf0fd07b0a7d06eaaed24fee2ba92509c12cfbb684f6c5ff4cb4498cbc807.svg');
+  --icon-health: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/ohNlEwuhQObHjsOtoUUZzPHAYYYyKKJ5_7127f97496b6bc652dd724d9e0fdcea2dca03afaa364aa17481897bda58665d3.svg');
+  --icon-star: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/pT6nD4eBcSwbizFIyHYXJJbLjkavvGNR_f366e9997e66d9418f51ccf4ddfe49271ad72221ed6aeb16b74c9ac34b6d987d.svg');
+  --icon-tree: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/B8DMifczdAzQiFisHhqXRU5Gk5gmFRWj_5ff6b7ccab8b189f829ce3b4bc0974e78a764f0c83b248388c2037444dd873e5.svg');
+  --icon-upgrade: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/YpiBSmwAWmBJR2EnXfdUKY6GUZCOxZCP_aa2bee0d91297c694915411d9606c3cbfc6882ea5980a5e7956f489c8a92b6bb.svg');
 }
+
+/* ===== ТЁМНАЯ ТЕМА ===== */
 @media (prefers-color-scheme: dark) {
   :root {
     --text-color: #eee;
@@ -134,8 +144,92 @@
     --tag-resurrection: #5c940d;
     --tag-element: #74b816;
     --tag-default: #868e96;
+
+    /* Тёмная тема - подставляем dark иконки */
+    --icon-sword: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/gllL6hA7DCrheRotrjwMcUBdhHJBkNjD_8ba1f682191d050aedc86c69d7e4560686611677b317608f394a02c337ed1de1.svg');
+    --icon-shield: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/I2KgfgksC7rQkmeLwyhNXecvFLwOT7Tv_7cf1eeb5551251f6cc76573222f9651d4fb64b7ec517cee5a4635de6568d05d5.svg');
+    --icon-health: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/kOIG4kluRjp8R9YYdRhrbzc9yBbKXF7q_a42e6d20f7225db05f5e6dc9e2d61aff8f478e24523d3e77617b9ddedd44341d.svg');
   }
 }
+
+/* ===== КЛАССЫ ДЛЯ ИКОНОК ЧЕРЕЗ CSS ===== */
+.icon-sword {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-image: var(--icon-sword);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.icon-sword-lg {
+  width: 20px;
+  height: 20px;
+}
+.icon-shield {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-image: var(--icon-shield);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.icon-health {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-image: var(--icon-health);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.icon-star {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: var(--icon-star);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.icon-tree {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: var(--icon-tree);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.icon-tree-white {
+  filter: brightness(0) invert(1);
+}
+.icon-upgrade {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: var(--icon-upgrade);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.icon-upgrade-white {
+  filter: brightness(0) invert(1);
+}
+
 /* ===== ТУЛТИПЫ ТЕГОВ ===== */
 .tag-tooltip {
     position: fixed;
@@ -162,6 +256,7 @@
     opacity: 1;
     visibility: visible;
 }
+
 /* ===== КНОПКИ РЕЖИМА ТЕГОВ ===== */
 .mode-btn {
     padding: 5px 12px;
@@ -994,14 +1089,13 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     margin: 0;
     padding: 0;
 }
-.hero-meta-row .star-display img {
+.hero-meta-row .star-display .icon-star {
     width: 16px !important;
     height: 16px !important;
     min-width: 16px !important;
     min-height: 16px !important;
     max-width: 16px !important;
     max-height: 16px !important;
-    object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
     margin: 0 !important;
@@ -1027,29 +1121,30 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-size: 15px;
     overflow: visible !important;
 }
-.hero-stats-row .stat-item img {
-    width: 18px !important;
-    height: 18px !important;
-    min-width: 18px !important;
-    min-height: 18px !important;
-    max-width: 18px !important;
-    max-height: 18px !important;
-    object-fit: contain !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
+.hero-stats-row .stat-item .icon-sword,
+.hero-stats-row .stat-item .icon-shield,
+.hero-stats-row .stat-item .icon-health {
     flex-shrink: 0 !important;
     overflow: visible !important;
     padding: 0 !important;
     margin: 0 !important;
 }
-.hero-stats-row .stat-item img[src*="Sword" i] {
+.hero-stats-row .stat-item .icon-sword {
     width: 20px !important;
     height: 20px !important;
     min-width: 20px !important;
     min-height: 20px !important;
     max-width: 20px !important;
     max-height: 20px !important;
-    padding: 0 !important;
+}
+.hero-stats-row .stat-item .icon-shield,
+.hero-stats-row .stat-item .icon-health {
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    max-width: 18px !important;
+    max-height: 18px !important;
 }
 .hero-stats-row .talent-controls {
     display: flex !important;
@@ -1129,20 +1224,17 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     background: #1a5f9a !important;
     background-color: #1a5f9a !important;
 }
-.hero-stats-row #openTreeBtn img {
+.hero-stats-row #openTreeBtn .icon-tree {
     width: 16px !important;
     height: 16px !important;
     min-width: 16px !important;
     min-height: 16px !important;
     max-width: 16px !important;
     max-height: 16px !important;
-    filter: brightness(0) invert(1) !important;
     display: inline-block !important;
     vertical-align: middle !important;
-    object-fit: contain !important;
-    margin: 0 !important;
-    padding: 0 !important;
     flex-shrink: 0 !important;
+    filter: brightness(0) invert(1) !important;
 }
 .upgrade-toggle-btn {
     display: inline-flex !important;
@@ -1177,20 +1269,17 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     background: #1a5f9a !important;
     background-color: #1a5f9a !important;
 }
-.upgrade-toggle-btn img {
+.upgrade-toggle-btn .icon-upgrade {
     width: 16px !important;
     height: 16px !important;
     min-width: 16px !important;
     min-height: 16px !important;
     max-width: 16px !important;
     max-height: 16px !important;
-    filter: brightness(0) invert(1) !important;
     display: inline-block !important;
     vertical-align: middle !important;
-    object-fit: contain !important;
-    margin: 0 !important;
-    padding: 0 !important;
     flex-shrink: 0 !important;
+    filter: brightness(0) invert(1) !important;
 }
 .upgrade-btn-wrapper {
     display: inline-block;
@@ -1376,7 +1465,16 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .tree-header { padding:12px 16px; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; background:var(--card-bg); cursor:grab; }
 .tree-panel.dragging .tree-header { cursor:grabbing; }
 .tree-header h3 { margin:0; font-size:16px; font-weight:600; user-select:none; display:flex; align-items:center; gap:8px; }
-.tree-header h3 img { width:32px !important; height:32px !important; min-width:32px !important; min-height:32px !important; max-width:32px !important; max-height:32px !important; object-fit:contain !important; display:inline-block !important; vertical-align:middle !important; }
+.tree-header h3 .icon-tree {
+    width:32px !important;
+    height:32px !important;
+    min-width:32px !important;
+    min-height:32px !important;
+    max-width:32px !important;
+    max-height:32px !important;
+    display:inline-block !important;
+    vertical-align:middle !important;
+}
 .tree-close { background: none !important; border: none !important; font-size: 28px !important; cursor: pointer !important; color: var(--text-color) !important; opacity: 0.7 !important; width: 36px !important; height: 36px !important; display: flex !important; align-items: center !important; justify-content: center !important; border-radius: 50% !important; transition: all 0.2s !important; padding: 0 !important; line-height: 1 !important; }
 .tree-close:hover { opacity: 1 !important; background: var(--secondary-color) !important; }
 .tree-content { padding:16px; overflow-y:auto; max-height:60vh; }
@@ -1437,14 +1535,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-weight: 500;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
-.stats .pill img {
+.stats .pill .icon-sword,
+.stats .pill .icon-shield,
+.stats .pill .icon-health {
     width: 14px !important;
     height: 14px !important;
     min-width: 14px !important;
     min-height: 14px !important;
     max-width: 14px !important;
     max-height: 14px !important;
-    object-fit: contain !important;
     display: inline-block !important;
     vertical-align: middle !important;
     flex-shrink: 0 !important;
@@ -1648,7 +1747,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <div id="mPassive" class="pre"></div>
         <div class="upgrade-btn-wrapper">
             <button id="upgradeToggleBtn" class="upgrade-toggle-btn">
-                <img id="upgradeIcon" src="" alt="Прокачка"> Прокачка героя
+                <span class="icon-upgrade icon-upgrade-white"></span> Прокачка героя
             </button>
         </div>
         <div id="upgradeSectionWrapper" class="upgrade-section-wrapper">
@@ -1678,7 +1777,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 <div id="treePanel" class="tree-panel">
     <div class="tree-header" id="treeHeader">
         <h3>
-            <img id="treeIcon" src="" alt="Дерево" style="width:32px;height:32px;min-width:32px;min-height:32px;max-width:32px;max-height:32px;object-fit:contain;display:inline-block;vertical-align:middle;">
+            <span class="icon-tree" style="width:32px;height:32px;min-width:32px;min-height:32px;max-width:32px;max-height:32px;"></span>
             Дерево талантов — <span id="treeHeroName"></span>
         </h3>
         <button id="closeTreeBtn" class="tree-close">×</button>
@@ -1827,6 +1926,69 @@ const TAG_DESCRIPTIONS = {
     'антихил': 'снижение лечения врагам'
 };
 
+// ===== РАБОТА С ТЕМОЙ =====
+function getCurrentTheme() {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function getIconForTheme(iconName) {
+    const theme = getCurrentTheme();
+    
+    // Для тёмной темы - заменяем на dark версии
+    if (theme === 'dark') {
+        if (iconName === 'Sword_icon_ffffff') return getItemImage('Sword_icon_dark') || getItemImage('Sword_icon_ffffff');
+        if (iconName === 'Shield_icon_ffffff') return getItemImage('Shield_icon_dark') || getItemImage('Shield_icon_ffffff');
+        if (iconName === 'Health_icon_ffffff') return getItemImage('Health_icon_dark') || getItemImage('Health_icon_ffffff');
+    }
+    
+    // Для светлой темы или если нет dark версии - используем оригинал
+    return getItemImage(iconName);
+}
+
+function getItemImage(itemName) {
+    if (!itemName) return '';
+    if (itemImages[itemName]) return itemImages[itemName];
+    for (const [key, url] of Object.entries(itemImages)) {
+        if (itemName.includes(key) || key.includes(itemName)) {
+            return url;
+        }
+    }
+    return '';
+}
+
+function getIcon(iconName) {
+    if (iconCache[iconName]) return iconCache[iconName];
+    const url = getIconForTheme(iconName);
+    if (url) iconCache[iconName] = url;
+    return url || '';
+}
+
+function initThemeWatch() {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    mediaQuery.addEventListener('change', function(e) {
+        // Очищаем кэш иконок
+        iconCache = {};
+        
+        // Перерисовываем карточки
+        if (viewHeroes.length) {
+            renderCards(viewHeroes);
+        }
+        
+        // Если модалка открыта - обновляем её
+        if (document.getElementById('modal').classList.contains('show') && currentIdx >= 0 && viewHeroes[currentIdx]) {
+            fillModal(viewHeroes[currentIdx]);
+        }
+        
+        // Если дерево талантов открыто - обновляем его
+        if (document.getElementById('treePanel').classList.contains('show') && viewHeroes[currentIdx]) {
+            renderTalentTree(viewHeroes[currentIdx], currentHeroTalents, currentMode);
+        }
+        
+        console.log('🎨 Тема изменена на:', e.matches ? 'тёмную' : 'светлую');
+    });
+}
+
 function initSortTooltip() {
     const btn = document.getElementById('sortBtn');
     if (btn) {
@@ -1896,28 +2058,6 @@ function getTagClass(tag) {
     return tagMap[tag] || 'tag-default';
 }
 function fileCellToUrl(v) { let s=String(v||''); let m=s.match(/\((https?:\/\/[^)]+)\)/i); if(m) return m[1]; let m2=s.match(/https?:\/\/\S+/i); return m2 ? m2[0].replace(/[),]+$/,'') : ''; }
-function getItemImage(itemName) {
-    if (!itemName) return '';
-    if (itemImages[itemName]) return itemImages[itemName];
-    for (const [key, url] of Object.entries(itemImages)) {
-        if (itemName.includes(key) || key.includes(itemName)) {
-            return url;
-        }
-    }
-    return '';
-}
-function getIcon(iconName) {
-    if (iconCache[iconName]) return iconCache[iconName];
-    const url = getItemImage(iconName);
-    if (url) iconCache[iconName] = url;
-    return url || '';
-}
-function getStarIcon() { return getIcon(ICON_NAMES.star); }
-function getSwordIcon() { return getIcon(ICON_NAMES.sword); }
-function getShieldIcon() { return getIcon(ICON_NAMES.shield); }
-function getHealthIcon() { return getIcon(ICON_NAMES.health); }
-function getTreeIcon() { return getIcon(ICON_NAMES.tree); }
-function getUpgradeIcon() { return getIcon(ICON_NAMES.upgrade); }
 
 // ===== ОПТИМИЗАЦИЯ ИЗОБРАЖЕНИЙ =====
 function getOptimizedImageUrl(originalUrl) {
@@ -2106,12 +2246,6 @@ function renderUpgradeSection(hero) {
         return;
     }
     container.style.display = 'block';
-    const upgradeIcon = getUpgradeIcon();
-    const upgradeIconEl = document.getElementById('upgradeIcon');
-    if (upgradeIcon && upgradeIconEl) {
-        upgradeIconEl.src = upgradeIcon;
-        upgradeIconEl.style.cssText = 'width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;margin:0;padding:0;';
-    }
     const heroStars = String(hero['Количество звезд'] || '1').trim();
     const heroElement = String(hero['Стихия'] || '').trim();
     const starTargets = getStarTargets(heroStars);
@@ -2119,7 +2253,7 @@ function renderUpgradeSection(hero) {
     const starContent = document.getElementById('starContent');
     if (starButtons && starContent) {
         starButtons.innerHTML = '';
-        const starIcon = getStarIcon();
+        const starIcon = getIcon('Star_icon');
         starTargets.forEach(target => {
             const btn = document.createElement('button');
             btn.className = 'upgrade-btn';
@@ -2379,12 +2513,6 @@ function renderTalentTree(hero, selections, mode) {
         document.getElementById('talentTable').innerHTML = '<p>Нет данных о талантах для этого класса</p>';
         return;
     }
-    const treeIcon = getIcon('TalantTree_icon');
-    const treeIconEl = document.getElementById('treeIcon');
-    if (treeIcon && treeIconEl) {
-        treeIconEl.src = treeIcon;
-        treeIconEl.style.cssText = 'width:32px;height:32px;min-width:32px;min-height:32px;max-width:32px;max-height:32px;object-fit:contain;display:inline-block;vertical-align:middle;';
-    }
     const talents = classTalents[heroClass];
     const groups = [];
     let currentGroup = [];
@@ -2551,30 +2679,16 @@ function renderTalentTree(hero, selections, mode) {
     }
 }
 function renderStatsRow(hero, calc) {
-    const swordUrl = getIcon(ICON_NAMES.sword);
-    const shieldUrl = getIcon(ICON_NAMES.shield);
-    const healthUrl = getIcon(ICON_NAMES.health);
-    const treeIcon = getIcon(ICON_NAMES.tree);
     const statsRow = document.getElementById('heroStatsRow');
     if (!statsRow) return;
-    const iconStyle = 'width:18px;height:18px;min-width:18px;min-height:18px;max-width:18px;max-height:18px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:0;margin:0;';
-    const swordStyle = 'width:20px;height:20px;min-width:20px;min-height:20px;max-width:20px;max-height:20px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;padding:0;margin:0;';
+    
+    // Используем CSS-иконки вместо img
     let html = '';
-    if (swordUrl) {
-        html += '<span class="stat-item"><img src="' + swordUrl + '" alt="Атака" style="' + swordStyle + '"> ' + calc.attack + '</span>';
-    } else {
-        html += '<span class="stat-item">⚔️ ' + calc.attack + '</span>';
-    }
-    if (shieldUrl) {
-        html += '<span class="stat-item"><img src="' + shieldUrl + '" alt="Защита" style="' + iconStyle + '"> ' + calc.defense + '</span>';
-    } else {
-        html += '<span class="stat-item">🛡️ ' + calc.defense + '</span>';
-    }
-    if (healthUrl) {
-        html += '<span class="stat-item"><img src="' + healthUrl + '" alt="Жизни" style="' + iconStyle + '"> ' + calc.hp + '</span>';
-    } else {
-        html += '<span class="stat-item">❤️ ' + calc.hp + '</span>';
-    }
+    html += `<span class="stat-item"><span class="icon-sword icon-sword-lg"></span> ${calc.attack}</span>`;
+    html += `<span class="stat-item"><span class="icon-shield"></span> ${calc.defense}</span>`;
+    html += `<span class="stat-item"><span class="icon-health"></span> ${calc.hp}</span>`;
+    
+    // Добавляем контролы талантов
     html += '<div class="talent-controls">';
     html += '<div class="select-wrapper">';
     html += '<select id="talentModeSelect">';
@@ -2585,21 +2699,19 @@ function renderStatsRow(hero, calc) {
     html += '</select>';
     html += '<div class="arrow"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div>';
     html += '</div>';
-    html += '<button id="openTreeBtn"><img id="treeBtnIcon" src="" alt="Дерево" style="width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;display:inline-block;vertical-align:middle;filter:brightness(0)invert(1);"> Дерево талантов</button>';
+    html += `<button id="openTreeBtn"><span class="icon-tree icon-tree-white"></span> Дерево талантов</button>`;
     html += '</div>';
+    
     statsRow.innerHTML = html;
-    if (treeIcon) {
-        const treeBtnIcon = document.getElementById('treeBtnIcon');
-        if (treeBtnIcon) {
-            treeBtnIcon.src = treeIcon;
-        }
-    }
+    
+    // Навешиваем события
     const select = document.getElementById('talentModeSelect');
     if (select) {
         select.value = currentMode || 'none';
         select.removeEventListener('change', updateMainModalStats);
         select.addEventListener('change', updateMainModalStats);
     }
+    
     const treeBtn = document.getElementById('openTreeBtn');
     if (treeBtn) {
         treeBtn.removeEventListener('click', openTreePanel);
@@ -2628,13 +2740,10 @@ function renderMetaRow(hero) {
     const element = hero[HERO_FIELDS.element] || '—';
     const stars = hero[HERO_FIELDS.stars] || '—';
     const clazz = hero[HERO_FIELDS.clazz] || '—';
-    const starIcon = getStarIcon();
-    let starsDisplay;
-    if (starIcon) {
-        starsDisplay = `<span class="star-display">${stars} <img src="${starIcon}" alt="★" style="width:16px !important;height:16px !important;min-width:16px !important;min-height:16px !important;max-width:16px !important;max-height:16px !important;object-fit:contain !important;display:inline-block !important;vertical-align:middle !important;margin:0 !important;padding:0 !important;"></span>`;
-    } else {
-        starsDisplay = `${stars}★`;
-    }
+    
+    // Используем CSS иконку звезды
+    const starsDisplay = `${stars} <span class="icon-star"></span>`;
+    
     metaRow.innerHTML = `
         <span>${element}</span>
         <span>${starsDisplay}</span>
@@ -2642,25 +2751,10 @@ function renderMetaRow(hero) {
     `;
 }
 function renderCardStats(hero) {
-    const swordUrl = getIcon(ICON_NAMES.sword);
-    const shieldUrl = getIcon(ICON_NAMES.shield);
-    const healthUrl = getIcon(ICON_NAMES.health);
     let html = '';
-    if (swordUrl) {
-        html += '<span class="pill"><img src="' + swordUrl + '" alt="Атака" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.attack] + '</span>';
-    } else {
-        html += '<span class="pill">⚔️ ' + hero[HERO_FIELDS.attack] + '</span>';
-    }
-    if (shieldUrl) {
-        html += '<span class="pill"><img src="' + shieldUrl + '" alt="Защита" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.defense] + '</span>';
-    } else {
-        html += '<span class="pill">🛡️ ' + hero[HERO_FIELDS.defense] + '</span>';
-    }
-    if (healthUrl) {
-        html += '<span class="pill"><img src="' + healthUrl + '" alt="Жизни" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;"> ' + hero[HERO_FIELDS.hp] + '</span>';
-    } else {
-        html += '<span class="pill">❤️ ' + hero[HERO_FIELDS.hp] + '</span>';
-    }
+    html += `<span class="pill"><span class="icon-sword"></span> ${hero[HERO_FIELDS.attack]}</span>`;
+    html += `<span class="pill"><span class="icon-shield"></span> ${hero[HERO_FIELDS.defense]}</span>`;
+    html += `<span class="pill"><span class="icon-health"></span> ${hero[HERO_FIELDS.hp]}</span>`;
     return html;
 }
 function initDragAndDrop() {
@@ -2888,7 +2982,6 @@ function applyFilters(){
 function renderCards(heroes){
     if(!heroes.length){ document.getElementById('cards').innerHTML=''; document.getElementById('empty').style.display='block'; return; }
     document.getElementById('empty').style.display='none';
-    const starIcon = getStarIcon();
     document.getElementById('cards').innerHTML=heroes.map((r,i)=>{
         let img = fileCellToUrl(r[HERO_FIELDS.image]);
         let optimizedImg = img ? getOptimizedImageUrl(img) : '';
@@ -2896,9 +2989,7 @@ function renderCards(heroes){
         let abilitiesFull=String(r[HERO_FIELDS.abilities]||'');
         let cleaned=abilitiesFull.replace(/^'|'$/g,'');
         let hasAbil=cleaned.trim().length>0;
-        const starsDisplay = starIcon ? 
-            '<span style="display:inline-flex;align-items:center;gap:2px;">' + r[HERO_FIELDS.stars] + ' <img src="'+starIcon+'" alt="★" style="width:14px;height:14px;min-width:14px;min-height:14px;max-width:14px;max-height:14px;object-fit:contain;display:inline-block;vertical-align:middle;"></span>' :
-            r[HERO_FIELDS.stars] + '★';
+        const starsDisplay = `${r[HERO_FIELDS.stars]} <span class="icon-star"></span>`;
         return '<article class="card" data-idx="'+i+'" data-element="'+(r[HERO_FIELDS.element]||'')+'"><div class="thumb">'+(imgSrc?'<img src="'+imgSrc+'" alt="'+r[HERO_FIELDS.name]+'" loading="lazy" onerror="this.onerror=null; this.src=\''+img+'\'">':'<div style="padding:20px;">Нет изображения</div>')+'</div><h3>'+r[HERO_FIELDS.name]+'</h3>' +
             '<div class="meta"><span>'+r[HERO_FIELDS.element]+'</span> • <span>'+starsDisplay+'</span> • <span>'+r[HERO_FIELDS.clazz]+'</span></div>' +
             '<div class="meta"><span>'+r[HERO_FIELDS.attackType]+'</span> • <span>'+r[HERO_FIELDS.mana]+'</span> • <span>'+r[HERO_FIELDS.summon]+'</span></div>' +
@@ -2932,11 +3023,7 @@ function fillModal(hero){
     const summonText = document.getElementById('modalSummonText');
     const summon = hero[HERO_FIELDS.summon] || '—';
     summonText.textContent = 'Призыв: ' + summon;
-    const treeIcon = getIcon(ICON_NAMES.tree);
-    const treeBtnIcon = document.getElementById('treeBtnIcon');
-    if (treeIcon && treeBtnIcon) {
-        treeBtnIcon.src = treeIcon;
-    }
+    
     const leftIcon = getIcon('Left_button');
     const rightIcon = getIcon('Right_button');
     const closeIcon = getIcon('Close_button');
@@ -3006,15 +3093,7 @@ function fillModal(hero){
     
     document.getElementById('mAbilities').textContent = String(hero[HERO_FIELDS.abilities] || '—').replace(/^'|'$/g, '');
     document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive] || '—').replace(/^'|'$/g, '');
-    const upgradeIcon = getIcon(ICON_NAMES.upgrade);
-    const toggleBtn = document.getElementById('upgradeToggleBtn');
-    if (upgradeIcon && toggleBtn) {
-        const upgradeImg = document.getElementById('upgradeIcon');
-        if (upgradeImg) {
-            upgradeImg.src = upgradeIcon;
-            upgradeImg.style.cssText = 'width:16px;height:16px;min-width:16px;min-height:16px;max-width:16px;max-height:16px;object-fit:contain;filter:brightness(0)invert(1);display:inline-block;vertical-align:middle;margin:0;padding:0;';
-        }
-    }
+    
     const wrapper = document.getElementById('upgradeSectionWrapper');
     if (wrapper) wrapper.classList.remove('show');
     renderUpgradeSection(hero);
@@ -3191,6 +3270,9 @@ function attachEvents(){
     document.getElementById('sortSelect').value = 'Герой';
     initTooltip();
     initDragAndDrop();
+    
+    // Инициализируем слежение за темой
+    initThemeWatch();
 }
 Promise.all([
     new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
