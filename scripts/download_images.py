@@ -12,12 +12,22 @@ from PIL import Image
 from io import BytesIO
 import time
 
-# Папки
 IMAGE_CACHE_DIR = 'images_cache'
+
+# ПРАВИЛЬНЫЕ названия ваших CSV файлов
 CSV_FILES = [
-    'heroes.csv',
-    'export - Герои - View.csv',
-    'item_images.csv'
+    'heroes.csv',                    # колонка: Картинка
+    'item_images.csv',               # колонка: Картинка
+    'Talent_description.csv'         # колонки: Картинка активная, Картинка неактивная
+]
+
+# Поля, в которых могут быть ссылки на картинки
+IMAGE_FIELDS = [
+    'Картинка',
+    'Картинка активная',
+    'Картинка неактивная',
+    'image',
+    'icon'
 ]
 
 def extract_url(text):
@@ -47,7 +57,6 @@ def download_and_optimize_image(url, filename, max_width=400, quality=80):
     if not url:
         return None
     
-    # Путь к файлу в кеше
     cache_file = os.path.join(IMAGE_CACHE_DIR, filename)
     
     # Проверяем, есть ли уже оптимизированная версия
@@ -56,7 +65,6 @@ def download_and_optimize_image(url, filename, max_width=400, quality=80):
         return cache_file
     
     try:
-        # Скачиваем изображение
         print(f'⬇️ Скачиваем: {url[:80]}...')
         response = requests.get(url, timeout=30, headers={'User-Agent': 'Mozilla/5.0'})
         response.raise_for_status()
@@ -104,17 +112,21 @@ def process_csv_file(csv_path):
     try:
         with open(csv_path, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f)
+            
+            # Проверяем, какие колонки есть в файле
+            print(f'   Колонки в файле: {list(reader.fieldnames)}')
+            
             for row in reader:
-                # Проверяем все колонки на наличие ссылок на картинки
-                for key, value in row.items():
-                    if 'Картинка' in key or 'image' in key.lower() or 'icon' in key.lower():
-                        url = extract_url(value)
+                # Проверяем все колонки, которые могут содержать картинки
+                for field in IMAGE_FIELDS:
+                    if field in row and row[field]:
+                        url = extract_url(row[field])
                         if url:
                             # Создаем имя файла из хеша
                             file_hash = get_image_hash(url)
                             # Определяем расширение
                             ext = '.jpg'
-                            if '.png' in url.lower() or 'png' in key.lower():
+                            if '.png' in url.lower():
                                 ext = '.png'
                             elif '.svg' in url.lower():
                                 ext = '.svg'
@@ -129,7 +141,6 @@ def process_csv_file(csv_path):
 def main():
     print('🚀 Запуск оптимизации изображений...')
     print(f'📂 Рабочая папка: {os.getcwd()}')
-    print(f'📁 Файлы в папке: {os.listdir(".")}')
     
     # Создаем папку для кеша
     os.makedirs(IMAGE_CACHE_DIR, exist_ok=True)
@@ -138,7 +149,7 @@ def main():
     
     # Обрабатываем все CSV файлы
     for csv_file in CSV_FILES:
-        print(f'📄 Обработка: {csv_file}')
+        print(f'\n📄 Обработка: {csv_file}')
         urls = process_csv_file(csv_file)
         all_urls.extend(urls)
         print(f'   Найдено URL: {len(urls)}')
@@ -149,7 +160,7 @@ def main():
     
     if len(unique_urls) == 0:
         print('⚠️ Не найдено изображений для обработки!')
-        print('   Проверьте, что CSV файлы содержат колонки "Картинка"')
+        print('   Проверьте, что CSV файлы содержат колонки с картинками')
         return
     
     # Скачиваем и оптимизируем
@@ -162,6 +173,7 @@ def main():
         time.sleep(0.2)  # Небольшая задержка между запросами
     
     print(f'\n✅ Готово! Оптимизировано: {success_count}/{len(unique_urls)} изображений')
+    print(f'📁 Папка: {IMAGE_CACHE_DIR}/')
 
 if __name__ == '__main__':
     main()
