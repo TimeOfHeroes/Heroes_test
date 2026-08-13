@@ -935,23 +935,23 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 
 /* ===== СЕКЦИЯ ПРОКАЧКИ ===== */
 .upgrade-section {
-    padding: 12px 14px;
+    padding: 8px 12px;
     background: var(--secondary-color);
     border-radius: 10px;
     border: 1px solid var(--border-color);
 }
 .upgrade-section-title { display: none !important; }
 .upgrade-group-title {
-    font-size: 16px !important;
+    font-size: 14px !important;
     font-weight: 600 !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 4px !important;
     color: var(--text-color);
 }
 .upgrade-buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 10px;
+    gap: 4px;
+    margin-bottom: 6px;
 }
 .upgrade-btn {
     padding: 4px 12px;
@@ -978,7 +978,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .upgrade-btn.active .star { color: #fff; }
 .upgrade-content { 
     display: none; 
-    padding: 10px 12px; 
+    padding: 6px 10px;
     background: var(--card-bg); 
     border-radius: 8px; 
     border: 1px solid var(--border-color); 
@@ -989,8 +989,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .upgrade-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 6px 0;
+    gap: 8px;
+    padding: 4px 0;
     font-size: 13px;
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
@@ -1084,17 +1084,17 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-container {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
     overflow-y: auto;
     padding-right: 4px;
 }
 .info-container h2 {
-    margin: 0 0 12px 0;
+    margin: 0 0 6px 0;
     font-size: 26px;
     font-weight: 700;
 }
 .info-container h3 {
-    margin: 12px 0 4px 0;
+    margin: 6px 0 2px 0;
     font-size: 16px;
     font-weight: 600;
 }
@@ -1103,18 +1103,18 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     white-space: pre-line;
     background: transparent !important;
     border: none !important;
-    padding: 4px 0;
+    padding: 2px 0;
     font-size: 14px;
     overflow-wrap: break-word;
-    line-height: 1.6;
+    line-height: 1.5;
     margin: 0;
 }
 .hero-meta-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 4px 8px;
-    margin: 0 0 4px 0;
+    gap: 2px 8px;
+    margin: 0 0 2px 0;
     font-weight: 600;
     font-size: 15px;
 }
@@ -1146,8 +1146,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px 12px;
-    margin: 0 0 4px 0;
+    gap: 4px 12px;
+    margin: 0 0 2px 0;
 }
 .hero-stats-row .stat-item {
     display: flex;
@@ -1320,14 +1320,14 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .upgrade-btn-wrapper {
     display: inline-block;
     width: auto;
-    margin: 4px 0 6px 0;
+    margin: 2px 0 0 0;
 }
 .hero-info-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 12px 24px;
-    margin: 0 0 8px 0;
+    gap: 6px 24px;
+    margin: 0 0 4px 0;
 }
 .hero-info-row .info-item {
     display: flex;
@@ -1336,7 +1336,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .hero-info-row .info-item .value { font-weight: 600; font-size: 15px; }
 .hero-info-row .info-item .label { font-size: 11px; color: var(--text-color); opacity: 0.6; font-weight: 400; margin-top: -2px; }
-.upgrade-section-wrapper { display: none; margin-top: 8px; }
+.upgrade-section-wrapper { display: none; margin-top: 4px; }
 .upgrade-section-wrapper.show { display: block; }
 
 /* ===== КНОПКИ НАВИГАЦИИ ===== */
@@ -1585,7 +1585,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .toggle-abilities { background:none; border:none; font-size:11px; font-weight:600; cursor:pointer; padding:4px 6px; margin:4px auto 8px; text-decoration:underline; display:block; color:var(--text-color); opacity:0.7; transition:opacity 0.2s; }
 .toggle-abilities:hover { opacity:1; }
 .card-abilities-full { display:none; font-size:10px; padding:0 12px 8px; line-height:1.4; border-top:1px solid rgba(0,0,0,0.08); margin-top:4px; padding-top:6px; }
-.modal-tags { display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 8px; }
+.modal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 2px 0 4px 0;
+}
 .modal-tags .tag { display:inline-block; font-size:12px; font-weight:600; padding:4px 12px; border-radius:12px; text-transform:lowercase; letter-spacing:0.3px; color:#fff; background:var(--tag-default); cursor:pointer; transition:transform 0.15s, box-shadow 0.15s; }
 .modal-tags .tag:hover { transform:scale(1.05); box-shadow:0 2px 8px rgba(0,0,0,0.2); }
 .modal-tags .tag:active { transform:scale(0.95); }
