@@ -69,27 +69,42 @@ def download_and_optimize_image(url, filename, max_width=400, quality=80):
         response = requests.get(url, timeout=30, headers={'User-Agent': 'Mozilla/5.0'})
         response.raise_for_status()
         
-        # Открываем изображение
-        img = Image.open(BytesIO(response.content))
+        # Проверяем, SVG ли это
+        content_type = response.headers.get('Content-Type', '').lower()
+        is_svg = '.svg' in url.lower() or 'svg' in content_type
+        
+        if is_svg:
+            # Для SVG просто сохраняем как есть
+            with open(cache_file, 'wb') as f:
+                f.write(response.content)
+            size_kb = os.path.getsize(cache_file) // 1024
+            print(f'✅ Сохранён SVG: {filename} ({size_kb} КБ)')
+            return cache_file
+        
+        # Для растровых изображений используем Pillow
+        try:
+            img = Image.open(BytesIO(response.content))
+        except Exception as e:
+            # Если не удалось открыть как изображение — сохраняем как есть
+            print(f'⚠️ Не удалось обработать как изображение, сохраняем как есть: {filename}')
+            with open(cache_file, 'wb') as f:
+                f.write(response.content)
+            size_kb = os.path.getsize(cache_file) // 1024
+            print(f'✅ Сохранён: {filename} ({size_kb} КБ)')
+            return cache_file
         
         # Определяем формат и сохраняем
         if img.mode in ('RGBA', 'LA', 'P'):
-            # Для PNG с прозрачностью
             if img.mode == 'P':
                 img = img.convert('RGBA')
             img.save(cache_file, 'PNG', optimize=True)
         else:
-            # Для JPEG
             if img.mode != 'RGB':
                 img = img.convert('RGB')
-            
-            # Изменяем размер, если нужно
             if max_width and img.width > max_width:
                 ratio = max_width / img.width
                 new_size = (max_width, int(img.height * ratio))
                 img = img.resize(new_size, Image.Resampling.LANCZOS)
-            
-            # Сохраняем с оптимизацией
             img.save(cache_file, 'JPEG', quality=quality, optimize=True)
         
         size_kb = os.path.getsize(cache_file) // 1024
@@ -98,7 +113,17 @@ def download_and_optimize_image(url, filename, max_width=400, quality=80):
         
     except Exception as e:
         print(f'❌ Ошибка для {filename}: {e}')
-        return None
+        # Пробуем сохранить как есть
+        try:
+            print(f'🔄 Пробуем сохранить как есть...')
+            with open(cache_file, 'wb') as f:
+                f.write(response.content)
+            size_kb = os.path.getsize(cache_file) // 1024
+            print(f'✅ Сохранён как есть: {filename} ({size_kb} КБ)')
+            return cache_file
+        except:
+            print(f'❌ Не удалось сохранить {filename}')
+            return None
 
 def process_csv_file(csv_path):
     """Обрабатывает CSV файл и извлекает URL изображений"""
@@ -170,7 +195,7 @@ def main():
         result = download_and_optimize_image(url, filename)
         if result:
             success_count += 1
-        time.sleep(0.2)  # Небольшая задержка между запросами
+        time.sleep(0.2)
     
     print(f'\n✅ Готово! Оптимизировано: {success_count}/{len(unique_urls)} изображений')
     print(f'📁 Папка: {IMAGE_CACHE_DIR}/')
