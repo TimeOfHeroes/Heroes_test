@@ -52,22 +52,26 @@ def download_and_optimize_image(url, filename, max_width=400, quality=80):
     
     # Проверяем, есть ли уже оптимизированная версия
     if os.path.exists(cache_file):
+        print(f'⏭️ Пропускаем (уже есть): {filename}')
         return cache_file
     
     try:
         # Скачиваем изображение
-        response = requests.get(url, timeout=30)
+        print(f'⬇️ Скачиваем: {url[:80]}...')
+        response = requests.get(url, timeout=30, headers={'User-Agent': 'Mozilla/5.0'})
         response.raise_for_status()
         
         # Открываем изображение
         img = Image.open(BytesIO(response.content))
         
-        # Конвертируем в RGB если нужно (для PNG с прозрачностью)
-        if img.mode in ('RGBA', 'LA'):
-            # Сохраняем альфа-канал для PNG
+        # Определяем формат и сохраняем
+        if img.mode in ('RGBA', 'LA', 'P'):
+            # Для PNG с прозрачностью
+            if img.mode == 'P':
+                img = img.convert('RGBA')
             img.save(cache_file, 'PNG', optimize=True)
         else:
-            # Для JPEG - сжимаем
+            # Для JPEG
             if img.mode != 'RGB':
                 img = img.convert('RGB')
             
@@ -80,7 +84,8 @@ def download_and_optimize_image(url, filename, max_width=400, quality=80):
             # Сохраняем с оптимизацией
             img.save(cache_file, 'JPEG', quality=quality, optimize=True)
         
-        print(f'✅ Оптимизировано: {filename} ({os.path.getsize(cache_file)} байт)')
+        size_kb = os.path.getsize(cache_file) // 1024
+        print(f'✅ Оптимизировано: {filename} ({size_kb} КБ)')
         return cache_file
         
     except Exception as e:
@@ -96,30 +101,35 @@ def process_csv_file(csv_path):
     
     urls = []
     
-    with open(csv_path, 'r', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            # Проверяем все колонки на наличие ссылок на картинки
-            for key, value in row.items():
-                if 'Картинка' in key or 'image' in key.lower() or 'icon' in key.lower():
-                    url = extract_url(value)
-                    if url:
-                        # Создаем имя файла из хеша
-                        file_hash = get_image_hash(url)
-                        # Определяем расширение
-                        ext = '.jpg'
-                        if '.png' in url.lower() or 'png' in key.lower():
-                            ext = '.png'
-                        elif '.svg' in url.lower():
-                            ext = '.svg'
-                        
-                        filename = f'{file_hash}{ext}'
-                        urls.append((url, filename))
+    try:
+        with open(csv_path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                # Проверяем все колонки на наличие ссылок на картинки
+                for key, value in row.items():
+                    if 'Картинка' in key or 'image' in key.lower() or 'icon' in key.lower():
+                        url = extract_url(value)
+                        if url:
+                            # Создаем имя файла из хеша
+                            file_hash = get_image_hash(url)
+                            # Определяем расширение
+                            ext = '.jpg'
+                            if '.png' in url.lower() or 'png' in key.lower():
+                                ext = '.png'
+                            elif '.svg' in url.lower():
+                                ext = '.svg'
+                            
+                            filename = f'{file_hash}{ext}'
+                            urls.append((url, filename))
+    except Exception as e:
+        print(f'❌ Ошибка при чтении {csv_path}: {e}')
     
     return urls
 
 def main():
     print('🚀 Запуск оптимизации изображений...')
+    print(f'📂 Рабочая папка: {os.getcwd()}')
+    print(f'📁 Файлы в папке: {os.listdir(".")}')
     
     # Создаем папку для кеша
     os.makedirs(IMAGE_CACHE_DIR, exist_ok=True)
@@ -137,14 +147,19 @@ def main():
     unique_urls = list(set(all_urls))
     print(f'\n📊 Всего уникальных изображений: {len(unique_urls)}')
     
+    if len(unique_urls) == 0:
+        print('⚠️ Не найдено изображений для обработки!')
+        print('   Проверьте, что CSV файлы содержат колонки "Картинка"')
+        return
+    
     # Скачиваем и оптимизируем
     success_count = 0
     for i, (url, filename) in enumerate(unique_urls, 1):
-        print(f'[{i}/{len(unique_urls)}] Загрузка: {filename}')
+        print(f'\n[{i}/{len(unique_urls)}] {filename}')
         result = download_and_optimize_image(url, filename)
         if result:
             success_count += 1
-        time.sleep(0.1)  # Небольшая задержка между запросами
+        time.sleep(0.2)  # Небольшая задержка между запросами
     
     print(f'\n✅ Готово! Оптимизировано: {success_count}/{len(unique_urls)} изображений')
 
