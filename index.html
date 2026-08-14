@@ -1484,9 +1484,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-height: 220px !important;
     }
     
-    /* ===== УВЕЛИЧИВАЕМ КАРТИНКИ В КНОПКАХ НАВИГАЦИИ (НЕ КНОПКИ!) ===== */
+    /* ===== КНОПКИ НАВИГАЦИИ ===== */
     .nav-btn {
-        /* Кнопки остаются прежнего размера */
         width: 38px !important;
         height: 38px !important;
         min-width: 38px !important;
@@ -1496,21 +1495,27 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         background: transparent !important;
     }
     .nav-btn img {
-        /* Увеличиваем картинки в 2 раза */
-        width: 60px !important;        /* было 30px */
-        height: 60px !important;       /* было 30px */
-        min-width: 60px !important;    /* было 30px */
-        min-height: 60px !important;   /* было 30px */
-        max-width: 60px !important;    /* было 30px */
-        max-height: 60px !important;   /* было 30px */
-        /* Центрируем картинку внутри кнопки */
+        width: 60px !important;
+        height: 60px !important;
+        min-width: 60px !important;
+        min-height: 60px !important;
+        max-width: 60px !important;
+        max-height: 60px !important;
         object-fit: contain !important;
         display: block !important;
-        margin: -11px !important;      /* (60-38)/2 = 11px — компенсируем увеличение */
+        margin: -11px !important;
     }
-    .nav-prev { right: 80px !important; top: 12px !important; }
-    .nav-next { right: 40px !important; top: 12px !important; }
-    .nav-close { right: 8px !important; top: 12px !important; width: 38px !important; height: 38px !important; min-width: 38px !important; min-height: 38px !important; }
+    /* Раздвигаем кнопки */
+    .nav-prev { right: 100px !important; top: 12px !important; }  /* было 80px */
+    .nav-next { right: 40px !important; top: 12px !important; }   /* было 40px */
+    .nav-close { 
+        right: 8px !important; 
+        top: 12px !important; 
+        width: 38px !important; 
+        height: 38px !important; 
+        min-width: 38px !important; 
+        min-height: 38px !important; 
+    }
     .nav-close img { 
         width: 60px !important; 
         height: 60px !important; 
@@ -1561,7 +1566,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-height: 180px !important;
     }
     
-    /* ===== УВЕЛИЧИВАЕМ КАРТИНКИ В КНОПКАХ НАВИГАЦИИ (НЕ КНОПКИ!) ===== */
+    /* ===== КНОПКИ НАВИГАЦИИ ===== */
     .nav-btn {
         width: 32px !important;
         height: 32px !important;
@@ -1572,19 +1577,27 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         background: transparent !important;
     }
     .nav-btn img {
-        width: 48px !important;        /* было 24px */
-        height: 48px !important;       /* было 24px */
-        min-width: 48px !important;    /* было 24px */
-        min-height: 48px !important;   /* было 24px */
-        max-width: 48px !important;    /* было 24px */
-        max-height: 48px !important;   /* было 24px */
+        width: 48px !important;
+        height: 48px !important;
+        min-width: 48px !important;
+        min-height: 48px !important;
+        max-width: 48px !important;
+        max-height: 48px !important;
         object-fit: contain !important;
         display: block !important;
-        margin: -8px !important;       /* (48-32)/2 = 8px */
+        margin: -8px !important;
     }
-    .nav-prev { right: 68px !important; top: 10px !important; }
-    .nav-next { right: 34px !important; top: 10px !important; }
-    .nav-close { right: 6px !important; top: 10px !important; width: 32px !important; height: 32px !important; min-width: 32px !important; min-height: 32px !important; }
+    /* Раздвигаем кнопки */
+    .nav-prev { right: 88px !important; top: 10px !important; }  /* было 68px */
+    .nav-next { right: 34px !important; top: 10px !important; }   /* было 34px */
+    .nav-close { 
+        right: 6px !important; 
+        top: 10px !important; 
+        width: 32px !important; 
+        height: 32px !important; 
+        min-width: 32px !important; 
+        min-height: 32px !important; 
+    }
     .nav-close img { 
         width: 48px !important; 
         height: 48px !important; 
