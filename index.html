@@ -1484,7 +1484,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-height: 220px !important;
     }
     
-    /* ===== КНОПКИ НАВИГАЦИИ ===== */
+    /* ===== КНОПКИ НАВИГАЦИИ (МОБИЛЬНЫЕ) ===== */
     .nav-btn {
         width: 38px !important;
         height: 38px !important;
@@ -1495,15 +1495,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         background: transparent !important;
     }
     .nav-btn img {
-        width: 40px !important;        /* было 60px */
-        height: 40px !important;       /* было 60px */
-        min-width: 40px !important;    /* было 60px */
-        min-height: 40px !important;   /* было 60px */
-        max-width: 40px !important;    /* было 60px */
-        max-height: 40px !important;   /* было 60px */
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        min-height: 40px !important;
+        max-width: 40px !important;
+        max-height: 40px !important;
         object-fit: contain !important;
         display: block !important;
-        margin: -1px !important;       /* (40-38)/2 = 1px */
+        margin: -1px !important;
     }
     .nav-prev { right: 100px !important; top: 12px !important; }
     .nav-next { right: 52px !important; top: 12px !important; }
@@ -1565,7 +1565,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-height: 180px !important;
     }
     
-    /* ===== КНОПКИ НАВИГАЦИИ ===== */
+    /* ===== КНОПКИ НАВИГАЦИИ (МОБИЛЬНЫЕ) ===== */
     .nav-btn {
         width: 32px !important;
         height: 32px !important;
@@ -1576,18 +1576,18 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         background: transparent !important;
     }
     .nav-btn img {
-        width: 32px !important;        /* было 48px */
-        height: 32px !important;       /* было 48px */
-        min-width: 32px !important;    /* было 48px */
-        min-height: 32px !important;   /* было 48px */
-        max-width: 32px !important;    /* было 48px */
-        max-height: 32px !important;   /* было 48px */
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
+        max-width: 32px !important;
+        max-height: 32px !important;
         object-fit: contain !important;
         display: block !important;
-        margin: 0 !important;          /* (32-32)/2 = 0px */
+        margin: 0 !important;
     }
-    .nav-prev { right: 80px !important; top: 10px !important; }  /* было 104px */
-    .nav-next { right: 42px !important; top: 10px !important; }   /* было 52px */
+    .nav-prev { right: 80px !important; top: 10px !important; }
+    .nav-next { right: 42px !important; top: 10px !important; }
     .nav-close { 
         right: 6px !important; 
         top: 10px !important; 
@@ -1859,7 +1859,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         </div>
     </div>
 </aside>
-  
+
 <div class="wrap">
 <section class="content">
 <div id="count">Загрузка...</div>
@@ -2997,6 +2997,8 @@ function updateMainModalStats(){
 function toNum(v){ let n=parseFloat(String(v).replace(',','.')); return isNaN(n)?null:n; }
 function uniq(arr){ return [...new Set(arr.filter(v=>v!==null&&v!==undefined&&String(v).trim()!==''))]; }
 function sortAlpha(a,b){ return String(a).localeCompare(String(b),'ru',{numeric:true}); }
+
+// ===== ФУНКЦИЯ ПОСТРОЕНИЯ ФАСЕТОВ =====
 function buildFacet(container, values, facetKey, isTags) {
     let opts=uniq(values);
     if(facetKey==='mana') opts.sort((a,b)=>{let o=['Очень медленно','Медленно','Средне','Быстро','Очень быстро','Легендарно быстро']; return o.indexOf(a)-o.indexOf(b);});
@@ -3013,7 +3015,8 @@ function buildFacet(container, values, facetKey, isTags) {
     }).join('');
     container.querySelectorAll('input[type="checkbox"]').forEach(cb=>cb.addEventListener('change',()=>{ let s=selected[cb.dataset.facet]; if(cb.checked) s.add(cb.value); else s.delete(cb.value); }));
     
-    if (isTags) {
+    // ===== ТУЛТИПЫ ТОЛЬКО ДЛЯ ДЕСКТОПА (шире 768px) =====
+    if (isTags && window.innerWidth > 768) {
         container.querySelectorAll('.opt[data-tag]').forEach(el => {
             const tagName = el.dataset.tag;
             const description = TAG_DESCRIPTIONS[tagName];
@@ -3030,6 +3033,7 @@ function buildFacet(container, values, facetKey, isTags) {
         });
     }
 }
+
 const selected = { element:new Set(), stars:new Set(), mana:new Set(), attackType:new Set(), summon:new Set(), clazz:new Set(), heroes:new Set(), tags:new Set() };
 function initAllFacets(heroes){
     buildFacet(document.getElementById('facet-element'), heroes.map(r=>r[HERO_FIELDS.element]), 'element');
@@ -3054,6 +3058,33 @@ function initAllFacets(heroes){
         });
     });
 }
+
+// ===== ФУНКЦИЯ ДЛЯ ОТСЛЕЖИВАНИЯ ИЗМЕНЕНИЯ РАЗМЕРА ОКНА =====
+function initTagTooltipsMobile() {
+    let tagTooltipsActive = window.innerWidth > 768;
+    
+    window.addEventListener('resize', function() {
+        const wasActive = tagTooltipsActive;
+        tagTooltipsActive = window.innerWidth > 768;
+        
+        if (wasActive !== tagTooltipsActive) {
+            const allTags = new Set();
+            allHeroes.forEach(r => {
+                if (r._tags) r._tags.forEach(t => allTags.add(t));
+            });
+            const container = document.getElementById('facet-tags');
+            if (container) {
+                const selectedTags = new Set(selected.tags);
+                buildFacet(container, Array.from(allTags), 'tags', true);
+                selected.tags = selectedTags;
+                container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                    cb.checked = selected.tags.has(cb.value);
+                });
+            }
+        }
+    });
+}
+
 function updateHeroCheckboxes(){
     let names=filteredHeroNames.length?filteredHeroNames:allHeroNames;
     document.getElementById('heroCheckboxesList').innerHTML=names.map(name => {
@@ -3452,6 +3483,8 @@ function attachEvents(){
     
     // Инициализируем слежение за темой
     initThemeWatch();
+    // Инициализируем слежение за тултипами на мобильных
+    initTagTooltipsMobile();
 }
 Promise.all([
     new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
