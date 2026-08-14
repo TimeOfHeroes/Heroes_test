@@ -3206,6 +3206,7 @@ function fillModal(hero){
         e.stopPropagation();
         const summonValue = this.textContent.replace('Призыв: ', '').trim();
         if (summonValue && summonValue !== '—') {
+            // Очищаем все остальные фильтры
             selected.element.clear();
             selected.stars.clear();
             selected.mana.clear();
@@ -3215,13 +3216,19 @@ function fillModal(hero){
             selected.heroes.clear();
             selected.tags.clear();
             document.getElementById('searchInput').value = '';
+            
+            // Добавляем выбранное место призыва
             selected.summon.add(summonValue);
+            
+            // Обновляем чекбоксы в интерфейсе
             const container = document.getElementById('facet-summon');
             if (container) {
                 container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
                     cb.checked = selected.summon.has(cb.value);
                 });
             }
+            
+            // Закрываем модалку и применяем фильтры
             closeModal();
             applyFilters();
         }
@@ -3277,92 +3284,6 @@ function fillModal(hero){
         
         // Клик по тегу — фильтрация (работает всегда)
         tagsContainer.querySelectorAll('.tag').forEach(el => {
-            el.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const tag = this.dataset.tag;
-                if (tag) {
-                    selected.element.clear();
-                    selected.stars.clear();
-                    selected.mana.clear();
-                    selected.attackType.clear();
-                    selected.summon.clear();
-                    selected.clazz.clear();
-                    selected.heroes.clear();
-                    document.getElementById('searchInput').value = '';
-                    selected.tags.add(tag);
-                    initAllFacets(allHeroes);
-                    closeModal();
-                    applyFilters();
-                }
-            });
-        });
-    } else {
-        tagsContainer.innerHTML = '';
-    }
-    
-    document.getElementById('mAbilities').textContent = String(hero[HERO_FIELDS.abilities] || '—').replace(/^'|'$/g, '');
-    document.getElementById('mPassive').textContent = String(hero[HERO_FIELDS.passive] || '—').replace(/^'|'$/g, '');
-    
-    const wrapper = document.getElementById('upgradeSectionWrapper');
-    if (wrapper) wrapper.classList.remove('show');
-    renderUpgradeSection(hero);
-    const select = document.getElementById('talentModeSelect');
-    if (select) {
-        select.value = 'none';
-        select.removeEventListener('change', updateMainModalStats);
-        select.addEventListener('change', updateMainModalStats);
-    }
-    const treeBtn = document.getElementById('openTreeBtn');
-    if (treeBtn) {
-        treeBtn.removeEventListener('click', openTreePanel);
-        treeBtn.addEventListener('click', openTreePanel);
-    }
-}
-    
-    const leftIcon = getIcon('Left_button');
-    const rightIcon = getIcon('Right_button');
-    const closeIcon = getIcon('Close_button');
-    const navIconStyle = 'width:36px;height:36px;min-width:36px;min-height:36px;max-width:36px;max-height:36px;object-fit:contain;display:block;';
-    if (leftIcon) {
-        const el = document.getElementById('leftBtnIcon');
-        if (el) { el.src = leftIcon; el.style.cssText = navIconStyle; }
-    }
-    if (rightIcon) {
-        const el = document.getElementById('rightBtnIcon');
-        if (el) { el.src = rightIcon; el.style.cssText = navIconStyle; }
-    }
-    if (closeIcon) {
-        const el = document.getElementById('closeBtnIcon');
-        if (el) { el.src = closeIcon; el.style.cssText = navIconStyle; }
-    }
-    renderMetaRow(hero);
-    const calc = calculateStatsWithSelections(hero, {}, 'none');
-    renderStatsRow(hero, calc);
-    renderInfoRow(hero);
-    
-    // Теги с тултипами
-    const tagsContainer = document.getElementById('modalTags');
-    if (hero._tags && hero._tags.length > 0) {
-        const tagsHtml = hero._tags.map(tag => {
-            const tagClass = getTagClass(tag);
-            return '<span class="tag ' + tagClass + '" data-tag="' + tag + '">#' + tag + '</span>';
-        }).join('');
-        tagsContainer.innerHTML = tagsHtml;
-        
-        tagsContainer.querySelectorAll('.tag').forEach(el => {
-            const tag = el.dataset.tag;
-            const description = TAG_DESCRIPTIONS[tag];
-            if (description) {
-                el.addEventListener('mouseenter', function(e) {
-                    const rect = this.getBoundingClientRect();
-                    showTagTooltip(description, rect.right, rect.top);
-                });
-                el.addEventListener('mouseleave', hideTagTooltip);
-                el.addEventListener('mousemove', function(e) {
-                    showTagTooltip(description, e.clientX, e.clientY);
-                });
-            }
-            
             el.addEventListener('click', function(e) {
                 e.stopPropagation();
                 const tag = this.dataset.tag;
