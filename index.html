@@ -1096,7 +1096,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .open-img:hover { text-decoration: underline; }
 
-/* ===== ИНФО КОНТЕЙНЕР ===== */
+/* ===== ИНФО КОНТЕЙНЕР (МОБИЛЬНЫЕ ОТСТУПЫ ПО УМОЛЧАНИЮ) ===== */
 .info-container {
     display: flex;
     flex-direction: column;
@@ -1390,6 +1390,41 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .upgrade-section-wrapper { display: none; margin-top: 4px; }
 .upgrade-section-wrapper.show { display: block; }
+
+/* ===== ДЕСКТОПНЫЕ ОТСТУПЫ (только для экранов шире 1024px) ===== */
+@media (min-width: 1024px) {
+    /* Увеличиваем горизонтальный отступ между картинкой и контентом в 2 раза */
+    .dialog .modal-content {
+        gap: 40px !important;
+        padding: 24px 32px !important;
+    }
+    
+    /* Уменьшаем вертикальные отступы в 1.5 раза */
+    .info-container h2 {
+        margin: 0 0 26px 0;
+    }
+    .hero-meta-row {
+        margin: 0 0 15px 0;
+    }
+    .hero-stats-row {
+        margin: 0 0 27px 0;
+    }
+    .hero-info-row {
+        margin: 0 0 15px 0;
+    }
+    .info-container .pre {
+        margin: 0 0 15px 0;
+    }
+    .modal-tags {
+        margin: 0 0 27px 0;
+    }
+    .info-container h3:last-of-type {
+        margin: 0 0 16px 0;
+    }
+    #mPassive.pre {
+        margin: 0 0 27px 0;
+    }
+}
 
 /* ===== КНОПКИ НАВИГАЦИИ ===== */
 .nav-btn {
