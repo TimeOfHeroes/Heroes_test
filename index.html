@@ -1426,6 +1426,45 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     }
 }
 
+/* ===== КНОПКИ НАВИГАЦИИ ===== */
+.nav-btn {
+    position: absolute !important;
+    top: 12px !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    border: none !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: transform 0.2s !important;
+    padding: 0 !important;
+    z-index: 20 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+.nav-btn:hover { transform: scale(1.1) !important; background: transparent !important; }
+.nav-btn:active { transform: scale(0.9) !important; background: transparent !important; }
+.nav-btn img {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
+    object-fit: contain !important;
+    display: block !important;
+    filter: none !important;
+    pointer-events: none !important;
+}
+.nav-prev { right: 160px !important; left: auto !important; top: 12px !important; }
+.nav-next { right: 112px !important; left: auto !important; top: 12px !important; }
+.nav-close { right: 64px !important; top: 12px !important; width: 48px !important; height: 48px !important; min-width: 48px !important; min-height: 48px !important; }
+.nav-close img { width: 36px !important; height: 36px !important; min-width: 36px !important; min-height: 36px !important; max-width: 36px !important; max-height: 36px !important; }
+
 /* ===== АДАПТИВ МОДАЛЬНОГО ОКНА ===== */
 @media (max-width: 768px) {
     .dialog .modal-content {
