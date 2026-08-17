@@ -8,7 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <style>
-/* ===== ВСЕ СТИЛИ ===== */
+/* ===== ВСЕ СТИЛИ (без изменений) ===== */
 :root {
   color-scheme: light dark;
   --hdrH: 70px;
@@ -73,7 +73,6 @@
   --tag-element: #a9e34b;
   --tag-default: #adb5bd;
 
-  /* ===== ИКОНКИ ХАРАКТЕРИСТИК (СВЕТЛАЯ ТЕМА) ===== */
   --icon-sword: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/YeSyw0QuIvRgpOrMU4uNGFLq6uV4YCFP_668ad0468f4d19bd1b8bbed7cd12d8c1cbcda5726c5f26f073af9e9eabca7894.svg');
   --icon-shield: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/xlNfrEBrB3pYmfkczHLpRCy8HqXGqhDm_e00cf0fd07b0a7d06eaaed24fee2ba92509c12cfbb684f6c5ff4cb4498cbc807.svg');
   --icon-health: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/ohNlEwuhQObHjsOtoUUZzPHAYYYyKKJ5_7127f97496b6bc652dd724d9e0fdcea2dca03afaa364aa17481897bda58665d3.svg');
@@ -82,7 +81,6 @@
   --icon-upgrade: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/YpiBSmwAWmBJR2EnXfdUKY6GUZCOxZCP_aa2bee0d91297c694915411d9606c3cbfc6882ea5980a5e7956f489c8a92b6bb.svg');
 }
 
-/* ===== ТЁМНАЯ ТЕМА ===== */
 @media (prefers-color-scheme: dark) {
   :root {
     --text-color: #eee;
@@ -145,7 +143,6 @@
     --tag-element: #74b816;
     --tag-default: #868e96;
 
-    /* Тёмная тема - подставляем dark иконки */
     --icon-sword: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/gllL6hA7DCrheRotrjwMcUBdhHJBkNjD_8ba1f682191d050aedc86c69d7e4560686611677b317608f394a02c337ed1de1.svg');
     --icon-shield: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/I2KgfgksC7rQkmeLwyhNXecvFLwOT7Tv_7cf1eeb5551251f6cc76573222f9651d4fb64b7ec517cee5a4635de6568d05d5.svg');
     --icon-health: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/kOIG4kluRjp8R9YYdRhrbzc9yBbKXF7q_a42e6d20f7225db05f5e6dc9e2d61aff8f478e24523d3e77617b9ddedd44341d.svg');
@@ -166,7 +163,6 @@ body {
     overflow-x:hidden; 
 }
 
-/* ===== КЛАССЫ ДЛЯ ИКОНОК ЧЕРЕЗ CSS ===== */
 .icon-sword {
   display: inline-block;
   width: 18px;
@@ -244,7 +240,6 @@ body {
   filter: brightness(0) invert(1);
 }
 
-/* ===== КЛИКАБЕЛЬНЫЙ ПРИЗЫВ КАК ГИПЕРССЫЛКА ===== */
 .summon-text {
     text-align: center;
     margin-top: 10px;
@@ -267,7 +262,6 @@ body {
     transform: scale(0.98);
 }
 
-/* ===== ТУЛТИПЫ ТЕГОВ ===== */
 .tag-tooltip {
     position: fixed;
     background: var(--tooltip-bg);
@@ -294,7 +288,6 @@ body {
     visibility: visible;
 }
 
-/* ===== КНОПКИ РЕЖИМА ТЕГОВ ===== */
 .mode-btn {
     padding: 5px 12px;
     font-size: 12px;
@@ -345,7 +338,6 @@ body {
 header { position:sticky; top:0; z-index:100; background:var(--header-bg); color:var(--header-text); backdrop-filter:blur(8px); border-bottom:1px solid var(--border-color); box-shadow:0 2px 10px rgba(0,0,0,.05); }
 .container { max-width:1400px; margin:0 auto; padding:0 16px; }
 
-/* ===== ВЕРХНЯЯ ПАНЕЛЬ ===== */
 .top-bar {
     display: flex;
     align-items: center;
@@ -673,7 +665,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .info-btn:hover { background: var(--secondary-color); }
 
-/* ===== МОБИЛЬНАЯ/ПЛАНШЕТНАЯ ВЁРСТКА ===== */
 @media (max-width: 1024px) {
     .top-bar {
         display: grid;
@@ -814,10 +805,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     }
 }
 
-/* ===== ОСТАЛЬНЫЕ СТИЛИ ===== */
 .wrap { display:block; padding:20px; min-height:calc(100vh - var(--hdrH)); max-width:1400px; margin:0 auto; overflow:visible; }
 
-/* ===== ПАНЕЛЬ ФИЛЬТРОВ ===== */
 .filters {
     background: var(--filter-bg);
     border: 1px solid var(--border-color);
@@ -876,14 +865,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     font-size: 13px;
 }
 
-/* Прокручиваемая область */
 .filters .filters-scroll {
     flex: 1;
     overflow-y: auto;
     padding: 0 16px 16px 16px;
 }
 
-/* ===== ФАСЕТЫ ФИЛЬТРОВ ===== */
 .facet {
     margin-bottom: 16px;
     flex-shrink: 0;
@@ -946,7 +933,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding: 4px 8px;
 }
 
-/* ===== СЕКЦИЯ ПРОКАЧКИ ===== */
 .upgrade-section {
     padding: 8px 12px;
     background: var(--secondary-color);
@@ -998,7 +984,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .upgrade-content.show { display: block; }
 
-/* ===== ЭЛЕМЕНТЫ СПИСКА В ПРОКАЧКЕ ===== */
 .upgrade-item {
     display: flex;
     align-items: center;
@@ -1025,7 +1010,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     padding-right: 6px;
 }
 
-/* ===== МОДАЛЬНОЕ ОКНО ===== */
 .modal { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center; padding:20px; z-index:2000; }
 .modal.show { display:flex; }
 .dialog { position:relative; background:var(--card-bg); max-width:1200px; width:min(1200px, 95vw); height:90vh; max-height:90vh; min-height:400px; border-radius:16px; display:flex; flex-direction:column; box-shadow:0 20px 40px rgba(0,0,0,0.3); overflow:hidden; }
@@ -1096,7 +1080,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .open-img:hover { text-decoration: underline; }
 
-/* ===== ИНФО КОНТЕЙНЕР (МОБИЛЬНЫЕ ОТСТУПЫ ПО УМОЛЧАНИЮ) ===== */
 .info-container {
     display: flex;
     flex-direction: column;
@@ -1107,14 +1090,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     min-height: 0;
 }
 
-/* Снейк — внешний отступ снизу 39px */
 .info-container h2 {
     margin: 0 0 39px 0;
     font-size: 26px;
     font-weight: 700;
 }
 
-/* Красный 5★ Варвар — внутр. отступ снизу 22px */
 .hero-meta-row {
     display: flex;
     flex-wrap: wrap;
@@ -1149,7 +1130,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     gap: 0px;
 }
 
-/* Атака 723 Защита ... — внутр. отступ снизу 41px */
 .hero-stats-row {
     display: flex;
     flex-wrap: wrap;
@@ -1281,7 +1261,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     filter: brightness(0) invert(1) !important;
 }
 
-/* Очень быстро 1+2 — внутр. отступ снизу 22px */
 .hero-info-row {
     display: flex;
     flex-wrap: wrap;
@@ -1297,12 +1276,10 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .hero-info-row .info-item .value { font-weight: 600; font-size: 15px; }
 .hero-info-row .info-item .label { font-size: 11px; color: var(--text-color); opacity: 0.6; font-weight: 400; margin-top: -2px; margin-bottom: 0; }
 
-/* Скрываем заголовок "Способности" */
 .info-container > h3:first-of-type { 
     display: none !important; 
 }
 
-/* Контент способностей — внутр. отступ снизу 22px */
 .info-container .pre {
     white-space: pre-line;
     background: transparent !important;
@@ -1314,7 +1291,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     margin: 0 0 22px 0;
 }
 
-/* Теги — внешний отступ снизу 40px */
 .modal-tags {
     display: flex;
     flex-wrap: wrap;
@@ -1325,19 +1301,16 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .modal-tags .tag:hover { transform:scale(1.05); box-shadow:0 2px 8px rgba(0,0,0,0.2); }
 .modal-tags .tag:active { transform:scale(0.95); }
 
-/* Заголовок "Пассивная способность" — внутр. отступ снизу 24px */
 .info-container h3:last-of-type {
     margin: 0 0 24px 0;
     font-size: 16px;
     font-weight: 600;
 }
 
-/* Пассивная способность (текст) — внешний отступ снизу 40px */
 #mPassive.pre {
     margin: 0 0 40px 0;
 }
 
-/* Кнопка прокачки — внешний отступ снизу 0 */
 .upgrade-btn-wrapper {
     display: inline-block;
     width: auto;
@@ -1391,15 +1364,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .upgrade-section-wrapper { display: none; margin-top: 4px; }
 .upgrade-section-wrapper.show { display: block; }
 
-/* ===== ДЕСКТОПНЫЕ ОТСТУПЫ (только для экранов шире 1024px) ===== */
 @media (min-width: 1024px) {
-    /* Увеличиваем горизонтальный отступ между картинкой и контентом в 2 раза */
     .dialog .modal-content {
         gap: 40px !important;
         padding: 24px 32px !important;
     }
-    
-    /* Уменьшаем вертикальные отступы в 1.5 раза */
     .info-container h2 {
         margin: 0 0 26px 0;
     }
@@ -1426,7 +1395,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     }
 }
 
-/* ===== КНОПКИ НАВИГАЦИИ ===== */
 .nav-btn {
     position: absolute !important;
     top: 12px !important;
@@ -1465,7 +1433,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .nav-close { right: 64px !important; top: 12px !important; width: 48px !important; height: 48px !important; min-width: 48px !important; min-height: 48px !important; }
 .nav-close img { width: 36px !important; height: 36px !important; min-width: 36px !important; min-height: 36px !important; max-width: 36px !important; max-height: 36px !important; }
 
-/* ===== АДАПТИВ МОДАЛЬНОГО ОКНА ===== */
 @media (max-width: 768px) {
     .dialog .modal-content {
         padding-top: 64px !important;
@@ -1483,8 +1450,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     .image-container img {
         max-height: 220px !important;
     }
-    
-    /* ===== КНОПКИ НАВИГАЦИИ (МОБИЛЬНЫЕ) ===== */
     .nav-btn {
         width: 38px !important;
         height: 38px !important;
@@ -1524,7 +1489,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-height: 40px !important;
         margin: -1px !important;
     }
-    
     .modal .dialog .modal-content { 
         grid-template-columns: 1fr; 
         gap: 12px; 
@@ -1564,8 +1528,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     .image-container img {
         max-height: 180px !important;
     }
-    
-    /* ===== КНОПКИ НАВИГАЦИИ (МОБИЛЬНЫЕ) ===== */
     .nav-btn {
         width: 32px !important;
         height: 32px !important;
@@ -1605,7 +1567,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         max-height: 32px !important;
         margin: 0 !important;
     }
-    
     .dialog { height: 100vh !important; max-height: 100vh !important; border-radius: 0 !important; }
     .modal .dialog .modal-content { 
         padding: 8px; 
@@ -1619,7 +1580,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     .open-img { font-size: 10px !important; margin-top: 3px !important; }
 }
 
-/* ===== ДЕРЕВО ТАЛАНТОВ ===== */
 .tree-panel { position:fixed; top:50%; right:20px; transform:translateY(-50%); width:420px; max-width:calc(100vw - 40px); background:var(--card-bg); border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.3); z-index:2100; display:none; flex-direction:column; overflow:hidden; border:1px solid var(--border-color); cursor:default; }
 .tree-panel.show { display:flex; }
 .tree-panel.dragging { opacity:0.9; cursor:grabbing; }
@@ -1653,7 +1613,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 @media (max-width:480px) { .tree-panel { width:calc(100vw - 20px); max-width:none; top:auto; bottom:20px; left:10px; right:10px; transform:none; } .talent-cell { width:45px; height:45px; } .tree-header { cursor:default; } }
 @media (max-width:768px) { .filters { width:85%; } }
 
-/* ===== ИНФО МОДАЛ ===== */
 .info-modal { position:fixed; inset:0; background:rgba(0,0,0,.7); display:none; align-items:center; justify-content:center; padding:20px; z-index:2001; }
 .info-modal.show { display:flex; }
 .info-dialog { background:var(--card-bg); border-radius:16px; padding:30px; max-width:500px; width:90%; position:relative; }
@@ -1667,7 +1626,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
 .info-close:hover { opacity:1; }
 
-/* ===== КАРТОЧКИ ===== */
 .content { min-height:60vh; width:100%; overflow:visible; }
 #count { margin:0 0 16px; opacity:0.7; font-size:14px; padding:6px 0; font-weight:500; }
 .cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:20px; width:100%; overflow:visible; }
@@ -1979,6 +1937,7 @@ const TALENT_DESC_FIELDS = { id:'id', talent_id:'talent_id', effect_type:'effect
 const DATA_URL = 'heroes.csv?ts=' + Date.now();
 const CLASSES_URL = 'Classes.csv?ts=' + Date.now();
 const TALENT_DESC_URL = 'Talent_description.csv?ts=' + Date.now();
+const MATERIALS_3_URL = 'materials_3.csv?ts=' + Date.now();
 const MATERIALS_4_URL = 'materials_4.csv?ts=' + Date.now();
 const MATERIALS_5_URL = 'materials_5.csv?ts=' + Date.now();
 const BOOKS_URL = 'books.csv?ts=' + Date.now();
@@ -1998,7 +1957,7 @@ let classTalents = {};
 let talentDescriptions = [];
 let currentHeroTalents = {};
 let currentMode = 'none';
-let materialsData = { '4★': [], '5★': [] };
+let materialsData = { '3★': [], '4★': [], '5★': [] };
 let booksData = [];
 let tokensData = [];
 let itemImages = {};
@@ -2079,14 +2038,12 @@ function getCurrentTheme() {
 function getIconForTheme(iconName) {
     const theme = getCurrentTheme();
     
-    // Для тёмной темы - заменяем на dark версии
     if (theme === 'dark') {
         if (iconName === 'Sword_icon_ffffff') return getItemImage('Sword_icon_dark') || getItemImage('Sword_icon_ffffff');
         if (iconName === 'Shield_icon_ffffff') return getItemImage('Shield_icon_dark') || getItemImage('Shield_icon_ffffff');
         if (iconName === 'Health_icon_ffffff') return getItemImage('Health_icon_dark') || getItemImage('Health_icon_ffffff');
     }
     
-    // Для светлой темы или если нет dark версии - используем оригинал
     return getItemImage(iconName);
 }
 
@@ -2112,20 +2069,16 @@ function initThemeWatch() {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     
     mediaQuery.addEventListener('change', function(e) {
-        // Очищаем кэш иконок
         iconCache = {};
         
-        // Перерисовываем карточки
         if (viewHeroes.length) {
             renderCards(viewHeroes);
         }
         
-        // Если модалка открыта - обновляем её
         if (document.getElementById('modal').classList.contains('show') && currentIdx >= 0 && viewHeroes[currentIdx]) {
             fillModal(viewHeroes[currentIdx]);
         }
         
-        // Если дерево талантов открыто - обновляем его
         if (document.getElementById('treePanel').classList.contains('show') && viewHeroes[currentIdx]) {
             renderTalentTree(viewHeroes[currentIdx], currentHeroTalents, currentMode);
         }
@@ -2140,6 +2093,7 @@ function initSortTooltip() {
         btn.dataset.tooltip = sortDirection === 'desc' ? 'Сортировка по убыванию' : 'Сортировка по возрастанию';
     }
 }
+
 function getTagClass(tag) {
     const tagMap = {
         'урон_навыка': 'tag-damage',
@@ -2202,9 +2156,15 @@ function getTagClass(tag) {
     };
     return tagMap[tag] || 'tag-default';
 }
-function fileCellToUrl(v) { let s=String(v||''); let m=s.match(/\((https?:\/\/[^)]+)\)/i); if(m) return m[1]; let m2=s.match(/https?:\/\/\S+/i); return m2 ? m2[0].replace(/[),]+$/,'') : ''; }
 
-// ===== ОПТИМИЗАЦИЯ ИЗОБРАЖЕНИЙ =====
+function fileCellToUrl(v) { 
+    let s=String(v||''); 
+    let m=s.match(/\((https?:\/\/[^)]+)\)/i); 
+    if(m) return m[1]; 
+    let m2=s.match(/https?:\/\/\S+/i); 
+    return m2 ? m2[0].replace(/[),]+$/,'') : ''; 
+}
+
 function getOptimizedImageUrl(originalUrl) {
     if (!originalUrl) return '';
     try {
@@ -2218,7 +2178,6 @@ function getOptimizedImageUrl(originalUrl) {
     }
 }
 
-// ===== ТУЛТИПЫ ДЛЯ ТЕГОВ =====
 function initTagTooltip() {
     if (!tagTooltipElement) {
         tagTooltipElement = document.createElement('div');
@@ -2262,7 +2221,10 @@ function hideTagTooltip() {
     }
 }
 
-function normalizeStarKey(star) { return String(star).replace(/★/g,'').trim(); }
+function normalizeStarKey(star) { 
+    return String(star).replace(/★/g,'').trim(); 
+}
+
 function getStarTargets(heroStars) {
     const starNum = parseInt(heroStars);
     if (starNum <= 3) return ['2', '3'];
@@ -2270,12 +2232,21 @@ function getStarTargets(heroStars) {
     if (starNum === 5) return ['2', '3', '4', '5'];
     return ['2', '3', '4', '5'];
 }
+
 function getMaterialsForStar(heroElement, heroStars, targetStar) {
     const heroStarNormalized = normalizeStarKey(heroStars);
     let allData = [];
-    if (heroStarNormalized === '4') allData = materialsData['4★'] || [];
-    else if (heroStarNormalized === '5') allData = materialsData['5★'] || [];
-    else allData = materialsData['4★'] || [];
+    
+    if (heroStarNormalized === '3' || parseInt(heroStarNormalized) < 4) {
+        allData = materialsData['3★'] || [];
+    } else if (heroStarNormalized === '4') {
+        allData = materialsData['4★'] || [];
+    } else if (heroStarNormalized === '5') {
+        allData = materialsData['5★'] || [];
+    } else {
+        allData = materialsData['3★'] || [];
+    }
+    
     const result = allData.filter(item => {
         const itemElement = String(item['Стихия'] || '').trim();
         const itemTarget = String(item['Целевая звезда'] || '').trim();
@@ -2283,6 +2254,7 @@ function getMaterialsForStar(heroElement, heroStars, targetStar) {
     });
     return result;
 }
+
 function getBooksForStar(heroStars, level) {
     const heroStarNormalized = normalizeStarKey(heroStars);
     let starKey = heroStarNormalized;
@@ -2293,6 +2265,7 @@ function getBooksForStar(heroStars, level) {
     });
     return result.length > 0 ? result[0] : null;
 }
+
 function getTokensForHero(heroStars) {
     const heroStarNormalized = normalizeStarKey(heroStars);
     let starKey = heroStarNormalized;
@@ -2303,6 +2276,7 @@ function getTokensForHero(heroStars) {
     });
     return result.length > 0 ? result[0] : null;
 }
+
 function showStarMaterials(element, stars, target, container) {
     const materials = getMaterialsForStar(element, stars, target);
     container.innerHTML = '';
@@ -2324,6 +2298,7 @@ function showStarMaterials(element, stars, target, container) {
     container.innerHTML = html;
     container.classList.add('show');
 }
+
 function showBookMaterials(stars, level, container) {
     const bookData = getBooksForStar(stars, level);
     container.innerHTML = '';
@@ -2356,6 +2331,7 @@ function showBookMaterials(stars, level, container) {
     container.innerHTML = html;
     container.classList.add('show');
 }
+
 function showTalentTokens(stars, hero, container) {
     const tokenData = getTokensForHero(stars);
     container.innerHTML = '';
@@ -2384,6 +2360,7 @@ function showTalentTokens(stars, hero, container) {
     container.innerHTML = html;
     container.classList.add('show');
 }
+
 function renderUpgradeSection(hero) {
     const container = document.getElementById('upgradeContainer');
     if (!hero || !container) {
@@ -2449,9 +2426,30 @@ function renderUpgradeSection(hero) {
         showTalentTokens(heroStars, hero, tokensContent);
     }
 }
-function initTooltip() { if(!tooltipElement){ tooltipElement=document.createElement('div'); tooltipElement.className='talent-tooltip hidden'; document.body.appendChild(tooltipElement); } }
-function showTalentTooltip(talentId, x, y) { if(!tooltipElement) initTooltip(); const desc=getTalentDescriptionById(talentId); if(desc){ tooltipElement.innerHTML=desc; tooltipElement.classList.remove('hidden'); tooltipElement.style.left=(x+15)+'px'; tooltipElement.style.top=(y-10)+'px'; } }
-function hideTalentTooltip() { if(tooltipElement) tooltipElement.classList.add('hidden'); }
+
+function initTooltip() { 
+    if(!tooltipElement){ 
+        tooltipElement=document.createElement('div'); 
+        tooltipElement.className='talent-tooltip hidden'; 
+        document.body.appendChild(tooltipElement); 
+    } 
+}
+
+function showTalentTooltip(talentId, x, y) { 
+    if(!tooltipElement) initTooltip(); 
+    const desc=getTalentDescriptionById(talentId); 
+    if(desc){ 
+        tooltipElement.innerHTML=desc; 
+        tooltipElement.classList.remove('hidden'); 
+        tooltipElement.style.left=(x+15)+'px'; 
+        tooltipElement.style.top=(y-10)+'px'; 
+    } 
+}
+
+function hideTalentTooltip() { 
+    if(tooltipElement) tooltipElement.classList.add('hidden'); 
+}
+
 const talentEffectsMap = {
     1:{type:'Атака',value:15,isPercent:false},
     2:{type:'Защита',value:17,isPercent:false},
@@ -2480,41 +2478,79 @@ const talentEffectsMap = {
     25:{type:'Пробитие',value:5,isPercent:true},
     26:{type:'Кровавый вихрь',value:35,isPercent:true}
 };
+
 function getTalentDescriptionById(talentId) {
-    const talent=talentEffectsMap[talentId]; if(!talent) return null;
-    const isPercent=talent.isPercent; const value=talent.value; const typeName=talent.type; const suffix=isPercent?'%':'';
+    const talent=talentEffectsMap[talentId]; 
+    if(!talent) return null;
+    const isPercent=talent.isPercent; 
+    const value=talent.value; 
+    const typeName=talent.type; 
+    const suffix=isPercent?'%':'';
     let desc='';
-    if(typeName==='Кровавый вихрь'){ desc='Кровавый вихрь: +'+value+suffix+' шанс вызвать кровотечение при обычной атаке. Наносит 60% урона каждый ход в течение 5 ходов.'; }
-    else if(typeName==='Исцеление'){ desc='Исцеление: эффективность лечения +'+value+suffix; }
-    else if(typeName==='Крит'){ desc='Шанс критического удара +'+value+suffix; }
-    else if(typeName==='Бонус к скорости набора маны'){ desc='Скорость набора маны +'+value+suffix; }
-    else if(typeName==='Шанс уклониться'){ desc='Уклонение +'+value+suffix; }
-    else if(typeName==='Стойкость'){ desc='Стойкость (шанс избежать ослабления) +'+value+suffix; }
-    else if(typeName==='Подавление магии'){ desc='Подавление магии (шанс заблокировать урон от навыков) +'+value+suffix; }
-    else if(typeName==='Концентрация'){ desc='Концентрация (шанс снять ослабление при использовании навыка) +'+value+suffix; }
-    else if(typeName==='Магический разряд'){ desc='Магический разряд (урон по врагу при использовании навыка) +'+value+suffix; }
-    else if(typeName==='Непоколебимость'){ desc='Непоколебимость (снижение получаемого урона) +'+value+suffix; }
-    else if(typeName==='Природный зов'){ desc='Природный зов (шанс призвать помощника) +'+value+suffix; }
-    else if(typeName==='Второе дыхание'){ desc='Второе дыхание (восстановление здоровья при критическом здоровье) +'+value+suffix; }
-    else if(typeName==='Пробитие'){ desc='Пробитие (игнорирование защиты) +'+value+suffix; }
-    else if(typeName==='Атака'){ desc='Атака +'+value+suffix; }
-    else if(typeName==='Защита'){ desc='Защита +'+value+suffix; }
-    else if(typeName==='Жизни'){ desc='Здоровье +'+value+suffix; }
-    else { desc=typeName+' +'+value+suffix; }
+    if(typeName==='Кровавый вихрь'){ 
+        desc='Кровавый вихрь: +'+value+suffix+' шанс вызвать кровотечение при обычной атаке. Наносит 60% урона каждый ход в течение 5 ходов.'; 
+    } else if(typeName==='Исцеление'){ 
+        desc='Исцеление: эффективность лечения +'+value+suffix; 
+    } else if(typeName==='Крит'){ 
+        desc='Шанс критического удара +'+value+suffix; 
+    } else if(typeName==='Бонус к скорости набора маны'){ 
+        desc='Скорость набора маны +'+value+suffix; 
+    } else if(typeName==='Шанс уклониться'){ 
+        desc='Уклонение +'+value+suffix; 
+    } else if(typeName==='Стойкость'){ 
+        desc='Стойкость (шанс избежать ослабления) +'+value+suffix; 
+    } else if(typeName==='Подавление магии'){ 
+        desc='Подавление магии (шанс заблокировать урон от навыков) +'+value+suffix; 
+    } else if(typeName==='Концентрация'){ 
+        desc='Концентрация (шанс снять ослабление при использовании навыка) +'+value+suffix; 
+    } else if(typeName==='Магический разряд'){ 
+        desc='Магический разряд (урон по врагу при использовании навыка) +'+value+suffix; 
+    } else if(typeName==='Непоколебимость'){ 
+        desc='Непоколебимость (снижение получаемого урона) +'+value+suffix; 
+    } else if(typeName==='Природный зов'){ 
+        desc='Природный зов (шанс призвать помощника) +'+value+suffix; 
+    } else if(typeName==='Второе дыхание'){ 
+        desc='Второе дыхание (восстановление здоровья при критическом здоровье) +'+value+suffix; 
+    } else if(typeName==='Пробитие'){ 
+        desc='Пробитие (игнорирование защиты) +'+value+suffix; 
+    } else if(typeName==='Атака'){ 
+        desc='Атака +'+value+suffix; 
+    } else if(typeName==='Защита'){ 
+        desc='Защита +'+value+suffix; 
+    } else if(typeName==='Жизни'){ 
+        desc='Здоровье +'+value+suffix; 
+    } else { 
+        desc=typeName+' +'+value+suffix; 
+    }
     return desc;
 }
+
 function getTalentEffects(numId) {
-    const talent=talentEffectsMap[numId]; if(!talent) return {attackPercent:0,attackFlat:0,defensePercent:0,defenseFlat:0,hpPercent:0,hpFlat:0};
-    const value=talent.value; const isPercent=talent.isPercent; const typeLower=talent.type.toLowerCase();
+    const talent=talentEffectsMap[numId]; 
+    if(!talent) return {attackPercent:0,attackFlat:0,defensePercent:0,defenseFlat:0,hpPercent:0,hpFlat:0};
+    const value=talent.value; 
+    const isPercent=talent.isPercent; 
+    const typeLower=talent.type.toLowerCase();
     let result={attackPercent:0,attackFlat:0,defensePercent:0,defenseFlat:0,hpPercent:0,hpFlat:0};
-    if(typeLower.includes('атак')){ if(isPercent) result.attackPercent=value; else result.attackFlat=value; }
-    else if(typeLower.includes('защит')){ if(isPercent) result.defensePercent=value; else result.defenseFlat=value; }
-    else if(typeLower.includes('жизн')||typeLower.includes('здоров')){ if(isPercent) result.hpPercent=value; else result.hpFlat=value; }
+    if(typeLower.includes('атак')){ 
+        if(isPercent) result.attackPercent=value; 
+        else result.attackFlat=value; 
+    } else if(typeLower.includes('защит')){ 
+        if(isPercent) result.defensePercent=value; 
+        else result.defenseFlat=value; 
+    } else if(typeLower.includes('жизн')||typeLower.includes('здоров')){ 
+        if(isPercent) result.hpPercent=value; 
+        else result.hpFlat=value; 
+    }
     return result;
 }
+
 function getTalentImage(numId, active) {
-    const talent=talentEffectsMap[numId]; if(!talent) return '';
-    const talentName=talent.type; const isPercent=talent.isPercent; const value=talent.value;
+    const talent=talentEffectsMap[numId]; 
+    if(!talent) return '';
+    const talentName=talent.type; 
+    const isPercent=talent.isPercent; 
+    const value=talent.value;
     for(const data of talentDescriptions){
         const dataTalentId=data[TALENT_DESC_FIELDS.talent_id];
         const dataValue=parseFloat(data[TALENT_DESC_FIELDS.value]);
@@ -2531,21 +2567,32 @@ function getTalentImage(numId, active) {
     }
     return '';
 }
+
 function getTalentValue(talentId, statType, baseStat) {
-    const talent=talentEffectsMap[talentId]; if(!talent) return 0;
-    const isPercent=talent.isPercent; const value=talent.value; const typeLower=talent.type.toLowerCase();
+    const talent=talentEffectsMap[talentId]; 
+    if(!talent) return 0;
+    const isPercent=talent.isPercent; 
+    const value=talent.value; 
+    const typeLower=talent.type.toLowerCase();
     if(statType==='attack' && !typeLower.includes('атак')) return 0;
     if(statType==='defense' && !typeLower.includes('защит')) return 0;
     if(statType==='hp' && !typeLower.includes('жизн') && !typeLower.includes('здоров')) return 0;
     if(isPercent) return baseStat*value/100;
     return value;
 }
+
 function getBranchScore(branchTalents, mode, baseAttack, baseDefense, baseHp) {
-    let hasDefense=false; let hasHealth=false; let hasAttack=false; let totalValue=0;
+    let hasDefense=false; 
+    let hasHealth=false; 
+    let hasAttack=false; 
+    let totalValue=0;
     for(const talentId of branchTalents){
         if(!talentId) continue;
-        const talent=talentEffectsMap[talentId]; if(!talent) continue;
-        const typeName=talent.type; const isPercent=talent.isPercent; const value=talent.value;
+        const talent=talentEffectsMap[talentId]; 
+        if(!talent) continue;
+        const typeName=talent.type; 
+        const isPercent=talent.isPercent; 
+        const value=talent.value;
         let actualValue=0;
         if(isPercent){
             if(typeName==='Атака') actualValue=baseAttack*value/100;
@@ -2575,19 +2622,29 @@ function getBranchScore(branchTalents, mode, baseAttack, baseDefense, baseHp) {
     }
     return 0;
 }
+
 function calculateStatsWithSelections(hero, selections, mode) {
     const heroClass=hero[HERO_FIELDS.clazz];
     const baseAttack=toNum(hero[HERO_FIELDS.attack])||0;
     const baseDefense=toNum(hero[HERO_FIELDS.defense])||0;
     const baseHp=toNum(hero[HERO_FIELDS.hp])||0;
-    if(mode==='none'){ return { attack:Math.floor(baseAttack), defense:Math.floor(baseDefense), hp:Math.floor(baseHp) }; }
-    if(!classTalents[heroClass]){ return { attack:Math.floor(baseAttack), defense:Math.floor(baseDefense), hp:Math.floor(baseHp) }; }
+    if(mode==='none'){ 
+        return { attack:Math.floor(baseAttack), defense:Math.floor(baseDefense), hp:Math.floor(baseHp) }; 
+    }
+    if(!classTalents[heroClass]){ 
+        return { attack:Math.floor(baseAttack), defense:Math.floor(baseDefense), hp:Math.floor(baseHp) }; 
+    }
     const talents=classTalents[heroClass];
     let attackFlat=0, attackPercent=0, defenseFlat=0, defensePercent=0, hpFlat=0, hpPercent=0;
-    const groups=[]; let currentGroup=[];
+    const groups=[]; 
+    let currentGroup=[];
     for(const talent of talents){
-        if(currentGroup.length===0 || currentGroup[0].branchGroup===talent.branchGroup){ currentGroup.push(talent); }
-        else { groups.push([...currentGroup]); currentGroup=[talent]; }
+        if(currentGroup.length===0 || currentGroup[0].branchGroup===talent.branchGroup){ 
+            currentGroup.push(talent); 
+        } else { 
+            groups.push([...currentGroup]); 
+            currentGroup=[talent]; 
+        }
     }
     if(currentGroup.length>0) groups.push(currentGroup);
     for(const group of groups){
@@ -2595,9 +2652,12 @@ function calculateStatsWithSelections(hero, selections, mode) {
         for(const talent of group){
             if(talent.isMandatory && talent.centerTalentId){
                 const effects=getTalentEffects(talent.centerTalentId);
-                attackPercent+=effects.attackPercent; attackFlat+=effects.attackFlat;
-                defensePercent+=effects.defensePercent; defenseFlat+=effects.defenseFlat;
-                hpPercent+=effects.hpPercent; hpFlat+=effects.hpFlat;
+                attackPercent+=effects.attackPercent; 
+                attackFlat+=effects.attackFlat;
+                defensePercent+=effects.defensePercent; 
+                defenseFlat+=effects.defenseFlat;
+                hpPercent+=effects.hpPercent; 
+                hpFlat+=effects.hpFlat;
             }
         }
         const selectedSide=selections[groupId];
@@ -2609,9 +2669,12 @@ function calculateStatsWithSelections(hero, selections, mode) {
                     if(selectedSide==='right' && talent.rightTalentId) talentId=talent.rightTalentId;
                     if(talentId){
                         const effects=getTalentEffects(talentId);
-                        attackPercent+=effects.attackPercent; attackFlat+=effects.attackFlat;
-                        defensePercent+=effects.defensePercent; defenseFlat+=effects.defenseFlat;
-                        hpPercent+=effects.hpPercent; hpFlat+=effects.hpFlat;
+                        attackPercent+=effects.attackPercent; 
+                        attackFlat+=effects.attackFlat;
+                        defensePercent+=effects.defensePercent; 
+                        defenseFlat+=effects.defenseFlat;
+                        hpPercent+=effects.hpPercent; 
+                        hpFlat+=effects.hpFlat;
                     }
                 }
             }
@@ -2622,22 +2685,30 @@ function calculateStatsWithSelections(hero, selections, mode) {
     const hpBonus=(baseHp*hpPercent/100)+hpFlat;
     return { attack:Math.floor(baseAttack+attackBonus), defense:Math.floor(baseDefense+defenseBonus), hp:Math.floor(baseHp+hpBonus) };
 }
+
 function getOptimalSelections(hero, mode) {
-    const heroClass=hero[HERO_FIELDS.clazz]; if(!classTalents[heroClass]) return {};
+    const heroClass=hero[HERO_FIELDS.clazz]; 
+    if(!classTalents[heroClass]) return {};
     const baseAttack=toNum(hero[HERO_FIELDS.attack])||0;
     const baseDefense=toNum(hero[HERO_FIELDS.defense])||0;
     const baseHp=toNum(hero[HERO_FIELDS.hp])||0;
     const talents=classTalents[heroClass];
-    const groups=[]; let currentGroup=[];
+    const groups=[]; 
+    let currentGroup=[];
     for(const talent of talents){
-        if(currentGroup.length===0 || currentGroup[0].branchGroup===talent.branchGroup){ currentGroup.push(talent); }
-        else { groups.push([...currentGroup]); currentGroup=[talent]; }
+        if(currentGroup.length===0 || currentGroup[0].branchGroup===talent.branchGroup){ 
+            currentGroup.push(talent); 
+        } else { 
+            groups.push([...currentGroup]); 
+            currentGroup=[talent]; 
+        }
     }
     if(currentGroup.length>0) groups.push(currentGroup);
     const selections={};
     for(const group of groups){
         const groupId=group[0].branchGroup;
-        let leftBranchTalents=[]; let rightBranchTalents=[];
+        let leftBranchTalents=[]; 
+        let rightBranchTalents=[];
         for(const talent of group){
             if(!talent.isMandatory){
                 if(talent.leftTalentId) leftBranchTalents.push(talent.leftTalentId);
@@ -2652,6 +2723,7 @@ function getOptimalSelections(hero, mode) {
     }
     return selections;
 }
+
 function renderTalentTree(hero, selections, mode) {
     const heroClass = hero[HERO_FIELDS.clazz];
     if (!classTalents[heroClass]) {
@@ -2823,17 +2895,16 @@ function renderTalentTree(hero, selections, mode) {
         });
     }
 }
+
 function renderStatsRow(hero, calc) {
     const statsRow = document.getElementById('heroStatsRow');
     if (!statsRow) return;
     
-    // Используем CSS-иконки вместо img
     let html = '';
     html += `<span class="stat-item"><span class="icon-sword icon-sword-lg"></span> ${calc.attack}</span>`;
     html += `<span class="stat-item"><span class="icon-shield"></span> ${calc.defense}</span>`;
     html += `<span class="stat-item"><span class="icon-health"></span> ${calc.hp}</span>`;
     
-    // Добавляем контролы талантов
     html += '<div class="talent-controls">';
     html += '<div class="select-wrapper">';
     html += '<select id="talentModeSelect">';
@@ -2849,7 +2920,6 @@ function renderStatsRow(hero, calc) {
     
     statsRow.innerHTML = html;
     
-    // Навешиваем события
     const select = document.getElementById('talentModeSelect');
     if (select) {
         select.value = currentMode || 'none';
@@ -2863,6 +2933,7 @@ function renderStatsRow(hero, calc) {
         treeBtn.addEventListener('click', openTreePanel);
     }
 }
+
 function renderInfoRow(hero) {
     const infoRow = document.getElementById('heroInfoRow');
     if (!infoRow) return;
@@ -2879,6 +2950,7 @@ function renderInfoRow(hero) {
         </div>
     `;
 }
+
 function renderMetaRow(hero) {
     const metaRow = document.getElementById('heroMetaRow');
     if (!metaRow) return;
@@ -2886,7 +2958,6 @@ function renderMetaRow(hero) {
     const stars = hero[HERO_FIELDS.stars] || '—';
     const clazz = hero[HERO_FIELDS.clazz] || '—';
     
-    // Используем CSS иконку звезды
     const starsDisplay = `${stars} <span class="icon-star"></span>`;
     
     metaRow.innerHTML = `
@@ -2895,6 +2966,7 @@ function renderMetaRow(hero) {
         <span>${clazz}</span>
     `;
 }
+
 function renderCardStats(hero) {
     let html = '';
     html += `<span class="pill"><span class="icon-sword"></span> ${hero[HERO_FIELDS.attack]}</span>`;
@@ -2902,6 +2974,7 @@ function renderCardStats(hero) {
     html += `<span class="pill"><span class="icon-health"></span> ${hero[HERO_FIELDS.hp]}</span>`;
     return html;
 }
+
 function initDragAndDrop() {
     const panel=document.getElementById('treePanel');
     const header=document.getElementById('treeHeader');
@@ -2941,6 +3014,7 @@ function initDragAndDrop() {
     }
     header.addEventListener('mousedown', onMouseDown);
 }
+
 function openTreePanel(){ 
     const hero=viewHeroes[currentIdx]; 
     if(!hero) return; 
@@ -2962,6 +3036,7 @@ function openTreePanel(){
     renderTalentTree(hero, currentHeroTalents, currentMode); 
     panel.classList.add('show'); 
 }
+
 function closeTreePanel(){ 
     const panel = document.getElementById('treePanel');
     if (panel) {
@@ -2969,6 +3044,7 @@ function closeTreePanel(){
     }
     hideTalentTooltip(); 
 }
+
 function updateMainModalStats(){ 
     const hero=viewHeroes[currentIdx]; 
     if(!hero) return; 
@@ -2994,11 +3070,20 @@ function updateMainModalStats(){
         renderTalentTree(hero, currentHeroTalents, currentMode); 
     } 
 }
-function toNum(v){ let n=parseFloat(String(v).replace(',','.')); return isNaN(n)?null:n; }
-function uniq(arr){ return [...new Set(arr.filter(v=>v!==null&&v!==undefined&&String(v).trim()!==''))]; }
-function sortAlpha(a,b){ return String(a).localeCompare(String(b),'ru',{numeric:true}); }
 
-// ===== ФУНКЦИЯ ПОСТРОЕНИЯ ФАСЕТОВ =====
+function toNum(v){ 
+    let n=parseFloat(String(v).replace(',','.')); 
+    return isNaN(n)?null:n; 
+}
+
+function uniq(arr){ 
+    return [...new Set(arr.filter(v=>v!==null&&v!==undefined&&String(v).trim()!==''))]; 
+}
+
+function sortAlpha(a,b){ 
+    return String(a).localeCompare(String(b),'ru',{numeric:true}); 
+}
+
 function buildFacet(container, values, facetKey, isTags) {
     let opts=uniq(values);
     if(facetKey==='mana') opts.sort((a,b)=>{let o=['Очень медленно','Медленно','Средне','Быстро','Очень быстро','Легендарно быстро']; return o.indexOf(a)-o.indexOf(b);});
@@ -3015,7 +3100,6 @@ function buildFacet(container, values, facetKey, isTags) {
     }).join('');
     container.querySelectorAll('input[type="checkbox"]').forEach(cb=>cb.addEventListener('change',()=>{ let s=selected[cb.dataset.facet]; if(cb.checked) s.add(cb.value); else s.delete(cb.value); }));
     
-    // ===== ТУЛТИПЫ ТОЛЬКО ДЛЯ ДЕСКТОПА (шире 768px) =====
     if (isTags && window.innerWidth > 768) {
         container.querySelectorAll('.opt[data-tag]').forEach(el => {
             const tagName = el.dataset.tag;
@@ -3035,6 +3119,7 @@ function buildFacet(container, values, facetKey, isTags) {
 }
 
 const selected = { element:new Set(), stars:new Set(), mana:new Set(), attackType:new Set(), summon:new Set(), clazz:new Set(), heroes:new Set(), tags:new Set() };
+
 function initAllFacets(heroes){
     buildFacet(document.getElementById('facet-element'), heroes.map(r=>r[HERO_FIELDS.element]), 'element');
     buildFacet(document.getElementById('facet-stars'), heroes.map(r=>r[HERO_FIELDS.stars]), 'stars');
@@ -3042,13 +3127,15 @@ function initAllFacets(heroes){
     buildFacet(document.getElementById('facet-attackType'), heroes.map(r=>r[HERO_FIELDS.attackType]), 'attackType');
     buildFacet(document.getElementById('facet-summon'), heroes.map(r=>r[HERO_FIELDS.summon]), 'summon');
     buildFacet(document.getElementById('facet-clazz'), heroes.map(r=>r[HERO_FIELDS.clazz]), 'clazz');
-    const allTags=new Set(); heroes.forEach(r=>{ if(r._tags) r._tags.forEach(t=>allTags.add(t)); });
+    const allTags=new Set(); 
+    heroes.forEach(r=>{ 
+        if(r._tags) r._tags.forEach(t=>allTags.add(t)); 
+    });
     buildFacet(document.getElementById('facet-tags'), Array.from(allTags), 'tags', true);
     allHeroNames=uniq(heroes.map(r=>r[HERO_FIELDS.name])).sort(sortAlpha);
     filteredHeroNames=[...allHeroNames];
     updateHeroCheckboxes();
     
-    // Инициализация кнопок режима тегов
     const modeButtons = document.querySelectorAll('.mode-btn');
     modeButtons.forEach(btn => {
         btn.addEventListener('click', function() {
@@ -3059,7 +3146,6 @@ function initAllFacets(heroes){
     });
 }
 
-// ===== ФУНКЦИЯ ДЛЯ ОТСЛЕЖИВАНИЯ ИЗМЕНЕНИЯ РАЗМЕРА ОКНА =====
 function initTagTooltipsMobile() {
     let tagTooltipsActive = window.innerWidth > 768;
     
@@ -3110,6 +3196,7 @@ function updateHeroCheckboxes(){
     
     updateHeroSelectDisplay();
 }
+
 function updateHeroSelectDisplay(){
     let c = selected.heroes.size;
     const toggleBtn = document.getElementById('heroSelectToggle');
@@ -3126,6 +3213,7 @@ function updateHeroSelectDisplay(){
         toggleBtn.textContent = Array.from(selected.heroes)[0] + ' и еще ' + (c - 1);
     }
 }
+
 function applyFilters(){
     let q=document.getElementById('searchInput').value.trim().toLowerCase();
     viewHeroes=allHeroes.filter(r=>{
@@ -3149,14 +3237,24 @@ function applyFilters(){
         return nameMatch && elemMatch && starsMatch && manaMatch && atkMatch && summonMatch && clazzMatch && heroMatch && tagMatch;
     });
     let by=document.getElementById('sortSelect').value;
-    viewHeroes.sort((a,b)=>{ let av=a[by], bv=b[by]; let an=toNum(av), bn=toNum(bv); let cmp=(an!=null && bn!=null)?an-bn:String(av||'').localeCompare(String(bv||''),'ru',{numeric:true}); return sortDirection==='asc'?cmp:-cmp; });
+    viewHeroes.sort((a,b)=>{ 
+        let av=a[by], bv=b[by]; 
+        let an=toNum(av), bn=toNum(bv); 
+        let cmp=(an!=null && bn!=null)?an-bn:String(av||'').localeCompare(String(bv||''),'ru',{numeric:true}); 
+        return sortDirection==='asc'?cmp:-cmp; 
+    });
     document.getElementById('count').textContent='Найдено: '+viewHeroes.length;
     renderCards(viewHeroes);
     filteredHeroNames=uniq(viewHeroes.map(r=>r[HERO_FIELDS.name])).sort(sortAlpha);
     updateHeroCheckboxes();
 }
+
 function renderCards(heroes){
-    if(!heroes.length){ document.getElementById('cards').innerHTML=''; document.getElementById('empty').style.display='block'; return; }
+    if(!heroes.length){ 
+        document.getElementById('cards').innerHTML=''; 
+        document.getElementById('empty').style.display='block'; 
+        return; 
+    }
     document.getElementById('empty').style.display='none';
     document.getElementById('cards').innerHTML=heroes.map((r,i)=>{
         let img = fileCellToUrl(r[HERO_FIELDS.image]);
@@ -3173,8 +3271,20 @@ function renderCards(heroes){
             renderCardStats(r) +
             '</div>'+(hasAbil?'<button class="toggle-abilities" data-idx="'+i+'">Показать способности</button><div class="card-abilities-full" id="abilities-'+i+'">'+cleaned.replace(/\n/g,'<br>')+'</div>':'')+'</article>';
     }).join('');
-    document.querySelectorAll('.toggle-abilities').forEach(btn=>btn.addEventListener('click',function(e){ e.stopPropagation(); let idx=this.dataset.idx; let div=document.getElementById('abilities-'+idx); if(div.style.display==='block'){ div.style.display='none'; this.textContent='Показать способности'; } else { div.style.display='block'; this.textContent='Скрыть способности'; } }));
+    document.querySelectorAll('.toggle-abilities').forEach(btn=>btn.addEventListener('click',function(e){ 
+        e.stopPropagation(); 
+        let idx=this.dataset.idx; 
+        let div=document.getElementById('abilities-'+idx); 
+        if(div.style.display==='block'){ 
+            div.style.display='none'; 
+            this.textContent='Показать способности'; 
+        } else { 
+            div.style.display='block'; 
+            this.textContent='Скрыть способности'; 
+        } 
+    }));
 }
+
 function openModal(idx){
     if(!viewHeroes.length) return;
     currentIdx=idx;
@@ -3186,6 +3296,7 @@ function openModal(idx){
     document.body.style.overflow='hidden';
     closeTreePanel();
 }
+
 function fillModal(hero){
     let img = fileCellToUrl(hero[HERO_FIELDS.image]);
     let optimizedImg = img ? getOptimizedImageUrl(img) : '';
@@ -3201,12 +3312,10 @@ function fillModal(hero){
     const summon = hero[HERO_FIELDS.summon] || '—';
     summonText.textContent = 'Призыв: ' + summon;
     
-    // Делаем "Призыв" кликабельным фильтром
     summonText.onclick = function(e) {
         e.stopPropagation();
         const summonValue = this.textContent.replace('Призыв: ', '').trim();
         if (summonValue && summonValue !== '—') {
-            // Очищаем все остальные фильтры
             selected.element.clear();
             selected.stars.clear();
             selected.mana.clear();
@@ -3216,19 +3325,13 @@ function fillModal(hero){
             selected.heroes.clear();
             selected.tags.clear();
             document.getElementById('searchInput').value = '';
-            
-            // Добавляем выбранное место призыва
             selected.summon.add(summonValue);
-            
-            // Обновляем чекбоксы в интерфейсе
             const container = document.getElementById('facet-summon');
             if (container) {
                 container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
                     cb.checked = selected.summon.has(cb.value);
                 });
             }
-            
-            // Закрываем модалку и применяем фильтры
             closeModal();
             applyFilters();
         }
@@ -3255,7 +3358,6 @@ function fillModal(hero){
     renderStatsRow(hero, calc);
     renderInfoRow(hero);
     
-    // Теги с тултипами
     const tagsContainer = document.getElementById('modalTags');
     if (hero._tags && hero._tags.length > 0) {
         const tagsHtml = hero._tags.map(tag => {
@@ -3264,7 +3366,6 @@ function fillModal(hero){
         }).join('');
         tagsContainer.innerHTML = tagsHtml;
         
-        // ===== ТУЛТИПЫ ТОЛЬКО ДЛЯ ДЕСКТОПА (шире 768px) =====
         if (window.innerWidth > 768) {
             tagsContainer.querySelectorAll('.tag').forEach(el => {
                 const tag = el.dataset.tag;
@@ -3282,7 +3383,6 @@ function fillModal(hero){
             });
         }
         
-        // Клик по тегу — фильтрация (работает всегда)
         tagsContainer.querySelectorAll('.tag').forEach(el => {
             el.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -3325,8 +3425,20 @@ function fillModal(hero){
         treeBtn.addEventListener('click', openTreePanel);
     }
 }
-function closeModal(){ document.getElementById('modal').classList.remove('show'); document.body.style.overflow=''; currentIdx=-1; closeTreePanel(); }
-function go(delta){ if(currentIdx<0||!viewHeroes.length) return; currentIdx=(currentIdx+delta+viewHeroes.length)%viewHeroes.length; openModal(currentIdx); }
+
+function closeModal(){ 
+    document.getElementById('modal').classList.remove('show'); 
+    document.body.style.overflow=''; 
+    currentIdx=-1; 
+    closeTreePanel(); 
+}
+
+function go(delta){ 
+    if(currentIdx<0||!viewHeroes.length) return; 
+    currentIdx=(currentIdx+delta+viewHeroes.length)%viewHeroes.length; 
+    openModal(currentIdx); 
+}
+
 function attachEvents(){
     const closeTreeBtn = document.getElementById('closeTreeBtn');
     if (closeTreeBtn) {
@@ -3344,7 +3456,10 @@ function attachEvents(){
         btn.dataset.tooltip = sortDirection === 'desc' ? 'Сортировка по убыванию' : 'Сортировка по возрастанию';
         applyFilters();
     });
-    document.getElementById('heroSelectToggle').addEventListener('click', e=>{ document.getElementById('heroCheckboxes').classList.toggle('show'); e.stopPropagation(); });
+    document.getElementById('heroSelectToggle').addEventListener('click', e=>{ 
+        document.getElementById('heroCheckboxes').classList.toggle('show'); 
+        e.stopPropagation(); 
+    });
     document.getElementById('deselectAllHeroes').addEventListener('click', ()=>{
         selected.heroes.clear();
         updateHeroCheckboxes();
@@ -3353,7 +3468,10 @@ function attachEvents(){
         document.getElementById('heroCheckboxes').classList.remove('show');
         applyFilters();
     });
-    document.addEventListener('click', e=>{ if(!document.getElementById('heroSelectToggle').contains(e.target) && !document.getElementById('heroCheckboxes').contains(e.target)) document.getElementById('heroCheckboxes').classList.remove('show'); });
+    document.addEventListener('click', e=>{ 
+        if(!document.getElementById('heroSelectToggle').contains(e.target) && !document.getElementById('heroCheckboxes').contains(e.target)) 
+            document.getElementById('heroCheckboxes').classList.remove('show'); 
+    });
     document.querySelectorAll('.facet .actions button').forEach(btn=>btn.addEventListener('click', ()=>{
         let f=btn.dataset.facet;
         if (btn.dataset.action === 'all') {
@@ -3377,7 +3495,6 @@ function attachEvents(){
                 selected[f].clear();
             }
         }
-        // Обновляем чекбоксы в интерфейсе
         const facetMap = {
             'element': 'facet-element',
             'stars': 'facet-stars',
@@ -3463,18 +3580,44 @@ function attachEvents(){
     });
     
     document.getElementById('openFilters').addEventListener('click', openFiltersPanel);
-    document.getElementById('applyFiltersBtn').addEventListener('click', ()=>{ applyFilters(); closeFiltersPanel(); });
+    document.getElementById('applyFiltersBtn').addEventListener('click', ()=>{ 
+        applyFilters(); 
+        closeFiltersPanel(); 
+    });
     document.getElementById('closeFilters').addEventListener('click', closeFiltersPanel);
     document.getElementById('filterOverlay').addEventListener('click', closeFiltersPanel);
-    document.getElementById('cards').addEventListener('click', e=>{ if(e.target.classList.contains('toggle-abilities')) return; let card=e.target.closest('.card'); if(card) openModal(Number(card.dataset.idx)); });
+    document.getElementById('cards').addEventListener('click', e=>{ 
+        if(e.target.classList.contains('toggle-abilities')) return; 
+        let card=e.target.closest('.card'); 
+        if(card) openModal(Number(card.dataset.idx)); 
+    });
     document.getElementById('mClose').addEventListener('click', closeModal);
     document.getElementById('mPrev').addEventListener('click', ()=>go(-1));
     document.getElementById('mNext').addEventListener('click', ()=>go(1));
-    document.getElementById('modal').addEventListener('click', e=>{ if(e.target===document.getElementById('modal')) closeModal(); });
-    window.addEventListener('keydown', e=>{ if(!document.getElementById('modal').classList.contains('show')) return; if(e.key==='Escape') closeModal(); if(e.key==='ArrowLeft') go(-1); if(e.key==='ArrowRight') go(1); if(e.key==='Escape' && document.getElementById('treePanel').classList.contains('show')) closeTreePanel(); });
-    document.getElementById('infoBtn').addEventListener('click', ()=>{ document.getElementById('infoModal').classList.add('show'); document.body.style.overflow='hidden'; });
-    document.getElementById('infoClose').addEventListener('click', ()=>{ document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow=''; });
-    document.getElementById('infoModal').addEventListener('click', e=>{ if(e.target===document.getElementById('infoModal')){ document.getElementById('infoModal').classList.remove('show'); document.body.style.overflow=''; } });
+    document.getElementById('modal').addEventListener('click', e=>{ 
+        if(e.target===document.getElementById('modal')) closeModal(); 
+    });
+    window.addEventListener('keydown', e=>{ 
+        if(!document.getElementById('modal').classList.contains('show')) return; 
+        if(e.key==='Escape') closeModal(); 
+        if(e.key==='ArrowLeft') go(-1); 
+        if(e.key==='ArrowRight') go(1); 
+        if(e.key==='Escape' && document.getElementById('treePanel').classList.contains('show')) closeTreePanel(); 
+    });
+    document.getElementById('infoBtn').addEventListener('click', ()=>{ 
+        document.getElementById('infoModal').classList.add('show'); 
+        document.body.style.overflow='hidden'; 
+    });
+    document.getElementById('infoClose').addEventListener('click', ()=>{ 
+        document.getElementById('infoModal').classList.remove('show'); 
+        document.body.style.overflow=''; 
+    });
+    document.getElementById('infoModal').addEventListener('click', e=>{ 
+        if(e.target===document.getElementById('infoModal')){ 
+            document.getElementById('infoModal').classList.remove('show'); 
+            document.body.style.overflow=''; 
+        } 
+    });
     const dateEl = document.getElementById('updateDate');
     if (dateEl) {
         if (dbUpdateDate) {
@@ -3487,11 +3630,10 @@ function attachEvents(){
     initTooltip();
     initDragAndDrop();
     
-    // Инициализируем слежение за темой
     initThemeWatch();
-    // Инициализируем слежение за тултипами на мобильных
     initTagTooltipsMobile();
 }
+
 Promise.all([
     new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
         allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]).map(row=>{ 
@@ -3505,21 +3647,82 @@ Promise.all([
         console.log('✅ Герои загружены:',allHeroes.length); 
         res(); 
     },error:rej})),
-    new Promise((res,rej)=>Papa.parse(CLASSES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ r.data.forEach(row=>{ if(!row[CLASS_TALENT_FIELDS.class_id]) return; let cn=row[CLASS_TALENT_FIELDS.class_id]; if(!classTalents[cn]) classTalents[cn]=[]; classTalents[cn].push({ rowNumber:parseInt(row[CLASS_TALENT_FIELDS.row_number])||0, isMandatory:String(row[CLASS_TALENT_FIELDS.is_mandatory]).toLowerCase()==='true', branchGroup:row[CLASS_TALENT_FIELDS.branch_group], leftTalentId:row[CLASS_TALENT_FIELDS.left_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.left_talent_id]):null, centerTalentId:row[CLASS_TALENT_FIELDS.center_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.center_talent_id]):null, rightTalentId:row[CLASS_TALENT_FIELDS.right_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.right_talent_id]):null }); }); Object.keys(classTalents).forEach(cn=>classTalents[cn].sort((a,b)=>a.rowNumber-b.rowNumber)); console.log('✅ Классы с талантами загружены:',Object.keys(classTalents).length); res(); },error:rej})),
-    new Promise((res,rej)=>Papa.parse(TALENT_DESC_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ console.log('📥 Загружено строк из Talent_description:',r.data.length); talentDescriptions=[]; r.data.forEach(row=>{ if(row[TALENT_DESC_FIELDS.talent_id]) talentDescriptions.push(row); }); console.log('✅ Описания талантов загружены:',talentDescriptions.length); res(); },error:rej})),
-    new Promise((res,rej)=>Papa.parse(MATERIALS_4_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ materialsData['4★']=r.data.filter(row=>row['Стихия']&&row['Предмет']); console.log('✅ Материалы 4★ загружены:',materialsData['4★'].length); res(); },error:rej})),
-    new Promise((res,rej)=>Papa.parse(MATERIALS_5_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ materialsData['5★']=r.data.filter(row=>row['Стихия']&&row['Предмет']); console.log('✅ Материалы 5★ загружены:',materialsData['5★'].length); res(); },error:rej})),
-    new Promise((res,rej)=>Papa.parse(BOOKS_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ booksData=r.data.filter(row=>row['Звездность героев']&&row['Уровень навыка']); console.log('✅ Книги навыков загружены:',booksData.length); res(); },error:rej})),
-    new Promise((res,rej)=>Papa.parse(TOKENS_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ tokensData=r.data.filter(row=>row['Количество звезд']&&row['Количество жетонов']); console.log('✅ Жетоны талантов загружены:',tokensData.length); res(); },error:rej})),
-    new Promise((res,rej)=>Papa.parse(IMAGES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ r.data.forEach(row=>{ if(row['Название']&&row['Картинка']){ const url=fileCellToUrl(row['Картинка']); if(url) itemImages[row['Название']]=url; } }); console.log('✅ Картинки предметов загружены:',Object.keys(itemImages).length); res(); },error:rej}))
+    new Promise((res,rej)=>Papa.parse(CLASSES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
+        r.data.forEach(row=>{ 
+            if(!row[CLASS_TALENT_FIELDS.class_id]) return; 
+            let cn=row[CLASS_TALENT_FIELDS.class_id]; 
+            if(!classTalents[cn]) classTalents[cn]=[]; 
+            classTalents[cn].push({ 
+                rowNumber:parseInt(row[CLASS_TALENT_FIELDS.row_number])||0, 
+                isMandatory:String(row[CLASS_TALENT_FIELDS.is_mandatory]).toLowerCase()==='true', 
+                branchGroup:row[CLASS_TALENT_FIELDS.branch_group], 
+                leftTalentId:row[CLASS_TALENT_FIELDS.left_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.left_talent_id]):null, 
+                centerTalentId:row[CLASS_TALENT_FIELDS.center_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.center_talent_id]):null, 
+                rightTalentId:row[CLASS_TALENT_FIELDS.right_talent_id]?parseInt(row[CLASS_TALENT_FIELDS.right_talent_id]):null 
+            }); 
+        }); 
+        Object.keys(classTalents).forEach(cn=>classTalents[cn].sort((a,b)=>a.rowNumber-b.rowNumber)); 
+        console.log('✅ Классы с талантами загружены:',Object.keys(classTalents).length); 
+        res(); 
+    },error:rej})),
+    new Promise((res,rej)=>Papa.parse(TALENT_DESC_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
+        console.log('📥 Загружено строк из Talent_description:',r.data.length); 
+        talentDescriptions=[]; 
+        r.data.forEach(row=>{ 
+            if(row[TALENT_DESC_FIELDS.talent_id]) talentDescriptions.push(row); 
+        }); 
+        console.log('✅ Описания талантов загружены:',talentDescriptions.length); 
+        res(); 
+    },error:rej})),
+    new Promise((res,rej)=>Papa.parse(MATERIALS_3_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
+        materialsData['3★'] = r.data.filter(row=>row['Стихия']&&row['Предмет']); 
+        console.log('✅ Материалы 3★ загружены:',materialsData['3★'].length); 
+        res(); 
+    },error:rej})),
+    new Promise((res,rej)=>Papa.parse(MATERIALS_4_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
+        materialsData['4★']=r.data.filter(row=>row['Стихия']&&row['Предмет']); 
+        console.log('✅ Материалы 4★ загружены:',materialsData['4★'].length); 
+        res(); 
+    },error:rej})),
+    new Promise((res,rej)=>Papa.parse(MATERIALS_5_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
+        materialsData['5★']=r.data.filter(row=>row['Стихия']&&row['Предмет']); 
+        console.log('✅ Материалы 5★ загружены:',materialsData['5★'].length); 
+        res(); 
+    },error:rej})),
+    new Promise((res,rej)=>Papa.parse(BOOKS_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
+        booksData=r.data.filter(row=>row['Звездность героев']&&row['Уровень навыка']); 
+        console.log('✅ Книги навыков загружены:',booksData.length); 
+        res(); 
+    },error:rej})),
+    new Promise((res,rej)=>Papa.parse(TOKENS_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
+        tokensData=r.data.filter(row=>row['Количество звезд']&&row['Количество жетонов']); 
+        console.log('✅ Жетоны талантов загружены:',tokensData.length); 
+        res(); 
+    },error:rej})),
+    new Promise((res,rej)=>Papa.parse(IMAGES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
+        r.data.forEach(row=>{ 
+            if(row['Название']&&row['Картинка']){ 
+                const url=fileCellToUrl(row['Картинка']); 
+                if(url) itemImages[row['Название']]=url; 
+            } 
+        }); 
+        console.log('✅ Картинки предметов загружены:',Object.keys(itemImages).length); 
+        res(); 
+    },error:rej}))
 ]).then(()=>{
-    if(!allHeroes.length){ document.getElementById('count').textContent='Данные не найдены'; return; }
+    if(!allHeroes.length){ 
+        document.getElementById('count').textContent='Данные не найдены'; 
+        return; 
+    }
     initAllFacets(allHeroes);
     initSortTooltip();
     attachEvents();
     applyFilters();
     console.log('🚀 Сайт готов к работе!');
-}).catch(e=>{ console.error('❌ Ошибка загрузки данных:',e); document.getElementById('count').textContent='Ошибка загрузки данных.'; });
+}).catch(e=>{ 
+    console.error('❌ Ошибка загрузки данных:',e); 
+    document.getElementById('count').textContent='Ошибка загрузки данных.'; 
+});
 </script>
 </body>
 </html>
