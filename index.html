@@ -81,7 +81,142 @@
   --icon-tree: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/B8DMifczdAzQiFisHhqXRU5Gk5gmFRWj_5ff6b7ccab8b189f829ce3b4bc0974e78a764f0c83b248388c2037444dd873e5.svg');
   --icon-upgrade: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/YpiBSmwAWmBJR2EnXfdUKY6GUZCOxZCP_aa2bee0d91297c694915411d9606c3cbfc6882ea5980a5e7956f489c8a92b6bb.svg');
 }
-.cabinet {
+.events-list { display: flex; flex-direction: column; gap: 8px; }
+.event-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.event-item:hover { background: var(--secondary-color); }
+.event-item .ev-name { font-weight: 600; font-size: 15px; }
+.event-view-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+.event-view-header h3 { flex: 1; }
+.event-subtabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 16px;
+}
+.event-subtab {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: var(--text-color);
+    opacity: 0.6;
+    cursor: pointer;
+}
+.event-subtab.active { opacity: 1; border-bottom-color: #227BBC; color: #227BBC; }
+.event-subpanel { display: none; }
+.event-subpanel.active { display: block; }
+.team-block {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 14px;
+}
+.team-block h4 { margin: 0 0 10px; font-size: 15px; }
+.team-slots {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+}
+.slot {
+    min-height: 110px;
+    border: 1px dashed var(--checkbox-border);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--secondary-color);
+    text-align: center;
+    font-size: 12px;
+    position: relative;
+}
+.slot:hover { border-color: #227BBC; }
+.slot.filled { border-style: solid; background: var(--card-bg); cursor: default; }
+.slot img { width: 56px; height: 56px; object-fit: contain; }
+.slot .slot-name { font-weight: 600; font-size: 12px; margin-top: 4px; }
+.slot .slot-meta { font-size: 11px; opacity: 0.7; }
+.slot .slot-remove {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: none;
+    background: #e03131;
+    color: #fff;
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.teams-list { display: flex; flex-direction: column; gap: 14px; }
+.team-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px 14px;
+}
+.team-card .team-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.team-card .team-card-head h4 { margin: 0; font-size: 14px; }
+.slot-picker-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 8px;
+    max-height: 340px;
+    overflow-y: auto;
+}
+.slot-picker-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.slot-picker-item:hover { background: var(--secondary-color); }
+.slot-picker-item img { width: 40px; height: 40px; object-fit: contain; }
+.slot-picker-item .sp-name { font-size: 13px; font-weight: 600; }
+.slot-picker-item .sp-meta { font-size: 11px; opacity: 0.7; }
+@media (max-width: 768px) {
+    .team-slots { grid-template-columns: repeat(3, 1fr); }
+    .slot { min-height: 100px; }
+}
+@media (max-width: 480px) {
+    .team-slots { grid-template-columns: repeat(2, 1fr); }
+}
+  .cabinet {
     max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
@@ -2123,9 +2258,73 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         </div>
     </div>
 
-    <!-- Вкладка «События» (пока заглушка) -->
+    <!-- Вкладка «События» -->
     <div id="cabinetEvents" class="cabinet-panel">
-        <div class="cabinet-empty">События и команды будут добавлены на следующем шаге.</div>
+        <div class="cabinet-toolbar">
+            <button id="addEventBtn" class="btn primary">+ Создать событие</button>
+        </div>
+        <div id="eventsList" class="events-list"></div>
+        <div id="eventsEmpty" class="cabinet-empty" style="display:none;">
+            Пока нет событий. Нажмите «Создать событие».
+        </div>
+
+        <!-- Просмотр выбранного события -->
+        <div id="eventView" style="display:none;">
+            <div class="event-view-header">
+                <button id="backToEventsBtn" class="btn">← К списку событий</button>
+                <h3 id="eventViewTitle" style="margin:0;"></h3>
+                <button id="deleteEventBtn" class="btn btn-white">Удалить событие</button>
+            </div>
+            <div class="event-subtabs">
+                <button class="event-subtab active" data-subtab="defense">Оборона</button>
+                <button class="event-subtab" data-subtab="teams">Команды</button>
+            </div>
+
+            <!-- Оборона -->
+            <div id="eventDefense" class="event-subpanel active">
+                <div class="team-block" id="defenseTeamBlock">
+                    <h4>Команда обороны</h4>
+                    <div class="team-slots" id="defenseSlots"></div>
+                </div>
+            </div>
+
+            <!-- Обычные команды -->
+            <div id="eventTeams" class="event-subpanel">
+                <div class="cabinet-toolbar">
+                    <button id="addTeamBtn" class="btn primary">+ Добавить команду</button>
+                    <span id="teamsCount" style="font-size:13px; opacity:0.7;"></span>
+                </div>
+                <div id="teamsList" class="teams-list"></div>
+                <div id="teamsEmpty" class="cabinet-empty" style="display:none;">
+                    Пока нет команд. Нажмите «Добавить команду».
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Модалка создания события -->
+<div id="eventModal" class="auth-modal">
+    <div class="auth-dialog" style="max-width:420px;">
+        <button id="eventModalClose" class="auth-close">×</button>
+        <h3 style="margin:0 0 16px;">Создать событие</h3>
+        <div class="auth-form active" style="gap:12px;">
+            <label>Название
+                <input type="text" id="eventNameInput" maxlength="60" placeholder="Например: Война">
+            </label>
+            <button id="eventCreateSubmit" class="auth-submit">Создать</button>
+            <div id="eventModalError" class="auth-error"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка выбора героя в слот -->
+<div id="slotPickerModal" class="auth-modal">
+    <div class="auth-dialog" style="max-width:520px;">
+        <button id="slotPickerClose" class="auth-close">×</button>
+        <h3 style="margin:0 0 12px;">Выбрать героя</h3>
+        <input type="search" id="slotPickerSearch" placeholder="Поиск по казарме" class="cabinet-search" style="margin-bottom:12px;">
+        <div id="slotPickerList" class="slot-picker-list"></div>
+        <div id="slotPickerEmpty" class="cabinet-empty" style="display:none;">В казарме нет подходящих героев</div>
     </div>
 </div>
 
@@ -2463,6 +2662,7 @@ function openCabinet() {
     document.getElementById('cabinetEmail').textContent = currentUser.email || '';
     document.body.style.overflow = '';
     loadBarracks();
+    loadEvents();
     switchCabinetTab('barracks');
 }
 
@@ -2615,6 +2815,335 @@ function initCabinet() {
     allHeroesById = {};
     allHeroes.forEach(h => { allHeroesById[h[HERO_FIELDS.id]] = h; });
 }
+// ===== ЛК: СОБЫТИЯ И КОМАНДЫ =====
+let eventsData = [];
+let currentEventId = null;
+let eventTeamsData = [];   // записи user_teams текущего события
+let slotPickerTarget = null; // { teamIndex, slot, isDefense }
+
+async function loadEvents() {
+    if (!supabaseClient || !currentUser) return;
+    const { data, error } = await supabaseClient
+        .from('user_events')
+        .select('*')
+        .order('sort_order', { ascending: true })
+        .order('created_at', { ascending: true });
+    if (error) { console.error(error); return; }
+    eventsData = data || [];
+    renderEventsList();
+}
+
+function renderEventsList() {
+    const list = document.getElementById('eventsList');
+    const empty = document.getElementById('eventsEmpty');
+    if (!eventsData.length) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+    }
+    empty.style.display = 'none';
+    list.innerHTML = eventsData.map(ev => `
+        <div class="event-item" data-id="${ev.id}">
+            <span class="ev-name">${ev.name}</span>
+            <span style="font-size:12px; opacity:0.6;">→</span>
+        </div>
+    `).join('');
+    list.querySelectorAll('.event-item').forEach(el => {
+        el.addEventListener('click', () => openEvent(el.dataset.id));
+    });
+}
+
+function initEventsModal() {
+    document.getElementById('addEventBtn').addEventListener('click', () => {
+        document.getElementById('eventModal').classList.add('show');
+        document.getElementById('eventNameInput').value = '';
+        document.getElementById('eventModalError').textContent = '';
+    });
+    document.getElementById('eventModalClose').addEventListener('click', () => {
+        document.getElementById('eventModal').classList.remove('show');
+    });
+    document.getElementById('eventModal').addEventListener('click', (e) => {
+        if (e.target.id === 'eventModal') e.target.classList.remove('show');
+    });
+    document.getElementById('eventCreateSubmit').addEventListener('click', async () => {
+        const name = document.getElementById('eventNameInput').value.trim();
+        const errEl = document.getElementById('eventModalError');
+        if (!name) { errEl.textContent = 'Введите название'; return; }
+        const { data, error } = await supabaseClient.from('user_events').insert({
+            user_id: currentUser.id, name, sort_order: eventsData.length
+        }).select().single();
+        if (error) { errEl.textContent = error.message; return; }
+        eventsData.push(data);
+        document.getElementById('eventModal').classList.remove('show');
+        renderEventsList();
+    });
+}
+
+async function openEvent(eventId) {
+    currentEventId = eventId;
+    const ev = eventsData.find(e => e.id === eventId);
+    if (!ev) return;
+    document.getElementById('eventsList').parentElement.querySelector('.cabinet-toolbar').style.display = 'none';
+    document.getElementById('eventsList').style.display = 'none';
+    document.getElementById('eventsEmpty').style.display = 'none';
+    document.getElementById('eventView').style.display = 'block';
+    document.getElementById('eventViewTitle').textContent = ev.name;
+    switchEventSubtab('defense');
+    await loadEventTeams();
+    renderEventView();
+}
+
+function closeEvent() {
+    currentEventId = null;
+    eventTeamsData = [];
+    document.getElementById('eventView').style.display = 'none';
+    document.getElementById('eventsList').style.display = '';
+    document.getElementById('eventsList').parentElement.querySelector('.cabinet-toolbar').style.display = '';
+    loadEvents();
+}
+
+function switchEventSubtab(tab) {
+    document.querySelectorAll('.event-subtab').forEach(t => {
+        t.classList.toggle('active', t.dataset.subtab === tab);
+    });
+    document.getElementById('eventDefense').classList.toggle('active', tab === 'defense');
+    document.getElementById('eventTeams').classList.toggle('active', tab === 'teams');
+}
+
+async function loadEventTeams() {
+    if (!currentEventId) return;
+    const { data, error } = await supabaseClient
+        .from('user_teams')
+        .select('*')
+        .eq('event_id', currentEventId);
+    if (error) { console.error(error); return; }
+    eventTeamsData = data || [];
+}
+
+function renderEventView() {
+    // Оборона
+    const defSlots = document.getElementById('defenseSlots');
+    defSlots.innerHTML = '';
+    for (let slot = 1; slot <= 5; slot++) {
+        const cell = eventTeamsData.find(t => t.is_defense && t.slot === slot);
+        defSlots.appendChild(makeSlotEl(cell, slot, true));
+    }
+    // Обычные команды
+    const normalTeams = {};
+    eventTeamsData.filter(t => !t.is_defense).forEach(t => {
+        if (!normalTeams[t.team_index]) normalTeams[t.team_index] = [];
+        normalTeams[t.team_index].push(t);
+    });
+    const draft = window.draftTeams || [];
+    draft.forEach(idx => { if (!normalTeams[idx]) normalTeams[idx] = []; });
+    const indexes = Object.keys(normalTeams).map(Number).sort((a,b)=>a-b);
+    const list = document.getElementById('teamsList');
+    const empty = document.getElementById('teamsEmpty');
+    document.getElementById('teamsCount').textContent = indexes.length + ' / 20';
+    if (!indexes.length) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+    }
+    empty.style.display = 'none';
+    list.innerHTML = indexes.map(idx => {
+        const slots = normalTeams[idx];
+        return `<div class="team-card" data-team-index="${idx}">
+            <div class="team-card-head">
+                <h4>Команда ${idx}</h4>
+                <button class="btn btn-white" data-action="delete-team" data-team-index="${idx}">Удалить</button>
+            </div>
+            <div class="team-slots">
+                ${[1,2,3,4,5].map(slot => {
+                    const cell = slots.find(s => s.slot === slot);
+                    return renderSlotHtml(cell, idx, slot, false);
+                }).join('')}
+            </div>
+        </div>`;
+    }).join('');
+    attachTeamSlotEvents(list, false);
+}
+
+function renderSlotHtml(cell, teamIndex, slot, isDefense) {
+    if (!cell) {
+        return `<div class="slot" data-team-index="${teamIndex}" data-slot="${slot}" data-defense="${isDefense}">+</div>`;
+    }
+    const heroRecord = barracksData.find(b => b.id === cell.user_hero_id);
+    const hero = heroRecord ? allHeroesById[heroRecord.hero_id] : null;
+    if (!hero) return `<div class="slot" data-team-index="${teamIndex}" data-slot="${slot}" data-defense="${isDefense}">+</div>`;
+    const img = fileCellToUrl(hero[HERO_FIELDS.image]);
+    const imgSrc = img ? getOptimizedImageUrl(img) : '';
+    return `<div class="slot filled" data-team-index="${teamIndex}" data-slot="${slot}" data-defense="${isDefense}" data-team-id="${cell.id}">
+        <button class="slot-remove" data-action="remove-slot" data-team-id="${cell.id}">×</button>
+        ${imgSrc ? `<img src="${imgSrc}" onerror="this.onerror=null;this.src='${img}'">` : ''}
+        <div class="slot-name">${hero[HERO_FIELDS.name]}</div>
+        <div class="slot-meta">${heroRecord.skill_level}</div>
+    </div>`;
+}
+
+function makeSlotEl(cell, slot, isDefense) {
+    const wrap = document.createElement('div');
+    wrap.innerHTML = renderSlotHtml(cell, 0, slot, isDefense);
+    const el = wrap.firstElementChild;
+    attachSlotClick(el);
+    return el;
+}
+
+function attachTeamSlotEvents(container, isDefense) {
+    container.querySelectorAll('.slot').forEach(el => attachSlotClick(el));
+    container.querySelectorAll('[data-action="remove-slot"]').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            const teamId = btn.dataset.teamId;
+            const { error } = await supabaseClient.from('user_teams').delete().eq('id', teamId);
+            if (error) { alert(error.message); return; }
+            await loadEventTeams();
+            renderEventView();
+        });
+    });
+    container.querySelectorAll('[data-action="delete-team"]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            if (!confirm('Удалить команду?')) return;
+            const teamIndex = parseInt(btn.dataset.teamIndex);
+            const { error } = await supabaseClient.from('user_teams').delete()
+                .eq('event_id', currentEventId).eq('team_index', teamIndex).eq('is_defense', false);
+            if (error) { alert(error.message); return; }
+            await loadEventTeams();
+            renderEventView();
+        });
+    });
+}
+
+function attachSlotClick(el) {
+    if (el.classList.contains('filled')) return;
+    el.addEventListener('click', () => {
+        const teamIndex = parseInt(el.dataset.teamIndex) || 0;
+        const slot = parseInt(el.dataset.slot);
+        const isDefense = el.dataset.defense === 'true';
+        openSlotPicker(teamIndex, slot, isDefense);
+    });
+}
+
+function openSlotPicker(teamIndex, slot, isDefense) {
+    slotPickerTarget = { teamIndex, slot, isDefense };
+    document.getElementById('slotPickerModal').classList.add('show');
+    document.getElementById('slotPickerSearch').value = '';
+    renderSlotPickerList('');
+    document.getElementById('slotPickerSearch').oninput = (e) => renderSlotPickerList(e.target.value);
+}
+
+function renderSlotPickerList(query) {
+    if (!slotPickerTarget) return;
+    const { teamIndex, isDefense } = slotPickerTarget;
+    // Какие user_hero_id уже заняты в этом событии (для обычных команд)
+    let occupied = new Set();
+    if (!isDefense) {
+        occupied = new Set(eventTeamsData.filter(t => !t.is_defense).map(t => t.user_hero_id));
+    }
+    const q = (query || '').trim().toLowerCase();
+    const list = document.getElementById('slotPickerList');
+    const empty = document.getElementById('slotPickerEmpty');
+    const available = barracksData.filter(b => {
+        if (occupied.has(b.id)) return false;
+        if (!q) return true;
+        const hero = allHeroesById[b.hero_id];
+        return hero && hero[HERO_FIELDS.name].toLowerCase().includes(q);
+    });
+    if (!available.length) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+    }
+    empty.style.display = 'none';
+    list.innerHTML = available.map(b => {
+        const hero = allHeroesById[b.hero_id];
+        if (!hero) return '';
+        const img = fileCellToUrl(hero[HERO_FIELDS.image]);
+        const imgSrc = img ? getOptimizedImageUrl(img) : '';
+        return `<div class="slot-picker-item" data-user-hero-id="${b.id}">
+            ${imgSrc ? `<img src="${imgSrc}" onerror="this.onerror=null;this.src='${img}'">` : ''}
+            <div>
+                <div class="sp-name">${hero[HERO_FIELDS.name]}</div>
+                <div class="sp-meta">${b.skill_level} • ${hero[HERO_FIELDS.clazz]}</div>
+            </div>
+        </div>`;
+    }).join('');
+    list.querySelectorAll('.slot-picker-item').forEach(el => {
+        el.addEventListener('click', () => placeHeroInSlot(el.dataset.userHeroId));
+    });
+}
+
+async function placeHeroInSlot(userHeroId) {
+    if (!slotPickerTarget || !currentEventId) return;
+    const { teamIndex, slot, isDefense } = slotPickerTarget;
+    const { error } = await supabaseClient.from('user_teams').insert({
+        event_id: currentEventId,
+        user_id: currentUser.id,
+        team_index: isDefense ? 0 : teamIndex,
+        slot,
+        user_hero_id: userHeroId,
+        is_defense: isDefense
+    });
+    if (error) { alert(error.message); return; }
+    document.getElementById('slotPickerModal').classList.remove('show');
+    slotPickerTarget = null;
+    await loadEventTeams();
+    renderEventView();
+}
+
+function initEventView() {
+    document.getElementById('backToEventsBtn').addEventListener('click', closeEvent);
+    document.getElementById('deleteEventBtn').addEventListener('click', async () => {
+        if (!currentEventId) return;
+        if (!confirm('Удалить событие со всеми командами?')) return;
+        const { error } = await supabaseClient.from('user_events').delete().eq('id', currentEventId);
+        if (error) { alert(error.message); return; }
+        eventsData = eventsData.filter(e => e.id !== currentEventId);
+        closeEvent();
+          container.querySelectorAll('[data-action="delete-team"]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            if (!confirm('Удалить команду?')) return;
+            const teamIndex = parseInt(btn.dataset.teamIndex);
+            const { error } = await supabaseClient.from('user_teams').delete()
+                .eq('event_id', currentEventId).eq('team_index', teamIndex).eq('is_defense', false);
+            if (error) { alert(error.message); return; }
+            if (window.draftTeams) window.draftTeams = window.draftTeams.filter(i => i !== teamIndex);
+            await loadEventTeams();
+            renderEventView();
+        });
+    });
+    });
+    document.querySelectorAll('.event-subtab').forEach(t => {
+        t.addEventListener('click', () => switchEventSubtab(t.dataset.subtab));
+    });
+    document.getElementById('addTeamBtn').addEventListener('click', async () => {
+        const indexes = eventTeamsData.filter(t => !t.is_defense).map(t => t.team_index);
+        const maxIdx = indexes.length ? Math.max(...indexes) : 0;
+        if (maxIdx >= 20) { alert('Максимум 20 команд'); return; }
+        // Создаём "пустую" команду — вставляем одну запись? Нет, команда без героев не имеет записи.
+        // Поэтому просто запоминаем, что следующая команда = maxIdx+1, но без записи в БД.
+        // Чтобы команда появилась в списке, добавим в eventTeamsData фиктивную? Нет.
+        // Проще: добавим первую команду с slot=1 и user_hero_id=null — но user_hero_id NOT NULL.
+        // Поэтому: создаём команду при первом выборе героя. А сейчас просто подскажем.
+        // Реализуем через "черновик": добавим team_index в локальный список.
+        // Для простоты: создаём команду сразу с пустыми слотами в UI, а в БД пишем при выборе героя.
+        // Но renderEventView строит команды из eventTeamsData. Нужно добавить "черновые" команды.
+        // Решение: храним черновые team_index в отдельном массиве draftTeams.
+        if (!window.draftTeams) window.draftTeams = [];
+        if (!window.draftTeams.includes(maxIdx + 1)) window.draftTeams.push(maxIdx + 1);
+        renderEventView();
+    });
+    document.getElementById('slotPickerClose').addEventListener('click', () => {
+        document.getElementById('slotPickerModal').classList.remove('show');
+        slotPickerTarget = null;
+    });
+    document.getElementById('slotPickerModal').addEventListener('click', (e) => {
+        if (e.target.id === 'slotPickerModal') {
+            e.target.classList.remove('show');
+            slotPickerTarget = null;
+        }
+    });
+}  
 const HERO_FIELDS = { 
     id:'id', 
     name:'Герой', 
@@ -4420,6 +4949,9 @@ Promise.all([
     initAuthButton();
       initAuthForms();
       initCabinet();
+      initEventsModal();
+    initEventView();
+    loadEvents();
     checkUser();  
     initSortTooltip();
     attachEvents();
