@@ -1,4 +1,4 @@
-﻿id,id 2,class_id,row_number,is_mandatory,branch_group,left_talent_id,center_talent_id,right_talent_id,next_group
+id,id 2,class_id,row_number,is_mandatory,branch_group,left_talent_id,center_talent_id,right_talent_id,next_group
 1,1,Разбойник,1,true,group_1,NULL,16,NULL,group_2
 2,2,Разбойник,2,false,group_1,1,NULL,3,group_2
 3,3,Разбойник,3,false,group_1,3,NULL,2,group_2
