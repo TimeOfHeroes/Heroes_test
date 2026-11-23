@@ -2986,6 +2986,18 @@ function makeSlotEl(cell, slot, isDefense) {
     wrap.innerHTML = renderSlotHtml(cell, 0, slot, isDefense);
     const el = wrap.firstElementChild;
     attachSlotClick(el);
+    // Обработчик удаления для заполненного слота
+    const removeBtn = el.querySelector('[data-action="remove-slot"]');
+    if (removeBtn) {
+        removeBtn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            const teamId = removeBtn.dataset.teamId;
+            const { error } = await supabaseClient.from('user_teams').delete().eq('id', teamId);
+            if (error) { alert(error.message); return; }
+            await loadEventTeams();
+            renderEventView();
+        });
+    }
     return el;
 }
 
