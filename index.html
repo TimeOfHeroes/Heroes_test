@@ -286,40 +286,127 @@
 }
 .barracks-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 16px;
 }
 .barracks-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
+    border: none;
     border-radius: 12px;
-    padding: 12px;
+    overflow: hidden;
+    background: var(--card-bg);
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    height: 100%;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    background-color: var(--element-unknown);
+    color: var(--card-text);
+    position: relative;
 }
-.barracks-card .bc-head { display: flex; align-items: center; gap: 10px; }
-.barracks-card .bc-img {
-    width: 60px; height: 60px;
+.barracks-card[data-element="Синий"] { background-color: var(--element-blue); }
+.barracks-card[data-element="Зеленый"] { background-color: var(--element-green); }
+.barracks-card[data-element="Красный"] { background-color: var(--element-red); }
+.barracks-card[data-element="Фиолетовый"] { background-color: var(--element-purple); }
+.barracks-card[data-element="Желтый"] { background-color: var(--element-yellow); }
+.barracks-card:hover { box-shadow: 0 8px 25px rgba(0,0,0,.12); transform: translateY(-3px); }
+.barracks-card .bc-thumb {
+    width: 100%;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: 6px;
+}
+.barracks-card .bc-thumb img {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    border-radius: 8px;
-    background: var(--secondary-color);
-    flex-shrink: 0;
+    padding: 6px;
+    transition: transform 0.3s;
 }
-.barracks-card .bc-name { font-weight: 600; font-size: 15px; }
-.barracks-card .bc-meta { font-size: 12px; opacity: 0.7; }
-.barracks-card .bc-row { display: flex; align-items: center; gap: 8px; font-size: 13px; }
-.barracks-card .bc-row select,
-.barracks-card .bc-row input {
-    padding: 4px 8px;
-    font-size: 13px;
-    border: 1px solid var(--checkbox-border);
-    border-radius: 6px;
-    background: var(--card-bg);
-    color: var(--text-color);
+.barracks-card:hover .bc-thumb img { transform: scale(1.05); }
+.barracks-card h4 {
+    margin: 8px 10px 2px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.3;
+    text-align: center;
 }
-.barracks-card .bc-actions { display: flex; gap: 6px; margin-top: 4px; }
-.barracks-card .bc-actions .btn { flex: 1; font-size: 12px; padding: 5px 8px; height: auto; }
+.barracks-card .bc-meta-line {
+    margin: 0 10px 2px;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    font-size: 11px;
+    justify-content: center;
+    text-align: center;
+}
+.barracks-card .bc-stats-line {
+    margin: 6px 10px 4px;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 11px;
+}
+.barracks-card .bc-pill {
+    font-size: 11px;
+    padding: 3px 8px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    border-radius: 999px;
+    white-space: nowrap;
+    font-weight: 500;
+    background: var(--pill-default);
+}
+.barracks-card[data-element="Синий"] .bc-pill { background-color: var(--pill-blue); }
+.barracks-card[data-element="Зеленый"] .bc-pill { background-color: var(--pill-green); }
+.barracks-card[data-element="Красный"] .bc-pill { background-color: var(--pill-red); }
+.barracks-card[data-element="Фиолетовый"] .bc-pill { background-color: var(--pill-purple); }
+.barracks-card[data-element="Желтый"] .bc-pill { background-color: var(--pill-yellow); }
+.barracks-card .bc-pill .icon-sword,
+.barracks-card .bc-pill .icon-shield,
+.barracks-card .bc-pill .icon-health {
+    width: 12px !important;
+    height: 12px !important;
+    min-width: 12px !important;
+    min-height: 12px !important;
+    max-width: 12px !important;
+    max-height: 12px !important;
+}
+.barracks-card .bc-extra {
+    margin: 4px 10px 8px;
+    font-size: 11px;
+    text-align: center;
+    opacity: 0.8;
+}
+.barracks-card .bc-extra b { font-weight: 700; }
+.barracks-card .bc-actions {
+    display: flex;
+    gap: 4px;
+    margin: 0 10px 8px;
+}
+.barracks-card .bc-actions .btn {
+    flex: 1;
+    font-size: 11px;
+    padding: 4px 6px;
+    height: auto;
+}
+.barracks-card .bc-counter {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
 
 /* ===== СОБЫТИЯ ===== */
 .events-list { display: flex; flex-direction: column; gap: 8px; }
@@ -2226,11 +2313,13 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         </div>
     </div>
 
-    <div id="cabinetBarracks" class="cabinet-panel active">
+       <div id="cabinetBarracks" class="cabinet-panel active">
         <div class="cabinet-toolbar">
             <input id="barracksSearch" type="search" placeholder="Поиск по казарме" class="cabinet-search">
+            <button id="barracksFiltersBtn" class="btn">Фильтры</button>
             <button id="addHeroToBarracksBtn" class="btn primary">+ Добавить героя</button>
         </div>
+        <div id="barracksCount" style="font-size:13px; opacity:0.7; margin-bottom:12px;"></div>
         <div id="barracksList" class="barracks-list"></div>
         <div id="barracksEmpty" class="cabinet-empty" style="display:none;">
             В казарме пока нет героев. Нажмите «Добавить героя».
@@ -2284,11 +2373,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <button id="addHeroClose" class="auth-close">×</button>
         <h3 style="margin:0 0 16px;">Добавить героя в казарму</h3>
         <div class="auth-form active" style="gap:12px;">
-            <label>Герой
+            <label id="addHeroSelectWrap">Герой
                 <select id="addHeroSelect"></select>
             </label>
+            <div id="addHeroNameWrap" style="display:none; font-weight:600; font-size:15px; margin-bottom:4px;"></div>
             <label>Количество
                 <input type="number" id="addHeroQuantity" min="1" value="1">
+            </label>
+            <label>Звёзды
+                <select id="addHeroStars"></select>
             </label>
             <label>Уровень навыка
                 <select id="addHeroSkill">
@@ -2660,6 +2753,12 @@ function switchCabinetTab(tab) {
     document.getElementById('cabinetEvents').classList.toggle('active', tab === 'events');
 }
 
+// ===== ЛК: КАЗАРМА (обновлённая) =====
+let barracksData = [];
+let allHeroesById = {};
+let barracksFilters = { element: new Set(), stars: new Set(), mana: new Set(), attackType: new Set(), summon: new Set(), clazz: new Set(), tags: new Set() };
+let barracksSort = { field: 'Герой', dir: 'desc' };
+
 async function loadBarracks() {
     if (!supabaseClient || !currentUser) return;
     const { data, error } = await supabaseClient
@@ -2669,19 +2768,54 @@ async function loadBarracks() {
     if (error) { console.error('Ошибка загрузки казармы:', error); return; }
     barracksData = data || [];
     renderBarracks();
+      refreshMainCounters();
+}
+
+function getBarracksHeroRecord(b) {
+    return allHeroesById[b.hero_id];
 }
 
 function renderBarracks() {
     const list = document.getElementById('barracksList');
     const empty = document.getElementById('barracksEmpty');
+    const countEl = document.getElementById('barracksCount');
     const search = (document.getElementById('barracksSearch').value || '').trim().toLowerCase();
-    let filtered = barracksData;
-    if (search) {
-        filtered = barracksData.filter(b => {
-            const hero = allHeroesById[b.hero_id];
-            return hero && hero[HERO_FIELDS.name].toLowerCase().includes(search);
-        });
-    }
+    let filtered = barracksData.filter(b => {
+        const hero = getBarracksHeroRecord(b);
+        if (!hero) return false;
+        if (search) {
+            const q = search;
+            const nameMatch = hero[HERO_FIELDS.name].toLowerCase().includes(q);
+            const abilMatch = String(hero[HERO_FIELDS.abilities] || '').toLowerCase().includes(q);
+            if (!nameMatch && !abilMatch) return false;
+        }
+        if (barracksFilters.element.size && !barracksFilters.element.has(String(hero[HERO_FIELDS.element]))) return false;
+        if (barracksFilters.stars.size && !barracksFilters.stars.has(String(hero[HERO_FIELDS.stars]))) return false;
+        if (barracksFilters.mana.size && !barracksFilters.mana.has(String(hero[HERO_FIELDS.mana]))) return false;
+        if (barracksFilters.attackType.size && !barracksFilters.attackType.has(String(hero[HERO_FIELDS.attackType]))) return false;
+        if (barracksFilters.summon.size && !barracksFilters.summon.has(String(hero[HERO_FIELDS.summon]))) return false;
+        if (barracksFilters.clazz.size && !barracksFilters.clazz.has(String(hero[HERO_FIELDS.clazz]))) return false;
+        if (barracksFilters.tags.size) {
+            const heroTags = hero._tags || [];
+            const mode = tagFilterMode === 'or' ? 'some' : 'every';
+            if (![...barracksFilters.tags][mode](t => heroTags.includes(t))) return false;
+        }
+        return true;
+    });
+    // Сортировка
+    filtered.sort((a, b) => {
+        const ha = getBarracksHeroRecord(a), hb = getBarracksHeroRecord(b);
+        if (!ha || !hb) return 0;
+        let av, bv;
+        if (barracksSort.field === 'Герой') { av = ha[HERO_FIELDS.name]; bv = hb[HERO_FIELDS.name]; }
+        else if (barracksSort.field === 'Атака') { av = toNum(ha[HERO_FIELDS.attack]); bv = toNum(hb[HERO_FIELDS.attack]); }
+        else if (barracksSort.field === 'Защита') { av = toNum(ha[HERO_FIELDS.defense]); bv = toNum(hb[HERO_FIELDS.defense]); }
+        else if (barracksSort.field === 'Жизни') { av = toNum(ha[HERO_FIELDS.hp]); bv = toNum(hb[HERO_FIELDS.hp]); }
+        else { av = ha[HERO_FIELDS.name]; bv = hb[HERO_FIELDS.name]; }
+        let cmp = (typeof av === 'number' && typeof bv === 'number') ? av - bv : String(av || '').localeCompare(String(bv || ''), 'ru', {numeric:true});
+        return barracksSort.dir === 'asc' ? cmp : -cmp;
+    });
+    countEl.textContent = 'Героев в казарме: ' + filtered.length + ' (всего записей: ' + barracksData.length + ')';
     if (!filtered.length) {
         list.innerHTML = '';
         empty.style.display = 'block';
@@ -2689,30 +2823,23 @@ function renderBarracks() {
     }
     empty.style.display = 'none';
     list.innerHTML = filtered.map(b => {
-        const hero = allHeroesById[b.hero_id];
+        const hero = getBarracksHeroRecord(b);
         if (!hero) return '';
         const img = fileCellToUrl(hero[HERO_FIELDS.image]);
         const imgSrc = img ? getOptimizedImageUrl(img) : '';
-        return `<div class="barracks-card" data-id="${b.id}">
-            <div class="bc-head">
-                ${imgSrc ? `<img class="bc-img" src="${imgSrc}" onerror="this.onerror=null;this.src='${img}'">` : '<div class="bc-img"></div>'}
-                <div>
-                    <div class="bc-name">${hero[HERO_FIELDS.name]}</div>
-                    <div class="bc-meta">${hero[HERO_FIELDS.element]} • ${hero[HERO_FIELDS.clazz]}</div>
-                </div>
+        const starsDisplay = `${b.star_level} <span class="icon-star" style="width:11px;height:11px;"></span>`;
+        const stats = renderBarracksStats(hero, b);
+        return `<div class="barracks-card" data-id="${b.id}" data-element="${hero[HERO_FIELDS.element]||''}">
+            <div class="bc-counter">×${b.quantity}</div>
+            <div class="bc-thumb">
+                ${imgSrc ? `<img src="${imgSrc}" alt="${hero[HERO_FIELDS.name]}" loading="lazy" onerror="this.onerror=null;this.src='${img}'">` : '<div style="padding:20px;">Нет изображения</div>'}
             </div>
-            <div class="bc-row">
-                <span>Кол-во:</span>
-                <input type="number" min="1" value="${b.quantity}" data-field="quantity" style="width:70px;">
-            </div>
-            <div class="bc-row">
-                <span>Навык:</span>
-                <select data-field="skill_level">
-                    ${['2/8','3/8','4/8','5/8','6/8','7/8','8/8'].map(l => `<option ${b.skill_level===l?'selected':''}>${l}</option>`).join('')}
-                </select>
-            </div>
+            <h4>${hero[HERO_FIELDS.name]}</h4>
+            <div class="bc-meta-line"><span>${hero[HERO_FIELDS.element]}</span> • <span>${starsDisplay}</span> • <span>${hero[HERO_FIELDS.clazz]}</span></div>
+            <div class="bc-stats-line">${stats}</div>
+            <div class="bc-extra">Навык: <b>${b.skill_level}</b></div>
             <div class="bc-actions">
-                <button class="btn" data-action="save">Сохранить</button>
+                <button class="btn" data-action="edit">Изменить</button>
                 <button class="btn" data-action="delete">Удалить</button>
             </div>
         </div>`;
@@ -2720,23 +2847,166 @@ function renderBarracks() {
 
     list.querySelectorAll('.barracks-card').forEach(card => {
         const id = card.dataset.id;
-        card.querySelector('[data-action="save"]').addEventListener('click', async () => {
-            const quantity = parseInt(card.querySelector('[data-field="quantity"]').value) || 1;
-            const skill_level = card.querySelector('[data-field="skill_level"]').value;
-            const { error } = await supabaseClient.from('user_heroes').update({ quantity, skill_level }).eq('id', id);
-            if (error) { alert('Ошибка сохранения: ' + error.message); return; }
-            const item = barracksData.find(b => b.id === id);
-            if (item) { item.quantity = quantity; item.skill_level = skill_level; }
+        card.querySelector('.bc-thumb').addEventListener('click', () => openBarracksHeroModal(id));
+        card.querySelector('h4').addEventListener('click', () => openBarracksHeroModal(id));
+        card.querySelector('[data-action="edit"]').addEventListener('click', (e) => {
+            e.stopPropagation();
+            openEditBarracksModal(id);
         });
-        card.querySelector('[data-action="delete"]').addEventListener('click', async () => {
+        card.querySelector('[data-action="delete"]').addEventListener('click', async (e) => {
+            e.stopPropagation();
             if (!confirm('Удалить этого героя из казармы?')) return;
             const { error } = await supabaseClient.from('user_heroes').delete().eq('id', id);
             if (error) { alert('Ошибка удаления: ' + error.message); return; }
-            barracksData = barracksData.filter(b => b.id !== id);
+            barracksData = barracksData.filter(x => x.id !== id);
             renderBarracks();
         });
     });
 }
+
+function renderBarracksStats(hero, b) {
+    // Статы с учётом выбранных талантов (talent_selections) и режима 'manual' или 'none'
+    let calc;
+    try {
+        const mode = b.talent_selections && Object.keys(b.talent_selections).length ? 'manual' : 'none';
+        calc = calculateStatsWithSelections(hero, b.talent_selections || {}, mode);
+    } catch (e) {
+        calc = { attack: toNum(hero[HERO_FIELDS.attack])||0, defense: toNum(hero[HERO_FIELDS.defense])||0, hp: toNum(hero[HERO_FIELDS.hp])||0 };
+    }
+    return `<span class="bc-pill"><span class="icon-sword"></span> ${calc.attack}</span>` +
+           `<span class="bc-pill"><span class="icon-shield"></span> ${calc.defense}</span>` +
+           `<span class="bc-pill"><span class="icon-health"></span> ${calc.hp}</span>`;
+}
+
+// --- Модалка героя из казармы ---
+function openBarracksHeroModal(barracksId) {
+    const b = barracksData.find(x => x.id === barracksId);
+    if (!b) return;
+    const hero = getBarracksHeroRecord(b);
+    if (!hero) return;
+    // Используем существующую модалку героя, но не даём кнопке «Добавить в казарму» показаться
+    // (если она есть). Открываем через openModal, найдя индекс героя в viewHeroes.
+    // Проще: временно подставляем hero в viewHeroes? Нет — viewHeroes это глобальный список.
+    // Вместо этого откроем модалку напрямую через fillModal с временным объектом.
+    // Но fillModal использует currentIdx и viewHeroes для навигации. Сделаем свою лёгкую модалку.
+    showBarracksHeroInfo(hero, b);
+}
+
+function showBarracksHeroInfo(hero, b) {
+    // Временная модалка на основе auth-modal
+    let modal = document.getElementById('barracksHeroModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'barracksHeroModal';
+        modal.className = 'auth-modal';
+        modal.innerHTML = '<div class="auth-dialog" style="max-width:700px; max-height:90vh; overflow-y:auto;"><button class="auth-close" id="bhClose">×</button><div id="bhContent"></div></div>';
+        document.body.appendChild(modal);
+        modal.addEventListener('click', (e) => { if (e.target.id === 'barracksHeroModal') modal.classList.remove('show'); });
+        modal.querySelector('#bhClose').addEventListener('click', () => modal.classList.remove('show'));
+    }
+    const img = fileCellToUrl(hero[HERO_FIELDS.image]);
+    const imgSrc = img ? getOptimizedImageUrl(img) : '';
+    const calc = calculateStatsWithSelections(hero, b.talent_selections || {}, b.talent_selections && Object.keys(b.talent_selections).length ? 'manual' : 'none');
+    const tagsHtml = (hero._tags || []).map(t => {
+        const cls = getTagClass(t);
+        return `<span class="tag ${cls}" style="display:inline-block; font-size:12px; font-weight:600; padding:4px 12px; border-radius:12px; color:#fff; background:var(--${cls.replace('tag-','')}); margin:2px;">#${t}</span>`;
+    }).join('');
+    const content = document.getElementById('bhContent');
+    content.innerHTML = `
+        <div style="display:grid; grid-template-columns:200px 1fr; gap:16px; align-items:start;">
+            <div style="background:var(--element-unknown); border-radius:12px; padding:8px; text-align:center;">
+                ${imgSrc ? `<img src="${imgSrc}" style="width:100%; max-height:220px; object-fit:contain;" onerror="this.onerror=null;this.src='${img}'">` : ''}
+            </div>
+            <div>
+                <h2 style="margin:0 0 8px;">${hero[HERO_FIELDS.name]}</h2>
+                <div style="font-size:13px; opacity:0.8; margin-bottom:8px;">${hero[HERO_FIELDS.element]} • ${b.star_level}★ • ${hero[HERO_FIELDS.clazz]}</div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
+                    <span><span class="icon-sword"></span> ${calc.attack}</span>
+                    <span><span class="icon-shield"></span> ${calc.defense}</span>
+                    <span><span class="icon-health"></span> ${calc.hp}</span>
+                </div>
+                <div style="font-size:13px; margin-bottom:6px;"><b>В казарме:</b> ${b.quantity} шт., навык ${b.skill_level}, ${b.star_level}★</div>
+                <div style="font-size:13px; margin-bottom:6px;"><b>Скорость маны:</b> ${hero[HERO_FIELDS.mana]||'—'} · <b>Цели:</b> ${hero[HERO_FIELDS.attackType]||'—'}</div>
+                <div style="font-size:13px; margin-bottom:6px;"><b>Призыв:</b> ${hero[HERO_FIELDS.summon]||'—'}</div>
+            </div>
+        </div>
+        <h3 style="margin:16px 0 6px; font-size:15px;">Способности</h3>
+        <div style="white-space:pre-line; font-size:13px; line-height:1.5;">${String(hero[HERO_FIELDS.abilities]||'—').replace(/^'|'$/g,'')}</div>
+        <h3 style="margin:14px 0 6px; font-size:15px;">Пассивная способность</h3>
+        <div style="white-space:pre-line; font-size:13px; line-height:1.5;">${String(hero[HERO_FIELDS.passive]||'—').replace(/^'|'$/g,'')}</div>
+        ${tagsHtml ? `<h3 style="margin:14px 0 6px; font-size:15px;">Теги</h3><div>${tagsHtml}</div>` : ''}
+        <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn primary" id="bhEdit">Изменить прокачку</button>
+            <button class="btn" id="bhTalents">Настроить таланты</button>
+        </div>
+    `;
+    modal.classList.add('show');
+    document.getElementById('bhEdit').addEventListener('click', () => {
+        modal.classList.remove('show');
+        openEditBarracksModal(b.id);
+    });
+    document.getElementById('bhTalents').addEventListener('click', () => {
+        modal.classList.remove('show');
+        openTalentEditorForBarracks(b.id);
+    });
+}
+
+// --- Редактирование записи казармы ---
+function openEditBarracksModal(barracksId) {
+    const b = barracksData.find(x => x.id === barracksId);
+    if (!b) return;
+    const hero = getBarracksHeroRecord(b);
+    if (!hero) return;
+    let modal = document.getElementById('editBarracksModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'editBarracksModal';
+        modal.className = 'auth-modal';
+        modal.innerHTML = `<div class="auth-dialog" style="max-width:480px;">
+            <button class="auth-close" id="ebClose">×</button>
+            <h3 style="margin:0 0 16px;">Изменить: <span id="ebName"></span></h3>
+            <div class="auth-form active" style="gap:12px;">
+                <label>Количество <input type="number" id="ebQuantity" min="1"></label>
+                <label>Звёзды <select id="ebStars"></select></label>
+                <label>Уровень навыка <select id="ebSkill">
+                    <option>2/8</option><option>3/8</option><option>4/8</option><option>5/8</option><option>6/8</option><option>7/8</option><option>8/8</option>
+                </select></label>
+                <button class="auth-submit" id="ebSave">Сохранить</button>
+                <div class="auth-error" id="ebError"></div>
+            </div>
+        </div>`;
+        document.body.appendChild(modal);
+        modal.addEventListener('click', (e) => { if (e.target.id === 'editBarracksModal') modal.classList.remove('show'); });
+        modal.querySelector('#ebClose').addEventListener('click', () => modal.classList.remove('show'));
+    }
+    document.getElementById('ebName').textContent = hero[HERO_FIELDS.name];
+    document.getElementById('ebQuantity').value = b.quantity;
+    const maxStars = parseInt(hero[HERO_FIELDS.stars]) || 5;
+    const starsSel = document.getElementById('ebStars');
+    starsSel.innerHTML = '';
+    for (let s = 1; s <= maxStars; s++) {
+        const opt = document.createElement('option');
+        opt.value = s; opt.textContent = s + '★';
+        if (s === b.star_level) opt.selected = true;
+        starsSel.appendChild(opt);
+    }
+    document.getElementById('ebSkill').value = b.skill_level;
+    document.getElementById('ebError').textContent = '';
+    modal.classList.add('show');
+    document.getElementById('ebSave').onclick = async () => {
+        const quantity = parseInt(document.getElementById('ebQuantity').value) || 1;
+        const star_level = parseInt(document.getElementById('ebStars').value) || 1;
+        const skill_level = document.getElementById('ebSkill').value;
+        const { error } = await supabaseClient.from('user_heroes').update({ quantity, star_level, skill_level }).eq('id', b.id);
+        if (error) { document.getElementById('ebError').textContent = error.message; return; }
+        b.quantity = quantity; b.star_level = star_level; b.skill_level = skill_level;
+        modal.classList.remove('show');
+        renderBarracks();
+    };
+}
+
+// --- Форма добавления (из казармы и с главной) ---
+let addHeroContext = { mode: 'cabinet', heroId: null };
 
 function initAddHeroModal() {
     const select = document.getElementById('addHeroSelect');
@@ -2746,9 +3016,24 @@ function initAddHeroModal() {
         .map(h => `<option value="${h[HERO_FIELDS.id]}">${h[HERO_FIELDS.name]} (${h[HERO_FIELDS.element]}, ${h[HERO_FIELDS.clazz]})</option>`)
         .join('');
 
+    function updateStarsOptions(heroId) {
+        const hero = allHeroesById[heroId];
+        const maxStars = hero ? (parseInt(hero[HERO_FIELDS.stars]) || 5) : 5;
+        const sel = document.getElementById('addHeroStars');
+        sel.innerHTML = '';
+        for (let s = 1; s <= maxStars; s++) {
+            const opt = document.createElement('option');
+            opt.value = s; opt.textContent = s + '★';
+            if (s === maxStars) opt.selected = true;
+            sel.appendChild(opt);
+        }
+    }
+
+    select.addEventListener('change', () => updateStarsOptions(parseInt(select.value)));
+    updateStarsOptions(parseInt(select.value));
+
     document.getElementById('addHeroToBarracksBtn').addEventListener('click', () => {
-        document.getElementById('addHeroModal').classList.add('show');
-        document.getElementById('addHeroError').textContent = '';
+        openAddHeroModal('cabinet', null);
     });
     document.getElementById('addHeroClose').addEventListener('click', () => {
         document.getElementById('addHeroModal').classList.remove('show');
@@ -2757,45 +3042,90 @@ function initAddHeroModal() {
         if (e.target.id === 'addHeroModal') e.target.classList.remove('show');
     });
     document.getElementById('addHeroSubmit').addEventListener('click', async () => {
-        const heroId = parseInt(select.value);
-        const quantity = parseInt(document.getElementById('addHeroQuantity').value) || 1;
-        const skill_level = document.getElementById('addHeroSkill').value;
         const errEl = document.getElementById('addHeroError');
         errEl.textContent = '';
+        let heroId;
+        if (addHeroContext.mode === 'card') {
+            heroId = addHeroContext.heroId;
+        } else {
+            heroId = parseInt(select.value);
+        }
+        const quantity = parseInt(document.getElementById('addHeroQuantity').value) || 1;
+        const star_level = parseInt(document.getElementById('addHeroStars').value) || 1;
+        const skill_level = document.getElementById('addHeroSkill').value;
         const { data, error } = await supabaseClient.from('user_heroes').insert({
-            user_id: currentUser.id,
-            hero_id: heroId,
-            quantity,
-            skill_level,
-            talent_selections: {}
+            user_id: currentUser.id, hero_id: heroId, quantity, star_level, skill_level, talent_selections: {}
         }).select().single();
         if (error) { errEl.textContent = error.message; return; }
         barracksData.push(data);
         document.getElementById('addHeroModal').classList.remove('show');
         renderBarracks();
+        // Обновить счётчики на главной
+        refreshMainCounters();
     });
 }
 
-function initCabinet() {
-    document.getElementById('closeCabinetBtn').addEventListener('click', closeCabinet);
-    document.getElementById('logoutBtn').addEventListener('click', async () => {
-        await supabaseClient.auth.signOut();
-        currentUser = null;
-        updateAuthButton();
-        ['addHeroModal', 'eventModal', 'slotPickerModal', 'authModal'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.classList.remove('show');
-        });
-        document.body.style.overflow = '';
-        closeCabinet();
+function openAddHeroModal(mode, heroId) {
+    addHeroContext = { mode, heroId };
+    const selectWrap = document.getElementById('addHeroSelectWrap');
+    const nameWrap = document.getElementById('addHeroNameWrap');
+    if (mode === 'card' && heroId) {
+        const hero = allHeroesById[heroId];
+        selectWrap.style.display = 'none';
+        nameWrap.style.display = 'block';
+        nameWrap.textContent = hero ? hero[HERO_FIELDS.name] : '';
+        // Звёзды по heroId
+        const maxStars = hero ? (parseInt(hero[HERO_FIELDS.stars]) || 5) : 5;
+        const sel = document.getElementById('addHeroStars');
+        sel.innerHTML = '';
+        for (let s = 1; s <= maxStars; s++) {
+            const opt = document.createElement('option');
+            opt.value = s; opt.textContent = s + '★';
+            if (s === maxStars) opt.selected = true;
+            sel.appendChild(opt);
+        }
+    } else {
+        selectWrap.style.display = '';
+        nameWrap.style.display = 'none';
+    }
+    document.getElementById('addHeroQuantity').value = 1;
+    document.getElementById('addHeroSkill').value = '2/8';
+    document.getElementById('addHeroError').textContent = '';
+    document.getElementById('addHeroModal').classList.add('show');
+}
+
+// --- Счётчики на главной (сколько копий героя в казарме) ---
+function refreshMainCounters() {
+    // Суммируем quantity по hero_id
+    const counts = {};
+    barracksData.forEach(b => {
+        counts[b.hero_id] = (counts[b.hero_id] || 0) + (b.quantity || 1);
     });
-    document.querySelectorAll('.cabinet-tab').forEach(tab => {
-        tab.addEventListener('click', () => switchCabinetTab(tab.dataset.ctab));
+    document.querySelectorAll('.card .add-to-barracks-counter').forEach(el => {
+        const heroId = parseInt(el.dataset.heroId);
+        const c = counts[heroId] || 0;
+        el.textContent = c > 0 ? ('×' + c) : '';
+        el.style.display = c > 0 ? 'inline-block' : 'none';
     });
-    document.getElementById('barracksSearch').addEventListener('input', renderBarracks);
-    initAddHeroModal();
-    allHeroesById = {};
-    allHeroes.forEach(h => { allHeroesById[h[HERO_FIELDS.id]] = h; });
+}
+
+// --- Редактор талантов для казармы (использует существующее дерево) ---
+function openTalentEditorForBarracks(barracksId) {
+    const b = barracksData.find(x => x.id === barracksId);
+    if (!b) return;
+    const hero = getBarracksHeroRecord(b);
+    if (!hero) return;
+    // Открываем существующее дерево, подставив временные значения
+    // Используем глобальные currentHeroTalents/currentMode, но сохраняем в b.talent_selections
+    // Для простоты: открываем дерево и по клику "Сохранить" (добавим кнопку) пишем в БД.
+    // Здесь просто откроем дерево с текущими выборами и режимом manual/none.
+    window._barracksTalentEdit = b.id;
+    currentIdx = -1; // чтобы не мешало
+    currentHeroTalents = JSON.parse(JSON.stringify(b.talent_selections || {}));
+    currentMode = Object.keys(b.talent_selections || {}).length ? 'manual' : 'none';
+    document.getElementById('treeHeroName').textContent = hero[HERO_FIELDS.name];
+    renderTalentTree(hero, currentHeroTalents, currentMode);
+    document.getElementById('treePanel').classList.add('show');
 }
 
 // ===== ЛК: СОБЫТИЯ И КОМАНДЫ =====
@@ -4170,14 +4500,86 @@ function renderMetaRow(hero) {
     `;
 }
 
-function renderCardStats(hero) {
-    let html = '';
-    html += `<span class="pill"><span class="icon-sword"></span> ${hero[HERO_FIELDS.attack]}</span>`;
-    html += `<span class="pill"><span class="icon-shield"></span> ${hero[HERO_FIELDS.defense]}</span>`;
-    html += `<span class="pill"><span class="icon-health"></span> ${hero[HERO_FIELDS.hp]}</span>`;
-    return html;
+function renderCards(heroes){
+    if(!heroes.length){ 
+        document.getElementById('cards').innerHTML=''; 
+        document.getElementById('empty').style.display='block'; 
+        return; 
+    }
+    document.getElementById('empty').style.display='none';
+    const counts = {};
+    barracksData.forEach(b => { counts[b.hero_id] = (counts[b.hero_id]||0) + (b.quantity||1); });
+    document.getElementById('cards').innerHTML=heroes.map((r,i)=>{
+        let img = fileCellToUrl(r[HERO_FIELDS.image]);
+        let optimizedImg = img ? getOptimizedImageUrl(img) : '';
+        let imgSrc = optimizedImg || img;
+        let abilitiesFull=String(r[HERO_FIELDS.abilities]||'');
+        let cleaned=abilitiesFull.replace(/^'|'$/g,'');
+        let hasAbil=cleaned.trim().length>0;
+        const starsDisplay = `${r[HERO_FIELDS.stars]} <span class="icon-star"></span>`;
+        const heroId = r[HERO_FIELDS.id];
+        const c = counts[heroId] || 0;
+        const counterHtml = currentUser ? `<span class="add-to-barracks-counter" data-hero-id="${heroId}" style="display:${c>0?'inline-block':'none'}; position:absolute; top:6px; right:6px; background:rgba(0,0,0,0.6); color:#fff; font-size:11px; font-weight:600; padding:2px 8px; border-radius:10px;">${c>0?('×'+c):''}</span>` : '';
+        const addBtnHtml = currentUser ? `<button class="add-to-barracks-btn" data-hero-id="${heroId}" style="position:absolute; top:6px; left:6px; width:28px; height:28px; border-radius:50%; border:none; background:#227BBC; color:#fff; font-size:18px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:5;" title="Добавить в казарму">+</button>` : '';
+        return '<article class="card" data-idx="'+i+'" data-element="'+(r[HERO_FIELDS.element]||'')+'" style="position:relative;">' + counterHtml + addBtnHtml +
+            '<div class="thumb">'+(imgSrc?'<img src="'+imgSrc+'" alt="'+r[HERO_FIELDS.name]+'" loading="lazy" onerror="this.onerror=null; this.src=\''+img+'\'">':'<div style="padding:20px;">Нет изображения</div>')+'</div><h3>'+r[HERO_FIELDS.name]+'</h3>' +
+            '<div class="meta"><span>'+r[HERO_FIELDS.element]+'</span> • <span>'+starsDisplay+'</span> • <span>'+r[HERO_FIELDS.clazz]+'</span></div>' +
+            '<div class="meta"><span>'+r[HERO_FIELDS.attackType]+'</span> • <span>'+r[HERO_FIELDS.mana]+'</span> • <span>'+r[HERO_FIELDS.summon]+'</span></div>' +
+            '<div class="stats">' +
+            renderCardStats(r) +
+            '</div>'+(hasAbil?'<button class="toggle-abilities" data-idx="'+i+'">Показать способности</button><div class="card-abilities-full" id="abilities-'+i+'">'+cleaned.replace(/\n/g,'<br>')+'</div>':'')+'</article>';
+    }).join('');
+    document.querySelectorAll('.toggle-abilities').forEach(btn=>btn.addEventListener('click',function(e){ 
+        e.stopPropagation(); 
+        let idx=this.dataset.idx; 
+        let div=document.getElementById('abilities-'+idx); 
+        if(div.style.display==='block'){ 
+            div.style.display='none'; 
+            this.textContent='Показать способности'; 
+        } else { 
+            div.style.display='block'; 
+            this.textContent='Скрыть способности'; 
+        } 
+    }));
+    document.querySelectorAll('.add-to-barracks-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const heroId = parseInt(btn.dataset.heroId);
+            openAddHeroModal('card', heroId);
+        });
+    });
+}
+function initBarracksFilters() {
+    document.getElementById('barracksFiltersBtn').addEventListener('click', () => {
+        // Открываем ту же панель фильтров, но применяем к казарме
+        window._filterContext = 'barracks';
+        document.getElementById('filters').classList.add('show');
+        document.getElementById('filterOverlay').classList.add('show');
+        document.body.style.overflow = 'hidden';
+        // Перестроить фасеты под казарму
+        rebuildFacetsForBarracks();
+    });
 }
 
+function rebuildFacetsForBarracks() {
+    const heroes = barracksData.map(b => getBarracksHeroRecord(b)).filter(Boolean);
+    // Уникальные герои по hero_id
+    const uniqHeroes = {};
+    heroes.forEach(h => { uniqHeroes[h[HERO_FIELDS.id]] = h; });
+    const arr = Object.values(uniqHeroes);
+    buildFacet(document.getElementById('facet-element'), arr.map(r=>r[HERO_FIELDS.element]), 'element');
+    buildFacet(document.getElementById('facet-stars'), arr.map(r=>r[HERO_FIELDS.stars]), 'stars');
+    buildFacet(document.getElementById('facet-mana'), arr.map(r=>r[HERO_FIELDS.mana]), 'mana');
+    buildFacet(document.getElementById('facet-attackType'), arr.map(r=>r[HERO_FIELDS.attackType]), 'attackType');
+    buildFacet(document.getElementById('facet-summon'), arr.map(r=>r[HERO_FIELDS.summon]), 'summon');
+    buildFacet(document.getElementById('facet-clazz'), arr.map(r=>r[HERO_FIELDS.clazz]), 'clazz');
+    const allTags = new Set();
+    arr.forEach(r => { if (r._tags) r._tags.forEach(t => allTags.add(t)); });
+    buildFacet(document.getElementById('facet-tags'), Array.from(allTags), 'tags', true);
+    // Переключить selected на barracksFilters
+    // (упрощённо: копируем текущие barracksFilters в selected)
+    Object.keys(barracksFilters).forEach(k => { selected[k] = barracksFilters[k]; });
+}
 function initDragAndDrop() {
     const panel=document.getElementById('treePanel');
     const header=document.getElementById('treeHeader');
@@ -4628,7 +5030,28 @@ function fillModal(hero){
         treeBtn.addEventListener('click', openTreePanel);
     }
 }
-
+function initCabinet() {
+    document.getElementById('closeCabinetBtn').addEventListener('click', closeCabinet);
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+        await supabaseClient.auth.signOut();
+        currentUser = null;
+        updateAuthButton();
+        ['addHeroModal','eventModal','slotPickerModal','authModal'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.remove('show');
+        });
+        document.body.style.overflow = '';
+        closeCabinet();
+    });
+    document.querySelectorAll('.cabinet-tab').forEach(tab => {
+        tab.addEventListener('click', () => switchCabinetTab(tab.dataset.ctab));
+    });
+    document.getElementById('barracksSearch').addEventListener('input', renderBarracks);
+    initAddHeroModal();
+    initBarracksFilters();   // <-- добавили
+    allHeroesById = {};
+    allHeroes.forEach(h => { allHeroesById[h[HERO_FIELDS.id]] = h; });
+}
 function closeModal(){ 
     document.getElementById('modal').classList.remove('show'); 
     document.body.style.overflow=''; 
@@ -4783,10 +5206,17 @@ function attachEvents(){
     });
     
     document.getElementById('openFilters').addEventListener('click', openFiltersPanel);
-    document.getElementById('applyFiltersBtn').addEventListener('click', ()=>{ 
+document.getElementById('applyFiltersBtn').addEventListener('click', ()=>{ 
+    if (window._filterContext === 'barracks') {
+        Object.keys(barracksFilters).forEach(k => { barracksFilters[k] = new Set(selected[k]); });
+        closeFiltersPanel();
+        renderBarracks();
+        window._filterContext = 'gallery';
+    } else {
         applyFilters(); 
         closeFiltersPanel(); 
-    });
+    }
+});
     document.getElementById('closeFilters').addEventListener('click', closeFiltersPanel);
     document.getElementById('filterOverlay').addEventListener('click', closeFiltersPanel);
     document.getElementById('cards').addEventListener('click', e=>{ 
@@ -4936,3 +5366,4 @@ Promise.all([
 </script>
 </body>
 </html>
+
