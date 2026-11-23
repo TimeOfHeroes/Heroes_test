@@ -81,7 +81,126 @@
   --icon-tree: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/B8DMifczdAzQiFisHhqXRU5Gk5gmFRWj_5ff6b7ccab8b189f829ce3b4bc0974e78a764f0c83b248388c2037444dd873e5.svg');
   --icon-upgrade: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/YpiBSmwAWmBJR2EnXfdUKY6GUZCOxZCP_aa2bee0d91297c694915411d9606c3cbfc6882ea5980a5e7956f489c8a92b6bb.svg');
 }
-
+.cabinet {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: calc(100vh - var(--hdrH));
+}
+.cabinet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+.cabinet-tabs { display: flex; gap: 4px; }
+.cabinet-tab {
+    padding: 8px 18px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: var(--text-color);
+    opacity: 0.6;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.cabinet-tab.active {
+    opacity: 1;
+    border-bottom-color: #227BBC;
+    color: #227BBC;
+}
+.cabinet-user { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.cabinet-panel { display: none; }
+.cabinet-panel.active { display: block; }
+.cabinet-toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+.cabinet-search {
+    flex: 1;
+    min-width: 200px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid var(--checkbox-border);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text-color);
+}
+.cabinet-empty {
+    text-align: center;
+    padding: 40px 20px;
+    opacity: 0.6;
+    font-size: 15px;
+}
+.barracks-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+}
+.barracks-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.barracks-card .bc-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.barracks-card .bc-img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: var(--secondary-color);
+    flex-shrink: 0;
+}
+.barracks-card .bc-name { font-weight: 600; font-size: 15px; }
+.barracks-card .bc-meta { font-size: 12px; opacity: 0.7; }
+.barracks-card .bc-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+}
+.barracks-card .bc-row select,
+.barracks-card .bc-row input {
+    padding: 4px 8px;
+    font-size: 13px;
+    border: 1px solid var(--checkbox-border);
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: var(--text-color);
+}
+.barracks-card .bc-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+}
+.barracks-card .bc-actions .btn {
+    flex: 1;
+    font-size: 12px;
+    padding: 5px 8px;
+    height: auto;
+}
+@media (max-width: 768px) {
+    .cabinet { padding: 12px; }
+    .cabinet-header { flex-direction: column; align-items: stretch; }
+    .cabinet-user { justify-content: space-between; }
+    .barracks-list { grid-template-columns: 1fr; }
+}
 @media (prefers-color-scheme: dark) {
   :root {
     --text-color: #eee;
@@ -1978,7 +2097,66 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 <div id="empty" style="display:none;">Ничего не найдено. Измените фильтры.</div>
 </section>
 </div>
+<!-- ===== ЛИЧНЫЙ КАБИНЕТ ===== -->
+<div id="cabinet" class="cabinet" style="display:none;">
+    <div class="cabinet-header">
+        <div class="cabinet-tabs">
+            <button class="cabinet-tab active" data-ctab="barracks">Казарма</button>
+            <button class="cabinet-tab" data-ctab="events">События</button>
+        </div>
+        <div class="cabinet-user">
+            <span id="cabinetEmail"></span>
+            <button id="logoutBtn" class="btn btn-white">Выйти</button>
+            <button id="closeCabinetBtn" class="btn">← На сайт</button>
+        </div>
+    </div>
 
+    <!-- Вкладка «Казарма» -->
+    <div id="cabinetBarracks" class="cabinet-panel active">
+        <div class="cabinet-toolbar">
+            <input id="barracksSearch" type="search" placeholder="Поиск по казарме" class="cabinet-search">
+            <button id="addHeroToBarracksBtn" class="btn primary">+ Добавить героя</button>
+        </div>
+        <div id="barracksList" class="barracks-list"></div>
+        <div id="barracksEmpty" class="cabinet-empty" style="display:none;">
+            В казарме пока нет героев. Нажмите «Добавить героя».
+        </div>
+    </div>
+
+    <!-- Вкладка «События» (пока заглушка) -->
+    <div id="cabinetEvents" class="cabinet-panel">
+        <div class="cabinet-empty">События и команды будут добавлены на следующем шаге.</div>
+    </div>
+</div>
+
+<!-- ===== МОДАЛКА ДОБАВЛЕНИЯ ГЕРОЯ В КАЗАРМУ ===== -->
+<div id="addHeroModal" class="auth-modal">
+    <div class="auth-dialog" style="max-width:520px;">
+        <button id="addHeroClose" class="auth-close">×</button>
+        <h3 style="margin:0 0 16px;">Добавить героя в казарму</h3>
+        <div class="auth-form active" style="gap:12px;">
+            <label>Герой
+                <select id="addHeroSelect"></select>
+            </label>
+            <label>Количество
+                <input type="number" id="addHeroQuantity" min="1" value="1">
+            </label>
+            <label>Уровень навыка
+                <select id="addHeroSkill">
+                    <option>2/8</option><option>3/8</option><option>4/8</option>
+                    <option>5/8</option><option>6/8</option><option>7/8</option><option>8/8</option>
+                </select>
+            </label>
+            <label>Таланты (необязательно)
+                <div id="addHeroTalentsInfo" style="font-size:12px; opacity:0.7;">
+                    Таланты можно настроить после добавления в казарму.
+                </div>
+            </label>
+            <button id="addHeroSubmit" class="auth-submit">Добавить</button>
+            <div id="addHeroError" class="auth-error"></div>
+        </div>
+    </div>
+</div>
 <!-- ===== МОДАЛЬНОЕ ОКНО ===== -->
 <div id="modal" class="modal">
 <div class="dialog">
@@ -2147,7 +2325,7 @@ function initAuthButton() {
     if (!btn) return;
     btn.addEventListener('click', () => {
         if (currentUser) {
-            alert('ЛК будет добавлен на следующем шаге. Вы вошли как: ' + currentUser.email);
+            openCabinet();
         } else {
             openAuthModal('login');
         }
@@ -2272,6 +2450,170 @@ function initAuthForms() {
             console.log('👋 Пользователь вышел');
         }
     });
+}
+  // ===== ЛК: КАЗАРМА =====
+let barracksData = [];
+let allHeroesById = {};
+
+function openCabinet() {
+    if (!currentUser) return;
+    document.querySelector('.wrap').style.display = 'none';
+    document.querySelector('header').style.display = 'none';
+    document.getElementById('cabinet').style.display = 'block';
+    document.getElementById('cabinetEmail').textContent = currentUser.email || '';
+    document.body.style.overflow = '';
+    loadBarracks();
+    switchCabinetTab('barracks');
+}
+
+function closeCabinet() {
+    document.getElementById('cabinet').style.display = 'none';
+    document.querySelector('.wrap').style.display = '';
+    document.querySelector('header').style.display = '';
+}
+
+function switchCabinetTab(tab) {
+    document.querySelectorAll('.cabinet-tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.ctab === tab);
+    });
+    document.getElementById('cabinetBarracks').classList.toggle('active', tab === 'barracks');
+    document.getElementById('cabinetEvents').classList.toggle('active', tab === 'events');
+}
+
+async function loadBarracks() {
+    if (!supabaseClient || !currentUser) return;
+    const { data, error } = await supabaseClient
+        .from('user_heroes')
+        .select('*')
+        .order('created_at', { ascending: true });
+    if (error) {
+        console.error('Ошибка загрузки казармы:', error);
+        return;
+    }
+    barracksData = data || [];
+    renderBarracks();
+}
+
+function renderBarracks() {
+    const list = document.getElementById('barracksList');
+    const empty = document.getElementById('barracksEmpty');
+    const search = (document.getElementById('barracksSearch').value || '').trim().toLowerCase();
+    let filtered = barracksData;
+    if (search) {
+        filtered = barracksData.filter(b => {
+            const hero = allHeroesById[b.hero_id];
+            return hero && hero[HERO_FIELDS.name].toLowerCase().includes(search);
+        });
+    }
+    if (!filtered.length) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+    }
+    empty.style.display = 'none';
+    list.innerHTML = filtered.map(b => {
+        const hero = allHeroesById[b.hero_id];
+        if (!hero) return '';
+        const img = fileCellToUrl(hero[HERO_FIELDS.image]);
+        const imgSrc = img ? getOptimizedImageUrl(img) : '';
+        return `<div class="barracks-card" data-id="${b.id}">
+            <div class="bc-head">
+                ${imgSrc ? `<img class="bc-img" src="${imgSrc}" onerror="this.onerror=null;this.src='${img}'">` : '<div class="bc-img"></div>'}
+                <div>
+                    <div class="bc-name">${hero[HERO_FIELDS.name]}</div>
+                    <div class="bc-meta">${hero[HERO_FIELDS.element]} • ${hero[HERO_FIELDS.clazz]}</div>
+                </div>
+            </div>
+            <div class="bc-row">
+                <span>Кол-во:</span>
+                <input type="number" min="1" value="${b.quantity}" data-field="quantity" style="width:70px;">
+            </div>
+            <div class="bc-row">
+                <span>Навык:</span>
+                <select data-field="skill_level">
+                    ${['2/8','3/8','4/8','5/8','6/8','7/8','8/8'].map(l => `<option ${b.skill_level===l?'selected':''}>${l}</option>`).join('')}
+                </select>
+            </div>
+            <div class="bc-actions">
+                <button class="btn" data-action="save">Сохранить</button>
+                <button class="btn" data-action="delete">Удалить</button>
+            </div>
+        </div>`;
+    }).join('');
+
+    list.querySelectorAll('.barracks-card').forEach(card => {
+        const id = card.dataset.id;
+        card.querySelector('[data-action="save"]').addEventListener('click', async () => {
+            const quantity = parseInt(card.querySelector('[data-field="quantity"]').value) || 1;
+            const skill_level = card.querySelector('[data-field="skill_level"]').value;
+            const { error } = await supabaseClient.from('user_heroes').update({ quantity, skill_level }).eq('id', id);
+            if (error) { alert('Ошибка сохранения: ' + error.message); return; }
+            const item = barracksData.find(b => b.id === id);
+            if (item) { item.quantity = quantity; item.skill_level = skill_level; }
+        });
+        card.querySelector('[data-action="delete"]').addEventListener('click', async () => {
+            if (!confirm('Удалить этого героя из казармы?')) return;
+            const { error } = await supabaseClient.from('user_heroes').delete().eq('id', id);
+            if (error) { alert('Ошибка удаления: ' + error.message); return; }
+            barracksData = barracksData.filter(b => b.id !== id);
+            renderBarracks();
+        });
+    });
+}
+
+function initAddHeroModal() {
+    const select = document.getElementById('addHeroSelect');
+    select.innerHTML = allHeroes
+        .slice()
+        .sort((a, b) => a[HERO_FIELDS.name].localeCompare(b[HERO_FIELDS.name], 'ru'))
+        .map(h => `<option value="${h[HERO_FIELDS.id]}">${h[HERO_FIELDS.name]} (${h[HERO_FIELDS.element]}, ${h[HERO_FIELDS.clazz]})</option>`)
+        .join('');
+
+    document.getElementById('addHeroToBarracksBtn').addEventListener('click', () => {
+        document.getElementById('addHeroModal').classList.add('show');
+        document.getElementById('addHeroError').textContent = '';
+    });
+    document.getElementById('addHeroClose').addEventListener('click', () => {
+        document.getElementById('addHeroModal').classList.remove('show');
+    });
+    document.getElementById('addHeroModal').addEventListener('click', (e) => {
+        if (e.target.id === 'addHeroModal') e.target.classList.remove('show');
+    });
+    document.getElementById('addHeroSubmit').addEventListener('click', async () => {
+        const heroId = parseInt(select.value);
+        const quantity = parseInt(document.getElementById('addHeroQuantity').value) || 1;
+        const skill_level = document.getElementById('addHeroSkill').value;
+        const errEl = document.getElementById('addHeroError');
+        errEl.textContent = '';
+        const { data, error } = await supabaseClient.from('user_heroes').insert({
+            user_id: currentUser.id,
+            hero_id: heroId,
+            quantity,
+            skill_level,
+            talent_selections: {}
+        }).select().single();
+        if (error) { errEl.textContent = error.message; return; }
+        barracksData.push(data);
+        document.getElementById('addHeroModal').classList.remove('show');
+        renderBarracks();
+    });
+}
+
+function initCabinet() {
+    document.getElementById('closeCabinetBtn').addEventListener('click', closeCabinet);
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+        await supabaseClient.auth.signOut();
+        currentUser = null;
+        updateAuthButton();
+        closeCabinet();
+    });
+    document.querySelectorAll('.cabinet-tab').forEach(tab => {
+        tab.addEventListener('click', () => switchCabinetTab(tab.dataset.ctab));
+    });
+    document.getElementById('barracksSearch').addEventListener('input', renderBarracks);
+    initAddHeroModal();
+    allHeroesById = {};
+    allHeroes.forEach(h => { allHeroesById[h[HERO_FIELDS.id]] = h; });
 }
 const HERO_FIELDS = { 
     id:'id', 
@@ -4077,6 +4419,7 @@ Promise.all([
     initSupabase();
     initAuthButton();
       initAuthForms();
+      initCabinet();
     checkUser();  
     initSortTooltip();
     attachEvents();
