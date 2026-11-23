@@ -525,14 +525,35 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .slot-picker-item .sp-name { font-size:13px; font-weight:600; }
 .slot-picker-item .sp-meta { font-size:11px; opacity:0.7; }
 @media (max-width: 768px) {
-  .cabinet { padding:12px; }
-  .cabinet-header { flex-direction:column; align-items:stretch; }
-  .cabinet-user { justify-content:space-between; }
-  .barracks-list { grid-template-columns:1fr; }
-  .team-slots { grid-template-columns:repeat(3, 1fr); }
-  .slot { min-height:100px; }
+    .cabinet { padding: 12px; }
+    .cabinet-header { flex-direction: column; align-items: stretch; }
+    .cabinet-user { justify-content: space-between; }
+    .barracks-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .barracks-card .bc-thumb { height: 100px; }
+    .barracks-card h4 { font-size: 13px; margin: 6px 8px 2px; }
+    .barracks-card .bc-meta-line { font-size: 10px; }
+    .barracks-card .bc-stats-line { font-size: 10px; }
+    .barracks-card .bc-pill { font-size: 10px; padding: 2px 6px; }
+    .barracks-card .bc-pill .icon-sword,
+    .barracks-card .bc-pill .icon-shield,
+    .barracks-card .bc-pill .icon-health { width: 10px !important; height: 10px !important; min-width: 10px !important; min-height: 10px !important; max-width: 10px !important; max-height: 10px !important; }
+    .barracks-card .bc-extra { font-size: 10px; margin: 2px 8px 6px; }
+    .barracks-card .bc-actions .btn { font-size: 10px; padding: 3px 4px; }
+    .team-slots { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .slot { min-height: 80px; }
+    .slot img { width: 40px; height: 40px; }
+    .slot .slot-name { font-size: 10px; }
+    .slot .slot-meta { font-size: 9px; }
+    .slot .slot-remove { width: 16px; height: 16px; font-size: 10px; }
 }
-@media (max-width: 480px) { .team-slots { grid-template-columns:repeat(2, 1fr); } }
+@media (max-width: 480px) {
+    .barracks-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .barracks-card .bc-thumb { height: 80px; }
+    .barracks-card h4 { font-size: 12px; }
+    .team-slots { grid-template-columns: repeat(2, 1fr); }
+    .slot { min-height: 70px; }
+    .slot img { width: 32px; height: 32px; }
+}
   </style>
 </head>
 <body>
@@ -1404,8 +1425,12 @@ function initSupabase() {
 }
 async function checkUser() {
     if (!supabaseClient) return;
-    try { const { data: { user } } = await supabaseClient.auth.getUser(); currentUser = user; updateAuthButton(); }
-    catch (e) { console.error('Ошибка проверки пользователя:', e); }
+    try {
+        const { data: { user } } = await supabaseClient.auth.getUser();
+        currentUser = user;
+        updateAuthButton();
+        if (viewHeroes.length) renderCards(viewHeroes);
+    } catch (e) { console.error('Ошибка проверки пользователя:', e); }
 }
 function updateAuthButton() {
     const btn = document.getElementById('authBtn'); if (!btn) return;
@@ -1439,7 +1464,7 @@ async function handleLogin(e) {
     try {
         const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        currentUser = data.user; updateAuthButton(); closeAuthModal(); e.target.reset();
+        currentUser = data.user; updateAuthButton(); if (viewHeroes.length) renderCards(viewHeroes); closeAuthModal(); e.target.reset();
         console.log('✅ Вход выполнен:', currentUser.email);
     } catch (err) { errEl.textContent = translateAuthError(err.message); }
     finally { btn.disabled = false; btn.textContent = 'Войти'; }
@@ -1456,7 +1481,7 @@ async function handleRegister(e) {
     try {
         const { data, error } = await supabaseClient.auth.signUp({ email, password });
         if (error) throw error;
-        if (data.user && data.session) { currentUser = data.user; updateAuthButton(); closeAuthModal(); e.target.reset(); console.log('✅ Регистрация и вход выполнены:', currentUser.email); }
+        if (data.user && data.session) { currentUser = data.user; updateAuthButton(); if (viewHeroes.length) renderCards(viewHeroes); closeAuthModal(); e.target.reset(); console.log('✅ Регистрация и вход выполнены:', currentUser.email); }
         else { errEl.style.color = '#2b8a3e'; errEl.textContent = 'Регистрация успешна! Проверьте почту для подтверждения.'; }
     } catch (err) { errEl.style.color = '#e03131'; errEl.textContent = translateAuthError(err.message); }
     finally { btn.disabled = false; btn.textContent = 'Зарегистрироваться'; }
@@ -1479,7 +1504,7 @@ function initAuthForms() {
     const ac = document.getElementById('authClose'); if (ac) ac.addEventListener('click', closeAuthModal);
     const am = document.getElementById('authModal'); if (am) am.addEventListener('click', (e) => { if (e.target.id === 'authModal') closeAuthModal(); });
     const fp = document.getElementById('forgotPasswordBtn'); if (fp) fp.addEventListener('click', () => { alert('Восстановление пароля будет доступно после подключения SMTP. Пока обратитесь к администратору.'); });
-    if (supabaseClient) supabaseClient.auth.onAuthStateChange((event, session) => { currentUser = session ? session.user : null; updateAuthButton(); if (event === 'SIGNED_OUT') console.log('👋 Пользователь вышел'); });
+    if (supabaseClient) supabaseClient.auth.onAuthStateChange((event, session) => { currentUser = session ? session.user : null; updateAuthButton(); if (viewHeroes.length) renderCards(viewHeroes); if (event === 'SIGNED_OUT') console.log('👋 Пользователь вышел'); });
 }
   // ===== ЛК: КАЗАРМА =====
 let barracksData = [];
@@ -1727,13 +1752,153 @@ function refreshMainCounters() {
 function openTalentEditorForBarracks(barracksId) {
     const b = barracksData.find(x => x.id === barracksId); if(!b) return;
     const hero = getBarracksHeroRecord(b); if(!hero) return;
-    window._barracksTalentEdit = b.id;
-    currentIdx = -1;
-    currentHeroTalents = JSON.parse(JSON.stringify(b.talent_selections || {}));
-    currentMode = Object.keys(b.talent_selections || {}).length ? 'manual' : 'none';
-    document.getElementById('treeHeroName').textContent = hero[HERO_FIELDS.name];
-    renderTalentTree(hero, currentHeroTalents, currentMode);
-    document.getElementById('treePanel').classList.add('show');
+
+    let modal = document.getElementById('barracksTalentModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'barracksTalentModal';
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="dialog" style="max-width:900px; width:95vw; height:85vh;">
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:16px 20px; border-bottom:1px solid var(--border-color); flex-shrink:0;">
+                    <h3 style="margin:0; font-size:18px;">Таланты: <span id="btName"></span></h3>
+                    <button class="auth-close" id="btClose" style="position:static; font-size:28px;">×</button>
+                </div>
+                <div style="display:flex; gap:12px; align-items:center; padding:10px 20px; border-bottom:1px solid var(--border-color); flex-shrink:0; flex-wrap:wrap;">
+                    <label style="font-size:13px; font-weight:500;">Режим:
+                        <select id="btMode" style="padding:4px 8px; border-radius:6px; border:1px solid #227BBC; background:var(--card-bg); color:var(--text-color); font-size:12px;">
+                            <option value="none">Без талантов</option>
+                            <option value="manual">Ручной выбор</option>
+                            <option value="attack">Таланты в атаку</option>
+                            <option value="defense">Таланты в защиту</option>
+                        </select>
+                    </label>
+                    <div id="btStats" style="font-size:14px; font-weight:600; display:flex; gap:10px;"></div>
+                </div>
+                <div style="flex:1; overflow-y:auto; padding:16px;">
+                    <div class="talent-table" id="btTalentTable"></div>
+                </div>
+                <div style="padding:12px 20px; border-top:1px solid var(--border-color); display:flex; gap:8px; justify-content:flex-end; flex-shrink:0;">
+                    <button class="btn" id="btCancel">Отмена</button>
+                    <button class="btn primary" id="btSave">Сохранить</button>
+                </div>
+            </div>`;
+        document.body.appendChild(modal);
+        modal.addEventListener('click', (e) => { if (e.target.id === 'barracksTalentModal') modal.classList.remove('show'); });
+        modal.querySelector('#btClose').addEventListener('click', () => modal.classList.remove('show'));
+        modal.querySelector('#btCancel').addEventListener('click', () => modal.classList.remove('show'));
+    }
+
+    // Временное состояние для этой модалки
+    let btSelections = JSON.parse(JSON.stringify(b.talent_selections || {}));
+    let btMode = Object.keys(b.talent_selections || {}).length ? 'manual' : 'none';
+
+    document.getElementById('btName').textContent = hero[HERO_FIELDS.name];
+    document.getElementById('btMode').value = btMode;
+
+    function updateBtStats() {
+        const calc = calculateStatsWithSelections(hero, btSelections, btMode);
+        document.getElementById('btStats').innerHTML =
+            `<span><span class="icon-sword"></span> ${calc.attack}</span>` +
+            `<span><span class="icon-shield"></span> ${calc.defense}</span>` +
+            `<span><span class="icon-health"></span> ${calc.hp}</span>`;
+    }
+
+    function renderBtTree() {
+        // Используем renderTalentTree, но он пишет в #talentTable.
+        // Временно подменим ID, чтобы не ломать основную модалку.
+        const mainTable = document.getElementById('talentTable');
+        const btTable = document.getElementById('btTalentTable');
+        // Сохраняем оригинальное содержимое
+        const saved = mainTable.innerHTML;
+        // Временно перенаправляем: renderTalentTree ищет #talentTable
+        // Проще: скопируем логику через временную подмену ID
+        mainTable.id = '_talentTable_orig';
+        btTable.id = 'talentTable';
+        // Подменяем глобальные переменные для корректной работы кликов
+        const oldHeroTalents = currentHeroTalents;
+        const oldMode = currentMode;
+        const oldIdx = currentIdx;
+        currentHeroTalents = btSelections;
+        currentMode = btMode;
+        // viewHeroes[currentIdx] используется в обработчике клика — подставим hero
+        if (!viewHeroes.includes(hero)) { viewHeroes.push(hero); }
+        currentIdx = viewHeroes.indexOf(hero);
+        renderTalentTree(hero, btSelections, btMode);
+        // Возвращаем
+        btTable.id = 'btTalentTable';
+        mainTable.id = 'talentTable';
+        mainTable.innerHTML = saved;
+        currentHeroTalents = oldHeroTalents;
+        currentMode = oldMode;
+        currentIdx = oldIdx;
+        // После renderTalentTree клики пишут в currentHeroTalents, но мы вернули старую ссылку.
+        // Поэтому нужно перенавесить клики на btSelections.
+        // Проще: переопределим обработчики в btTable
+        attachBtTreeClicks(hero);
+    }
+
+    function attachBtTreeClicks(hero) {
+        const btTable = document.getElementById('btTalentTable');
+        const groups = [];
+        const talents = classTalents[hero[HERO_FIELDS.clazz]] || [];
+        let cur = [];
+        for (const t of talents) { if (cur.length===0 || cur[0].branchGroup===t.branchGroup) cur.push(t); else { groups.push([...cur]); cur=[t]; } }
+        if (cur.length) groups.push(cur);
+
+        btTable.querySelectorAll('.talent-cell.selectable').forEach(cell => {
+            if (cell.dataset.disabled === 'true') return;
+            cell.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const gid = cell.dataset.group, side = cell.dataset.side, tid = parseInt(cell.dataset.talentId), gi = parseInt(cell.dataset.groupIdx);
+                if (!gid || !side) return;
+                let ok = true;
+                for (let i=0;i<gi;i++) { if (!btSelections[groups[i][0].branchGroup]) { ok=false; break; } }
+                if (!ok) { alert('Сначала выберите таланты в предыдущих строках!'); return; }
+                // Сброс активных в группе
+                btTable.querySelectorAll('.talent-cell[data-group="'+gid+'"]').forEach(c => {
+                    if (!c.classList.contains('mandatory')) {
+                        const id = c.dataset.talentId;
+                        if (id) { const u = getTalentImage(parseInt(id), false); const im = c.querySelector('img'); if (im && u) im.src = u; }
+                        c.classList.remove('active');
+                    }
+                });
+                // Активация выбранной стороны
+                const u = getTalentImage(tid, true); const im = cell.querySelector('img'); if (im && u) im.src = u;
+                btTable.querySelectorAll('.talent-cell[data-group="'+gid+'"][data-side="'+side+'"]').forEach(c => {
+                    if (!c.classList.contains('mandatory')) {
+                        const id = c.dataset.talentId;
+                        if (id) { const uu = getTalentImage(parseInt(id), true); const ci = c.querySelector('img'); if (ci && uu) ci.src = uu; }
+                        c.classList.add('active');
+                    }
+                });
+                btSelections[gid] = side;
+                updateBtStats();
+            });
+        });
+    }
+
+    document.getElementById('btMode').onchange = (e) => {
+        btMode = e.target.value;
+        if (btMode === 'none') { btSelections = {}; }
+        else if (btMode === 'attack') { btSelections = getOptimalSelections(hero, 'attack'); }
+        else if (btMode === 'defense') { btSelections = getOptimalSelections(hero, 'defense'); }
+        renderBtTree();
+        updateBtStats();
+    };
+
+    document.getElementById('btSave').onclick = async () => {
+        const { error } = await supabaseClient.from('user_heroes').update({ talent_selections: btSelections }).eq('id', b.id);
+        if (error) { alert('Ошибка сохранения: ' + error.message); return; }
+        b.talent_selections = btSelections;
+        modal.classList.remove('show');
+        renderBarracks();
+        refreshMainCounters();
+    };
+
+    renderBtTree();
+    updateBtStats();
+    modal.classList.add('show');
 }
 function initCabinet() {
     document.getElementById('closeCabinetBtn').addEventListener('click', closeCabinet);
@@ -2056,3 +2221,4 @@ Promise.all([
 </script>
 </body>
 </html>
+
