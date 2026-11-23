@@ -2415,6 +2415,41 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     </div>
 </div>
 
+<!-- ===== МОДАЛКА АУТЕНТИФИКАЦИИ ===== -->
+<div id="authModal" class="auth-modal">
+    <div class="auth-dialog">
+        <button id="authClose" class="auth-close">×</button>
+        <div class="auth-tabs">
+            <button class="auth-tab active" data-tab="login">Вход</button>
+            <button class="auth-tab" data-tab="register">Регистрация</button>
+        </div>
+        <form id="loginForm" class="auth-form active">
+            <label>Email
+                <input type="email" id="loginEmail" required autocomplete="email">
+            </label>
+            <label>Пароль
+                <input type="password" id="loginPassword" required autocomplete="current-password">
+            </label>
+            <button type="submit" class="auth-submit">Войти</button>
+            <button type="button" id="forgotPasswordBtn" class="auth-link">Забыли пароль?</button>
+            <div id="loginError" class="auth-error"></div>
+        </form>
+        <form id="registerForm" class="auth-form">
+            <label>Email
+                <input type="email" id="registerEmail" required autocomplete="email">
+            </label>
+            <label>Пароль
+                <input type="password" id="registerPassword" required minlength="6" autocomplete="new-password">
+            </label>
+            <label>Подтвердите пароль
+                <input type="password" id="registerPasswordConfirm" required minlength="6" autocomplete="new-password">
+            </label>
+            <button type="submit" class="auth-submit">Зарегистрироваться</button>
+            <div id="registerError" class="auth-error"></div>
+        </form>
+    </div>
+</div>
+  
 <script>
 
 // ===== SUPABASE INIT =====
@@ -2569,22 +2604,27 @@ function initAuthForms() {
     document.querySelectorAll('.auth-tab').forEach(tab => {
         tab.addEventListener('click', () => switchAuthTab(tab.dataset.tab));
     });
-    document.getElementById('loginForm').addEventListener('submit', handleLogin);
-    document.getElementById('registerForm').addEventListener('submit', handleRegister);
-    document.getElementById('authClose').addEventListener('click', closeAuthModal);
-    document.getElementById('authModal').addEventListener('click', (e) => {
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) loginForm.addEventListener('submit', handleLogin);
+    const registerForm = document.getElementById('registerForm');
+    if (registerForm) registerForm.addEventListener('submit', handleRegister);
+    const authClose = document.getElementById('authClose');
+    if (authClose) authClose.addEventListener('click', closeAuthModal);
+    const authModal = document.getElementById('authModal');
+    if (authModal) authModal.addEventListener('click', (e) => {
         if (e.target.id === 'authModal') closeAuthModal();
     });
-    document.getElementById('forgotPasswordBtn').addEventListener('click', () => {
+    const forgotBtn = document.getElementById('forgotPasswordBtn');
+    if (forgotBtn) forgotBtn.addEventListener('click', () => {
         alert('Восстановление пароля будет доступно после подключения SMTP. Пока обратитесь к администратору.');
     });
-    supabaseClient.auth.onAuthStateChange((event, session) => {
-        currentUser = session ? session.user : null;
-        updateAuthButton();
-        if (event === 'SIGNED_OUT') {
-            console.log('👋 Пользователь вышел');
-        }
-    });
+    if (supabaseClient) {
+        supabaseClient.auth.onAuthStateChange((event, session) => {
+            currentUser = session ? session.user : null;
+            updateAuthButton();
+            if (event === 'SIGNED_OUT') console.log('👋 Пользователь вышел');
+        });
+    }
 }
 
 // ===== ЛК: КАЗАРМА =====
