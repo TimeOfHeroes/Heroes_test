@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>  
 <style>
 /* ===== ВСЕ СТИЛИ (без изменений) ===== */
 :root {
@@ -665,6 +666,38 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .info-btn:hover { background: var(--secondary-color); }
 
+.auth-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 1px solid var(--checkbox-border);
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+.auth-btn:hover { background: var(--secondary-color); }
+.auth-btn svg { display: block; }
+.auth-btn.logged-in {
+    border-color: #227BBC;
+    color: #227BBC;
+}
+
+@media (max-width: 480px) {
+    .auth-btn {
+        width: 28px;
+        height: 28px;
+    }
+    .auth-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+}  
 @media (max-width: 1024px) {
     .top-bar {
         display: grid;
@@ -1736,7 +1769,13 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
             </select>
         </div>
     </div>
-    <div class="info-btn-wrapper">
+       <div class="info-btn-wrapper" style="display:flex; gap:6px; align-items:center;">
+        <button id="authBtn" class="auth-btn" title="Войти">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+        </button>
         <button id="infoBtn" class="info-btn">i</button>
     </div>
 </div>
@@ -1914,6 +1953,59 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 </div>
 
 <script>
+// ===== SUPABASE INIT =====
+const SUPABASE_URL = 'https://isjpkcffopjucztxfgwu.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_opmSAOppJGrHceyXsHKdaA_A4JYTQH0';
+let supabaseClient = null;
+let currentUser = null;
+
+function initSupabase() {
+    if (typeof supabase !== 'undefined' && supabase.createClient) {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        console.log('✅ Supabase клиент инициализирован');
+    } else {
+        console.error('❌ Supabase SDK не загружен');
+    }
+}
+
+async function checkUser() {
+    if (!supabaseClient) return;
+    try {
+        const { data: { user } } = await supabaseClient.auth.getUser();
+        currentUser = user;
+        updateAuthButton();
+    } catch (e) {
+        console.error('Ошибка проверки пользователя:', e);
+    }
+}
+
+function updateAuthButton() {
+    const btn = document.getElementById('authBtn');
+    if (!btn) return;
+    if (currentUser) {
+        btn.classList.add('logged-in');
+        btn.title = currentUser.email || 'Личный кабинет';
+    } else {
+        btn.classList.remove('logged-in');
+        btn.title = 'Войти';
+    }
+}
+
+function initAuthButton() {
+    const btn = document.getElementById('authBtn');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+        if (currentUser) {
+            // TODO: открыть модалку ЛК (следующий шаг)
+            console.log('Открыть ЛК для', currentUser.email);
+            alert('ЛК будет добавлен на следующем шаге. Вы вошли как: ' + currentUser.email);
+        } else {
+            // TODO: открыть модалку входа (следующий шаг)
+            console.log('Открыть форму входа');
+            alert('Форма входа будет добавлена на следующем шаге.');
+        }
+    });
+}  
 const HERO_FIELDS = { 
     id:'id', 
     name:'Герой', 
@@ -3715,6 +3807,9 @@ Promise.all([
         return; 
     }
     initAllFacets(allHeroes);
+    initSupabase();
+    initAuthButton();
+    checkUser();  
     initSortTooltip();
     attachEvents();
     applyFilters();
