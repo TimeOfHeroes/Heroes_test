@@ -81,6 +81,247 @@
   --icon-tree: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/B8DMifczdAzQiFisHhqXRU5Gk5gmFRWj_5ff6b7ccab8b189f829ce3b4bc0974e78a764f0c83b248388c2037444dd873e5.svg');
   --icon-upgrade: url('https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/YpiBSmwAWmBJR2EnXfdUKY6GUZCOxZCP_aa2bee0d91297c694915411d9606c3cbfc6882ea5980a5e7956f489c8a92b6bb.svg');
 }
+/* ===== КНОПКА АВТОРИЗАЦИИ ===== */
+.auth-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 1px solid var(--checkbox-border);
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+.auth-btn:hover { background: var(--secondary-color); }
+.auth-btn svg { display: block; }
+.auth-btn.logged-in { border-color: #227BBC; color: #227BBC; }
+@media (max-width: 480px) {
+    .auth-btn { width: 28px; height: 28px; }
+    .auth-btn svg { width: 16px; height: 16px; }
+}
+
+/* ===== МОДАЛКА АУТЕНТИФИКАЦИИ ===== */
+.auth-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 2002;
+}
+.auth-modal.show { display: flex; }
+.auth-dialog {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 420px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+.auth-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 26px;
+    cursor: pointer;
+    color: var(--text-color);
+    opacity: 0.7;
+    line-height: 1;
+}
+.auth-close:hover { opacity: 1; }
+.auth-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.auth-tab {
+    flex: 1;
+    padding: 10px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-color);
+    opacity: 0.6;
+    transition: all 0.2s;
+}
+.auth-tab.active {
+    opacity: 1;
+    border-bottom-color: #227BBC;
+    color: #227BBC;
+}
+.auth-form { display: none; flex-direction: column; gap: 14px; }
+.auth-form.active { display: flex; }
+.auth-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+}
+.auth-form input,
+.auth-form select {
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid var(--checkbox-border);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    transition: border-color 0.2s;
+}
+.auth-form input:focus,
+.auth-form select:focus {
+    outline: none;
+    border-color: #227BBC;
+    box-shadow: 0 0 0 2px rgba(34,123,188,0.15);
+}
+.auth-submit {
+    padding: 11px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    background: #227BBC;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 4px;
+}
+.auth-submit:hover { background: #1a5f9a; }
+.auth-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+.auth-link {
+    background: none;
+    border: none;
+    color: #227BBC;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 4px 0;
+    align-self: center;
+}
+.auth-link:hover { color: #1a5f9a; }
+.auth-error {
+    color: #e03131;
+    font-size: 13px;
+    min-height: 18px;
+    text-align: center;
+    line-height: 1.3;
+}
+@media (max-width: 480px) {
+    .auth-dialog { padding: 24px 18px; }
+}
+
+/* ===== ЛК ===== */
+.cabinet {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: calc(100vh - var(--hdrH));
+}
+.cabinet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+.cabinet-tabs { display: flex; gap: 4px; }
+.cabinet-tab {
+    padding: 8px 18px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: var(--text-color);
+    opacity: 0.6;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.cabinet-tab.active {
+    opacity: 1;
+    border-bottom-color: #227BBC;
+    color: #227BBC;
+}
+.cabinet-user { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.cabinet-panel { display: none; }
+.cabinet-panel.active { display: block; }
+.cabinet-toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+.cabinet-search {
+    flex: 1;
+    min-width: 200px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid var(--checkbox-border);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text-color);
+}
+.cabinet-empty {
+    text-align: center;
+    padding: 40px 20px;
+    opacity: 0.6;
+    font-size: 15px;
+}
+.barracks-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+}
+.barracks-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.barracks-card .bc-head { display: flex; align-items: center; gap: 10px; }
+.barracks-card .bc-img {
+    width: 60px; height: 60px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: var(--secondary-color);
+    flex-shrink: 0;
+}
+.barracks-card .bc-name { font-weight: 600; font-size: 15px; }
+.barracks-card .bc-meta { font-size: 12px; opacity: 0.7; }
+.barracks-card .bc-row { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.barracks-card .bc-row select,
+.barracks-card .bc-row input {
+    padding: 4px 8px;
+    font-size: 13px;
+    border: 1px solid var(--checkbox-border);
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: var(--text-color);
+}
+.barracks-card .bc-actions { display: flex; gap: 6px; margin-top: 4px; }
+.barracks-card .bc-actions .btn { flex: 1; font-size: 12px; padding: 5px 8px; height: auto; }
+
+/* ===== СОБЫТИЯ ===== */
 .events-list { display: flex; flex-direction: column; gap: 8px; }
 .event-item {
     display: flex;
@@ -210,131 +451,15 @@
 .slot-picker-item .sp-name { font-size: 13px; font-weight: 600; }
 .slot-picker-item .sp-meta { font-size: 11px; opacity: 0.7; }
 @media (max-width: 768px) {
+    .cabinet { padding: 12px; }
+    .cabinet-header { flex-direction: column; align-items: stretch; }
+    .cabinet-user { justify-content: space-between; }
+    .barracks-list { grid-template-columns: 1fr; }
     .team-slots { grid-template-columns: repeat(3, 1fr); }
     .slot { min-height: 100px; }
 }
 @media (max-width: 480px) {
     .team-slots { grid-template-columns: repeat(2, 1fr); }
-}
-  .cabinet {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 20px;
-    min-height: calc(100vh - var(--hdrH));
-}
-.cabinet-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border-color);
-}
-.cabinet-tabs { display: flex; gap: 4px; }
-.cabinet-tab {
-    padding: 8px 18px;
-    font-size: 15px;
-    font-weight: 600;
-    border: none;
-    border-bottom: 2px solid transparent;
-    background: none;
-    color: var(--text-color);
-    opacity: 0.6;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-.cabinet-tab.active {
-    opacity: 1;
-    border-bottom-color: #227BBC;
-    color: #227BBC;
-}
-.cabinet-user { display: flex; align-items: center; gap: 10px; font-size: 13px; }
-.cabinet-panel { display: none; }
-.cabinet-panel.active { display: block; }
-.cabinet-toolbar {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-}
-.cabinet-search {
-    flex: 1;
-    min-width: 200px;
-    padding: 8px 12px;
-    font-size: 14px;
-    border: 1px solid var(--checkbox-border);
-    border-radius: 8px;
-    background: var(--card-bg);
-    color: var(--text-color);
-}
-.cabinet-empty {
-    text-align: center;
-    padding: 40px 20px;
-    opacity: 0.6;
-    font-size: 15px;
-}
-.barracks-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 16px;
-}
-.barracks-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-.barracks-card .bc-head {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.barracks-card .bc-img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    border-radius: 8px;
-    background: var(--secondary-color);
-    flex-shrink: 0;
-}
-.barracks-card .bc-name { font-weight: 600; font-size: 15px; }
-.barracks-card .bc-meta { font-size: 12px; opacity: 0.7; }
-.barracks-card .bc-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-}
-.barracks-card .bc-row select,
-.barracks-card .bc-row input {
-    padding: 4px 8px;
-    font-size: 13px;
-    border: 1px solid var(--checkbox-border);
-    border-radius: 6px;
-    background: var(--card-bg);
-    color: var(--text-color);
-}
-.barracks-card .bc-actions {
-    display: flex;
-    gap: 6px;
-    margin-top: 4px;
-}
-.barracks-card .bc-actions .btn {
-    flex: 1;
-    font-size: 12px;
-    padding: 5px 8px;
-    height: auto;
-}
-@media (max-width: 768px) {
-    .cabinet { padding: 12px; }
-    .cabinet-header { flex-direction: column; align-items: stretch; }
-    .cabinet-user { justify-content: space-between; }
-    .barracks-list { grid-template-columns: 1fr; }
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -920,38 +1045,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 }
 .info-btn:hover { background: var(--secondary-color); }
 
-.auth-btn {
-    width: 32px;
-    height: 32px;
-    padding: 0;
-    border: 1px solid var(--checkbox-border);
-    border-radius: 6px;
-    background: var(--card-bg);
-    color: var(--text-color);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    flex-shrink: 0;
-}
-.auth-btn:hover { background: var(--secondary-color); }
-.auth-btn svg { display: block; }
-.auth-btn.logged-in {
-    border-color: #227BBC;
-    color: #227BBC;
-}
-
-@media (max-width: 480px) {
-    .auth-btn {
-        width: 28px;
-        height: 28px;
-    }
-    .auth-btn svg {
-        width: 16px;
-        height: 16px;
-    }
-}  
 @media (max-width: 1024px) {
     .top-bar {
         display: grid;
@@ -1912,121 +2005,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .info-dialog .date { text-align:center; font-style:italic; color:var(--text-color); opacity:0.6; margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color); }
 .info-close { position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-color); opacity:0.7; }
 .info-close:hover { opacity:1; }
-.auth-modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.7);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    z-index: 2002;
-}
-.auth-modal.show { display: flex; }
-.auth-dialog {
-    background: var(--card-bg);
-    border-radius: 16px;
-    padding: 30px;
-    max-width: 420px;
-    width: 90%;
-    position: relative;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
-.auth-close {
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    background: none;
-    border: none;
-    font-size: 26px;
-    cursor: pointer;
-    color: var(--text-color);
-    opacity: 0.7;
-    line-height: 1;
-}
-.auth-close:hover { opacity: 1; }
-.auth-tabs {
-    display: flex;
-    gap: 4px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid var(--border-color);
-}
-.auth-tab {
-    flex: 1;
-    padding: 10px;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-color);
-    opacity: 0.6;
-    transition: all 0.2s;
-}
-.auth-tab.active {
-    opacity: 1;
-    border-bottom-color: #227BBC;
-    color: #227BBC;
-}
-.auth-form { display: none; flex-direction: column; gap: 14px; }
-.auth-form.active { display: flex; }
-.auth-form label {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    font-size: 13px;
-    font-weight: 500;
-}
-.auth-form input {
-    padding: 10px 12px;
-    font-size: 14px;
-    border: 1px solid var(--checkbox-border);
-    border-radius: 8px;
-    background: var(--card-bg);
-    color: var(--text-color);
-    transition: border-color 0.2s;
-}
-.auth-form input:focus {
-    outline: none;
-    border-color: #227BBC;
-    box-shadow: 0 0 0 2px rgba(34,123,188,0.15);
-}
-.auth-submit {
-    padding: 11px;
-    font-size: 15px;
-    font-weight: 600;
-    border: none;
-    border-radius: 8px;
-    background: #227BBC;
-    color: #fff;
-    cursor: pointer;
-    transition: background 0.2s;
-    margin-top: 4px;
-}
-.auth-submit:hover { background: #1a5f9a; }
-.auth-submit:disabled { opacity: 0.6; cursor: not-allowed; }
-.auth-link {
-    background: none;
-    border: none;
-    color: #227BBC;
-    font-size: 13px;
-    cursor: pointer;
-    text-decoration: underline;
-    padding: 4px 0;
-    align-self: center;
-}
-.auth-link:hover { color: #1a5f9a; }
-.auth-error {
-    color: #e03131;
-    font-size: 13px;
-    min-height: 18px;
-    text-align: center;
-    line-height: 1.3;
-}
-@media (max-width: 480px) {
-    .auth-dialog { padding: 24px 18px; }
-}
+
 .content { min-height:60vh; width:100%; overflow:visible; }
 #count { margin:0 0 16px; opacity:0.7; font-size:14px; padding:6px 0; font-weight:500; }
 .cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:20px; width:100%; overflow:visible; }
@@ -2137,7 +2116,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
             </select>
         </div>
     </div>
-       <div class="info-btn-wrapper" style="display:flex; gap:6px; align-items:center;">
+    <div class="info-btn-wrapper" style="display:flex; gap:6px; align-items:center;">
         <button id="authBtn" class="auth-btn" title="Войти">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -2232,6 +2211,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 <div id="empty" style="display:none;">Ничего не найдено. Измените фильтры.</div>
 </section>
 </div>
+
 <!-- ===== ЛИЧНЫЙ КАБИНЕТ ===== -->
 <div id="cabinet" class="cabinet" style="display:none;">
     <div class="cabinet-header">
@@ -2246,7 +2226,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         </div>
     </div>
 
-    <!-- Вкладка «Казарма» -->
     <div id="cabinetBarracks" class="cabinet-panel active">
         <div class="cabinet-toolbar">
             <input id="barracksSearch" type="search" placeholder="Поиск по казарме" class="cabinet-search">
@@ -2258,7 +2237,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         </div>
     </div>
 
-    <!-- Вкладка «События» -->
     <div id="cabinetEvents" class="cabinet-panel">
         <div class="cabinet-toolbar">
             <button id="addEventBtn" class="btn primary">+ Создать событие</button>
@@ -2268,7 +2246,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
             Пока нет событий. Нажмите «Создать событие».
         </div>
 
-        <!-- Просмотр выбранного события -->
         <div id="eventView" style="display:none;">
             <div class="event-view-header">
                 <button id="backToEventsBtn" class="btn">← К списку событий</button>
@@ -2280,7 +2257,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
                 <button class="event-subtab" data-subtab="teams">Команды</button>
             </div>
 
-            <!-- Оборона -->
             <div id="eventDefense" class="event-subpanel active">
                 <div class="team-block" id="defenseTeamBlock">
                     <h4>Команда обороны</h4>
@@ -2288,7 +2264,6 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
                 </div>
             </div>
 
-            <!-- Обычные команды -->
             <div id="eventTeams" class="event-subpanel">
                 <div class="cabinet-toolbar">
                     <button id="addTeamBtn" class="btn primary">+ Добавить команду</button>
@@ -2301,6 +2276,31 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
             </div>
         </div>
     </div>
+</div>
+
+<!-- Модалка добавления героя в казарму -->
+<div id="addHeroModal" class="auth-modal">
+    <div class="auth-dialog" style="max-width:520px;">
+        <button id="addHeroClose" class="auth-close">×</button>
+        <h3 style="margin:0 0 16px;">Добавить героя в казарму</h3>
+        <div class="auth-form active" style="gap:12px;">
+            <label>Герой
+                <select id="addHeroSelect"></select>
+            </label>
+            <label>Количество
+                <input type="number" id="addHeroQuantity" min="1" value="1">
+            </label>
+            <label>Уровень навыка
+                <select id="addHeroSkill">
+                    <option>2/8</option><option>3/8</option><option>4/8</option>
+                    <option>5/8</option><option>6/8</option><option>7/8</option><option>8/8</option>
+                </select>
+            </label>
+            <button id="addHeroSubmit" class="auth-submit">Добавить</button>
+            <div id="addHeroError" class="auth-error"></div>
+        </div>
+    </div>
+</div>
 
 <!-- Модалка создания события -->
 <div id="eventModal" class="auth-modal">
@@ -2326,36 +2326,8 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <div id="slotPickerList" class="slot-picker-list"></div>
         <div id="slotPickerEmpty" class="cabinet-empty" style="display:none;">В казарме нет подходящих героев</div>
     </div>
-</div>
-
-<!-- ===== МОДАЛКА ДОБАВЛЕНИЯ ГЕРОЯ В КАЗАРМУ ===== -->
-<div id="addHeroModal" class="auth-modal">
-    <div class="auth-dialog" style="max-width:520px;">
-        <button id="addHeroClose" class="auth-close">×</button>
-        <h3 style="margin:0 0 16px;">Добавить героя в казарму</h3>
-        <div class="auth-form active" style="gap:12px;">
-            <label>Герой
-                <select id="addHeroSelect"></select>
-            </label>
-            <label>Количество
-                <input type="number" id="addHeroQuantity" min="1" value="1">
-            </label>
-            <label>Уровень навыка
-                <select id="addHeroSkill">
-                    <option>2/8</option><option>3/8</option><option>4/8</option>
-                    <option>5/8</option><option>6/8</option><option>7/8</option><option>8/8</option>
-                </select>
-            </label>
-            <label>Таланты (необязательно)
-                <div id="addHeroTalentsInfo" style="font-size:12px; opacity:0.7;">
-                    Таланты можно настроить после добавления в казарму.
-                </div>
-            </label>
-            <button id="addHeroSubmit" class="auth-submit">Добавить</button>
-            <div id="addHeroError" class="auth-error"></div>
-        </div>
-    </div>
-</div>
+</div>  
+  
 <!-- ===== МОДАЛЬНОЕ ОКНО ===== -->
 <div id="modal" class="modal">
 <div class="dialog">
@@ -2442,45 +2414,9 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
         <p class="date">Дата последнего обновления базы: <span id="updateDate"></span></p>
     </div>
 </div>
-<!-- ===== МОДАЛКА АУТЕНТИФИКАЦИИ ===== -->
-<div id="authModal" class="auth-modal">
-    <div class="auth-dialog">
-        <button id="authClose" class="auth-close">×</button>
-        <div class="auth-tabs">
-            <button class="auth-tab active" data-tab="login">Вход</button>
-            <button class="auth-tab" data-tab="register">Регистрация</button>
-        </div>
 
-        <!-- Форма входа -->
-        <form id="loginForm" class="auth-form active">
-            <label>Email
-                <input type="email" id="loginEmail" required autocomplete="email">
-            </label>
-            <label>Пароль
-                <input type="password" id="loginPassword" required autocomplete="current-password">
-            </label>
-            <button type="submit" class="auth-submit">Войти</button>
-            <button type="button" id="forgotPasswordBtn" class="auth-link">Забыли пароль?</button>
-            <div id="loginError" class="auth-error"></div>
-        </form>
-
-        <!-- Форма регистрации -->
-        <form id="registerForm" class="auth-form">
-            <label>Email
-                <input type="email" id="registerEmail" required autocomplete="email">
-            </label>
-            <label>Пароль
-                <input type="password" id="registerPassword" required minlength="6" autocomplete="new-password">
-            </label>
-            <label>Подтвердите пароль
-                <input type="password" id="registerPasswordConfirm" required minlength="6" autocomplete="new-password">
-            </label>
-            <button type="submit" class="auth-submit">Зарегистрироваться</button>
-            <div id="registerError" class="auth-error"></div>
-        </form>
-    </div>
-</div>
 <script>
+
 // ===== SUPABASE INIT =====
 const SUPABASE_URL = 'https://isjpkcffopjucztxfgwu.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_opmSAOppJGrHceyXsHKdaA_A4JYTQH0';
@@ -2530,7 +2466,8 @@ function initAuthButton() {
         }
     });
 }
-  function openAuthModal(tab = 'login') {
+
+function openAuthModal(tab = 'login') {
     const modal = document.getElementById('authModal');
     if (!modal) return;
     modal.classList.add('show');
@@ -2641,7 +2578,6 @@ function initAuthForms() {
     document.getElementById('forgotPasswordBtn').addEventListener('click', () => {
         alert('Восстановление пароля будет доступно после подключения SMTP. Пока обратитесь к администратору.');
     });
-    // Подписка на изменения авторизации
     supabaseClient.auth.onAuthStateChange((event, session) => {
         currentUser = session ? session.user : null;
         updateAuthButton();
@@ -2650,7 +2586,8 @@ function initAuthForms() {
         }
     });
 }
-  // ===== ЛК: КАЗАРМА =====
+
+// ===== ЛК: КАЗАРМА =====
 let barracksData = [];
 let allHeroesById = {};
 
@@ -2661,6 +2598,8 @@ function openCabinet() {
     document.getElementById('cabinet').style.display = 'block';
     document.getElementById('cabinetEmail').textContent = currentUser.email || '';
     document.body.style.overflow = '';
+    allHeroesById = {};
+    allHeroes.forEach(h => { allHeroesById[h[HERO_FIELDS.id]] = h; });
     loadBarracks();
     loadEvents();
     switchCabinetTab('barracks');
@@ -2670,6 +2609,7 @@ function closeCabinet() {
     document.getElementById('cabinet').style.display = 'none';
     document.querySelector('.wrap').style.display = '';
     document.querySelector('header').style.display = '';
+    document.body.style.overflow = '';
 }
 
 function switchCabinetTab(tab) {
@@ -2686,10 +2626,7 @@ async function loadBarracks() {
         .from('user_heroes')
         .select('*')
         .order('created_at', { ascending: true });
-    if (error) {
-        console.error('Ошибка загрузки казармы:', error);
-        return;
-    }
+    if (error) { console.error('Ошибка загрузки казармы:', error); return; }
     barracksData = data || [];
     renderBarracks();
 }
@@ -2805,6 +2742,11 @@ function initCabinet() {
         await supabaseClient.auth.signOut();
         currentUser = null;
         updateAuthButton();
+        ['addHeroModal', 'eventModal', 'slotPickerModal', 'authModal'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.remove('show');
+        });
+        document.body.style.overflow = '';
         closeCabinet();
     });
     document.querySelectorAll('.cabinet-tab').forEach(tab => {
@@ -2815,11 +2757,12 @@ function initCabinet() {
     allHeroesById = {};
     allHeroes.forEach(h => { allHeroesById[h[HERO_FIELDS.id]] = h; });
 }
+
 // ===== ЛК: СОБЫТИЯ И КОМАНДЫ =====
 let eventsData = [];
 let currentEventId = null;
-let eventTeamsData = [];   // записи user_teams текущего события
-let slotPickerTarget = null; // { teamIndex, slot, isDefense }
+let eventTeamsData = [];
+let slotPickerTarget = null;
 
 async function loadEvents() {
     if (!supabaseClient || !currentUser) return;
@@ -2883,7 +2826,7 @@ async function openEvent(eventId) {
     currentEventId = eventId;
     const ev = eventsData.find(e => e.id === eventId);
     if (!ev) return;
-    document.getElementById('eventsList').parentElement.querySelector('.cabinet-toolbar').style.display = 'none';
+    document.querySelector('#cabinetEvents > .cabinet-toolbar').style.display = 'none';
     document.getElementById('eventsList').style.display = 'none';
     document.getElementById('eventsEmpty').style.display = 'none';
     document.getElementById('eventView').style.display = 'block';
@@ -2896,9 +2839,10 @@ async function openEvent(eventId) {
 function closeEvent() {
     currentEventId = null;
     eventTeamsData = [];
+    if (window.draftTeams) window.draftTeams = [];
     document.getElementById('eventView').style.display = 'none';
     document.getElementById('eventsList').style.display = '';
-    document.getElementById('eventsList').parentElement.querySelector('.cabinet-toolbar').style.display = '';
+    document.querySelector('#cabinetEvents > .cabinet-toolbar').style.display = '';
     loadEvents();
 }
 
@@ -2921,14 +2865,12 @@ async function loadEventTeams() {
 }
 
 function renderEventView() {
-    // Оборона
     const defSlots = document.getElementById('defenseSlots');
     defSlots.innerHTML = '';
     for (let slot = 1; slot <= 5; slot++) {
         const cell = eventTeamsData.find(t => t.is_defense && t.slot === slot);
         defSlots.appendChild(makeSlotEl(cell, slot, true));
     }
-    // Обычные команды
     const normalTeams = {};
     eventTeamsData.filter(t => !t.is_defense).forEach(t => {
         if (!normalTeams[t.team_index]) normalTeams[t.team_index] = [];
@@ -2986,7 +2928,6 @@ function makeSlotEl(cell, slot, isDefense) {
     wrap.innerHTML = renderSlotHtml(cell, 0, slot, isDefense);
     const el = wrap.firstElementChild;
     attachSlotClick(el);
-    // Обработчик удаления для заполненного слота
     const removeBtn = el.querySelector('[data-action="remove-slot"]');
     if (removeBtn) {
         removeBtn.addEventListener('click', async (e) => {
@@ -3020,6 +2961,7 @@ function attachTeamSlotEvents(container, isDefense) {
             const { error } = await supabaseClient.from('user_teams').delete()
                 .eq('event_id', currentEventId).eq('team_index', teamIndex).eq('is_defense', false);
             if (error) { alert(error.message); return; }
+            if (window.draftTeams) window.draftTeams = window.draftTeams.filter(i => i !== teamIndex);
             await loadEventTeams();
             renderEventView();
         });
@@ -3046,8 +2988,7 @@ function openSlotPicker(teamIndex, slot, isDefense) {
 
 function renderSlotPickerList(query) {
     if (!slotPickerTarget) return;
-    const { teamIndex, isDefense } = slotPickerTarget;
-    // Какие user_hero_id уже заняты в этом событии (для обычных команд)
+    const { isDefense } = slotPickerTarget;
     let occupied = new Set();
     if (!isDefense) {
         occupied = new Set(eventTeamsData.filter(t => !t.is_defense).map(t => t.user_hero_id));
@@ -3112,35 +3053,14 @@ function initEventView() {
         if (error) { alert(error.message); return; }
         eventsData = eventsData.filter(e => e.id !== currentEventId);
         closeEvent();
-          container.querySelectorAll('[data-action="delete-team"]').forEach(btn => {
-        btn.addEventListener('click', async () => {
-            if (!confirm('Удалить команду?')) return;
-            const teamIndex = parseInt(btn.dataset.teamIndex);
-            const { error } = await supabaseClient.from('user_teams').delete()
-                .eq('event_id', currentEventId).eq('team_index', teamIndex).eq('is_defense', false);
-            if (error) { alert(error.message); return; }
-            if (window.draftTeams) window.draftTeams = window.draftTeams.filter(i => i !== teamIndex);
-            await loadEventTeams();
-            renderEventView();
-        });
-    });
     });
     document.querySelectorAll('.event-subtab').forEach(t => {
         t.addEventListener('click', () => switchEventSubtab(t.dataset.subtab));
     });
-    document.getElementById('addTeamBtn').addEventListener('click', async () => {
+    document.getElementById('addTeamBtn').addEventListener('click', () => {
         const indexes = eventTeamsData.filter(t => !t.is_defense).map(t => t.team_index);
         const maxIdx = indexes.length ? Math.max(...indexes) : 0;
         if (maxIdx >= 20) { alert('Максимум 20 команд'); return; }
-        // Создаём "пустую" команду — вставляем одну запись? Нет, команда без героев не имеет записи.
-        // Поэтому просто запоминаем, что следующая команда = maxIdx+1, но без записи в БД.
-        // Чтобы команда появилась в списке, добавим в eventTeamsData фиктивную? Нет.
-        // Проще: добавим первую команду с slot=1 и user_hero_id=null — но user_hero_id NOT NULL.
-        // Поэтому: создаём команду при первом выборе героя. А сейчас просто подскажем.
-        // Реализуем через "черновик": добавим team_index в локальный список.
-        // Для простоты: создаём команду сразу с пустыми слотами в UI, а в БД пишем при выборе героя.
-        // Но renderEventView строит команды из eventTeamsData. Нужно добавить "черновые" команды.
-        // Решение: храним черновые team_index в отдельном массиве draftTeams.
         if (!window.draftTeams) window.draftTeams = [];
         if (!window.draftTeams.includes(maxIdx + 1)) window.draftTeams.push(maxIdx + 1);
         renderEventView();
@@ -3156,6 +3076,7 @@ function initEventView() {
         }
     });
 }  
+  
 const HERO_FIELDS = { 
     id:'id', 
     name:'Герой', 
@@ -4956,17 +4877,16 @@ Promise.all([
         document.getElementById('count').textContent='Данные не найдены'; 
         return; 
     }
-    initAllFacets(allHeroes);
-    initSupabase();
-    initAuthButton();
-      initAuthForms();
-      initCabinet();
-      initEventsModal();
-    initEventView();
-    loadEvents();
-    checkUser();  
+        initAllFacets(allHeroes);
     initSortTooltip();
     attachEvents();
+    initSupabase();
+    initAuthButton();
+    initAuthForms();
+    checkUser();
+    initCabinet();
+    initEventsModal();
+    initEventView();
     applyFilters();
     console.log('🚀 Сайт готов к работе!');
 }).catch(e=>{ 
