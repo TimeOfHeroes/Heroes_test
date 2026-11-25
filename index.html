@@ -506,14 +506,23 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .event-subpanel.active { display:block; }
 .team-block { background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:14px; margin-bottom:14px; }
 .team-block h4 { margin:0 0 10px; font-size:15px; }
-.team-slots { display:grid; grid-template-columns:repeat(5, 1fr); gap:8px; }
-.slot { min-height:110px; border:1px dashed var(--checkbox-border); border-radius:10px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:6px; cursor:pointer; transition:all 0.2s; background:var(--secondary-color); text-align:center; font-size:12px; position:relative; }
-.slot:hover { border-color:#227BBC; }
-.slot.filled { border-style:solid; background:var(--card-bg); cursor:default; }
-.slot img { width:56px; height:56px; object-fit:contain; }
-.slot .slot-name { font-weight:600; font-size:12px; margin-top:4px; }
-.slot .slot-meta { font-size:11px; opacity:0.7; }
-.slot .slot-remove { position:absolute; top:4px; right:4px; width:20px; height:20px; border-radius:50%; border:none; background:#e03131; color:#fff; font-size:12px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.team-slots { display:grid; grid-template-columns:repeat(5, 1fr); gap:6px; }
+.slot {
+    min-height: 120px;
+    border: 1px dashed var(--checkbox-border);
+    border-radius: 10px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 4px; cursor: pointer; transition: all 0.2s;
+    background: var(--secondary-color); text-align: center; font-size: 12px;
+    position: relative; overflow: hidden;
+}
+.slot:hover { border-color: #227BBC; }
+.slot.filled { border-style: solid; background: var(--card-bg); cursor: default; }
+.slot .slot-img-wrap { width: 100%; display: flex; align-items: center; justify-content: center; height: 80px; }
+.slot img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.slot .slot-name { font-weight: 600; font-size: 12px; margin-top: 4px; line-height: 1.2; word-break: break-word; }
+.slot .slot-progress { font-size: 10px; opacity: 0.8; margin-top: 2px; line-height: 1.2; white-space: nowrap; }
+.slot .slot-remove { position: absolute; top: 3px; right: 3px; width: 18px; height: 18px; border-radius: 50%; border: none; background: #e03131; color: #fff; font-size: 11px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2; }
 .teams-list { display:flex; flex-direction:column; gap:14px; }
 .team-card { background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:12px 14px; }
 .team-card .team-card-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
@@ -539,20 +548,38 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     .barracks-card .bc-pill .icon-health { width: 10px !important; height: 10px !important; min-width: 10px !important; min-height: 10px !important; max-width: 10px !important; max-height: 10px !important; }
     .barracks-card .bc-extra { font-size: 10px; margin: 2px 8px 6px; }
     .barracks-card .bc-actions .btn { font-size: 10px; padding: 3px 4px; }
-    .team-slots { grid-template-columns: repeat(3, 1fr); gap: 6px; }
-    .slot { min-height: 80px; }
-    .slot img { width: 40px; height: 40px; }
+    .team-slots { gap: 4px; }
+    .slot { min-height: 100px; padding: 3px; }
+    .slot .slot-img-wrap { height: 60px; }
     .slot .slot-name { font-size: 10px; }
-    .slot .slot-meta { font-size: 9px; }
     .slot .slot-remove { width: 16px; height: 16px; font-size: 10px; }
+    .slot .slot-progress { font-size: 9px; margin-top: 1px; }
 }
 @media (max-width: 480px) {
     .barracks-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
     .barracks-card .bc-thumb { height: 80px; }
     .barracks-card h4 { font-size: 12px; }
-    .team-slots { grid-template-columns: repeat(2, 1fr); }
-    .slot { min-height: 70px; }
-    .slot img { width: 32px; height: 32px; }
+    .team-slots { gap: 3px; }
+    .slot { min-height: 85px; padding: 2px; }
+    .slot .slot-img-wrap { height: 50px; }
+    .slot .slot-name { font-size: 9px; margin-top: 2px; }
+    .slot .slot-remove { width: 14px; height: 14px; font-size: 9px; }
+    .slot .slot-progress { font-size: 8px; margin-top: 1px; }
+}
+  
+
+  #slotPickerModal .auth-dialog { max-width: 560px; width: 95vw; max-height: 85vh; display: flex; flex-direction: column; }
+#slotPickerModal .slot-picker-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; max-height: none; flex: 1; overflow-y: auto; }
+#slotPickerModal .slot-picker-item { display: flex; align-items: center; gap: 8px; padding: 8px; border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: background 0.15s; }
+#slotPickerModal .slot-picker-item img { width: 50px; height: 50px; object-fit: contain; }
+#slotPickerModal .slot-picker-item .sp-name { font-size: 14px; font-weight: 600; }
+#slotPickerModal .slot-picker-item .sp-meta { font-size: 12px; opacity: 0.7; }
+@media (max-width: 768px) {
+    #slotPickerModal .auth-dialog { width: 95vw; max-width: 95vw; }
+    #slotPickerModal .slot-picker-list { grid-template-columns: 1fr; }
+    #slotPickerModal .slot-picker-item img { width: 56px; height: 56px; }
+    #slotPickerModal .slot-picker-item .sp-name { font-size: 15px; }
+    #slotPickerModal .slot-picker-item .sp-meta { font-size: 13px; }
 }
   </style>
 </head>
@@ -2018,11 +2045,22 @@ function renderEventView() {
     attachTeamSlotEvents(list);
 }
 function renderSlotHtml(cell, teamIndex, slot, isDefense) {
-    if (!cell) return `<div class="slot" data-team-index="${teamIndex}" data-slot="${slot}" data-defense="${isDefense}">+</div>`;
-    const hr = barracksData.find(b => b.id === cell.user_hero_id); const hero = hr ? allHeroesById[hr.hero_id] : null;
-    if (!hero) return `<div class="slot" data-team-index="${teamIndex}" data-slot="${slot}" data-defense="${isDefense}">+</div>`;
-    const img = fileCellToUrl(hero[HERO_FIELDS.image]); const src = img?getOptimizedImageUrl(img):'';
-    return `<div class="slot filled" data-team-index="${teamIndex}" data-slot="${slot}" data-defense="${isDefense}" data-team-id="${cell.id}"><button class="slot-remove" data-action="remove-slot" data-team-id="${cell.id}">×</button>${src?`<img src="${src}" onerror="this.onerror=null;this.src='${img}'">`:''}<div class="slot-name">${hero[HERO_FIELDS.name]}</div><div class="slot-meta">${hr.skill_level}</div></div>`;
+    if (!cell) {
+        return `<div class="slot" data-team-index="${teamIndex}" data-slot="${slot}" data-defense="${isDefense}">+</div>`;
+    }
+    const hr = barracksData.find(b => b.id === cell.user_hero_id);
+    const hero = hr ? allHeroesById[hr.hero_id] : null;
+    if (!hero) {
+        return `<div class="slot" data-team-index="${teamIndex}" data-slot="${slot}" data-defense="${isDefense}">+</div>`;
+    }
+    const img = fileCellToUrl(hero[HERO_FIELDS.image]);
+    const src = img ? getOptimizedImageUrl(img) : '';
+    return `<div class="slot filled" data-team-index="${teamIndex}" data-slot="${slot}" data-defense="${isDefense}" data-team-id="${cell.id}">
+        <button class="slot-remove" data-action="remove-slot" data-team-id="${cell.id}">×</button>
+        <div class="slot-img-wrap">${src ? `<img src="${src}" onerror="this.onerror=null;this.src='${img}'">` : ''}</div>
+        <div class="slot-name">${hero[HERO_FIELDS.name]}</div>
+        <div class="slot-progress">${hr.star_level}★ · ${hr.skill_level}</div>
+    </div>`;
 }
 function makeSlotEl(cell, slot, isDefense) {
     const wrap = document.createElement('div'); wrap.innerHTML = renderSlotHtml(cell, 0, slot, isDefense);
