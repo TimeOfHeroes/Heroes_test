@@ -1528,7 +1528,7 @@ function initAuthForms() {
     const lf = document.getElementById('loginForm'); if (lf) lf.addEventListener('submit', handleLogin);
     const rf = document.getElementById('registerForm'); if (rf) rf.addEventListener('submit', handleRegister);
     const ac = document.getElementById('authClose'); if (ac) ac.addEventListener('click', closeAuthModal);
-    /const am = document.getElementById('authModal'); if (am) am.addEventListener('click', (e) => { if (e.target.id === 'authModal') closeAuthModal(); });
+    const am = document.getElementById('authModal'); if (am) am.addEventListener('click', (e) => { if (e.target.id === 'authModal') closeAuthModal(); });
     const fp = document.getElementById('forgotPasswordBtn'); if (fp) fp.addEventListener('click', () => { alert('Восстановление пароля будет доступно после подключения SMTP. Пока обратитесь к администратору.'); });
     if (supabaseClient) supabaseClient.auth.onAuthStateChange((event, session) => { currentUser = session ? session.user : null; updateAuthButton(); if (viewHeroes.length) renderCards(viewHeroes); if (event === 'SIGNED_OUT') console.log('👋 Пользователь вышел'); });
 }
