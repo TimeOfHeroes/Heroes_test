@@ -1757,7 +1757,7 @@ function openAddHeroModal(mode, heroId) {
     const sw = document.getElementById('addHeroSelectWrap'), nw = document.getElementById('addHeroNameWrap');
     if (mode === 'card' && heroId) {
         const hero = allHeroes.find(h => h[HERO_FIELDS.id] === heroId);
-        /sw.style.display = 'none'; nw.style.display = 'block'; nw.textContent = hero ? hero[HERO_FIELDS.name] : '';
+        sw.style.display = 'none'; nw.style.display = 'block'; nw.textContent = hero ? hero[HERO_FIELDS.name] : '';
         const max = hero ? (parseInt(hero[HERO_FIELDS.stars])||5) : 5;
         const sel = document.getElementById('addHeroStars'); sel.innerHTML = '';
         for (let s=1; s<=max; s++) { const o=document.createElement('option'); o.value=s; o.textContent=s+'/'+max+'★'; if(s===max) o.selected=true; sel.appendChild(o); }
