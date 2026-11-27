@@ -1670,14 +1670,15 @@ function showBarracksHeroInfo(hero, b) {
     const img = fileCellToUrl(hero[HERO_FIELDS.image]); const imgSrc = img?getOptimizedImageUrl(img):'';
     const calc = calculateStatsWithSelections(hero, b.talent_selections || {}, b.talent_selections && Object.keys(b.talent_selections).length ? 'manual' : 'none');
     const tagsHtml = (hero._tags||[]).map(t => { const cls=getTagClass(t); return `<span class="tag ${cls}" style="display:inline-block;font-size:12px;font-weight:600;padding:4px 12px;border-radius:12px;color:#fff;background:var(--${cls.replace('tag-','')});margin:2px;">#${t}</span>`; }).join('');
+    const maxStars = parseInt(hero[HERO_FIELDS.stars]) || 5;
     document.getElementById('bhContent').innerHTML = `
         <div style="display:grid; grid-template-columns:200px 1fr; gap:16px; align-items:start;">
             <div style="background:var(--element-unknown);border-radius:12px;padding:8px;text-align:center;">${imgSrc?`<img src="${imgSrc}" style="width:100%;max-height:220px;object-fit:contain;" onerror="this.onerror=null;this.src='${img}'">`:''}</div>
             <div>
                 <h2 style="margin:0 0 8px;">${hero[HERO_FIELDS.name]}</h2>
-                <div style="font-size:13px;opacity:0.8;margin-bottom:8px;">${hero[HERO_FIELDS.element]} • ${b.star_level}/${parseInt(hero[HERO_FIELDS.stars])||5}★ • ${hero[HERO_FIELDS.clazz]}</div>
+                <div style="font-size:13px;opacity:0.8;margin-bottom:8px;">${hero[HERO_FIELDS.element]} • ${b.star_level}/${maxStars}★ • ${hero[HERO_FIELDS.clazz]}</div>
                 <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;"><span><span class="icon-sword"></span> ${calc.attack}</span><span><span class="icon-shield"></span> ${calc.defense}</span><span><span class="icon-health"></span> ${calc.hp}</span></div>
-                <div style="font-size:13px;margin-bottom:6px;"><b>В казарме:</b> ${b.quantity} шт., навык ${b.skill_level}, ${b.star_level}★</div>
+                <div style="font-size:13px;margin-bottom:6px;"><b>В казарме:</b> ${b.quantity} шт., навык ${b.skill_level}, ${b.star_level}/${maxStars}★</div>
                 <div style="font-size:13px;margin-bottom:6px;"><b>Скорость маны:</b> ${hero[HERO_FIELDS.mana]||'—'} · <b>Цели:</b> ${hero[HERO_FIELDS.attackType]||'—'}</div>
                 <div style="font-size:13px;margin-bottom:6px;"><b>Призыв:</b> ${hero[HERO_FIELDS.summon]||'—'}</div>
             </div>
@@ -1687,13 +1688,13 @@ function showBarracksHeroInfo(hero, b) {
         <h3 style="margin:14px 0 6px;font-size:15px;">Пассивная способность</h3>
         <div style="white-space:pre-line;font-size:13px;line-height:1.5;">${String(hero[HERO_FIELDS.passive]||'—').replace(/^'|'$/g,'')}</div>
         ${tagsHtml?`<h3 style="margin:14px 0 6px;font-size:15px;">Теги</h3><div>${tagsHtml}</div>`:''}
-       <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
-          <button class="btn primary" id="bhEdit">Изменить прокачку</button>
-       </div>
+        <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn primary" id="bhEdit">Изменить прокачку</button>
+        </div>`;
     modal.classList.add('show');
-    document.getElementById('bhEdit').addEventListener('click', () => { modal.classList.remove('show'); (b.id); });
-    document.getElementById('bhTalents').addEventListener('click', () => { modal.classList.remove('show'); openTalentEditorForBarracks(b.id); });
+    document.getElementById('bhEdit').addEventListener('click', () => { modal.classList.remove('show'); openEditBarracksModal(b.id); });
 }
+
 function openEditBarracksModal(barracksId) {
     const b = barracksData.find(x => x.id === barracksId); if(!b) return;
     const hero = getBarracksHeroRecord(b); if(!hero) return;
@@ -1724,6 +1725,48 @@ function openEditBarracksModal(barracksId) {
     document.getElementById('ebSkill').value = b.skill_level;
     document.getElementById('ebError').textContent = '';
 
+    const talentsBtn = document.getElementById('ebTalents');
+    function updateTalentsBtn() {
+        const curStars = parseInt(document.getElementById('ebStars').value) || 1;
+        const curSkill = document.getElementById('ebSkill').value;
+        const canEdit = curStars === maxStars && curSkill === '8/8';
+        talentsBtn.disabled = !canEdit;
+        talentsBtn.style.opacity = canEdit ? '1' : '0.5';
+        talentsBtn.style.cursor = canEdit ? 'pointer' : 'not-allowed';
+        talentsBtn.title = canEdit ? 'Настроить таланты' : 'Таланты доступны только при максимуме звёзд и навыке 8/8';
+    }
+    document.getElementById('ebStars').onchange = updateTalentsBtn;
+    document.getElementById('ebSkill').onchange = updateTalentsBtn;
+    updateTalentsBtn();
+
+    talentsBtn.onclick = () => {
+        const curStars = parseInt(document.getElementById('ebStars').value) || 1;
+        const curSkill = document.getElementById('ebSkill').value;
+        if (curStars !== maxStars || curSkill !== '8/8') return;
+        b.star_level = curStars; b.skill_level = curSkill;
+        modal.classList.remove('show');
+        openTalentEditorForBarracks(b.id);
+    };
+
+    modal.classList.add('show');
+    document.getElementById('ebSave').onclick = async () => {
+        const quantity = parseInt(document.getElementById('ebQuantity').value) || 1;
+        const star_level = parseInt(document.getElementById('ebStars').value) || 1;
+        const skill_level = document.getElementById('ebSkill').value;
+        if (star_level > maxStars) { document.getElementById('ebError').textContent = 'Звёзд не может быть больше '+maxStars; return; }
+        const hasTalents = b.talent_selections && Object.keys(b.talent_selections).length > 0;
+        const isDowngrade = (star_level < maxStars) || (skill_level !== '8/8');
+        let talent_selections = b.talent_selections || {};
+        if (hasTalents && isDowngrade) {
+            if (!confirm('При понижении звёзд или навыка таланты будут сброшены. Продолжить?')) return;
+            talent_selections = {};
+        }
+        const { error } = await supabaseClient.from('user_heroes').update({ quantity, star_level, skill_level, talent_selections }).eq('id', b.id);
+        if (error) { document.getElementById('ebError').textContent = error.message; return; }
+        b.quantity = quantity; b.star_level = star_level; b.skill_level = skill_level; b.talent_selections = talent_selections;
+        modal.classList.remove('show'); renderBarracks(); refreshMainCounters();
+    };
+}
     // Кнопка «Таланты» — активна только при максимуме звёзд и навыке 8/8
     const talentsBtn = document.getElementById('ebTalents');
     function updateTalentsBtn() {
