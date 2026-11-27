@@ -1714,9 +1714,7 @@ function openEditBarracksModal(barracksId) {
     }
     document.getElementById('ebName').textContent = hero[HERO_FIELDS.name];
     document.getElementById('ebQuantity').value = b.quantity;
-    const maxStars = parseInt(hero[HERO_FIELDS.stars]) || 5;
     const maxStars = hero ? (parseInt(hero[HERO_FIELDS.stars]) || 5) : 5;
-    if (star_level > maxStars) { document.getElementById('ebError').textContent = 'Звёзд не может быть больше '+maxStars; return; }
     const sel = document.getElementById('ebStars'); sel.innerHTML = '';
     for (let s=1; s<=maxStars; s++) { const o=document.createElement('option'); o.value=s; o.textContent=s+'/'+maxStars+'★'; if(s===b.star_level) o.selected=true; sel.appendChild(o); }
     document.getElementById('ebSkill').value = b.skill_level;
@@ -1726,6 +1724,7 @@ function openEditBarracksModal(barracksId) {
         const quantity = parseInt(document.getElementById('ebQuantity').value) || 1;
         const star_level = parseInt(document.getElementById('ebStars').value) || 1;
         const skill_level = document.getElementById('ebSkill').value;
+        if (star_level > maxStars) { document.getElementById('ebError').textContent = 'Звёзд не может быть больше '+maxStars; return; }
         const { error } = await supabaseClient.from('user_heroes').update({ quantity, star_level, skill_level }).eq('id', b.id);
         if (error) { document.getElementById('ebError').textContent = error.message; return; }
         b.quantity = quantity; b.star_level = star_level; b.skill_level = skill_level;
