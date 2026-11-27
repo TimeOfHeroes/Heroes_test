@@ -1615,7 +1615,6 @@ function renderBarracks() {
         const maxStars = parseInt(hero[HERO_FIELDS.stars]) || 5;
         const starsDisplay = `${b.star_level}/${maxStars}★`;
         return `<div class="barracks-card" data-id="${b.id}" data-element="${hero[HERO_FIELDS.element]||''}">
-            <div class="bc-counter">×${b.quantity}</div>
             <div class="bc-thumb">${imgSrc?`<img src="${imgSrc}" alt="${hero[HERO_FIELDS.name]}" loading="lazy" onerror="this.onerror=null;this.src='${img}'">`:'<div style="padding:20px;">Нет изображения</div>'}</div>
             <h4>${hero[HERO_FIELDS.name]}</h4>
             <div class="bc-meta-line"><span>${hero[HERO_FIELDS.element]}</span> • <span>${starsDisplay}</span> • <span>${hero[HERO_FIELDS.clazz]}</span></div>
