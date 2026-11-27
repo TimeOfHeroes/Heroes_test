@@ -1528,7 +1528,7 @@ function initAuthForms() {
     const lf = document.getElementById('loginForm'); if (lf) lf.addEventListener('submit', handleLogin);
     const rf = document.getElementById('registerForm'); if (rf) rf.addEventListener('submit', handleRegister);
     const ac = document.getElementById('authClose'); if (ac) ac.addEventListener('click', closeAuthModal);
-    //const am = document.getElementById('authModal'); if (am) am.addEventListener('click', (e) => { if (e.target.id === 'authModal') closeAuthModal(); });
+    /const am = document.getElementById('authModal'); if (am) am.addEventListener('click', (e) => { if (e.target.id === 'authModal') closeAuthModal(); });
     const fp = document.getElementById('forgotPasswordBtn'); if (fp) fp.addEventListener('click', () => { alert('Восстановление пароля будет доступно после подключения SMTP. Пока обратитесь к администратору.'); });
     if (supabaseClient) supabaseClient.auth.onAuthStateChange((event, session) => { currentUser = session ? session.user : null; updateAuthButton(); if (viewHeroes.length) renderCards(viewHeroes); if (event === 'SIGNED_OUT') console.log('👋 Пользователь вышел'); });
 }
@@ -1608,7 +1608,7 @@ function renderBarracks() {
         const maxStars = parseInt(hero[HERO_FIELDS.stars]) || 5;
         const starsDisplay = `${b.star_level}/${maxStars}★`;
         return `<div class="barracks-card" data-id="${b.id}" data-element="${hero[HERO_FIELDS.element]||''}">
-            //<div class="bc-counter">×${b.quantity}</div>
+            <div class="bc-counter">×${b.quantity}</div>
             <div class="bc-thumb">${imgSrc?`<img src="${imgSrc}" alt="${hero[HERO_FIELDS.name]}" loading="lazy" onerror="this.onerror=null;this.src='${img}'">`:'<div style="padding:20px;">Нет изображения</div>'}</div>
             <h4>${hero[HERO_FIELDS.name]}</h4>
             <div class="bc-meta-line"><span>${hero[HERO_FIELDS.element]}</span> • <span>${starsDisplay}</span> • <span>${hero[HERO_FIELDS.clazz]}</span></div>
@@ -1757,7 +1757,7 @@ function openAddHeroModal(mode, heroId) {
     const sw = document.getElementById('addHeroSelectWrap'), nw = document.getElementById('addHeroNameWrap');
     if (mode === 'card' && heroId) {
         const hero = allHeroes.find(h => h[HERO_FIELDS.id] === heroId);
-        //sw.style.display = 'none'; nw.style.display = 'block'; nw.textContent = hero ? hero[HERO_FIELDS.name] : '';
+        /sw.style.display = 'none'; nw.style.display = 'block'; nw.textContent = hero ? hero[HERO_FIELDS.name] : '';
         const max = hero ? (parseInt(hero[HERO_FIELDS.stars])||5) : 5;
         const sel = document.getElementById('addHeroStars'); sel.innerHTML = '';
         for (let s=1; s<=max; s++) { const o=document.createElement('option'); o.value=s; o.textContent=s+'/'+max+'★'; if(s===max) o.selected=true; sel.appendChild(o); }
