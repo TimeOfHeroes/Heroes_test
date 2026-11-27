@@ -1569,6 +1569,13 @@ async function loadBarracks() {
     const { data, error } = await supabaseClient.from('user_heroes').select('*').order('created_at', { ascending: true });
     if (error) { console.error('Ошибка загрузки казармы:', error); return; }
     barracksData = data || [];
+    barracksData.forEach(b => {
+    const hero = allHeroes.find(h => String(h[HERO_FIELDS.id]) === String(b.hero_id));
+    if (hero) {
+        const max = parseInt(hero[HERO_FIELDS.stars]) || 5;
+        if (b.star_level > max) b.star_level = max;
+    }
+});
     renderBarracks();
     refreshMainCounters();
 }
@@ -1708,6 +1715,8 @@ function openEditBarracksModal(barracksId) {
     document.getElementById('ebName').textContent = hero[HERO_FIELDS.name];
     document.getElementById('ebQuantity').value = b.quantity;
     const maxStars = parseInt(hero[HERO_FIELDS.stars]) || 5;
+    const maxStars = hero ? (parseInt(hero[HERO_FIELDS.stars]) || 5) : 5;
+    if (star_level > maxStars) { document.getElementById('ebError').textContent = 'Звёзд не может быть больше '+maxStars; return; }
     const sel = document.getElementById('ebStars'); sel.innerHTML = '';
     for (let s=1; s<=maxStars; s++) { const o=document.createElement('option'); o.value=s; o.textContent=s+'/'+maxStars+'★'; if(s===b.star_level) o.selected=true; sel.appendChild(o); }
     document.getElementById('ebSkill').value = b.skill_level;
@@ -1728,9 +1737,15 @@ function initAddHeroModal() {
     const select = document.getElementById('addHeroSelect');
     select.innerHTML = allHeroes.slice().sort((a,b)=>a[HERO_FIELDS.name].localeCompare(b[HERO_FIELDS.name],'ru')).map(h => `<option value="${h[HERO_FIELDS.id]}">${h[HERO_FIELDS.name]} (${h[HERO_FIELDS.element]}, ${h[HERO_FIELDS.clazz]})</option>`).join('');
     function updateStars(heroId) {
-        const hero = allHeroes.find(h => h[HERO_FIELDS.id] === heroId); const max = hero ? (parseInt(hero[HERO_FIELDS.stars])||5) : 5;
+        const hero = allHeroes.find(h => String(h[HERO_FIELDS.id]) === String(heroId));
+        const max = hero ? (parseInt(hero[HERO_FIELDS.stars])||5) : 5;
         const sel = document.getElementById('addHeroStars'); sel.innerHTML = '';
-        for (let s=1; s<=max; s++) { const o=document.createElement('option'); o.value=s; o.textContent=s+'★'; if(s===max) o.selected=true; sel.appendChild(o); }
+        for (let s=1; s<=max; s++) {
+            const o = document.createElement('option');
+            o.value = s; o.textContent = s+'/'+max+'★';
+            if (s === max) o.selected = true;
+            sel.appendChild(o);
+        }
     }
     select.addEventListener('change', () => updateStars(parseInt(select.value)));
     updateStars(parseInt(select.value));
@@ -1745,6 +1760,10 @@ function initAddHeroModal() {
         const quantity = parseInt(document.getElementById('addHeroQuantity').value) || 1;
         const star_level = parseInt(document.getElementById('addHeroStars').value) || 1;
         const skill_level = document.getElementById('addHeroSkill').value;
+        // Проверка: star_level не больше максимума
+        const hero = allHeroes.find(h => String(h[HERO_FIELDS.id]) === String(heroId));
+        const maxStars = hero ? (parseInt(hero[HERO_FIELDS.stars])||5) : 5;
+        if (star_level > maxStars) { errEl.textContent = 'Звёзд не может быть больше '+maxStars; return; }
         const { data, error } = await supabaseClient.from('user_heroes').insert({ user_id: currentUser.id, hero_id: heroId, quantity, star_level, skill_level, talent_selections: {} }).select().single();
         if (error) { errEl.textContent = error.message; return; }
         barracksData.push(data);
@@ -1756,12 +1775,30 @@ function openAddHeroModal(mode, heroId) {
     addHeroContext = { mode, heroId };
     const sw = document.getElementById('addHeroSelectWrap'), nw = document.getElementById('addHeroNameWrap');
     if (mode === 'card' && heroId) {
-        const hero = allHeroes.find(h => h[HERO_FIELDS.id] === heroId);
+        const hero = allHeroes.find(h => String(h[HERO_FIELDS.id]) === String(heroId));
         sw.style.display = 'none'; nw.style.display = 'block'; nw.textContent = hero ? hero[HERO_FIELDS.name] : '';
         const max = hero ? (parseInt(hero[HERO_FIELDS.stars])||5) : 5;
         const sel = document.getElementById('addHeroStars'); sel.innerHTML = '';
-        for (let s=1; s<=max; s++) { const o=document.createElement('option'); o.value=s; o.textContent=s+'/'+max+'★'; if(s===max) o.selected=true; sel.appendChild(o); }
-    } else { sw.style.display = ''; nw.style.display = 'none'; }
+        for (let s=1; s<=max; s++) {
+            const o = document.createElement('option');
+            o.value = s; o.textContent = s+'/'+max+'★';
+            if (s === max) o.selected = true;
+            sel.appendChild(o);
+        }
+    } else {
+        sw.style.display = ''; nw.style.display = 'none';
+        const select = document.getElementById('addHeroSelect');
+        const heroIdFromSelect = parseInt(select.value);
+        const hero = allHeroes.find(h => String(h[HERO_FIELDS.id]) === String(heroIdFromSelect));
+        const max = hero ? (parseInt(hero[HERO_FIELDS.stars])||5) : 5;
+        const sel = document.getElementById('addHeroStars'); sel.innerHTML = '';
+        for (let s=1; s<=max; s++) {
+            const o = document.createElement('option');
+            o.value = s; o.textContent = s+'/'+max+'★';
+            if (s === max) o.selected = true;
+            sel.appendChild(o);
+        }
+    }
     document.getElementById('addHeroQuantity').value = 1;
     document.getElementById('addHeroSkill').value = '2/8';
     document.getElementById('addHeroError').textContent = '';
@@ -2240,12 +2277,13 @@ function attachEvents(){
 Promise.all([
     new Promise((res,rej)=>Papa.parse(DATA_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
         allHeroes=r.data.filter(row=>row&&row[HERO_FIELDS.name]).map(row=>{ 
-            const tagsStr=row['Теги']||''; const tags=tagsStr.split(',').map(t=>t.trim()).filter(t=>t!==''); 
+            const tagsStr=row['Теги']||''; const tags=tagsStr.split(',').map(t=>t.trim()).filter(t=>t!=='');
             if (row['Дата обновления'] && row['Дата обновления'].trim()) dbUpdateDate = row['Дата обновления'].trim();
             return {...row,_tags:tags};
-        }); 
-      allHeroesById = {};
-      allHeroes.forEach(h => { allHeroesById[h[HERO_FIELDS.id]] = h; });
+        });
+        // Заполняем allHeroesById сразу после загрузки героев
+        allHeroesById = {};
+        allHeroes.forEach(h => { allHeroesById[h[HERO_FIELDS.id]] = h; });
         console.log('✅ Герои загружены:',allHeroes.length); res(); 
     },error:rej})),
     new Promise((res,rej)=>Papa.parse(CLASSES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
