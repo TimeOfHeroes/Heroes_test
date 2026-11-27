@@ -492,7 +492,7 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
 .barracks-card .bc-actions .btn { flex:1; font-size:11px; padding:4px 6px; height:auto; }
 .barracks-card .bc-counter { position:absolute; top:6px; right:6px; background:rgba(0,0,0,0.6); color:#fff; font-size:11px; font-weight:600; padding:2px 8px; border-radius:10px; }
 
-/* События */
+/* Составы */
 .events-list { display:flex; flex-direction:column; gap:8px; }
 .event-item { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:var(--card-bg); border:1px solid var(--border-color); border-radius:10px; cursor:pointer; transition:background 0.2s; }
 .event-item:hover { background:var(--secondary-color); }
@@ -667,13 +667,12 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     <div class="cabinet-header">
         <div class="cabinet-tabs">
             <button class="cabinet-tab active" data-ctab="barracks">Казарма</button>
-            <button class="cabinet-tab" data-ctab="events">События</button>
+            <button class="cabinet-tab" data-ctab="events">Составы</button>
         </div>
         <div class="cabinet-user">
             <span id="cabinetEmail"></span>
             <button id="logoutBtn" class="btn btn-white">Выйти</button>
-            <button id="closeCabinetBtn" class="btn">← На сайт</button>
-        </div>
+            <button id="closeCabinetBtn" class="btn">← В галерею</button>        </div>
     </div>
     <div id="cabinetBarracks" class="cabinet-panel active">
         <div class="cabinet-toolbar">
@@ -687,15 +686,15 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     </div>
     <div id="cabinetEvents" class="cabinet-panel">
         <div class="cabinet-toolbar">
-            <button id="addEventBtn" class="btn primary">+ Создать событие</button>
+            <button id="addEventBtn" class="btn primary">+ Создать состав</button>
         </div>
         <div id="eventsList" class="events-list"></div>
-        <div id="eventsEmpty" class="cabinet-empty" style="display:none;">Пока нет событий. Нажмите «Создать событие».</div>
+        <div id="eventsEmpty" class="cabinet-empty" style="display:none;">Пока нет составов. Нажмите «Создать состав».</div>
         <div id="eventView" style="display:none;">
             <div class="event-view-header">
-                <button id="backToEventsBtn" class="btn">← К списку событий</button>
+                <button id="backToEventsBtn" class="btn">← К списку составов</button>
                 <h3 id="eventViewTitle" style="margin:0;"></h3>
-                <button id="deleteEventBtn" class="btn btn-white">Удалить событие</button>
+                <button id="deleteEventBtn" class="btn btn-white">Удалить состав</button>
             </div>
             <div class="event-subtabs">
                 <button class="event-subtab active" data-subtab="defense">Оборона</button>
@@ -736,11 +735,11 @@ header { position:sticky; top:0; z-index:100; background:var(--header-bg); color
     </div>
 </div>
 
-<!-- Модалка создания события -->
+<!-- Модалка создания составов -->
 <div id="eventModal" class="auth-modal">
     <div class="auth-dialog" style="max-width:420px;">
         <button id="eventModalClose" class="auth-close">×</button>
-        <h3 style="margin:0 0 16px;">Создать событие</h3>
+        <h3 style="margin:0 0 16px;">Создать состав</h3>
         <div class="auth-form active" style="gap:12px;">
             <label>Название<input type="text" id="eventNameInput" maxlength="60" placeholder="Например: Война"></label>
             <button id="eventCreateSubmit" class="auth-submit">Создать</button>
@@ -1461,7 +1460,7 @@ async function checkUser() {
 }
 function updateAuthButton() {
     const btn = document.getElementById('authBtn'); if (!btn) return;
-    if (currentUser) { btn.classList.add('logged-in'); btn.title = currentUser.email || 'Личный кабинет'; }
+    if (currentUser) { btn.classList.add('logged-in'); btn.title = 'В личный кабинет'; }
     else { btn.classList.remove('logged-in'); btn.title = 'Войти'; }
 }
 function initAuthButton() {
@@ -1529,7 +1528,7 @@ function initAuthForms() {
     const lf = document.getElementById('loginForm'); if (lf) lf.addEventListener('submit', handleLogin);
     const rf = document.getElementById('registerForm'); if (rf) rf.addEventListener('submit', handleRegister);
     const ac = document.getElementById('authClose'); if (ac) ac.addEventListener('click', closeAuthModal);
-    const am = document.getElementById('authModal'); if (am) am.addEventListener('click', (e) => { if (e.target.id === 'authModal') closeAuthModal(); });
+    //const am = document.getElementById('authModal'); if (am) am.addEventListener('click', (e) => { if (e.target.id === 'authModal') closeAuthModal(); });
     const fp = document.getElementById('forgotPasswordBtn'); if (fp) fp.addEventListener('click', () => { alert('Восстановление пароля будет доступно после подключения SMTP. Пока обратитесь к администратору.'); });
     if (supabaseClient) supabaseClient.auth.onAuthStateChange((event, session) => { currentUser = session ? session.user : null; updateAuthButton(); if (viewHeroes.length) renderCards(viewHeroes); if (event === 'SIGNED_OUT') console.log('👋 Пользователь вышел'); });
 }
@@ -1606,9 +1605,10 @@ function renderBarracks() {
     list.innerHTML = filtered.map(b => {
         const hero = getBarracksHeroRecord(b); if(!hero) return '';
         const img = fileCellToUrl(hero[HERO_FIELDS.image]); const imgSrc = img?getOptimizedImageUrl(img):'';
-        const starsDisplay = b.star_level+' <span class="icon-star" style="width:11px;height:11px;"></span>';
+        const maxStars = parseInt(hero[HERO_FIELDS.stars]) || 5;
+        const starsDisplay = `${b.star_level}/${maxStars}★`;
         return `<div class="barracks-card" data-id="${b.id}" data-element="${hero[HERO_FIELDS.element]||''}">
-            <div class="bc-counter">×${b.quantity}</div>
+            //<div class="bc-counter">×${b.quantity}</div>
             <div class="bc-thumb">${imgSrc?`<img src="${imgSrc}" alt="${hero[HERO_FIELDS.name]}" loading="lazy" onerror="this.onerror=null;this.src='${img}'">`:'<div style="padding:20px;">Нет изображения</div>'}</div>
             <h4>${hero[HERO_FIELDS.name]}</h4>
             <div class="bc-meta-line"><span>${hero[HERO_FIELDS.element]}</span> • <span>${starsDisplay}</span> • <span>${hero[HERO_FIELDS.clazz]}</span></div>
@@ -1664,7 +1664,7 @@ function showBarracksHeroInfo(hero, b) {
             <div style="background:var(--element-unknown);border-radius:12px;padding:8px;text-align:center;">${imgSrc?`<img src="${imgSrc}" style="width:100%;max-height:220px;object-fit:contain;" onerror="this.onerror=null;this.src='${img}'">`:''}</div>
             <div>
                 <h2 style="margin:0 0 8px;">${hero[HERO_FIELDS.name]}</h2>
-                <div style="font-size:13px;opacity:0.8;margin-bottom:8px;">${hero[HERO_FIELDS.element]} • ${b.star_level}★ • ${hero[HERO_FIELDS.clazz]}</div>
+                <div style="font-size:13px;opacity:0.8;margin-bottom:8px;">${hero[HERO_FIELDS.element]} • ${b.star_level}/${parseInt(hero[HERO_FIELDS.stars])||5}★ • ${hero[HERO_FIELDS.clazz]}</div>
                 <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;"><span><span class="icon-sword"></span> ${calc.attack}</span><span><span class="icon-shield"></span> ${calc.defense}</span><span><span class="icon-health"></span> ${calc.hp}</span></div>
                 <div style="font-size:13px;margin-bottom:6px;"><b>В казарме:</b> ${b.quantity} шт., навык ${b.skill_level}, ${b.star_level}★</div>
                 <div style="font-size:13px;margin-bottom:6px;"><b>Скорость маны:</b> ${hero[HERO_FIELDS.mana]||'—'} · <b>Цели:</b> ${hero[HERO_FIELDS.attackType]||'—'}</div>
@@ -1709,7 +1709,7 @@ function openEditBarracksModal(barracksId) {
     document.getElementById('ebQuantity').value = b.quantity;
     const maxStars = parseInt(hero[HERO_FIELDS.stars]) || 5;
     const sel = document.getElementById('ebStars'); sel.innerHTML = '';
-    for (let s=1; s<=maxStars; s++) { const o=document.createElement('option'); o.value=s; o.textContent=s+'★'; if(s===b.star_level) o.selected=true; sel.appendChild(o); }
+    for (let s=1; s<=maxStars; s++) { const o=document.createElement('option'); o.value=s; o.textContent=s+'/'+maxStars+'★'; if(s===b.star_level) o.selected=true; sel.appendChild(o); }
     document.getElementById('ebSkill').value = b.skill_level;
     document.getElementById('ebError').textContent = '';
     modal.classList.add('show');
@@ -1728,7 +1728,7 @@ function initAddHeroModal() {
     const select = document.getElementById('addHeroSelect');
     select.innerHTML = allHeroes.slice().sort((a,b)=>a[HERO_FIELDS.name].localeCompare(b[HERO_FIELDS.name],'ru')).map(h => `<option value="${h[HERO_FIELDS.id]}">${h[HERO_FIELDS.name]} (${h[HERO_FIELDS.element]}, ${h[HERO_FIELDS.clazz]})</option>`).join('');
     function updateStars(heroId) {
-        const hero = allHeroesById[heroId]; const max = hero ? (parseInt(hero[HERO_FIELDS.stars])||5) : 5;
+        const hero = allHeroes.find(h => h[HERO_FIELDS.id] === heroId); const max = hero ? (parseInt(hero[HERO_FIELDS.stars])||5) : 5;
         const sel = document.getElementById('addHeroStars'); sel.innerHTML = '';
         for (let s=1; s<=max; s++) { const o=document.createElement('option'); o.value=s; o.textContent=s+'★'; if(s===max) o.selected=true; sel.appendChild(o); }
     }
@@ -1756,11 +1756,11 @@ function openAddHeroModal(mode, heroId) {
     addHeroContext = { mode, heroId };
     const sw = document.getElementById('addHeroSelectWrap'), nw = document.getElementById('addHeroNameWrap');
     if (mode === 'card' && heroId) {
-        const hero = allHeroesById[heroId];
-        sw.style.display = 'none'; nw.style.display = 'block'; nw.textContent = hero ? hero[HERO_FIELDS.name] : '';
+        const hero = allHeroes.find(h => h[HERO_FIELDS.id] === heroId);
+        //sw.style.display = 'none'; nw.style.display = 'block'; nw.textContent = hero ? hero[HERO_FIELDS.name] : '';
         const max = hero ? (parseInt(hero[HERO_FIELDS.stars])||5) : 5;
         const sel = document.getElementById('addHeroStars'); sel.innerHTML = '';
-        for (let s=1; s<=max; s++) { const o=document.createElement('option'); o.value=s; o.textContent=s+'★'; if(s===max) o.selected=true; sel.appendChild(o); }
+        for (let s=1; s<=max; s++) { const o=document.createElement('option'); o.value=s; o.textContent=s+'/'+max+'★'; if(s===max) o.selected=true; sel.appendChild(o); }
     } else { sw.style.display = ''; nw.style.display = 'none'; }
     document.getElementById('addHeroQuantity').value = 1;
     document.getElementById('addHeroSkill').value = '2/8';
@@ -1965,7 +1965,7 @@ function rebuildFacetsForBarracks() {
     Object.keys(barracksFilters).forEach(k => { selected[k] = barracksFilters[k]; });
 }
 
-// ===== ЛК: СОБЫТИЯ И КОМАНДЫ =====
+// ===== ЛК: СОСТАВЫ И КОМАНДЫ =====
 let eventsData = [];
 let currentEventId = null;
 let eventTeamsData = [];
@@ -1976,13 +1976,28 @@ async function loadEvents() {
     const { data, error } = await supabaseClient.from('user_events').select('*').order('sort_order', { ascending: true }).order('created_at', { ascending: true });
     if (error) { console.error(error); return; }
     eventsData = data || [];
+    // Подгружаем количество команд для каждого состава
+    if (eventsData.length) {
+        const { data: teams, error: te } = await supabaseClient.from('user_teams').select('event_id, team_index, is_defense');
+        if (!te && teams) {
+            const counts = {};
+            teams.forEach(t => {
+                if (!counts[t.event_id]) counts[t.event_id] = { normal: new Set(), defense: 0 };
+                if (t.is_defense) counts[t.event_id].defense = 1;
+                else counts[t.event_id].normal.add(t.team_index);
+            });
+            eventsData.forEach(ev => {
+                ev._teamCount = (counts[ev.id] ? counts[ev.id].normal.size : 0) + (counts[ev.id] ? counts[ev.id].defense : 0);
+            });
+        }
+    }
     renderEventsList();
 }
 function renderEventsList() {
     const list = document.getElementById('eventsList'), empty = document.getElementById('eventsEmpty');
     if (!eventsData.length) { list.innerHTML=''; empty.style.display='block'; return; }
     empty.style.display='none';
-    list.innerHTML = eventsData.map(ev => `<div class="event-item" data-id="${ev.id}"><span class="ev-name">${ev.name}</span><span style="font-size:12px;opacity:0.6;">→</span></div>`).join('');
+    list.innerHTML = eventsData.map(ev => `<div class="event-item" data-id="${ev.id}"><span class="ev-name">${ev.name}</span><span style="font-size:12px;opacity:0.6;">${ev._teamCount||0} ком. →</span></div>`).join('');
     list.querySelectorAll('.event-item').forEach(el => el.addEventListener('click', () => openEvent(el.dataset.id)));
 }
 function initEventsModal() {
@@ -1990,12 +2005,17 @@ function initEventsModal() {
     document.getElementById('eventModalClose').addEventListener('click', () => document.getElementById('eventModal').classList.remove('show'));
     document.getElementById('eventModal').addEventListener('click', (e) => { if (e.target.id === 'eventModal') e.target.classList.remove('show'); });
     document.getElementById('eventCreateSubmit').addEventListener('click', async () => {
-        const name = document.getElementById('eventNameInput').value.trim(); const errEl = document.getElementById('eventModalError');
-        if (!name) { errEl.textContent = 'Введите название'; return; }
-        const { data, error } = await supabaseClient.from('user_events').insert({ user_id: currentUser.id, name, sort_order: eventsData.length }).select().single();
-        if (error) { errEl.textContent = error.message; return; }
-        eventsData.push(data); document.getElementById('eventModal').classList.remove('show'); renderEventsList();
-    });
+    const name = document.getElementById('eventNameInput').value.trim();
+    const errEl = document.getElementById('eventModalError');
+    if (!name) { errEl.textContent = 'Введите название'; return; }
+    if (eventsData.some(e => e.name.toLowerCase() === name.toLowerCase())) {
+        errEl.textContent = 'Состав с таким названием уже существует';
+        return;
+    }
+    const { data, error } = await supabaseClient.from('user_events').insert({ user_id: currentUser.id, name, sort_order: eventsData.length }).select().single();
+    if (error) { errEl.textContent = error.message; return; }
+    eventsData.push(data); document.getElementById('eventModal').classList.remove('show'); renderEventsList();
+});
 }
 async function openEvent(eventId) {
     currentEventId = eventId;
@@ -2059,7 +2079,7 @@ function renderSlotHtml(cell, teamIndex, slot, isDefense) {
         <button class="slot-remove" data-action="remove-slot" data-team-id="${cell.id}">×</button>
         <div class="slot-img-wrap">${src ? `<img src="${src}" onerror="this.onerror=null;this.src='${img}'">` : ''}</div>
         <div class="slot-name">${hero[HERO_FIELDS.name]}</div>
-        <div class="slot-progress">${hr.star_level}★ · ${hr.skill_level}</div>
+        <div class="slot-progress">${hr.star_level}/${parseInt(hero[HERO_FIELDS.stars])||5}★ · ${hr.skill_level}</div>
     </div>`;
 }
 function makeSlotEl(cell, slot, isDefense) {
@@ -2118,7 +2138,7 @@ function initEventView() {
     document.getElementById('backToEventsBtn').addEventListener('click', closeEvent);
     document.getElementById('deleteEventBtn').addEventListener('click', async () => {
         if (!currentEventId) return;
-        if (!confirm('Удалить событие со всеми командами?')) return;
+        if (!confirm('Удалить состав со всеми командами?')) return;
         const { error } = await supabaseClient.from('user_events').delete().eq('id', currentEventId);
         if (error) { alert(error.message); return; }
         eventsData = eventsData.filter(e => e.id !== currentEventId); closeEvent();
@@ -2224,6 +2244,8 @@ Promise.all([
             if (row['Дата обновления'] && row['Дата обновления'].trim()) dbUpdateDate = row['Дата обновления'].trim();
             return {...row,_tags:tags};
         }); 
+      allHeroesById = {};
+      allHeroes.forEach(h => { allHeroesById[h[HERO_FIELDS.id]] = h; });
         console.log('✅ Герои загружены:',allHeroes.length); res(); 
     },error:rej})),
     new Promise((res,rej)=>Papa.parse(CLASSES_URL,{download:true,header:true,skipEmptyLines:true,complete:r=>{ 
