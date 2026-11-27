@@ -1809,7 +1809,7 @@ function openEditBarracksModal(barracksId) {
         const { error } = await supabaseClient.from('user_heroes').update({ quantity, star_level, skill_level, talent_selections }).eq('id', b.id);
         if (error) { document.getElementById('ebError').textContent = error.message; return; }
         b.quantity = quantity; b.star_level = star_level; b.skill_level = skill_level; b.talent_selections = talent_selections;
-        modal.classList.remove('show'); renderBarracks(); refreshMainCounters();
+                modal.classList.remove('show'); renderBarracks(); refreshMainCounters();
     };
 }
 let addHeroContext = { mode:'cabinet', heroId:null };
